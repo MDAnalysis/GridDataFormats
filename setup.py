@@ -8,7 +8,7 @@ use_setuptools()
 from setuptools import setup, find_packages
 
 setup(name="GridDataFormats",
-      version="0.1",
+      version="0.1.1",
       description="A python library for reading and writing gridded data",
       long_description="""The gridDataFormats package provides classes to 
 unify reading and writing n-dimensional datasets. At the moment this simply
