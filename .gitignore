@@ -1,0 +1,4 @@
+*.pyc
+GridDataFormats.egg-info
+build
+dist

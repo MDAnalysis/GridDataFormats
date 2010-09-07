@@ -1,0 +1,67 @@
+============================
+ README for gridDataFormats
+============================
+
+The package reads grid data from files, makes them available as a
+:class:`Grid` object, and allows one to write out the data again.
+
+A :class:`Grid` consists of a rectangular, regular, N-dimensional
+array of data. It contains
+(1) The position of the array cell edges.
+(2) The array data itself.
+
+This is equivalent to knowing
+(1) The origin of the coordinate system (i.e. which data cell
+    corresponds to (0,0,...,0)
+(2) The spacing of the grid in each dimension.
+(3) The data on a grid.
+
+:class:`Grid` objects have some convenient properties:
+
+* The data is represented as a :class:`numpy.array` and thus shares
+  all the advantages coming with this sophisticated and powerful
+  library.
+
+* They can be manipulated arithmetically, e.g. one can simply add or
+  subtract two of them and get another one, or multiply by a
+  constant. Note that all operations are defined point-wise (see the
+  :mod:`numpy` documentation for details) and that only grids defined
+  on the same cell edges can be combined.
+
+* A :class:`Grid` object can also be created from within python code
+  e.g. from the output of the :func:`numpy.histogramdd` function.
+
+* The representation of the data is abstracted from the format that
+  the files are saved in. This makes it straightforward to add
+  additional readers for new formats.
+
+* The data can be written out again in formats that are understood by
+  other programs such as VMD or PyMOL.
+
+
+Examples
+========
+
+Subtracting two densities
+-------------------------
+
+Assuming one has two densities that were generated on the same grid
+positions, stored in files ``A.dx`` and ``B.dx``, one first reads the
+data into two :class:`Grid` objects::
+
+  from gridData import Grid
+  A = Grid('A.dx')
+  B = Grid('B.dx')
+
+Subtract A from B::
+
+  C = B - A
+
+and write out as a dx file::
+
+  C.export('C.dx')
+
+The resulting file ``C.dx`` can be visualized with any OpenDX-capable
+viewer, or later read-in again.
+
+

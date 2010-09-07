@@ -1,0 +1,21 @@
+===============================
+  Installing gridDataFormats
+===============================
+
+Follow the standard python instructions (using "setuptools", also
+known as "easy_install").
+
+In order to install into the default system directories::
+
+  python setup.py install
+
+If you don't have NumPy_ installed it will download and install it automatically.
+
+
+For other ways of installing have a look at the documentation for
+`easy_install`_, in particular notes on "Custom Install Locations". 
+
+.. _`easy_install`:
+   http://peak.telecommunity.com/DevCenter/EasyInstall#custom-installation-locations
+
+.. _NumPy: http://numpy.scipy.org/
