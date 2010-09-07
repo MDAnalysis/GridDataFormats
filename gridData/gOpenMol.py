@@ -123,5 +123,5 @@ Copyright CSC, 2005
 Last modified: September 23, 2003 09:18:50
 """
 
-class plt:
+class GOpenMol(object):
     raise NotImplementedError

@@ -1,4 +1,3 @@
-# $Id$
 # gridDataFormats --- python modules to read and write gridded data
 # Copyright (c) 2009-2010 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser Public License, version 3 or later.

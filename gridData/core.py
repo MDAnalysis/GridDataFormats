@@ -1,4 +1,3 @@
-# $Id$
 # gridDataFormats --- python modules to read and write gridded data
 # Copyright (c) 2009-2010 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser Public License, version 3 or later.
@@ -29,6 +28,13 @@ import OpenDX
 
 from gridDataFormats import gridDataWarning
 
+def _grid(x):
+    """Access the underlying ndarray of a Grid object or return the object itself"""
+    try:
+        return x.grid
+    except AttributeError:
+        return x
+
 class Grid(object):
     """Class to manage a multidimensional grid object.
 
@@ -41,6 +47,7 @@ class Grid(object):
     The attribute Grid.metadata holds a user-defined dictionary that
     can be used to annotate the data. It is saved with save().
     """
+    default_format = 'DX'
 
     def __init__(self,grid=None,edges=None,origin=None,delta=None, metadata=None):
         """
@@ -75,6 +82,15 @@ class Grid(object):
             associated with the density; the class does not touch
             metadata[] but stores it with save()
         """
+        self._exporters = {'DX': self._export_dx,
+                           'PICKLE': self._export_python,
+                           'PYTHON': self._export_python,  # compatibility
+                           }
+        self._loaders = {'DX': self._load_dx,
+                         'PICKLE': self._load_python,
+                         'PYTHON': self._load_python,      # compatibility
+                         }
+
 
         if metadata is None: 
             metadata = {}
@@ -127,7 +143,28 @@ class Grid(object):
         self.midpoints = map(lambda e: 0.5 * (e[:-1] + e[1:]), self.edges)
         self.origin = map(lambda m: m[0], self.midpoints)
 
-    def load(self,filename=None):
+    def _guess_format(self, filename, format=None, export=True):
+        if export:
+            available = self._exporters
+        else:
+            available = self._loaders
+        if format is None:
+            format = os.path.splitext(filename)[1][1:]
+        format = format.upper()
+        if not format:
+            format = self.default_format
+        if not format in available:
+            raise ValueError("File format %r not available, choose one of %r"\
+                                 % (format, available.keys()))
+        return format
+
+    def _get_exporter(self, filename, format=None):
+        return self._exporters[self._guess_format(filename, format=format, export=True)]
+
+    def _get_loader(self, filename, format=None):
+        return self._loaders[self._guess_format(filename, format=format, export=False)]
+
+    def load(self,filename, format=None):
         """Load saved (pickled or dx) grid and edges from <filename>.pickle
 
            Grid.load(<filename>.pickle)
@@ -136,16 +173,8 @@ class Grid(object):
         The load() method calls the class's constructor method and
         completely resets all values, based on the loaded data.
         """
-        import os.path
-        root,ext = os.path.splitext(filename)
-        if ext == '.dx':
-            self._load_dx(filename)
-        elif ext == '.pickle':
-            self._load_python(filename)
-        else:
-            warnings.warn("File to load from has no identifying extension assuming pickle",
-                          category=gridDataWarning)
-            self._load_python(filename)
+        loader = self._get_loader(filename, format=format)
+        loader(filename)
 
     def _load_python(self,filename):
         f = open(filename,'rb')
@@ -164,31 +193,24 @@ class Grid(object):
         grid,edges = dx.histogramdd()
         self.__init__(grid=grid,edges=edges,metadata=self.metadata)
     
-    def export(self,filename,format="dx"):
+    def export(self,filename,format=None):
         """export density to file using the given format; use 'dx' for visualization.
 
         export(filename=<filename>,format=<format>)
 
-        The <filename> can be omitted if a default file name already
-        exists for the object (e.g. if it was loaded from a file or it
-        was saved before.) Do not supply the filename extension. The
-        correct one will be added by the method.
+        The format can also be deduced from the suffix of the filename
+        though the *format* keyword takes precedence.
 
         The default format for export() is 'dx'.
         
         Only implemented formats:
 
-        dx        OpenDX (WRITE ONLY)
-        python    pickle (use Grid.load(filename) to restore); Grid.save()
+        dx        OpenDX
+        pickle    pickle (use Grid.load(filename) to restore); Grid.save()
                   is simpler than export(format='python').
         """
-        if format == "dx":
-            self._export_dx(filename)
-        elif format == "python":
-            self._export_python(filename)
-        else:
-            raise NotImplementedError("Exporting to format "+str(format)+\
-                                      " is not implemented.")
+        exporter = self._get_exporter(filename, format=format)
+        exporter(filename)
 
     def _export_python(self,filename):
         """Pickle the Grid object
@@ -196,9 +218,10 @@ class Grid(object):
         The object is dumped as a dictionary with grid and edges: This
         is sufficient to recreate the grid object with __init__().
         """
+        root, ext = os.path.splitext(filename)
+        filename = root + ".pickle"
         
         data = dict(grid=self.grid,edges=self.edges,metadata=self.metadata)
-        filename = filename + ".pickle"
         f = open(filename,'wb')
         try:
             cPickle.dump(data,f,cPickle.HIGHEST_PROTOCOL)
@@ -209,17 +232,16 @@ class Grid(object):
     def _export_dx(self,filename):
         """Export the density grid to an OpenDX file. The file format
         is the simplest regular grid array and it is also understood
-        by VMD's DX reader.
+        by VMD's and PyMOL's DX reader.
 
         For the file format see
         http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF
         """
-
-        filename = filename + '.dx'
+        root, ext = os.path.splitext(filename)
+        filename = root + '.dx'
 
         comments = [
-            'OpenDX density file written by',
-            '$Id$',
+            'OpenDX density file written by gridDataFormats.Grid.export()',
             'File format: http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF',
             'Data are embedded in the header and tied to the grid positions.',
             'Data is written in C array order: In grid[x,y,z] the axis z is fastest',
@@ -250,9 +272,8 @@ class Grid(object):
 
            g = Grid(filename=<filename>)
 
-        Always omit the filename's suffix as it is set by the Grid class.
         """
-        self.export(filename,format="python")
+        self.export(filename,format="pickle")
 
     def centers(self):
         """Returns the coordinates of the centers of all grid cells as an iterator."""
@@ -263,7 +284,7 @@ class Grid(object):
             yield numpy.sum(self.delta * numpy.asarray(idx), axis=0) + self.origin
 
     def check_compatible(self, other):
-        """Check if *other* can be used in an algebraic operation.
+        """Check if *other* can be used in an arithmetic operation.
 
         1) *other* is a scalar
         2) *other* is a grid defined on the same edges
@@ -272,9 +293,12 @@ class Grid(object):
         """
         if not (numpy.isscalar(other) or 
                 numpy.all(numpy.concatenate(self.edges) == numpy.concatenate(other.edges))):
-            raise TypeError("The argument can not be algebraically combined with the grid. "
+            raise TypeError("The argument can not be arithmetically combined with the grid. "
                             "It must be a scalar or a grid with identical edges.")
         return True
+
+    # basic arithmetic (left and right associative so that Grid1 + Grid2 but also
+    # 3 * Grid and Grid/0.5 work)
 
     def __add__(self, other):
         """Return a new :class:`Grid` with the point-wise sum of the data.
@@ -284,8 +308,8 @@ class Grid(object):
         :Returns: :class:`Grid`
         """
         self.check_compatible(other)
-        return Grid(self.grid + other.grid, edges=self.edges)
-
+        return Grid(self.grid + _grid(other), edges=self.edges)
+    
     def __sub__(self, other):
         """Return a new :class:`Grid` with the point-wise difference of the data.
 
@@ -294,7 +318,7 @@ class Grid(object):
         :Returns: :class:`Grid`
         """
         self.check_compatible(other)
-        return Grid(self.grid - other.grid, edges=self.edges)
+        return Grid(self.grid - _grid(other), edges=self.edges)
 
     def __mul__(self, other):
         """Return a new :class:`Grid` with the point-wise product of the data.
@@ -304,7 +328,7 @@ class Grid(object):
         :Returns: :class:`Grid`
         """
         self.check_compatible(other)
-        return Grid(self.grid * other.grid, edges=self.edges)
+        return Grid(self.grid * _grid(other), edges=self.edges)
 
     def __div__(self, other):
         """Return a new :class:`Grid` with the point-wise quotient of the data.
@@ -314,7 +338,7 @@ class Grid(object):
         :Returns: :class:`Grid`
         """
         self.check_compatible(other)
-        return Grid(self.grid / other.grid, edges=self.edges)
+        return Grid(self.grid / _grid(other), edges=self.edges)
 
     def __pow__(self, other):
         """Return a new :class:`Grid` with the point-wise power of the data.
@@ -324,8 +348,57 @@ class Grid(object):
         :Returns: :class:`Grid`
         """
         self.check_compatible(other)
-        return Grid(numpy.power(self.grid, other.grid), edges=self.edges)
+        return Grid(numpy.power(self.grid, _grid(other)), edges=self.edges)
 
+    def __radd__(self, other):
+        """Return a new :class:`Grid` with the point-wise sum of the data.
+
+        g.__add__(h) <==> h + g
+
+        :Returns: :class:`Grid`
+        """
+        self.check_compatible(other)
+        return Grid(_grid(other) + self.grid, edges=self.edges)
+
+    def __rsub__(self, other):
+        """Return a new :class:`Grid` with the point-wise difference of the data.
+
+        g.__sub__(h) <==> h - g
+
+        :Returns: :class:`Grid`
+        """
+        self.check_compatible(other)
+        return Grid(_grid(other) - self.grid, edges=self.edges)
+
+    def __rmul__(self, other):
+        """Return a new :class:`Grid` with the point-wise product of the data.
+
+        g.__mul__(h) <==> h * g
+
+        :Returns: :class:`Grid`
+        """
+        self.check_compatible(other)
+        return Grid(_grid(other) * self.grid, edges=self.edges)
+
+    def __rdiv__(self, other):
+        """Return a new :class:`Grid` with the point-wise quotient of the data.
+
+        g.__div__(h) <==> h/g
+
+        :Returns: :class:`Grid`
+        """
+        self.check_compatible(other)
+        return Grid(_grid(other) / self.grid, edges=self.edges)
+
+    def __rpow__(self, other):
+        """Return a new :class:`Grid` with the point-wise power of the data.
+
+        g.__pow__(h) <==> numpy.power(h, g)
+
+        :Returns: :class:`Grid`
+        """
+        self.check_compatible(other)
+        return Grid(numpy.power(_grid(other), self.grid), edges=self.edges)
 
     def __repr__(self):
         return '<Grid with '+str(self.grid.shape)+' bins>'
