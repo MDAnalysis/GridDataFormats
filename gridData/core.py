@@ -3,8 +3,8 @@
 # Released under the GNU Lesser Public License, version 3 or later.
 
 """
-:mod:`gridDataFormats.core` --- Core functionality for storing n-D grids
-========================================================================
+:mod:`gridData.core` --- Core functionality for storing n-D grids
+=================================================================
  
 Classes and functions that are independent of the grid data
 format. In particular this module contains the :class:`Grid` class that acts as
@@ -26,7 +26,7 @@ import cPickle
 import numpy
 import OpenDX
 
-from gridDataFormats import gridDataWarning
+from gridData import gridDataWarning
 
 def _grid(x):
     """Access the underlying ndarray of a Grid object or return the object itself"""

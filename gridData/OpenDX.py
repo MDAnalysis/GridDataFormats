@@ -1,4 +1,4 @@
-# gridDataFormats --- python modules to read and write gridded data
+# gridData --- python modules to read and write gridded data
 # Copyright (c) 2009-2010 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser Public License, version 3 or later.
 
@@ -15,7 +15,7 @@ See http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF for the
 file format specifications.
 
 If you want to build a dx object from your data you can either use the
-convenient Grid class from the top level module (gridDataFormats.Grid)
+convenient Grid class from the top level module (gridData.Grid)
 or see the lower-level methods described below.
 
 
@@ -253,8 +253,8 @@ class field(DXclass):
         if components is None:
             components = dict(positions=None,connections=None,data=None)
         if comments is None:
-            comments = ['OpenDX written by gridDataFormats.OpenDX',
-                        '$Id$']
+            comments = ['OpenDX written by gridData.OpenDX',
+                        'from http://github.com/orbeckst/GridDataFormats']
         elif type(comments) is not list:
             comments = [str(comments)]
         self.id = classid       # can be an arbitrary string
