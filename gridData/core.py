@@ -401,4 +401,8 @@ class Grid(object):
         return Grid(numpy.power(_grid(other), self.grid), edges=self.edges)
 
     def __repr__(self):
-        return '<Grid with '+str(self.grid.shape)+' bins>'
+        try:
+            bins = self.grid.shape
+        except AttributeError:
+            bins = "no"
+        return '<Grid with '+str(bins)+' bins>'
