@@ -24,7 +24,7 @@ import os
 import warnings
 import cPickle
 import numpy
-import OpenDX
+import OpenDX, gOpenMol
 
 from gridData import gridDataWarning
 
@@ -82,11 +82,13 @@ class Grid(object):
             associated with the density; the class does not touch
             metadata[] but stores it with save()
         """
+        # file formats are guess from extension == lower case key
         self._exporters = {'DX': self._export_dx,
                            'PICKLE': self._export_python,
                            'PYTHON': self._export_python,  # compatibility
                            }
         self._loaders = {'DX': self._load_dx,
+                         'PLT': self._load_plt,
                          'PICKLE': self._load_python,
                          'PYTHON': self._load_python,      # compatibility
                          }
@@ -185,14 +187,21 @@ class Grid(object):
         self.__init__(grid=saved['grid'],edges=saved['edges'],metadata=saved['metadata'])
         del saved
 
-    def _load_dx(self,dxfile):
+    def _load_dx(self, filename):
         """Initializes Grid from a OpenDX file."""
         
         dx = OpenDX.field(0)
-        dx.read(dxfile)
+        dx.read(filename)
         grid,edges = dx.histogramdd()
         self.__init__(grid=grid,edges=edges,metadata=self.metadata)
     
+    def _load_plt(self, filename):
+        """Initialize Grid from gOpenMol plt file."""
+        g = gOpenMol.Plt()
+        g.read(filename)
+        grid,edges = g.histogramdd()
+        self.__init__(grid=grid,edges=edges,metadata=self.metadata)        
+
     def export(self,filename,format=None):
         """export density to file using the given format; use 'dx' for visualization.
 
