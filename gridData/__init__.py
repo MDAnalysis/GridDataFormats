@@ -49,7 +49,7 @@ The following formats are available:
    :mod:`OpenDX`
         IBM's Data Explorer, http://www.opendx.org/
    :mod:`gOpenMol`
-        http://www.csc.fi/gopenmol/  ## not implemented yet
+        http://www.csc.fi/gopenmol/
    pickle
         python pickle file (:mod:`pickle`)
 

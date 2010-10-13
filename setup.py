@@ -8,11 +8,11 @@ use_setuptools()
 from setuptools import setup, find_packages
 
 setup(name="GridDataFormats",
-      version="0.1.2",
+      version="0.2.0",
       description="A python library for reading and writing gridded data",
       long_description="""The gridDataFormats package provides classes to 
 unify reading and writing n-dimensional datasets. At the moment this simply
-means reading and writing OpenDX files.
+means reading and writing OpenDX files, or reading gOpenMol plt files.
 """,
       author="Oliver Beckstein",
       author_email="orbeckst@gmail.com",
