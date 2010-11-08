@@ -97,6 +97,9 @@ class Grid(object):
         if metadata is None: 
             metadata = {}
         self.metadata = metadata     # use this to record arbitrary data
+        self.__interpolated = None   # cache for interpolated grid
+        self.interpolation_spline_order = 3
+        self.interpolation_cval = None       # default to using min(grid)
 
         if type(grid) is str:
             # read from a file
@@ -124,12 +127,36 @@ class Grid(object):
             # note that origin is CENTER so edges must be shifted by -0.5*delta
             self.edges = [origin[dim] + (numpy.arange(m+1) - 0.5) * delta[dim,dim] 
                           for dim,m in enumerate(grid.shape)]
-            self.grid = grid
+            self.grid = numpy.asarray(grid)
             self._update()
         else:
             # empty, must manually populate with load()
             #print "Setting up empty grid object. Use Grid.load(filename)."
             pass
+
+    def resample(self, edges):
+        """Resample data to a new grid with edges *edges*.
+
+        resample(edges) --> Grid
+        """
+        midpoints = self._midpoints(edges)
+        coordinates = ndmeshgrid(*midpoints)
+        newgrid = self.interpolated(*coordinates)  # feed a meshgrid to generate all points
+        return Grid(newgrid, edges)
+
+    def resample_factor(self, factor):
+        """Resample to a new regular grid with factor*oldN cells along each dimension."""
+        from itertools import izip
+        # new number of edges N' = (N-1)*f + 1
+        newlengths = [(N-1)*float(factor) + 1 for N in self._len_edges()]
+        edges = [numpy.linspace(start,stop,num=N,endpoint=True) for (start,stop,N) in 
+                 izip(self._min_edges(), self._max_edges(), newlengths)]
+        return self.resample(edges)
+
+    def _edgify(self, midpoints):
+        """Return edges, given midpoints."""
+        m = numpy.asarray(midpoints)
+        return numpy.concatenate([[m[0] - 0.5*(m[1]-m[0])], m, [m[-1] + 0.5*(m[-1]-m[-2])]])
 
     def _update(self):
         """compute/update all derived data
@@ -138,12 +165,54 @@ class Grid(object):
 
         Can be called without harm and is idem-potent.
 
-        origin  is the center of the cell with index 0,0,0
+        Updates these attributes and methods:
+           :attr:`origin`
+              the center of the cell with index 0,0,0
+           :attr:`midpoints`
+              centre coordinate of each grid cell
+           :meth:`interpolated`
+              spline interpolation function that can generated a value for
+              coordinate
         """
         self.delta = numpy.diag(
             map(lambda e: (e[-1] - e[0])/(len(e)-1), self.edges) )
-        self.midpoints = map(lambda e: 0.5 * (e[:-1] + e[1:]), self.edges)
-        self.origin = map(lambda m: m[0], self.midpoints)
+        self.midpoints = self._midpoints(self.edges)
+        self.origin = numpy.array(map(lambda m: m[0], self.midpoints))
+        if not self.__interpolated is None:
+            # only update if we are using it
+            self.__interpolated = self._interpolationFunctionFactory()
+
+    @property
+    def interpolated(self):
+        """B-spline function over the data grid(x,y,z).
+
+           interpolated([x1,x2,...],[y1,y2,...],[z1,z2,...]) -> F[x1,y1,z1],F[x2,y2,z2],...
+
+        Example usage for resampling::
+           >>> XX,YY,ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
+           >>> FF = interpolated(XX,YY,ZZ)            
+        """
+        if self.__interpolated is None:
+            self.__interpolated = self._interpolationFunctionFactory()
+        return self.__interpolated        
+
+    def _map_edges(self, func, edges=None):
+        if edges is None:
+            edges = self.edges
+        return [func(e) for e in edges]
+
+    def _midpoints(self, edges=None):
+        return self._map_edges(lambda e: 0.5*(e[:-1] + e[1:]), edges=edges)
+
+    def _len_edges(self, edges=None):
+        return self._map_edges(len, edges=edges)    
+
+    def _min_edges(self, edges=None):
+        return self._map_edges(numpy.min, edges=edges)
+
+    def _max_edges(self, edges=None):
+        return self._map_edges(numpy.max, edges=edges)
+
 
     def _guess_format(self, filename, format=None, export=True):
         if export:
@@ -306,6 +375,58 @@ class Grid(object):
                             "It must be a scalar or a grid with identical edges.")
         return True
 
+    def _interpolationFunctionFactory(self,spline_order=None,cval=None):
+        """Returns a function F(x,y,z) that interpolates any values on the grid.
+
+        _interpolationFunctionFactory(self,spline_order=3,cval=None) --> F
+
+        *cval* is set to :meth:`Grid.grid.min`. *cval* cannot be chosen too
+        large or too small or NaN because otherwise the spline interpolation
+        breaks down near that region and produces wild oscillations.
+
+        .. Note:: Only correct for equally spaced values (i.e. regular edges with
+                  constant delta).
+        """
+        # see http://www.scipy.org/Cookbook/Interpolation
+        from scipy import ndimage
+
+        if spline_order is None:
+            spline_order = self.interpolation_spline_order
+        assert(spline_order in (1,3,5), "Only splines of order 1,3,5 supported by scipy.")
+        if cval is None:
+            cval = self.interpolation_cval
+
+        data = self.grid
+        if cval is None:
+            cval = data.min()
+        try:
+            # masked arrays
+            _data = data.filled(cval)   # fill with min; hopefully keeps spline happy
+        except AttributeError:
+            _data = data
+
+        coeffs = ndimage.spline_filter(_data,order=spline_order)
+        x0 = self.origin
+        dx = self.delta.diagonal()    # fixed dx required!!
+        def _transform(cnew, c0, dc):
+            return (numpy.atleast_1d(cnew) - c0)/dc
+        def interpolatedF(*coordinates):
+            """B-spline function over the data grid(x,y,z).
+
+            interpolatedF([x1,x2,...],[y1,y2,...],[z1,z2,...]) -> F[x1,y1,z1],F[x2,y2,z2],...
+
+            Example usage for resampling::
+              >>> XX,YY,ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
+              >>> FF = _interpolationFunction(XX,YY,ZZ)            
+            """
+            _coordinates = numpy.array(
+                [_transform(coordinates[i], x0[i], dx[i]) for i in xrange(len(coordinates))])
+            return ndimage.map_coordinates(coeffs, _coordinates, prefilter=False, 
+                                           mode='nearest',cval=cval)
+        # mode='wrap' would be ideal but is broken: http://projects.scipy.org/scipy/ticket/796
+        return interpolatedF            
+                
+
     # basic arithmetic (left and right associative so that Grid1 + Grid2 but also
     # 3 * Grid and Grid/0.5 work)
 
@@ -415,3 +536,37 @@ class Grid(object):
         except AttributeError:
             bins = "no"
         return '<Grid with '+str(bins)+' bins>'
+
+def ndmeshgrid(*arrs):
+    """Return a mesh grid for N dimensions.
+
+    The input are N arrays, each of which contains the values along one axis of
+    the coordinate system. The arrays do not have to have the same number of
+    entries. The function returns arrays that can be fed into numpy functions
+    so that they produce values for *all* points spanned by the axes *arrs*.
+
+    Original from 
+    http://stackoverflow.com/questions/1827489/numpy-meshgrid-in-3d and fixed.
+
+    .. SeeAlso: :func:`numpy.meshgrid` for the 2D case.
+    """
+    #arrs = tuple(reversed(arrs)) <-- wrong on stackoverflow.com
+    arrs = tuple(arrs)
+    lens = map(len, arrs)
+    dim = len(arrs)
+
+    sz = 1
+    for s in lens:
+        sz*=s
+
+    ans = []    
+    for i, arr in enumerate(arrs):
+        slc = [1]*dim
+        slc[i] = lens[i]
+        arr2 = numpy.asarray(arr).reshape(slc)
+        for j, sz in enumerate(lens):
+            if j!=i:
+                arr2 = arr2.repeat(sz, axis=j) 
+        ans.append(arr2)
+
+    return tuple(ans)
