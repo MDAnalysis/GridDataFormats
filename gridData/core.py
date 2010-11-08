@@ -372,7 +372,9 @@ class Grid(object):
         if not (numpy.isscalar(other) or 
                 numpy.all(numpy.concatenate(self.edges) == numpy.concatenate(other.edges))):
             raise TypeError("The argument can not be arithmetically combined with the grid. "
-                            "It must be a scalar or a grid with identical edges.")
+                            "It must be a scalar or a grid with identical edges. "
+                            "Use Grid.resample(other.edges) to make a new grid that is "
+                            "compatible with other.")
         return True
 
     def _interpolationFunctionFactory(self,spline_order=None,cval=None):
