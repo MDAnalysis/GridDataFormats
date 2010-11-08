@@ -147,6 +147,8 @@ For an example of what a formatted *.plt file can look like please look
 above. If you are a programmer please look at the included utility programs for
 the code for doing the reading and writing of *.plt files
 """
+from __future__ import with_statement
+
 import warnings
 import struct
 import numpy

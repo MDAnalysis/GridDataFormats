@@ -66,6 +66,7 @@ histograms in a portable and universal manner:
 >>> histogram,edges = dx.histogramdd()
 
 """
+from __future__ import with_statement
 
 import numpy
 import re
@@ -273,25 +274,19 @@ class field(DXclass):
 
         The format should be compatible with VMD's dx reader plugin.
         """
-
-        file = open(filename,'w')
-        
         # comments (VMD chokes on lines of len > 80, so truncate)
         maxcol = 80
-        for line in self.comments:
-            comment = '# '+str(line)
-            file.write(comment[:maxcol]+'\n')
-
-        # each individual object
-        for component,object in self.sorted_components():
-            object.write(file)
-
-        # the field object itself
-        DXclass.write(self,file,quote=True)
-        for component,object in self.sorted_components():
-            file.write('component "%s" value %s\n' %
-                       (component,str(object.id)))
-        file.close()
+        with open(filename,'w') as outfile:
+            for line in self.comments:
+                comment = '# '+str(line)
+                outfile.write(comment[:maxcol]+'\n')
+            # each individual object
+            for component,object in self.sorted_components():
+                object.write(outfile)
+            # the field object itself
+            DXclass.write(self,outfile,quote=True)
+            for component,object in self.sorted_components():
+                outfile.write('component "%s" value %s\n' % (component,str(object.id)))
 
     def read(self,file):
         """Read DX field from file.
@@ -481,9 +476,8 @@ class DXParser(object):
         self.currentobject = None           # containers for data
         self.objects = []                   # |
         self.tokens = []                    # token buffer
-        self.dxfile = open(self.filename,'r')
-        self.use_parser('general')          # parse the whole file and populate self.objects
-        self.dxfile.close()
+        with open(self.filename,'r') as self.dxfile:
+            self.use_parser('general')      # parse the whole file and populate self.objects
 
         # assemble field from objects
         for o in self.objects:
