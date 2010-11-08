@@ -107,11 +107,14 @@ Downsample to half of the bins in each dimension::
 
  Ahalf = A.resample_factor(0.5)
 
-Resample to the same grid as another density, B::
+Resample to the grid of another density, B::
 
  B = Grid('B.dx')
  A_on_B = A.resample(B.edges)
 
+or even simpler ::
+
+ A_on_B = A.resample(B)
 
 .. Note:: The cubic spline generates region with values that did not
    occur in the original data; in particular if the original data's

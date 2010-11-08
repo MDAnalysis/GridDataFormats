@@ -137,8 +137,16 @@ class Grid(object):
     def resample(self, edges):
         """Resample data to a new grid with edges *edges*.
 
-        resample(edges) --> Grid
+          resample(edges) --> Grid
+
+        or 
+
+          resample(otherGrid) --> Grid
         """
+        try:
+            edges = edges.edges  # can also supply another Grid
+        except AttributeError:
+            pass
         midpoints = self._midpoints(edges)
         coordinates = ndmeshgrid(*midpoints)
         newgrid = self.interpolated(*coordinates)  # feed a meshgrid to generate all points
@@ -394,7 +402,7 @@ class Grid(object):
 
         if spline_order is None:
             spline_order = self.interpolation_spline_order
-        assert(spline_order in (1,3,5), "Only splines of order 1,3,5 supported by scipy.")
+        assert spline_order in (1,3,5), "Only splines of order 1,3,5 supported by scipy."
         if cval is None:
             cval = self.interpolation_cval
 
