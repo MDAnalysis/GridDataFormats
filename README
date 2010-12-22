@@ -120,7 +120,6 @@ or even simpler ::
    occur in the original data; in particular if the original data's
    lowest value was 0 then the spline interpolation will probably
    produce some values <0 near regions where the density changed
-   abruptly. It is possible to switch to linear interpolation by
-   setting the attribute :attr:`gridData.Grid.interpolation_order` = 1.
+   abruptly.
 
 

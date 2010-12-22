@@ -49,7 +49,7 @@ class Grid(object):
     """
     default_format = 'DX'
 
-    def __init__(self,grid=None,edges=None,origin=None,delta=None, metadata=None):
+    def __init__(self,grid=None,edges=None,origin=None,delta=None, metadata=None, **kwargs):
         """
         Create a Grid object from data.
 
@@ -81,6 +81,8 @@ class Grid(object):
             a user defined dictionary of arbitrary values
             associated with the density; the class does not touch
             metadata[] but stores it with save()
+          interpolation_spline_order
+            order of interpolation function for resampling; cubic splines = 3 [3]
         """
         # file formats are guess from extension == lower case key
         self._exporters = {'DX': self._export_dx,
@@ -93,12 +95,11 @@ class Grid(object):
                          'PYTHON': self._load_python,      # compatibility
                          }
 
-
         if metadata is None: 
             metadata = {}
         self.metadata = metadata     # use this to record arbitrary data
         self.__interpolated = None   # cache for interpolated grid
-        self.interpolation_spline_order = 3
+        self.__interpolation_spline_order = kwargs.pop('interpolation_spline_order', 3)
         self.interpolation_cval = None       # default to using min(grid)
 
         if type(grid) is str:
@@ -134,6 +135,23 @@ class Grid(object):
             #print "Setting up empty grid object. Use Grid.load(filename)."
             pass
 
+    def interpolation_spline_order():
+        """Order of the B-spline interpolation of the data.
+
+        3 = cubic; 4 & 5 are also supported
+
+        Only choose values that are acceptable to :func:`scipy.ndimage.spline_filter`!
+        """
+        def fget(self):
+            return self.__interpolation_spline_order
+        def fset(self, x):
+            # As we cache the interpolation function, we need to rebuild the cache
+            # whenever the interpolation order changes: this is handled by _update()
+            self.__interpolation_spline_order = x
+            self._update()
+        return locals()
+    interpolation_spline_order = property(**interpolation_spline_order())
+
     def resample(self, edges):
         """Resample data to a new grid with edges *edges*.
 
@@ -142,6 +160,9 @@ class Grid(object):
         or 
 
           resample(otherGrid) --> Grid
+
+        The order of the interpolation is set by
+        :attr:`Grid.interpolation_spline_order`.
         """
         try:
             edges = edges.edges  # can also supply another Grid
@@ -195,6 +216,15 @@ class Grid(object):
         """B-spline function over the data grid(x,y,z).
 
            interpolated([x1,x2,...],[y1,y2,...],[z1,z2,...]) -> F[x1,y1,z1],F[x2,y2,z2],...
+
+        The interpolation order is set in :attr:`Grid.interpolation_spline_order`.
+
+        The interpolated function is computed once and is cached for better
+        performance. Whenever :attr:`~Grid.interpolation_spline_order` is
+        modified, :meth:`Grid.interpolated` is recomputed.
+
+        The value for unknown data is set in :attr:`Grid.interpolation_cval`
+        (TODO: also recompute when interpolation_cval value is changed.)
 
         Example usage for resampling::
            >>> XX,YY,ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
@@ -396,13 +426,17 @@ class Grid(object):
 
         .. Note:: Only correct for equally spaced values (i.e. regular edges with
                   constant delta).
+        .. SeeAlso:: http://www.scipy.org/Cookbook/Interpolation
         """
-        # see http://www.scipy.org/Cookbook/Interpolation
+        # for scipy >=0.9: should use scipy.interpolate.griddata
+        # http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html#scipy.interpolate.griddata
+        # (does it work for nD?)
+
         from scipy import ndimage
 
         if spline_order is None:
+            # must be compatible with whatever :func:`scipy.ndimage.spline_filter` takes.
             spline_order = self.interpolation_spline_order
-        assert spline_order in (1,3,5), "Only splines of order 1,3,5 supported by scipy."
         if cval is None:
             cval = self.interpolation_cval
 
