@@ -63,7 +63,7 @@ From the output of :func:`numpy.histogramdd`::
 
   import numpy
   r = numpy.random.randn(100,3)
-  H, edges = np.histogramdd(r, bins = (5, 8, 4))
+  H, edges = numpy.histogramdd(r, bins = (5, 8, 4))
   g = Grid(H, edges=edges)
 
 For other ways to load data, see the docs for :class:`gridData.Grid`.
@@ -123,3 +123,84 @@ or even simpler ::
    abruptly.
 
 
+Classes
+=======
+
+.. class:: Grid
+
+   Class to manage a multidimensional grid object.
+
+   A grid is a n-dimensional array and data indicating the dimensions
+   of the edges, i.e. the positions of all grid cells in cartesian
+   coordinates. 
+
+   :class:`Grid` objects can be multiplied by scalars in order to
+   scale the values (but not the dimensions) and like :class:`Grid`
+   objects (i.e. corresponding grid points are located at the same
+   coordinates) can be used in basic arithmetic operations (addition,
+   subtraction, multiplication, division, exponentiation). Basic
+   arithmetic is left and right associative, i.e. ``Grid1 + Grid2 ==
+   Grid2 + Grid1`` and also ``3 * Grid`` and ``Grid/0.5`` work.
+
+   .. method:: load(filename)
+
+      Load saved (pickled or dx) grid and edges from *filename*.
+
+   .. method:: export(filename[, format])
+
+      Export to file using the given *format*. 
+
+      The format can also be deduced from the suffix of the filename
+      though the *format* keyword takes precedence.
+
+      The default format 'dx'.
+        
+      Implemented formats:
+
+       ========== =================================================
+       suffix     description
+       ========== =================================================
+        dx        OpenDX
+
+        pickle    Python pickle (use :meth:`load` to restore); 
+                  :meth:`save` is a short cut for 
+                  ``export(format='python')``
+       ========== =================================================
+
+   .. method:: save(filename)
+
+      Save a grid object to *filename*.pickle.
+
+
+   .. method:: resample(edges)
+
+      Resample data to a new grid with edges *edges*.  The order of
+      the interpolation is set by
+      :attr:`interpolation_spline_order`. Returns a new :class:`Grid`.
+
+   .. attribute:: interpolation_spline_order
+
+      Order of the B-spline interpolation of the data. 3 = cubic; 4 &
+      5 are also supported. Only choose values that are acceptable to
+      :func:`scipy.ndimage.spline_filter`!
+
+   .. method:: resample_factor(factor)
+
+      Resample to a new regular grid with *factor* * oldN cells along each
+      dimension. Returns a new :class:`Grid`.
+
+   .. method:: centers()
+
+      Returns the coordinates of the centers of all grid cells as an
+      iterator.
+
+   .. method:: check_compatible(other)
+
+        Check if *other* can be used in an arithmetic operation.
+
+        1) *other* is a scalar
+        2) *other* is a grid defined on the same edges
+        
+        Raises :exc:`TypeError` if not compatible.
+
+   
