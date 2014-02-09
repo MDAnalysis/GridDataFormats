@@ -13,7 +13,7 @@ finally:
     summary.close()
 
 setup(name="GridDataFormats",
-      version="0.2.2",
+      version="0.2.3",
       description="Reading and writing of data on regular grids in Python",
       long_description=long_description,
       author="Oliver Beckstein",
@@ -33,7 +33,12 @@ setup(name="GridDataFormats",
       packages=find_packages(exclude=[]),
       package_data = {},
       install_requires=['numpy>=1.0.3',
-                        'scipy',          # for remapping/interpolation
                         ],
+      # extras can be difficult to install through setuptools and/or
+      # you might prefer to use the version available through your
+      # packaging system
+      extras_require={'remapping':  ['scipy',          # for remapping/interpolation
+                                     ],
+                      },
       zip_safe=True,
 )

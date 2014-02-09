@@ -9,7 +9,10 @@ In order to install into the default system directories::
 
   python setup.py install
 
-If you don't have NumPy_ installed it will download and install it automatically.
+If you don't have NumPy_ installed it will download and install it
+automatically.
+
+For some functionality you will also need to install scipy_.
 
 
 For other ways of installing have a look at the documentation for
@@ -19,3 +22,4 @@ For other ways of installing have a look at the documentation for
    http://peak.telecommunity.com/DevCenter/EasyInstall#custom-installation-locations
 
 .. _NumPy: http://numpy.scipy.org/
+.. _scipy: http://www.scipy.org/scipylib/index.html
