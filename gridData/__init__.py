@@ -197,7 +197,7 @@ __all__ =  ['Grid', 'OpenDX','gOpenMol']
 
 import warnings
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 
 class gridDataWarning(Warning):
     """Warns of a problem specific to the gridData module."""
