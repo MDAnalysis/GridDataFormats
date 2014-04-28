@@ -1,5 +1,5 @@
 # setuptools installation of Hop
-# Copyright (c) 2007-2010 Oliver Beckstein <orbeckst@gmail.com>
+# Copyright (c) 2007-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Public License 3 (or higher, your choice)
 # See the file COPYING for details.
 from ez_setup import use_setuptools
@@ -18,14 +18,14 @@ setup(name="GridDataFormats",
       long_description=long_description,
       author="Oliver Beckstein",
       author_email="orbeckst@gmail.com",
-      license="GPLv3",
+      license="LGPLv3",
       url="https://github.com/orbeckst/GridDataFormats",
       download_url = "https://github.com/orbeckst/GridDataFormats/downloads",
       keywords="science array density",
       classifiers = ['Development Status :: 4 - Beta',
                      'Environment :: Console',
                      'Intended Audience :: Science/Research',
-                     'License :: OSI Approved :: GNU General Public License (GPL)',
+                     'License :: OSI Approved :: GNU Lesser General Public License (GPL)',
                      'Programming Language :: Python',
                      'Topic :: Scientific/Engineering',
                      'Topic :: Software Development :: Libraries :: Python Modules',

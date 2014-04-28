@@ -1,6 +1,8 @@
-# gridData --- python modules to read and write gridded data
-# Copyright (c) 2009 Oliver Beckstein <orbeckst@gmail.com>
-# Copyright CSC, 2005
+# gridDataFormats --- python modules to read and write gridded data
+# Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
+# Released under the GNU Lesser General Public License, version 3 or later.
+#
+# Part of the documentation and format specification: Copyright CSC, 2005
 
 """
 :mod:`gOpenMol` --- the gOpenMol plt format
@@ -19,7 +21,7 @@ that is more standard, such as OpenDX (see :mod:`OpenDX`).
 .. autoclass:: Plt
 
 
-Background 
+Background
 ----------
 
 gOpenMol http://www.csc.fi/english/pages/g0penMol plt format.
@@ -47,24 +49,6 @@ or big endian machines).
 
 Format of the binary *.plt file
 ...............................
-
-The *.plt grid data files are the main enginees for ploting isocontour
-surfaces. The *.plt files can either be generated directly by various programs
-inside the gOpenMol package or be imported from other programs.
-
-Programs inside gOpenMol generating *.plt grid data files:
-
-    * The probsurf program generates the grid data for plotting
-      Connolly type of surfaces.
-    
-    * The vss program generates the grid data for plotting
-      electrostatic potentials.
-
-To assist in moving the binary *.plt files between different hardware platforms
-the pltfile program is included. Using the program it is possible to format a
-binary grid file and move it to an other platform and unformat the file
-again. The program can of course also be used interface the grid data from
-other programs with gOpenMol.
 
 The *.plt file binary and formatted file formats are very simple but please
 observe that unformatted files written with a FORTRAN program are not pure
@@ -106,25 +90,25 @@ Record number and meaning::
    #11: Float, xmax value
    #12 ... Float, grid data values running (x is inner loop, then y and last z):
 
-1.	Loop in the z direction
-2.	Loop in the y direction
-3.	Loop in the x direction
+1.      Loop in the z direction
+2.      Loop in the y direction
+3.      Loop in the x direction
 
-Example [OB]?::
+Example::
 
    nx=2  ny=1  nz=3
 
    0,0,0   1,0,0     y=0, z=0
    0,0,1   1,0,0     y=0, z=1
-   0,0,2   1,0,2     y=0, z=2   
+   0,0,2   1,0,2     y=0, z=2
 
 The formatted (the first few lines) file can look like::
 
    3 2
    65 65 65
    -3.300000e+001 3.200000e+001 -3.300000e+001 3.200000e+001 -3.300000e+001 3.200000e+001
-   -1.625609e+001 -1.644741e+001 -1.663923e+001 -1.683115e+001 -1.702274e+001 -1.721340e+001 
-   -1.740280e+001 -1.759018e+001 -1.777478e+001 -1.795639e+001 -1.813387e+001 -1.830635e+001 
+   -1.625609e+001 -1.644741e+001 -1.663923e+001 -1.683115e+001 -1.702274e+001 -1.721340e+001
+   -1.740280e+001 -1.759018e+001 -1.777478e+001 -1.795639e+001 -1.813387e+001 -1.830635e+001
    ...
 
 Formatted *.plt (grid) file format
@@ -139,14 +123,8 @@ Line numbers and variables on the line::
 1. Loop in the z direction
 2. Loop in the y direction
 3. Loop in the x direction
-
-A file in this format can then be converted into binary with the pltfile
-program.
-
-For an example of what a formatted *.plt file can look like please look
-above. If you are a programmer please look at the included utility programs for
-the code for doing the reading and writing of *.plt files
 """
+
 from __future__ import with_statement
 
 import warnings
@@ -179,7 +157,7 @@ class Plt(object):
     The data is held in :attr:`GOpenMol.array` and all header information is in
     the dict :attr:`GOpenMol.header`.
 
-    :attr:`Plt.shape`     
+    :attr:`Plt.shape`
          D-tuplet describing size in each dimension
     :attr:`Plt.origin`
          coordinates of the centre of the grid cell with index 0,0,...,0
@@ -258,7 +236,7 @@ class Plt(object):
         qmin = numpy.array([h['xmin'],h['ymin'],h['zmin']])
         qmax = numpy.array([h['xmax'],h['ymax'],h['zmax']])
         delta = numpy.abs(qmax - qmin) / self.shape
-        return numpy.diag(delta)    
+        return numpy.diag(delta)
 
     def _read_header(self, pltfile):
         """Read header bytes, try all possibilities for byte order/size/alignment"""
@@ -286,4 +264,4 @@ class Plt(object):
         """Return array data as (edges,grid), i.e. a numpy nD histogram."""
         return (self.array, self.edges)
 
-        
+

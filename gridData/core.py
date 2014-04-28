@@ -1,11 +1,11 @@
 # gridDataFormats --- python modules to read and write gridded data
-# Copyright (c) 2009-2010 Oliver Beckstein <orbeckst@gmail.com>
-# Released under the GNU Lesser Public License, version 3 or later.
+# Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
+# Released under the GNU Lesser General Public License, version 3 or later.
 
 """
 :mod:`gridData.core` --- Core functionality for storing n-D grids
 =================================================================
- 
+
 Classes and functions that are independent of the grid data
 format. In particular this module contains the :class:`Grid` class that acts as
 a universal constructor for specific formats::
@@ -42,7 +42,7 @@ class Grid(object):
     rest should work for an array of any dimension.
 
     The grid (Grid.grid) can be manipulated as a standard numpy
-    array. 
+    array.
 
     The attribute Grid.metadata holds a user-defined dictionary that
     can be used to annotate the data. It is saved with save().
@@ -65,9 +65,9 @@ class Grid(object):
         or
           g = Grid()
           g.load(filename)
- 
+
         :Arguments:
-          grid       
+          grid
             histogram or density, defined on numpy nD array
           edges
             list of arrays, the lower and upper bin edges along the axes
@@ -75,7 +75,7 @@ class Grid(object):
           origin
             cartesian coordinates of the center of grid[0,0,...,0]
           delta
-            Either n x n array containing the cell lengths in each dimension, 
+            Either n x n array containing the cell lengths in each dimension,
             or n x 1 array for rectangular arrays.
           metadata
             a user defined dictionary of arbitrary values
@@ -95,7 +95,7 @@ class Grid(object):
                          'PYTHON': self._load_python,      # compatibility
                          }
 
-        if metadata is None: 
+        if metadata is None:
             metadata = {}
         self.metadata = metadata     # use this to record arbitrary data
         self.__interpolated = None   # cache for interpolated grid
@@ -126,7 +126,7 @@ class Grid(object):
             else:
                 raise ValueError('delta = %r has the wrong shape' % delta)
             # note that origin is CENTER so edges must be shifted by -0.5*delta
-            self.edges = [origin[dim] + (numpy.arange(m+1) - 0.5) * delta[dim,dim] 
+            self.edges = [origin[dim] + (numpy.arange(m+1) - 0.5) * delta[dim,dim]
                           for dim,m in enumerate(grid.shape)]
             self.grid = numpy.asarray(grid)
             self._update()
@@ -157,7 +157,7 @@ class Grid(object):
 
           resample(edges) --> Grid
 
-        or 
+        or
 
           resample(otherGrid) --> Grid
 
@@ -178,7 +178,7 @@ class Grid(object):
         from itertools import izip
         # new number of edges N' = (N-1)*f + 1
         newlengths = [(N-1)*float(factor) + 1 for N in self._len_edges()]
-        edges = [numpy.linspace(start,stop,num=N,endpoint=True) for (start,stop,N) in 
+        edges = [numpy.linspace(start,stop,num=N,endpoint=True) for (start,stop,N) in
                  izip(self._min_edges(), self._max_edges(), newlengths)]
         return self.resample(edges)
 
@@ -228,11 +228,11 @@ class Grid(object):
 
         Example usage for resampling::
            >>> XX,YY,ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
-           >>> FF = interpolated(XX,YY,ZZ)            
+           >>> FF = interpolated(XX,YY,ZZ)
         """
         if self.__interpolated is None:
             self.__interpolated = self._interpolationFunctionFactory()
-        return self.__interpolated        
+        return self.__interpolated
 
     def _map_edges(self, func, edges=None):
         if edges is None:
@@ -243,7 +243,7 @@ class Grid(object):
         return self._map_edges(lambda e: 0.5*(e[:-1] + e[1:]), edges=edges)
 
     def _len_edges(self, edges=None):
-        return self._map_edges(len, edges=edges)    
+        return self._map_edges(len, edges=edges)
 
     def _min_edges(self, edges=None):
         return self._map_edges(numpy.min, edges=edges)
@@ -296,18 +296,18 @@ class Grid(object):
 
     def _load_dx(self, filename):
         """Initializes Grid from a OpenDX file."""
-        
+
         dx = OpenDX.field(0)
         dx.read(filename)
         grid,edges = dx.histogramdd()
         self.__init__(grid=grid,edges=edges,metadata=self.metadata)
-    
+
     def _load_plt(self, filename):
         """Initialize Grid from gOpenMol plt file."""
         g = gOpenMol.Plt()
         g.read(filename)
         grid,edges = g.histogramdd()
-        self.__init__(grid=grid,edges=edges,metadata=self.metadata)        
+        self.__init__(grid=grid,edges=edges,metadata=self.metadata)
 
     def export(self,filename,format=None):
         """export density to file using the given format; use 'dx' for visualization.
@@ -318,7 +318,7 @@ class Grid(object):
         though the *format* keyword takes precedence.
 
         The default format for export() is 'dx'.
-        
+
         Only implemented formats:
 
         dx        OpenDX
@@ -336,7 +336,7 @@ class Grid(object):
         """
         root, ext = os.path.splitext(filename)
         filename = root + ".pickle"
-        
+
         data = dict(grid=self.grid,edges=self.edges,metadata=self.metadata)
         f = open(filename,'wb')
         try:
@@ -404,10 +404,10 @@ class Grid(object):
 
         1) *other* is a scalar
         2) *other* is a grid defined on the same edges
-        
+
         :Raises: :exc:`TypeError` if not compatible.
         """
-        if not (numpy.isscalar(other) or 
+        if not (numpy.isscalar(other) or
                 numpy.all(numpy.concatenate(self.edges) == numpy.concatenate(other.edges))):
             raise TypeError("The argument can not be arithmetically combined with the grid. "
                             "It must be a scalar or a grid with identical edges. "
@@ -461,15 +461,15 @@ class Grid(object):
 
             Example usage for resampling::
               >>> XX,YY,ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
-              >>> FF = _interpolationFunction(XX,YY,ZZ)            
+              >>> FF = _interpolationFunction(XX,YY,ZZ)
             """
             _coordinates = numpy.array(
                 [_transform(coordinates[i], x0[i], dx[i]) for i in xrange(len(coordinates))])
-            return ndimage.map_coordinates(coeffs, _coordinates, prefilter=False, 
+            return ndimage.map_coordinates(coeffs, _coordinates, prefilter=False,
                                            mode='nearest',cval=cval)
         # mode='wrap' would be ideal but is broken: http://projects.scipy.org/scipy/ticket/796
-        return interpolatedF            
-                
+        return interpolatedF
+
 
     # basic arithmetic (left and right associative so that Grid1 + Grid2 but also
     # 3 * Grid and Grid/0.5 work)
@@ -483,7 +483,7 @@ class Grid(object):
         """
         self.check_compatible(other)
         return Grid(self.grid + _grid(other), edges=self.edges)
-    
+
     def __sub__(self, other):
         """Return a new :class:`Grid` with the point-wise difference of the data.
 
@@ -589,7 +589,7 @@ def ndmeshgrid(*arrs):
     entries. The function returns arrays that can be fed into numpy functions
     so that they produce values for *all* points spanned by the axes *arrs*.
 
-    Original from 
+    Original from
     http://stackoverflow.com/questions/1827489/numpy-meshgrid-in-3d and fixed.
 
     .. SeeAlso: :func:`numpy.meshgrid` for the 2D case.
@@ -603,14 +603,14 @@ def ndmeshgrid(*arrs):
     for s in lens:
         sz*=s
 
-    ans = []    
+    ans = []
     for i, arr in enumerate(arrs):
         slc = [1]*dim
         slc[i] = lens[i]
         arr2 = numpy.asarray(arr).reshape(slc)
         for j, sz in enumerate(lens):
             if j!=i:
-                arr2 = arr2.repeat(sz, axis=j) 
+                arr2 = arr2.repeat(sz, axis=j)
         ans.append(arr2)
 
     return tuple(ans)

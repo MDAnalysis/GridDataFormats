@@ -1,6 +1,6 @@
 # gridData --- python modules to read and write gridded data
-# Copyright (c) 2009-2010 Oliver Beckstein <orbeckst@gmail.com>
-# Released under the GNU Lesser Public License, version 3 or later.
+# Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
+# Released under the GNU Lesser General Public License, version 3 or later.
 
 """
 :mod:`OpenDX` --- routines to read and write simple OpenDX files
@@ -31,11 +31,11 @@ The following data are required:
 
    grid              numpy nD array (typically a nD histogram)
    grid.shape        the shape of the array
-   origin            the cartesian coordinates of the center of the 
+   origin            the cartesian coordinates of the center of the
                      (0,0,..,0) grid cell
-   delta             n x n array with the length of a grid cell along 
-                     each axis; for regular rectangular grids the off-diagonal 
-                     elements are 0 and the diagonal ones correspond to the 
+   delta             n x n array with the length of a grid cell along
+                     each axis; for regular rectangular grids the off-diagonal
+                     elements are 0 and the diagonal ones correspond to the
                      'bin width' of the histogram, eg delta[0,0] = 1.0 (Angstrom)
 
 >>> dx = OpenDX.field('density')
@@ -46,8 +46,8 @@ The following data are required:
 or
 
 >>> dx = OpenDX.field('density',components=dict(
-            positions=OpenDX.gridpositions(1,grid.shape,d.origin,d.delta), 
-            connections=OpenDX.gridconnections(2,grid.shape), 
+            positions=OpenDX.gridpositions(1,grid.shape,d.origin,d.delta),
+            connections=OpenDX.gridconnections(2,grid.shape),
             data=OpenDX.array(3,grid)) )
 
 
@@ -79,7 +79,7 @@ except NameError:
         Naive pre python 2.4 compatibility fudge.
 
         With key, cmp must make use of triplets (key,int,value).
-        It's a fudge after all. 
+        It's a fudge after all.
         """
         L = list(iterable)
         args = ()
@@ -91,11 +91,11 @@ except NameError:
             # decorate-sort-undecorate
             deco = [(key(x),i,x) for i,x in enumerate(L)]
             deco.sort(*args)
-            L[:] = [y[2] for y in deco] 
+            L[:] = [y[2] for y in deco]
         if reverse:
             L.reverse()
         return L
-    
+
 class DXclass(object):
     """'class' object as defined by OpenDX"""
     def __init__(self,classid):
@@ -113,7 +113,7 @@ class DXclass(object):
         # spaces. (Chimera 1.4.1, PyMOL 1.3)
         file.write('object '+classid+' class '+str(self.name)+' '+\
                    optstring+'\n')
-        
+
     def read(self,file):
         raise NotImplementedError('Reading is currently not supported.')
 
@@ -124,7 +124,7 @@ class DXclass(object):
 
     def __repr__(self):
         return '<OpenDX.'+str(self.name)+' object, id='+str(self.id)+'>'
-    
+
 
 class gridpositions(DXclass):
     """OpenDX gridpositions class.
@@ -189,7 +189,7 @@ class array(DXclass):
                       self.array.size)
         # grid data, serialized as a C array (z fastest varying)
         # (flat iterator is equivalent to: for x: for y: for z: grid[x,y,z])
-        # VMD's DX reader requires exactly 3 values per line 
+        # VMD's DX reader requires exactly 3 values per line
         values_per_line = 3
         anext = self.array.flat.next
         while 1:
@@ -228,7 +228,7 @@ class field(DXclass):
                         individual ids!) which correspond to
                           positions
                           connections
-                          data        
+                          data
         comments        list of strings; each string becomes a comment line
                         prefixed with '#'. Avoid newlines.
 
@@ -237,7 +237,7 @@ class field(DXclass):
         write()         write a dx file
         add()           add a component to the field
         add_comments()  add comments
-        
+
         A field must have at least the components 'positions',
         'connections', and 'data'. Those components are associated
         with objects belonging to the field. When writing a dx file
@@ -405,7 +405,7 @@ class DXParser(object):
     """Brain-dead baroque implementation to read a simple (VMD) dx file.
 
     Requires a OpenDX.field instance.
-    
+
     1) scan for 'object' lines:
        'object' id 'class' class  [data]
        [data ...]
@@ -452,12 +452,12 @@ class DXParser(object):
                         'array':self.__array, 'field':self.__field,
                         }
 
-        
+
     def parse(self,DXfield):
         """Parse the dx file and construct a DX field object with component classes.
 
         DXfield_object = OpenDX.field(*args)
-        parse(DXfield_object)        
+        parse(DXfield_object)
 
         A tokenizer turns the dx file into a stream of tokens. A
         hierarchy of parsers examines the stream. The level-0 parser
@@ -471,7 +471,7 @@ class DXParser(object):
           not implemented yet.
         * Unknown tokens raise an exception.
         """
-    
+
         self.DXfield = DXfield              # OpenDX.field (used by comment parser)
         self.currentobject = None           # containers for data
         self.objects = []                   # |
@@ -495,12 +495,12 @@ class DXParser(object):
 
         # free space
         del self.currentobject, self.objects
-        
+
 
 
     def __general(self):
         """Level-0 parser and main loop.
-        
+
         Look for a token that matches a level-1 parser and hand over control."""
         while 1:                            # main loop
             try:
@@ -510,7 +510,7 @@ class DXParser(object):
                 # (kludge in here as the last level-2 parser usually does not return
                 # via the object parser)
                 if self.currentobject and self.currentobject not in self.objects:
-                    self.objects.append(self.currentobject)                        
+                    self.objects.append(self.currentobject)
                 return                      # stop parsing and finish
             # decision branches for all level-1 parsers:
             # (the only way to get out of the lower level parsers!)
@@ -525,7 +525,7 @@ class DXParser(object):
                 # later we never formally switch back to __general
                 # (would create inifinite loop)
                 raise DXParseError('Unknown level-1 construct at '+str(tok))
-                
+
             self.apply_parser()     # hand over to new parser
                                     # (possibly been set further down the hierarchy!)
 
@@ -559,7 +559,7 @@ class DXParser(object):
         # setup new DXInitObject
         classtype = self.__consume().text
         self.currentobject = DXInitObject(classtype=classtype,classid=classid)
-        
+
         self.use_parser(classtype)
 
     # Level-2 parser (object parsers)
@@ -572,12 +572,12 @@ class DXParser(object):
         delta 1 0 0
         delta 0 1 0
         delta 0 0 1
-        """        
+        """
         try:
             tok = self.__consume()
         except DXParserNoTokens:
             return
-            
+
         if tok.equals('counts'):
             shape = []
             try:
@@ -592,7 +592,7 @@ class DXParser(object):
         elif tok.equals('origin'):
             origin = []
             try:
-                while (self.__peek().iscode('INTEGER') or 
+                while (self.__peek().iscode('INTEGER') or
                        self.__peek().iscode('REAL')):
                     tok = self.__consume()
                     origin.append(tok.value())
@@ -606,7 +606,7 @@ class DXParser(object):
             try:
                 while (self.__peek().iscode('INTEGER') or
                        self.__peek().iscode('REAL')):
-                    tok = self.__consume()                        
+                    tok = self.__consume()
                     d.append(tok.value())
             except DXParserNoTokens:
                 pass
@@ -618,7 +618,7 @@ class DXParser(object):
                 self.currentobject['delta'] = [d]
         else:
             raise DXParseError('gridpositions: '+str(tok)+' not recognized.')
-            
+
 
     def __gridconnections(self):
         """Level-2 parser for gridconnections.
@@ -631,7 +631,7 @@ class DXParser(object):
             tok = self.__consume()
         except DXParserNoTokens:
             return
-            
+
         if tok.equals('counts'):
             shape = []
             try:
@@ -647,7 +647,7 @@ class DXParser(object):
             raise DXParseError('gridconnections: '+str(tok)+' not recognized.')
 
 
-    def __array(self):        
+    def __array(self):
         """Level-2 parser for arrays.
 
         pattern:
@@ -662,7 +662,7 @@ class DXParser(object):
             tok = self.__consume()
         except DXParserNoTokens:
             return
-    
+
         if tok.equals('type'):
             tok = self.__consume()
             if not tok.iscode('STRING'):
@@ -706,7 +706,7 @@ class DXParser(object):
         """Level-2 parser for a DX field object.
 
         pattern:
-        object "site map 1" class field  
+        object "site map 1" class field
         component "positions" value 1
         component "connections" value 2
         component "data" value 3
@@ -790,9 +790,9 @@ class DXParser(object):
           pass
         """
         self.__refill_tokenbuffer()
-        #print "DEBUG consume: "+str(self.__parser)+' '+str(self.__peek())        
+        #print "DEBUG consume: "+str(self.__parser)+' '+str(self.__peek())
         try:
             return self.tokens.pop(0)  # singlet
         except IndexError:
             raise DXParserNoTokens
-        
+
