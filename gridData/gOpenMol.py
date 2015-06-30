@@ -10,15 +10,13 @@
 
 .. _gOpenMol: http://www.csc.fi/english/pages/g0penMol
 
-The module provides a simple implementation of a reader for gOpenMol_ *plt*
-files. Plt files are binary files. The reader tries to guess the endianess of
-the file, but this can fail (with a :exc:`TypeError`); you are on your own in
-this case.
+The module provides a simple implementation of a reader for gOpenMol_
+*plt* files. Plt files are binary files. The :class:`Plt` reader tries
+to guess the endianess of the file, but this can fail (with a
+:exc:`TypeError`); you are on your own in this case.
 
 Only the reader is implemented. If you want to write gridded data use a format
 that is more standard, such as OpenDX (see :mod:`OpenDX`).
-
-.. autoclass:: Plt
 
 
 Background
@@ -32,7 +30,7 @@ http://web.archive.org/web/20061011125817/http://www.csc.fi/gopenmol/developers/
 
 
 Grid data plt file format
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 Copyright CSC, 2005. Last modified: September 23, 2003 09:18:50
 
@@ -47,18 +45,18 @@ the format can be found elsewhere in this manual. gOpenMol can read binary plot
 files from different hardware platforms independent of the system type (little
 or big endian machines).
 
-Format of the binary *.plt file
-...............................
+Format of the binary ``*.plt`` file
+...................................
 
-The *.plt file binary and formatted file formats are very simple but please
+The ``*.plt`` file binary and formatted file formats are very simple but please
 observe that unformatted files written with a FORTRAN program are not pure
 binary files because there are file records between the values while pure
 binary files do not have any records between the values. gOpenMol should be
 able to figure out if the file is pure binary or FORTRAN unformatted but it is
 not very well tested.
 
-Binary *.plt (grid) file format
-...............................
+Binary ``*.plt`` (grid) file format
+...................................
 
 Record number and meaning::
 
@@ -111,18 +109,23 @@ The formatted (the first few lines) file can look like::
    -1.740280e+001 -1.759018e+001 -1.777478e+001 -1.795639e+001 -1.813387e+001 -1.830635e+001
    ...
 
-Formatted *.plt (grid) file format
-..................................
+Formatted ``*.plt`` (grid) file format
+......................................
 
 Line numbers and variables on the line::
-   #1: Integer, Integer. Rank and type of surface (rank is always = 3)
-   #2: Integer, Integer, Integer. Zdim, Ydim, Xdim (number of points in the z,y,x directions)
-   #3: Float, Float, Float, Float, Float, Float. Zmin, Zmax, Ymin, Ymax, Xmin,Xmax (min and max values)
-   #4: ... Float. Grid data values running (x is inner loop, then y and last z) with one or several values per line:
 
-1. Loop in the z direction
-2. Loop in the y direction
-3. Loop in the x direction
+   line #1: Integer, Integer. Rank and type of surface (rank is always = 3)
+   line #2: Integer, Integer, Integer. Zdim, Ydim, Xdim (number of points in the z,y,x directions)
+   line #3: Float, Float, Float, Float, Float, Float. Zmin, Zmax, Ymin, Ymax, Xmin,Xmax (min and max values)
+   line #4: ... Float. Grid data values running (x is inner loop, then y and last z) with one or several values per line:
+
+    1. Loop in the z direction
+    2. Loop in the y direction
+    3. Loop in the x direction
+
+Classes
+-------
+
 """
 
 from __future__ import with_statement

@@ -2,68 +2,89 @@
 # Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser General Public License, version 3 or later.
 
-"""
+r"""
 :mod:`OpenDX` --- routines to read and write simple OpenDX files
 ================================================================
 
-The OpenDX format for multi-dimensional grid data. This
-module only implements a primitive subset, sufficient to represent
-n-dimensional regular grids. OpenDX is a free visualization software,
-see http://www.opendx.org.
+The OpenDX format for multi-dimensional grid data. OpenDX is a free
+visualization software, see http://www.opendx.org.
 
-See http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF for the
-file format specifications.
+.. Note:: This module only implements a primitive subset, sufficient
+          to represent n-dimensional regular grids.
+
+The OpenDX scalar file format is specified in Appendix `B.2 Data
+Explorer Native Files`_ [#OpenDXformat]_.
 
 If you want to build a dx object from your data you can either use the
-convenient Grid class from the top level module (gridData.Grid)
-or see the lower-level methods described below.
+convenient :class:`~gridData.core.Grid` class from the top level
+module (:class:`gridData.Grid`) or see the lower-level methods
+described below.
 
 
-Building a dx object from a numpy array A
------------------------------------------
+Building a dx object from a numpy array ``A``
+---------------------------------------------
 
-If you have a numpy array A that represents a density in cartesian
-space then you can construct a dx object if you provide some
-additional information that fixes the coordinate system in space and
-defines the units along the axes.
+If you have a numpy array ``A`` that represents a density in cartesian
+space then you can construct a dx object (named a *field* in OpenDX
+parlance) if you provide some additional information that fixes the
+coordinate system in space and defines the units along the axes.
 
 The following data are required:
 
-   grid              numpy nD array (typically a nD histogram)
-   grid.shape        the shape of the array
-   origin            the cartesian coordinates of the center of the
-                     (0,0,..,0) grid cell
-   delta             n x n array with the length of a grid cell along
-                     each axis; for regular rectangular grids the off-diagonal
-                     elements are 0 and the diagonal ones correspond to the
-                     'bin width' of the histogram, eg delta[0,0] = 1.0 (Angstrom)
+grid
+    numpy nD array (typically a nD histogram)
+grid.shape
+    the shape of the array
+origin
+    the cartesian coordinates of the center of the (0,0,..,0) grid cell
+delta
+    :math:`n \times n` array with the length of a grid cell along
+    each axis; for regular rectangular grids the off-diagonal
+    elements are 0 and the diagonal ones correspond to the
+    'bin width' of the histogram, eg ``delta[0,0] = 1.0`` (Angstrom)
 
->>> dx = OpenDX.field('density')
->>> dx.add('positions',OpenDX.gridpositions(1,grid.shape,origin,delta))
->>> dx.add('connections',OpenDX.gridconnections(2,grid.shape))
->>> dx.add('data',OpenDX.array(3,grid))
+For example, to build a :class:`field`::
 
-or
+  dx = OpenDX.field('density')
+  dx.add('positions', OpenDX.gridpositions(1, grid.shape, origin, delta))
+  dx.add('connections', OpenDX.gridconnections(2, grid.shape))
+  dx.add('data', OpenDX.array(3, grid))
 
->>> dx = OpenDX.field('density',components=dict(
-            positions=OpenDX.gridpositions(1,grid.shape,d.origin,d.delta),
-            connections=OpenDX.gridconnections(2,grid.shape),
-            data=OpenDX.array(3,grid)) )
+or all with the constructor::
+
+  dx = OpenDX.field('density', components=dict(
+            positions=OpenDX.gridpositions(1,grid.shape, d.origin, d.delta),
+            connections=OpenDX.gridconnections(2, grid.shape),
+            data=OpenDX.array(3, grid)))
 
 
 Building a dx object from a dx file
 -----------------------------------
 
-One can also read data from an existing dx file:
+One can also read data from an existing dx file::
 
->>> dx = OpenDX.field(0)
->>> dx.read('file.dx')
+ dx = OpenDX.field(0)
+ dx.read('file.dx')
 
-The dx object has a method histogramdd() that produces output identical
-to the numpy.histogramdd() function. In this way, one can store nD
-histograms in a portable and universal manner:
+The dx :class:`field` object has a method
+:meth:`~OpenDX.field.histogramdd` that produces output identical to the
+:func:`numpy.histogramdd` function. In this way, one can store nD
+histograms in a portable and universal manner::
 
->>> histogram,edges = dx.histogramdd()
+  histogram, edges = dx.histogramdd()
+
+.. rubric:; Footnotes
+
+.. [#OpenDXformat] The original link to the OpenDX file format specs
+   http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF is dead so I am linking
+   to an archived copy at the Internet Archive , `B.2 Data Explorer Native Files`_.
+
+.. _`B.2 Data Explorer Native Files`:
+   https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm
+.. http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF
+
+Classes and functions
+---------------------
 
 """
 from __future__ import with_statement
@@ -205,38 +226,44 @@ class array(DXclass):
 class field(DXclass):
     """OpenDX container class
 
-        Methods:
+    The *field* is the top-level object and represents the whole
+    OpenDX file. It contains a number of other objects.
 
-        write(file)     write OpenDX file to file descriptor; only simple
-                        regular arrays are supported. File should be readable
-                        by VMD.
-        append(obj)     add a DXclass object
+    Methods overview:
 
-    Derive a DX instance from this class and add subclasses with append.
+    :meth:`add`
+        add a component to the field
+    :meth:`add_comments`
+        add comments
+    :meth:`write`
+       write OpenDX file to file descriptor; only simple regular
+       arrays are supported. File should be readable by VMD.
+    :meth:`read`
+        construct the field from a dx file
+
+    Instantiated a DX object from this class and add subclasses with
+    :meth:`append`.
     """
     # perhaps this should not derive from DXclass as those are
     # objects in field but a field cannot contain itself
     def __init__(self,classid='0',components=None,comments=None):
-        """OpenDX object, which is build from a list of components.
+        """OpenDX object, which is build from a list of components.::
 
-        dx = OpenDX.field('density',[gridpoints,gridconnections,array])
+          dx = OpenDX.field('density',[gridpoints,gridconnections,array])
 
-        Arguments:
+        :Arguments:
 
-        id              arbitrary string
-        components      dictionary of DXclass instances (no sanity check on the
-                        individual ids!) which correspond to
-                          positions
-                          connections
-                          data
-        comments        list of strings; each string becomes a comment line
-                        prefixed with '#'. Avoid newlines.
-
-        Methods:
-        read()          constrcut the field from a dx file
-        write()         write a dx file
-        add()           add a component to the field
-        add_comments()  add comments
+           *id*
+               arbitrary string
+           *components*
+               dictionary of DXclass instances (no sanity check on the
+               individual ids!) which correspond to
+                  * positions
+                  * connections
+                  * data
+           *comments*
+               list of strings; each string becomes a comment line
+               prefixed with '#'. Avoid newlines.
 
         A field must have at least the components 'positions',
         'connections', and 'data'. Those components are associated
@@ -249,7 +276,8 @@ class field(DXclass):
         objects are written and then the field object describes its
         components. Objects are referenced by their unique id.)
 
-        NOTE: uniqueness of the id is not checked.
+        .. Warning:: uniqueness of the *id* is not checked.
+
         """
         if components is None:
             components = dict(positions=None,connections=None,data=None)
@@ -456,8 +484,11 @@ class DXParser(object):
     def parse(self,DXfield):
         """Parse the dx file and construct a DX field object with component classes.
 
-        DXfield_object = OpenDX.field(*args)
-        parse(DXfield_object)
+        A :class:`field` instance *DXfield* must be provided to be
+        filled by the parser::
+
+           DXfield_object = OpenDX.field(*args)
+           parse(DXfield_object)
 
         A tokenizer turns the dx file into a stream of tokens. A
         hierarchy of parsers examines the stream. The level-0 parser

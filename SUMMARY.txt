@@ -46,6 +46,7 @@ This is equivalent to knowing
 .. _PyMOL: http://www.pymol.org/
 .. _`numpy.histogramdd`: http://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html
 .. _OpenDX: http://www.opendx.org
+.. _gOpenMol: http://www.csc.fi/gopenmol/
 
 Supported file formats
 ----------------------
@@ -59,7 +60,7 @@ small number of file formats is directly supported.
 format      extension  read   write  remarks
 ==========  =========  =====  =====  =========================================
 OpenDX_     dx         x      x      subset of OpenDX implemented
-gOpenMol    plt        x
+gOpenMol_   plt        x
 pickle      pickle     x      x      standard Python pickle of the Grid class
 ==========  =========  =====  =====  =========================================
 

@@ -4,8 +4,8 @@
 # See the files COPYING and COPYING.LESSER for details.
 
 """
-:mod:`gridDataFormat` -- Handling grids of data
-===============================================
+:mod:`gridData` -- Handling grids of data
+=========================================
 
 Overview
 --------
@@ -18,7 +18,7 @@ we also store the edges, which are are (essentially) the cartesian
 coordinates of the intersections of the grid (mesh) lines on the
 axes. In this way the grid is anchored in space.
 
-The :class:`Grid` object can be resampled at arbitrary resolution (by
+The :class:`~gridData.core.Grid` object can be resampled at arbitrary resolution (by
 interpolating the data). Standard algebraic operations are defined for
 grids on a point-wise basis (same as for :class:`numpy.ndarray`).
 
@@ -27,22 +27,24 @@ Description
 -----------
 
 The package reads grid data from files, makes them available as a
-:class:`Grid` object, and allows one to write out the data again.
+:class:`~gridData.core.Grid` object, and allows one to write out the data again.
 
-A :class:`Grid` consists of a rectangular, regular, N-dimensional
+A :class:`~gridData.core.Grid` consists of a rectangular, regular, N-dimensional
 array of data. It contains
+
 (1) The position of the array cell edges.
 (2) The array data itself.
 
 This is equivalent to knowing
+
 (1) The origin of the coordinate system (i.e. which data cell
     corresponds to (0,0,...,0)
 (2) The spacing of the grid in each dimension.
 (3) The data on a grid.
 
-:class:`Grid` objects have some convenient properties:
+:class:`~gridData.core.Grid` objects have some convenient properties:
 
-* The data is represented as a :class:`numpy.array` and thus shares
+* The data is represented as a :class:`numpy.ndarray` and thus shares
   all the advantages coming with this sophisticated and powerful
   library.
 
@@ -52,7 +54,7 @@ This is equivalent to knowing
   :mod:`numpy` documentation for details) and that only grids defined
   on the same cell edges can be combined.
 
-* A :class:`Grid` object can also be created from within python code
+* A :class:`~gridData.core.Grid` object can also be created from within python code
   e.g. from the output of the :func:`numpy.histogramdd` function.
 
 * The representation of the data is abstracted from the format that
@@ -76,26 +78,26 @@ Some Formats_ can be read directly from a file on disk::
 Constructing a Grid
 -------------------
 
-Data from an n-dimensional array can be packaged as a :class:`Grid`
+Data from an n-dimensional array can be packaged as a :class:`~gridData.core.Grid`
 for convenient handling (especially export to other formats).  The
-:class:`Grid` class acts as a universal constructor::
+:class:`~gridData.core.Grid` class acts as a universal constructor::
 
  g = Grid(ndarray, edges=edges)                 # from histogramdd
  g = Grid(ndarray, origin=origin, delta=delta)  # from arbitrary data
 
  g.export(filename, format)   # export to the desire format
 
-See the doc string for :class:`Grid` for details.
+See the doc string for :class:`~gridData.core.Grid` for details.
 
 
 Formats
 -------
 
-The following formats are available:
+The following formats are available (:ref:`supported-file-formats`):
 
-   :mod:`OpenDX`
+   :mod:`~gridData.OpenDX`
         IBM's Data Explorer, http://www.opendx.org/
-   :mod:`gOpenMol`
+   :mod:`~gridData.gOpenMol`
         http://www.csc.fi/gopenmol/
    pickle
         python pickle file (:mod:`pickle`)
@@ -112,7 +114,7 @@ Examples
 ========
 
 In most cases, only one class is important, the
-:class:`gridData.Grid`, so we just load this right away::
+:class:`~gridData.core.Grid`, so we just load this right away::
 
   from gridData import Grid
 
@@ -135,7 +137,7 @@ From the output of :func:`numpy.histogramdd`::
   H, edges = np.histogramdd(r, bins = (5, 8, 4))
   g = Grid(H, edges=edges)
 
-For other ways to load data, see the docs for :class:`gridData.Grid`.
+For other ways to load data, see the docs for :class:`~gridData.core.Grid`.
 
 
 
@@ -144,7 +146,7 @@ Subtracting two densities
 
 Assuming one has two densities that were generated on the same grid
 positions, stored in files ``A.dx`` and ``B.dx``, one first reads the
-data into two :class:`Grid` objects::
+data into two :class:`~gridData.core.Grid` objects::
 
   A = Grid('A.dx')
   B = Grid('B.dx')
@@ -193,13 +195,10 @@ or even simpler ::
 """
 
 __all__ =  ['Grid', 'OpenDX','gOpenMol']
-
-import warnings
-
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 
 class gridDataWarning(Warning):
     """Warns of a problem specific to the gridData module."""
     pass
 
-from core import Grid
+from .core import Grid

@@ -6,9 +6,10 @@
 :mod:`gridData.core` --- Core functionality for storing n-D grids
 =================================================================
 
-Classes and functions that are independent of the grid data
-format. In particular this module contains the :class:`Grid` class that acts as
-a universal constructor for specific formats::
+The :mod:`core` module contains classes and functions that are
+independent of the grid data format. In particular this module
+contains the :class:`Grid` class that acts as a universal constructor
+for specific formats::
 
  g = Grid(**kwargs)           # construct
  g.export(filename, format)   # export to the desired format
@@ -18,15 +19,19 @@ Some formats can also be read::
  g = Grid()                   # make an empty Grid
  g.load(filename)             # populate with data from filename
 
+
+Classes and functions
+---------------------
+
 """
 
 import os
 import warnings
 import cPickle
 import numpy
-import OpenDX, gOpenMol
 
-from gridData import gridDataWarning
+from . import OpenDX, gOpenMol
+from . import gridDataWarning
 
 def _grid(x):
     """Access the underlying ndarray of a Grid object or return the object itself"""
@@ -310,20 +315,22 @@ class Grid(object):
         self.__init__(grid=grid,edges=edges,metadata=self.metadata)
 
     def export(self,filename,format=None):
-        """export density to file using the given format; use 'dx' for visualization.
-
-        export(filename=<filename>,format=<format>)
+        """export density to file using the given format.
 
         The format can also be deduced from the suffix of the filename
         though the *format* keyword takes precedence.
 
-        The default format for export() is 'dx'.
+        The default format for export() is 'dx'.  Use 'dx' for
+        visualization.
 
-        Only implemented formats:
+        Implemented formats:
 
-        dx        OpenDX
-        pickle    pickle (use Grid.load(filename) to restore); Grid.save()
-                  is simpler than export(format='python').
+        dx
+            :mod:`OpenDX`
+        pickle
+            pickle (use :meth:``Grid.load` to restore); :meth:`Grid.save`
+            is simpler than ``export(format='python')``.
+
         """
         exporter = self._get_exporter(filename, format=format)
         exporter(filename)
