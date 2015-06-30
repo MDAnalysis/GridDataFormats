@@ -9,16 +9,18 @@ make them available as a `Grid`_ object, and write out the data again.
 Availability 
 ------------
 
-The package is licensed under the GPL, v3 (see file COPYING_) and is
-available from 
+The package is licensed under the LGPL, v3 (see files COPYING_ and
+`COPYING.LESSER`_) and is available from
 
 * the Python Package Index under the name `GridDataFormats`_ 
-* the GitHub reporsitory https://github.com/MDAnalysis/GridDataFormats
+* the GitHub repository https://github.com/MDAnalysis/GridDataFormats
 
 .. _GridDataFormats:
    https://pypi.python.org/pypi/GridDataFormats
 .. _COPYING: 
    https://raw.githubusercontent.com/MDAnalysis/GridDataFormats/master/COPYING
+.. _`COPYING.LESSER`: 
+   https://raw.githubusercontent.com/MDAnalysis/GridDataFormats/master/COPYING.LESSER
 .. _Grid: 
    http://www.mdanalysis.org/GridDataFormats/doc/html/gridData/core.html#gridData.core.Grid
 

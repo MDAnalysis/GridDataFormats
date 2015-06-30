@@ -6,7 +6,7 @@ from ez_setup import use_setuptools
 use_setuptools()
 from setuptools import setup, find_packages
 
-summary = open("SUMMARY.txt")
+summary = open("README.rst")
 try:
     long_description = summary.read()
 finally:
@@ -19,8 +19,8 @@ setup(name="GridDataFormats",
       author="Oliver Beckstein",
       author_email="orbeckst@gmail.com",
       license="LGPLv3",
-      url="https://github.com/orbeckst/GridDataFormats",
-      download_url = "https://github.com/orbeckst/GridDataFormats/downloads",
+      url="https://github.com/MDAnalysis/GridDataFormats",
+      download_url = "https://github.com/MDAnalysis/GridDataFormats/releases",
       keywords="science array density",
       classifiers = ['Development Status :: 4 - Beta',
                      'Environment :: Console',
