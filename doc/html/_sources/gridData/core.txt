@@ -1,0 +1,2 @@
+.. automodule:: gridData.core
+   :members:

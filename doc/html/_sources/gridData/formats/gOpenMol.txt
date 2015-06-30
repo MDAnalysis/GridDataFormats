@@ -1,0 +1,2 @@
+.. automodule:: gridData.gOpenMol
+   :members:
