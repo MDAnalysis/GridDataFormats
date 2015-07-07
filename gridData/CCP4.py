@@ -57,6 +57,11 @@ class CCP4(object):
     :attr:`CCP4.delta`
          DxD array describing the deltas
 
+    .. Note:: The following features of the CCP4 format are *not* implemented:
+    * triclinic boxes
+    * symmetry records
+    * index ordering besides standard column-major and row-major
+    * non-standard fields, such any in filed in future use block
     """
 
     _axis_map = {1: 'x', 2: 'y', 3: 'z'}
@@ -123,7 +128,6 @@ class CCP4(object):
         #TODO: Account for the possibility that y-axis is fastest or
         # slowest index, which unfortunately is possible in CCP4.
         order = 'C' if h['mapc'] == 'z' else 'F'
-        # Unpack ccp4 in reverse!!
         self.array = a.reshape(h['nc'], h['nr'], h['ns'], order=order)
         self.delta = self._delta()
         self.origin = numpy.zeros(3)
