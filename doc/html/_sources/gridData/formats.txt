@@ -27,6 +27,7 @@ small number of file formats is directly supported.
    ==========  =========  =====  =====  =========================================
    OpenDX_     dx         x      x      subset of OpenDX implemented
    gOpenMol_   plt        x
+   CCP4_       ccp4       x             subset implemented
    pickle      pickle     x      x      standard Python pickle of the Grid class
    ==========  =========  =====  =====  =========================================
 
@@ -36,6 +37,7 @@ small number of file formats is directly supported.
 .. _PyMOL: http://www.pymol.org/
 .. _OpenDX: http://www.opendx.org/
 .. _gOpenMol: http://www.csc.fi/gopenmol/
+.. _CCP4: http://www.ccp4.ac.uk/html/maplib.html#description
 
 
 Format-specific modules
@@ -46,3 +48,4 @@ Format-specific modules
 
    formats/OpenDX
    formats/gOpenMol
+   formats/CCP4

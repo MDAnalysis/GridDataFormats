@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.2.2. gOpenMol — the gOpenMol plt format &mdash; gridDataFormats 0.2.5 documentation</title>
+    <title>3.2.2. gOpenMol — the gOpenMol plt format &mdash; gridDataFormats 0.3.0-dev documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.2.5',
+        VERSION:     '0.3.0-dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="gridDataFormats 0.2.5 documentation" href="../../index.html" />
+    <link rel="top" title="gridDataFormats 0.3.0-dev documentation" href="../../index.html" />
     <link rel="up" title="3. Formats" href="../formats.html" />
-    <link rel="next" title="4. gridData.core — Core functionality for storing n-D grids" href="../core.html" />
+    <link rel="next" title="3.2.3. CCP4 — the CCP4 volumetric data format" href="CCP4.html" />
     <link rel="prev" title="3.2.1. OpenDX — routines to read and write simple OpenDX files" href="OpenDX.html" /> 
   </head>
   <body>
@@ -42,12 +42,12 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../core.html" title="4. gridData.core — Core functionality for storing n-D grids"
+          <a href="CCP4.html" title="3.2.3. CCP4 — the CCP4 volumetric data format"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="OpenDX.html" title="3.2.1. OpenDX — routines to read and write simple OpenDX files"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">gridDataFormats 0.2.5 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
           <li><a href="../formats.html" accesskey="U">3. Formats</a> &raquo;</li> 
       </ul>
     </div>
@@ -70,10 +70,10 @@
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="OpenDX.html"
-                        title="previous chapter">3.2.1. <tt class="docutils literal docutils literal"><span class="pre">OpenDX</span></tt> &#8212; routines to read and write simple OpenDX files</a></p>
+                        title="previous chapter">3.2.1. <tt class="docutils literal docutils literal docutils literal"><span class="pre">OpenDX</span></tt> &#8212; routines to read and write simple OpenDX files</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../core.html"
-                        title="next chapter">4. <tt class="docutils literal"><span class="pre">gridData.core</span></tt> &#8212; Core functionality for storing n-D grids</a></p>
+  <p class="topless"><a href="CCP4.html"
+                        title="next chapter">3.2.3. <tt class="docutils literal docutils literal docutils literal"><span class="pre">CCP4</span></tt> &#8212; the CCP4 volumetric data format</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/gridData/formats/gOpenMol.txt"
@@ -207,7 +207,7 @@ line #4: ... Float. Grid data values running (x is inner loop, then y and last z
 <dl class="class">
 <dt id="gridData.gOpenMol.Plt">
 <em class="property">class </em><tt class="descclassname">gridData.gOpenMol.</tt><tt class="descname">Plt</tt><big>(</big><em>filename=None</em><big>)</big><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.gOpenMol.Plt" title="Permalink to this definition">¶</a></dt>
-<dd><p>A class to reprensent a <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a> plt file.</p>
+<dd><p>A class to represent a <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a> plt file.</p>
 <dl class="docutils">
 <dt>Only reading is implemented; either supply a filename to the constructor</dt>
 <dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">Plt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -271,17 +271,17 @@ the dict <tt class="xref py py-attr docutils literal"><span class="pre">GOpenMol
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../core.html" title="4. gridData.core — Core functionality for storing n-D grids"
+          <a href="CCP4.html" title="3.2.3. CCP4 — the CCP4 volumetric data format"
              >next</a> |</li>
         <li class="right" >
           <a href="OpenDX.html" title="3.2.1. OpenDX — routines to read and write simple OpenDX files"
              >previous</a> |</li>
-        <li><a href="../../index.html">gridDataFormats 0.2.5 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
           <li><a href="../formats.html" >3. Formats</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2007-2015, Oliver Beckstein.
+        &copy; Copyright 2007-2015, Oliver Beckstein, Jesse Johnson.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

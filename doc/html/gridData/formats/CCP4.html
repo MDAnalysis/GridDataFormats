@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.2.3. CCP4 — the CCP4 volumetric data format &mdash; gridDataFormats 0.3.0-dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.3.0-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="gridDataFormats 0.3.0-dev documentation" href="../../index.html" />
+    <link rel="up" title="3. Formats" href="../formats.html" />
+    <link rel="next" title="4. gridData.core — Core functionality for storing n-D grids" href="../core.html" />
+    <link rel="prev" title="3.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../core.html" title="4. gridData.core — Core functionality for storing n-D grids"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gOpenMol.html" title="3.2.2. gOpenMol — the gOpenMol plt format"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
+          <li><a href="../formats.html" accesskey="U">3. Formats</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.2.3. <tt class="docutils literal"><span class="pre">CCP4</span></tt> &#8212; the CCP4 volumetric data format</a><ul>
+<li><a class="reference internal" href="#background">3.2.3.1. Background</a></li>
+<li><a class="reference internal" href="#grid-data-ccp4-file-format">3.2.3.2. Grid data CCP4 file format</a></li>
+<li><a class="reference internal" href="#classes">3.2.3.3. Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="gOpenMol.html"
+                        title="previous chapter">3.2.2. <tt class="docutils literal"><span class="pre">gOpenMol</span></tt> &#8212; the gOpenMol plt format</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../core.html"
+                        title="next chapter">4. <tt class="docutils literal docutils literal"><span class="pre">gridData.core</span></tt> &#8212; Core functionality for storing n-D grids</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/gridData/formats/CCP4.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-gridData.CCP4"></span><div class="section" id="ccp4-the-ccp4-volumetric-data-format">
+<h1>3.2.3. <tt class="xref py py-mod docutils literal"><span class="pre">CCP4</span></tt> &#8212; the CCP4 volumetric data format<a class="headerlink" href="#ccp4-the-ccp4-volumetric-data-format" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.3.0.</span></p>
+<p>The module provides a simple implementation of a reader for <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">CCP4</a>
+<em>ccp4</em> files. CCP4 files are binary files. The <a class="reference internal" href="#gridData.CCP4.CCP4" title="gridData.CCP4.CCP4"><tt class="xref py py-class docutils literal"><span class="pre">CCP4</span></tt></a> reader tries
+to guess the endianess of the file, but this can fail (with a
+<tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt>); you are on your own in this case.</p>
+<p>Only the reader is implemented. If you want to write gridded data use a format
+that is more standard, such as OpenDX (see <tt class="xref py py-mod docutils literal"><span class="pre">OpenDX</span></tt>).</p>
+<div class="section" id="background">
+<h2>3.2.3.1. Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<p>CCP4 format: <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">http://www.ccp4.ac.uk/html/maplib.html#description</a></p>
+<p>Used to be more carefully documented at <a class="reference external" href="http://lsbr.niams.nih.gov/3demc/3demc_maplib.html">http://lsbr.niams.nih.gov/3demc/3demc_maplib.html</a> but currently this is only accessible through the Google cache
+<a class="reference external" href="http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html">http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html</a></p>
+</div>
+<div class="section" id="grid-data-ccp4-file-format">
+<h2>3.2.3.2. Grid data CCP4 file format<a class="headerlink" href="#grid-data-ccp4-file-format" title="Permalink to this headline">¶</a></h2>
+<p>Copyright Science and Technologies Facilities Council, 2015.</p>
+<p>The overall layout of the file is as follows:</p>
+<div class="highlight-python"><pre>File header (256 longwords)
+Symmetry information
+Map, stored as a 3-dimensional array</pre>
+</div>
+<p>The header is organised as 56 words followed by space for ten 80
+character text labels as follows:</p>
+<div class="highlight-python"><pre> 1      NC              # of Columns    (fastest changing in map)
+ 2      NR              # of Rows
+ 3      NS              # of Sections   (slowest changing in map)
+ 4      MODE            Data type
+                          0 = envelope stored as signed bytes (from
+                              -128 lowest to 127 highest)
+                          1 = Image     stored as Integer*2
+                          2 = Image     stored as Reals
+                          3 = Transform stored as Complex Integer*2
+                          4 = Transform stored as Complex Reals
+                          5 == 0
+
+                          Note: Mode 2 is the normal mode used in
+                                the CCP4 programs. Other modes than 2 and 0
+                                may NOT WORK
+
+ 5      NCSTART         Number of first COLUMN  in map
+ 6      NRSTART         Number of first ROW     in map
+ 7      NSSTART         Number of first SECTION in map
+ 8      NX              Number of intervals along X
+ 9      NY              Number of intervals along Y
+10      NZ              Number of intervals along Z
+11      X length        Cell Dimensions (Angstroms)
+12      Y length                     "
+13      Z length                     "
+14      Alpha           Cell Angles     (Degrees)
+15      Beta                         "
+16      Gamma                        "
+17      MAPC            Which axis corresponds to Cols.  (1,2,3 for X,Y,Z)
+18      MAPR            Which axis corresponds to Rows   (1,2,3 for X,Y,Z)
+19      MAPS            Which axis corresponds to Sects. (1,2,3 for X,Y,Z)
+20      AMIN            Minimum density value
+21      AMAX            Maximum density value
+22      AMEAN           Mean    density value    (Average)
+23      ISPG            Space group number
+24      NSYMBT          Number of bytes used for storing symmetry operators
+25      LSKFLG          Flag for skew transformation, =0 none, =1 if foll
+26-34   SKWMAT          Skew matrix S (in order S11, S12, S13, S21 etc) if
+                        LSKFLG .ne. 0.
+35-37   SKWTRN          Skew translation t if LSKFLG .ne. 0.
+                        Skew transformation is from standard orthogonal
+                        coordinate frame (as used for atoms) to orthogonal
+                        map frame, as
+
+                                Xo(map) = S * (Xo(atoms) - t)
+
+38      future use       (some of these are used by the MSUBSX routines
+ .          "              in MAPBRICK, MAPCONT and FRODO)
+ .          "   (all set to zero by default)
+ .          "
+52          "
+
+53    MAP             Character string 'MAP ' to identify file type
+54    MACHST          Machine stamp indicating the machine type
+                        which wrote file
+55      ARMS            Rms deviation of map from mean density
+56      NLABL           Number of labels being used
+57-256  LABEL(20,10)    10  80 character text labels (ie. A4 format)</pre>
+</div>
+<p>Symmetry records follow - if any - stored as text as in International
+Tables, operators separated by <cite>*</cite> and grouped into &#8216;lines&#8217; of 80
+characters (i.e. symmetry operators do not cross the ends of the
+80-character &#8216;lines&#8217; and the &#8216;lines&#8217; do not terminate in a <cite>*</cite>).</p>
+<p>Map data array follows.</p>
+<p>Note on the machine stamp: The machine stamp (word 54) is a 32-bit
+quantity containing a set of four <a href="#id1"><span class="problematic" id="id2">`</span></a>nibbles&#8217; (half-bytes) - only half
+the space is used. Each nibble is a number specifying the
+representation of (in C terms) double (d), float (f), int (i) and
+unsigned char (c) types. Thus each stamp is of the form 0xdfic0000.
+For little endian hardware the stamp is 0x44, 0x41, 0x00, 0x00 while
+the big endian stamp is 0x11, 0x11, 0x00, 0x00.</p>
+</div>
+<div class="section" id="classes">
+<h2>3.2.3.3. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="gridData.CCP4.CCP4">
+<em class="property">class </em><tt class="descclassname">gridData.CCP4.</tt><tt class="descname">CCP4</tt><big>(</big><em>filename=None</em><big>)</big><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to represent a <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">CCP4</a> file.</p>
+<dl class="docutils">
+<dt>Only reading is implemented; either supply a filename to the constructor</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt>or load the file with the read method</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>The data is held in <tt class="xref py py-attr docutils literal"><span class="pre">CCP4.array</span></tt> and all header information is in
+the dict <tt class="xref py py-attr docutils literal"><span class="pre">CCP4.header</span></tt>.</p>
+<dl class="docutils">
+<dt><tt class="xref py py-attr docutils literal"><span class="pre">CCP4.shape</span></tt></dt>
+<dd>D-tuplet describing size in each dimension</dd>
+<dt><tt class="xref py py-attr docutils literal"><span class="pre">CCP4.origin</span></tt></dt>
+<dd>coordinates of the centre of the grid cell with index 0,0,...,0</dd>
+<dt><tt class="xref py py-attr docutils literal"><span class="pre">CCP4.delta</span></tt></dt>
+<dd>DxD array describing the deltas</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The following features of the CCP4 format are <em>not</em> implemented:
+* triclinic boxes
+* symmetry records
+* index ordering besides standard column-major and row-major
+* non-standard fields, such any in filed in future use block</p>
+</div>
+<dl class="attribute">
+<dt id="gridData.CCP4.CCP4.edges">
+<tt class="descname">edges</tt><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4.edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4.edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</p>
+<p>Only works for regular, orthonormal grids.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.CCP4.CCP4.histogramdd">
+<tt class="descname">histogramdd</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4.histogramdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4.histogramdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return array data as (edges,grid), i.e. a numpy nD histogram.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.CCP4.CCP4.read">
+<tt class="descname">read</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populate the instance from the ccp4 file <em>filename</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../core.html" title="4. gridData.core — Core functionality for storing n-D grids"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gOpenMol.html" title="3.2.2. gOpenMol — the gOpenMol plt format"
+             >previous</a> |</li>
+        <li><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
+          <li><a href="../formats.html" >3. Formats</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2007-2015, Oliver Beckstein, Jesse Johnson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
