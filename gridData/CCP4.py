@@ -1,6 +1,9 @@
 # gridDataFormats --- python modules to read and write gridded data
 # Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser General Public License, version 3 or later.
+#
+# Part of the documentation and format specification:
+# Copyright Science and Technologies Facilities Council, 2015.
 
 """
 :mod:`CCP4` --- the CCP4 volumetric data format
