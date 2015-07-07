@@ -6,7 +6,7 @@
 :mod:`CCP4` --- the CCP4 volumetric data format
 ===========================================
 
-.. _gOpenMol: http://www.ccp4.ac.uk/html/maplib.html#description
+.. _CCP4: http://www.ccp4.ac.uk/html/maplib.html#description
 
 The module provides a simple implementation of a reader for CCP4_
 *ccp4* files. CCP4 files are binary files. The :class:`CCP4` reader tries
