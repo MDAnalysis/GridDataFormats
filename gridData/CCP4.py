@@ -25,6 +25,94 @@ CCP4 format: http://www.ccp4.ac.uk/html/maplib.html#description
 Used to be more carefully documented at http://lsbr.niams.nih.gov/3demc/3demc_maplib.html but currently this is only accessible through the Google cache
 http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html
 
+Grid data CCP4 file format
+--------------------------
+
+Copyright Science and Technologies Facilities Council, 2015. 
+
+The overall layout of the file is as follows:
+
+    File header (256 longwords)
+    Symmetry information
+    Map, stored as a 3-dimensional array 
+
+The header is organised as 56 words followed by space for ten 80
+character text labels as follows:
+
+ 
+ 1      NC              # of Columns    (fastest changing in map)
+ 2      NR              # of Rows
+ 3      NS              # of Sections   (slowest changing in map)
+ 4      MODE            Data type
+                          0 = envelope stored as signed bytes (from
+                              -128 lowest to 127 highest)
+                          1 = Image     stored as Integer*2
+                          2 = Image     stored as Reals
+                          3 = Transform stored as Complex Integer*2
+                          4 = Transform stored as Complex Reals
+                          5 == 0	
+ 
+                          Note: Mode 2 is the normal mode used in
+                                the CCP4 programs. Other modes than 2 and 0
+                                may NOT WORK
+ 
+ 5      NCSTART         Number of first COLUMN  in map
+ 6      NRSTART         Number of first ROW     in map
+ 7      NSSTART         Number of first SECTION in map
+ 8      NX              Number of intervals along X
+ 9      NY              Number of intervals along Y
+10      NZ              Number of intervals along Z
+11      X length        Cell Dimensions (Angstroms)
+12      Y length                     "
+13      Z length                     "
+14      Alpha           Cell Angles     (Degrees)
+15      Beta                         "
+16      Gamma                        "
+17      MAPC            Which axis corresponds to Cols.  (1,2,3 for X,Y,Z)
+18      MAPR            Which axis corresponds to Rows   (1,2,3 for X,Y,Z)
+19      MAPS            Which axis corresponds to Sects. (1,2,3 for X,Y,Z)
+20      AMIN            Minimum density value
+21      AMAX            Maximum density value
+22      AMEAN           Mean    density value    (Average)
+23      ISPG            Space group number
+24      NSYMBT          Number of bytes used for storing symmetry operators
+25      LSKFLG          Flag for skew transformation, =0 none, =1 if foll
+26-34   SKWMAT          Skew matrix S (in order S11, S12, S13, S21 etc) if
+                        LSKFLG .ne. 0.
+35-37   SKWTRN          Skew translation t if LSKFLG .ne. 0.
+                        Skew transformation is from standard orthogonal
+                        coordinate frame (as used for atoms) to orthogonal
+                        map frame, as
+ 
+                                Xo(map) = S * (Xo(atoms) - t)
+ 
+38      future use       (some of these are used by the MSUBSX routines
+ .          "              in MAPBRICK, MAPCONT and FRODO)
+ .          "   (all set to zero by default)
+ .          "
+52          "
+
+53	MAP	        Character string 'MAP ' to identify file type
+54	MACHST		Machine stamp indicating the machine type
+			which wrote file
+55      ARMS            Rms deviation of map from mean density
+56      NLABL           Number of labels being used
+57-256  LABEL(20,10)    10  80 character text labels (ie. A4 format)
+
+Symmetry records follow - if any - stored as text as in International
+Tables, operators separated by * and grouped into 'lines' of 80
+characters (i.e. symmetry operators do not cross the ends of the
+80-character 'lines' and the 'lines' do not terminate in a *).
+
+Map data array follows.
+
+Note on the machine stamp: The machine stamp (word 54) is a 32-bit
+quantity containing a set of four `nibbles' (half-bytes) - only half
+the space is used. Each nibble is a number specifying the
+representation of (in C terms) double (d), float (f), int (i) and
+unsigned char (c) types. Thus each stamp is of the form 0xdfic0000.
+For little endian hardware the stamp is 0x44, 0x41, 0x00, 0x00 while
+the big endian stamp is 0x11, 0x11, 0x00, 0x00.
 """
 # TODO: include basic format in documentation.
 
