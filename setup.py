@@ -13,7 +13,7 @@ finally:
     summary.close()
 
 setup(name="GridDataFormats",
-      version="0.2.5",    # keep in sync with __init__.py: __version__ and docs/source/conf.py
+      version="0.3.0-dev",    # keep in sync with __init__.py: __version__ and docs/source/conf.py
       description="Reading and writing of data on regular grids in Python",
       long_description=long_description,
       author="Oliver Beckstein",

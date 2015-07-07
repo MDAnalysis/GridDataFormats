@@ -195,7 +195,7 @@ or even simpler ::
 """
 
 __all__ =  ['Grid', 'OpenDX','gOpenMol']
-__version__ = '0.2.5'
+__version__ = '0.3.0-dev'
 
 class gridDataWarning(Warning):
     """Warns of a problem specific to the gridData module."""

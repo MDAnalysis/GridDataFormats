@@ -30,7 +30,9 @@ import warnings
 import cPickle
 import numpy
 
-from . import OpenDX, gOpenMol, CCP4
+from . import OpenDX
+from . import gOpenMol
+from . import CCP4
 from . import gridDataWarning
 
 def _grid(x):

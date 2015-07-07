@@ -9,6 +9,8 @@
 :mod:`CCP4` --- the CCP4 volumetric data format
 ===========================================
 
+.. versionadded:: 0.3.0
+
 .. _CCP4: http://www.ccp4.ac.uk/html/maplib.html#description
 
 The module provides a simple implementation of a reader for CCP4_
@@ -31,81 +33,80 @@ http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih
 Grid data CCP4 file format
 --------------------------
 
-Copyright Science and Technologies Facilities Council, 2015. 
+Copyright Science and Technologies Facilities Council, 2015.
 
-The overall layout of the file is as follows:
+The overall layout of the file is as follows::
 
     File header (256 longwords)
     Symmetry information
-    Map, stored as a 3-dimensional array 
+    Map, stored as a 3-dimensional array
 
 The header is organised as 56 words followed by space for ten 80
-character text labels as follows:
+character text labels as follows::
 
- 
- 1      NC              # of Columns    (fastest changing in map)
- 2      NR              # of Rows
- 3      NS              # of Sections   (slowest changing in map)
- 4      MODE            Data type
-                          0 = envelope stored as signed bytes (from
-                              -128 lowest to 127 highest)
-                          1 = Image     stored as Integer*2
-                          2 = Image     stored as Reals
-                          3 = Transform stored as Complex Integer*2
-                          4 = Transform stored as Complex Reals
-                          5 == 0	
- 
-                          Note: Mode 2 is the normal mode used in
-                                the CCP4 programs. Other modes than 2 and 0
-                                may NOT WORK
- 
- 5      NCSTART         Number of first COLUMN  in map
- 6      NRSTART         Number of first ROW     in map
- 7      NSSTART         Number of first SECTION in map
- 8      NX              Number of intervals along X
- 9      NY              Number of intervals along Y
-10      NZ              Number of intervals along Z
-11      X length        Cell Dimensions (Angstroms)
-12      Y length                     "
-13      Z length                     "
-14      Alpha           Cell Angles     (Degrees)
-15      Beta                         "
-16      Gamma                        "
-17      MAPC            Which axis corresponds to Cols.  (1,2,3 for X,Y,Z)
-18      MAPR            Which axis corresponds to Rows   (1,2,3 for X,Y,Z)
-19      MAPS            Which axis corresponds to Sects. (1,2,3 for X,Y,Z)
-20      AMIN            Minimum density value
-21      AMAX            Maximum density value
-22      AMEAN           Mean    density value    (Average)
-23      ISPG            Space group number
-24      NSYMBT          Number of bytes used for storing symmetry operators
-25      LSKFLG          Flag for skew transformation, =0 none, =1 if foll
-26-34   SKWMAT          Skew matrix S (in order S11, S12, S13, S21 etc) if
-                        LSKFLG .ne. 0.
-35-37   SKWTRN          Skew translation t if LSKFLG .ne. 0.
-                        Skew transformation is from standard orthogonal
-                        coordinate frame (as used for atoms) to orthogonal
-                        map frame, as
- 
-                                Xo(map) = S * (Xo(atoms) - t)
- 
-38      future use       (some of these are used by the MSUBSX routines
- .          "              in MAPBRICK, MAPCONT and FRODO)
- .          "   (all set to zero by default)
- .          "
-52          "
+   1      NC              # of Columns    (fastest changing in map)
+   2      NR              # of Rows
+   3      NS              # of Sections   (slowest changing in map)
+   4      MODE            Data type
+                            0 = envelope stored as signed bytes (from
+                                -128 lowest to 127 highest)
+                            1 = Image     stored as Integer*2
+                            2 = Image     stored as Reals
+                            3 = Transform stored as Complex Integer*2
+                            4 = Transform stored as Complex Reals
+                            5 == 0
 
-53	MAP	        Character string 'MAP ' to identify file type
-54	MACHST		Machine stamp indicating the machine type
-			which wrote file
-55      ARMS            Rms deviation of map from mean density
-56      NLABL           Number of labels being used
-57-256  LABEL(20,10)    10  80 character text labels (ie. A4 format)
+                            Note: Mode 2 is the normal mode used in
+                                  the CCP4 programs. Other modes than 2 and 0
+                                  may NOT WORK
+
+   5      NCSTART         Number of first COLUMN  in map
+   6      NRSTART         Number of first ROW     in map
+   7      NSSTART         Number of first SECTION in map
+   8      NX              Number of intervals along X
+   9      NY              Number of intervals along Y
+  10      NZ              Number of intervals along Z
+  11      X length        Cell Dimensions (Angstroms)
+  12      Y length                     "
+  13      Z length                     "
+  14      Alpha           Cell Angles     (Degrees)
+  15      Beta                         "
+  16      Gamma                        "
+  17      MAPC            Which axis corresponds to Cols.  (1,2,3 for X,Y,Z)
+  18      MAPR            Which axis corresponds to Rows   (1,2,3 for X,Y,Z)
+  19      MAPS            Which axis corresponds to Sects. (1,2,3 for X,Y,Z)
+  20      AMIN            Minimum density value
+  21      AMAX            Maximum density value
+  22      AMEAN           Mean    density value    (Average)
+  23      ISPG            Space group number
+  24      NSYMBT          Number of bytes used for storing symmetry operators
+  25      LSKFLG          Flag for skew transformation, =0 none, =1 if foll
+  26-34   SKWMAT          Skew matrix S (in order S11, S12, S13, S21 etc) if
+                          LSKFLG .ne. 0.
+  35-37   SKWTRN          Skew translation t if LSKFLG .ne. 0.
+                          Skew transformation is from standard orthogonal
+                          coordinate frame (as used for atoms) to orthogonal
+                          map frame, as
+
+                                  Xo(map) = S * (Xo(atoms) - t)
+
+  38      future use       (some of these are used by the MSUBSX routines
+   .          "              in MAPBRICK, MAPCONT and FRODO)
+   .          "   (all set to zero by default)
+   .          "
+  52          "
+
+  53    MAP             Character string 'MAP ' to identify file type
+  54    MACHST          Machine stamp indicating the machine type
+                          which wrote file
+  55      ARMS            Rms deviation of map from mean density
+  56      NLABL           Number of labels being used
+  57-256  LABEL(20,10)    10  80 character text labels (ie. A4 format)
 
 Symmetry records follow - if any - stored as text as in International
-Tables, operators separated by * and grouped into 'lines' of 80
+Tables, operators separated by `*` and grouped into 'lines' of 80
 characters (i.e. symmetry operators do not cross the ends of the
-80-character 'lines' and the 'lines' do not terminate in a *).
+80-character 'lines' and the 'lines' do not terminate in a `*`).
 
 Map data array follows.
 
@@ -116,6 +117,10 @@ representation of (in C terms) double (d), float (f), int (i) and
 unsigned char (c) types. Thus each stamp is of the form 0xdfic0000.
 For little endian hardware the stamp is 0x44, 0x41, 0x00, 0x00 while
 the big endian stamp is 0x11, 0x11, 0x00, 0x00.
+
+Classes
+-------
+
 """
 
 from __future__ import with_statement
@@ -148,14 +153,14 @@ class CCP4(object):
          DxD array describing the deltas
 
     .. Note:: The following features of the CCP4 format are *not* implemented:
-    * triclinic boxes
-    * symmetry records
-    * index ordering besides standard column-major and row-major
-    * non-standard fields, such any in filed in future use block
+       * triclinic boxes
+       * symmetry records
+       * index ordering besides standard column-major and row-major
+       * non-standard fields, such any in filed in future use block
     """
 
     _axis_map = {1: 'x', 2: 'y', 3: 'z'}
-    
+
     _data_bintype = 'f'
 
     _header_struct =  (
@@ -182,8 +187,8 @@ class CCP4(object):
         Record('alpha', 'f'), # Degrees.
         Record('beta', 'f'),
         Record('gamma', 'f'),
-        Record('mapc', 'I', _axis_map), 
-        Record('mapr', 'I', _axis_map), 
+        Record('mapc', 'I', _axis_map),
+        Record('mapr', 'I', _axis_map),
         Record('maps', 'I', _axis_map),
         Record('amin', 'f'),
         Record('amax', 'f'),
@@ -193,7 +198,7 @@ class CCP4(object):
         Record('lskflg', 'I'),
         # Remaining few fields are manually parsed.
     )
-    
+
 
     def __init__(self, filename=None):
         self.filename = filename
@@ -253,7 +258,7 @@ class CCP4(object):
         ccp4file.seek(52 * 4)
         mapbin = ccp4file.read(4)
         for flag in '@=<>':
-            mapstr = struct.unpack(flag+'4s', mapbin)[0]            
+            mapstr = struct.unpack(flag+'4s', mapbin)[0]
             if mapstr.upper() == 'MAP ':
                 bsaflag = flag
                 break # Only possible value according to spec.
@@ -268,12 +273,12 @@ class CCP4(object):
         def decode_header(header, bsaflag='@'):
             h = dict(zip(names, struct.unpack(bsaflag+self._headerfmt, header)))
             h['bsaflag'] = bsaflag
-            return h    
+            return h
         header = decode_header(bintopheader, bsaflag)
         for rec in self._header_struct:
             if not rec.is_legal_dict(header):
                 warnings.warn("Key %s: Illegal value %r" % (rec.key, header[rec.key]))
-        
+
         # Parse the latter half of the header (4-byte words, 26 to 256).
         if (header['lskflg']):
             skewmatrix = np.fromfile(ccp4file, dtype=numpy.float32, count=9)
