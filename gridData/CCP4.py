@@ -117,7 +117,6 @@ unsigned char (c) types. Thus each stamp is of the form 0xdfic0000.
 For little endian hardware the stamp is 0x44, 0x41, 0x00, 0x00 while
 the big endian stamp is 0x11, 0x11, 0x00, 0x00.
 """
-# TODO: include basic format in documentation.
 
 from __future__ import with_statement
 
