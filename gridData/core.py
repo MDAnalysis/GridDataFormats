@@ -30,7 +30,7 @@ import warnings
 import cPickle
 import numpy
 
-from . import OpenDX, gOpenMol
+from . import OpenDX, gOpenMol, CCP4
 from . import gridDataWarning
 
 def _grid(x):
@@ -94,7 +94,8 @@ class Grid(object):
                            'PICKLE': self._export_python,
                            'PYTHON': self._export_python,  # compatibility
                            }
-        self._loaders = {'DX': self._load_dx,
+        self._loaders = {'CCP4': self._load_cpp4,
+                         'DX': self._load_dx,
                          'PLT': self._load_plt,
                          'PICKLE': self._load_python,
                          'PYTHON': self._load_python,      # compatibility
@@ -299,9 +300,15 @@ class Grid(object):
         self.__init__(grid=saved['grid'],edges=saved['edges'],metadata=saved['metadata'])
         del saved
 
+    def _load_cpp4(self, filename):
+        """Initializes Grid from a CCP4 file."""
+        ccp4 = CCP4.CCP4()
+        ccp4.read(filename)
+        grid,edges = ccp4.histogramdd()
+        self.__init__(grid=grid,edges=edges,metadata=self.metadata)
+
     def _load_dx(self, filename):
         """Initializes Grid from a OpenDX file."""
-
         dx = OpenDX.field(0)
         dx.read(filename)
         grid,edges = dx.histogramdd()

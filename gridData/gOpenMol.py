@@ -149,7 +149,7 @@ class Record(object):
         return "Record(%(key)r,%(bintype)r,...)" % vars(self)
 
 class Plt(object):
-    """A class to reprensent a gOpenMol_ plt file.
+    """A class to represent a gOpenMol_ plt file.
 
     Only reading is implemented; either supply a filename to the constructor
       >>> G = Plt(filename)
@@ -242,7 +242,7 @@ class Plt(object):
         return numpy.diag(delta)
 
     def _read_header(self, pltfile):
-        """Read header bytes, try all possibilities for byte order/size/alignment"""
+        """Read header bytes, try all possibilities for byte order/size/alignment."""
         nheader = struct.calcsize(self._headerfmt)
         names = [r.key for r in self._header_struct]
         binheader = pltfile.read(nheader)
