@@ -102,9 +102,6 @@ class CCP4(object):
 
     def __init__(self, filename=None):
         self.filename = filename
-        # # Fix header_struct because I cannot do {...}.update().
-        # rec_surf = [r for r in self._header_struct if r.key == 'surface'][0]
-        # rec_surf.values.update(dict((kp,'user-defined') for k in xrange(4,51) if k != 42))
         # Assemble format.
         self._headerfmt = "".join([r.bintype for r in self._header_struct])
 
