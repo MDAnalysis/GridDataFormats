@@ -6,7 +6,12 @@ Copyright (c) 2007-2014 Oliver Beckstein <orbeckst@gmail.com>
 
 Published under the GNU Lesser General Public Licence, version 3
 
-
 * releases: https://pypi.python.org/pypi/GridDataFormats
 
 * source code repository: https://github.com/orbeckst/GridDataFormats
+
+Additional contributions by:
+
+* Jesse Johnson <holocronweaver> (CCP4 format support)
+
+
