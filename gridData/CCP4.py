@@ -129,7 +129,7 @@ import warnings
 import struct
 import numpy
 
-from gOpenMol import Record
+from .gOpenMol import Record
 
 #TODO: Consider abstracting a binary data class to handle CCP4,
 # gOpenMol, and other binary formats.

@@ -27,7 +27,7 @@ Classes and functions
 
 import os
 import warnings
-import cPickle
+from six.moves import cPickle
 import numpy
 
 from . import OpenDX
