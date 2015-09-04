@@ -335,9 +335,9 @@ class field(DXclass):
 
     def sorted_components(self):
         """iterator that returns (component,object) in id order"""
-        for component,object in \
-                sorted(self.components.items(),key=lambda (c,o):o.id):
-            yield component,object
+        for component, object in \
+                sorted(self.components.items(), key=lambda c, o: o.id):
+            yield component, object
 
     def histogramdd(self):
         """Return array data as (edges,grid), i.e. a numpy nD histogram."""
@@ -826,4 +826,3 @@ class DXParser(object):
             return self.tokens.pop(0)  # singlet
         except IndexError:
             raise DXParserNoTokens
-

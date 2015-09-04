@@ -102,12 +102,6 @@ The following formats are available (:ref:`supported-file-formats`):
    pickle
         python pickle file (:mod:`pickle`)
 
-Exceptions
-----------
-
-.. autoexception:`gridDataWarning`
-
-
 
 
 Examples
@@ -194,11 +188,9 @@ or even simpler ::
    abruptly.
 """
 
-__all__ =  ['Grid', 'OpenDX','gOpenMol']
-__version__ = '0.3.0-dev'
-
-class gridDataWarning(Warning):
-    """Warns of a problem specific to the gridData module."""
-    pass
-
 from .core import Grid
+from . import OpenDX
+from . import gOpenMol
+
+__all__ = ['Grid', 'OpenDX', 'gOpenMol']
+__version__ = '0.3.0-dev'
