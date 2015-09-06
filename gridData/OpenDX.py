@@ -93,30 +93,6 @@ import numpy
 import re
 from six.moves import range
 
-try:
-    sorted([])
-except NameError:
-    def sorted(iterable, cmp=None, key=None, reverse=False):
-        """sorted(iterable, cmp=None, key=None, reverse=False) --> new sorted list
-        Naive pre python 2.4 compatibility fudge.
-
-        With key, cmp must make use of triplets (key,int,value).
-        It's a fudge after all.
-        """
-        L = list(iterable)
-        args = ()
-        if cmp is not None:
-            args = (cmp,)
-        if key is None:
-            L.sort(*args)
-        else:
-            # decorate-sort-undecorate
-            deco = [(key(x),i,x) for i,x in enumerate(L)]
-            deco.sort(*args)
-            L[:] = [y[2] for y in deco]
-        if reverse:
-            L.reverse()
-        return L
 
 class DXclass(object):
     """'class' object as defined by OpenDX"""
