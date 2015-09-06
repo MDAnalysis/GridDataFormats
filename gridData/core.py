@@ -210,10 +210,10 @@ class Grid(object):
               spline interpolation function that can generated a value for
               coordinate
         """
-        self.delta = numpy.diag(
-            map(lambda e: (e[-1] - e[0]) / (len(e) - 1), self.edges))
+        self.delta = numpy.diag(list(
+            map(lambda e: (e[-1] - e[0]) / (len(e) - 1), self.edges)))
         self.midpoints = self._midpoints(self.edges)
-        self.origin = numpy.array(map(lambda m: m[0], self.midpoints))
+        self.origin = numpy.array(list(map(lambda m: m[0], self.midpoints)))
         if not self.__interpolated is None:
             # only update if we are using it
             self.__interpolated = self._interpolationFunctionFactory()
