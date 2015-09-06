@@ -128,6 +128,7 @@ from __future__ import with_statement
 import warnings
 import struct
 import numpy
+from six.moves import range
 
 from .gOpenMol import Record
 
@@ -240,7 +241,7 @@ class CCP4(object):
         """
         # TODO: Add triclinic cell support.
         return [self.delta[d,d] * numpy.arange(self.shape[d]+1) + self.origin[d]\
-                - 0.5*self.delta[d,d]     for d in xrange(self.rank)]
+                - 0.5*self.delta[d,d]     for d in range(self.rank)]
 
     def _delta(self):
         h = self.header

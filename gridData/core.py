@@ -26,14 +26,13 @@ Classes and functions
 """
 
 import os
-import warnings
-from six.moves import cPickle
+from six.moves import cPickle, range
 import numpy
 
 from . import OpenDX
 from . import gOpenMol
 from . import CCP4
-from . import gridDataWarning
+
 
 def _grid(x):
     """Access the underlying ndarray of a Grid object or return the object itself"""
@@ -212,7 +211,7 @@ class Grid(object):
               coordinate
         """
         self.delta = numpy.diag(
-            map(lambda e: (e[-1] - e[0])/(len(e)-1), self.edges) )
+            map(lambda e: (e[-1] - e[0]) / (len(e) - 1), self.edges))
         self.midpoints = self._midpoints(self.edges)
         self.origin = numpy.array(map(lambda m: m[0], self.midpoints))
         if not self.__interpolated is None:
@@ -480,7 +479,7 @@ class Grid(object):
               >>> FF = _interpolationFunction(XX,YY,ZZ)
             """
             _coordinates = numpy.array(
-                [_transform(coordinates[i], x0[i], dx[i]) for i in xrange(len(coordinates))])
+                [_transform(coordinates[i], x0[i], dx[i]) for i in range(len(coordinates))])
             return ndimage.map_coordinates(coeffs, _coordinates, prefilter=False,
                                            mode='nearest',cval=cval)
         # mode='wrap' would be ideal but is broken: http://projects.scipy.org/scipy/ticket/796
