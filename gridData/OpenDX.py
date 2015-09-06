@@ -91,6 +91,7 @@ from __future__ import with_statement
 
 import numpy
 import re
+from six.moves import range
 
 try:
     sorted([])
@@ -179,7 +180,7 @@ class gridpositions(DXclass):
         Only works for regular, orthonormal grids.
         """
         return [self.delta[d,d] * numpy.arange(self.shape[d]+1) + self.origin[d]\
-                - 0.5*self.delta[d,d]     for d in xrange(self.rank)]
+                - 0.5*self.delta[d,d]     for d in range(self.rank)]
 
 
 class gridconnections(DXclass):
@@ -215,7 +216,7 @@ class array(DXclass):
         anext = self.array.flat.next
         while 1:
             try:
-                for i in xrange(values_per_line):
+                for i in range(values_per_line):
                     file.write(str(anext())+"\t")  # I hope this is written even if the try fails..
                 file.write('\n')
             except StopIteration:
@@ -723,7 +724,7 @@ class DXParser(object):
             if not self.currentobject['size']:
                 raise DXParseError("array: missing number of items")
             self.currentobject['array'] = [self.__consume().value('REAL') \
-                                           for i in xrange(self.currentobject['size'])]
+                                           for i in range(self.currentobject['size'])]
         elif tok.equals('attribute'):
             # not used at the moment
             attribute = self.__consume().value()
