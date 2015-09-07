@@ -439,8 +439,7 @@ class Grid(object):
 
         :Raises: :exc:`TypeError` if not compatible.
         """
-        if not (numpy.isscalar(other) or numpy.all(numpy.concatenate(
-                self.edges) == numpy.concatenate(other.edges))):
+        if not (numpy.isreal(other) or self == other):
             raise TypeError(
                 "The argument can not be arithmetically combined with the grid. "
                 "It must be a scalar or a grid with identical edges. "
@@ -499,14 +498,27 @@ class Grid(object):
               >>> FF = _interpolationFunction(XX,YY,ZZ)
             """
             _coordinates = numpy.array(
-                [_transform(coordinates[i], x0[i], dx[i]) for i in range(len(coordinates))])
-            return ndimage.map_coordinates(coeffs, _coordinates, prefilter=False,
-                                           mode='nearest',cval=cval)
+                [_transform(coordinates[i], x0[i], dx[i]) for i in range(len(
+                    coordinates))])
+            return ndimage.map_coordinates(coeffs,
+                                           _coordinates,
+                                           prefilter=False,
+                                           mode='nearest',
+                                           cval=cval)
         # mode='wrap' would be ideal but is broken: http://projects.scipy.org/scipy/ticket/796
         return interpolatedF
 
     # basic arithmetic (left and right associative so that Grid1 + Grid2 but also
     # 3 * Grid and Grid/0.5 work)
+
+    def __eq__(self, other):
+        if not isinstance(other, Grid):
+            return False
+        return numpy.all(other.grid == self.grid) and numpy.all(
+            other.origin == self.origin) and other.edges == self.edges
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
     def __add__(self, other):
         """Return a new :class:`Grid` with the point-wise sum of the data.
