@@ -198,12 +198,6 @@ class Grid(object):
                  izip(self._min_edges(), self._max_edges(), newlengths)]
         return self.resample(edges)
 
-    def _edgify(self, midpoints):
-        """Return edges, given midpoints."""
-        m = numpy.asarray(midpoints)
-        return numpy.concatenate([[m[0] - 0.5 * (m[1] - m[0])], m, [m[-1
-                                     ] + 0.5 * (m[-1] - m[-2])]])
-
     def _update(self):
         """compute/update all derived data
 
