@@ -207,8 +207,8 @@ class Grid(object):
     def _edgify(self, midpoints):
         """Return edges, given midpoints."""
         m = numpy.asarray(midpoints)
-        return numpy.concatenate([[m[0] - 0.5 * (m[1] - m[0])], m,
-                                  [m[-1] + 0.5 * (m[-1] - m[-2])]])
+        return numpy.concatenate([[m[0] - 0.5 * (m[1] - m[0])], m, [m[-1
+                                     ] + 0.5 * (m[-1] - m[-2])]])
 
     def _update(self):
         """compute/update all derived data
@@ -426,9 +426,8 @@ class Grid(object):
         """Returns the coordinates of the centers of all grid cells as an iterator."""
         # crappy
         for idx in numpy.ndindex(self.grid.shape):
-            # TODO: CHECK that this delta*(i,j,k) is really correct, even for non-diagonal delta
-            # NOTE: origin is center of (0,0,0) (and already has index offset by 0.5)
-            yield numpy.sum(self.delta * numpy.asarray(idx),
+            # TODO: CHECK that this is really correct, even for non-diagonal delta
+            yield numpy.sum(self.delta / 2 + numpy.diag(idx),
                             axis=0) + self.origin
 
     def check_compatible(self, other):
@@ -560,6 +559,10 @@ class Grid(object):
         self.check_compatible(other)
         return Grid(self.grid / _grid(other), edges=self.edges)
 
+    def __truediv__(self, other):
+        self.check_compatible(other)
+        return Grid(self.grid / _grid(other), edges=self.edges)
+
     def __pow__(self, other):
         """Return a new :class:`Grid` with the point-wise power of the data.
 
@@ -608,6 +611,9 @@ class Grid(object):
         :Returns: :class:`Grid`
         """
         self.check_compatible(other)
+        return Grid(_grid(other) / self.grid, edges=self.edges)
+
+    def __rtruediv__(self, other):
         return Grid(_grid(other) / self.grid, edges=self.edges)
 
     def __rpow__(self, other):
