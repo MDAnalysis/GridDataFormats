@@ -507,9 +507,6 @@ class Grid(object):
         # mode='wrap' would be ideal but is broken: http://projects.scipy.org/scipy/ticket/796
         return interpolatedF
 
-    # basic arithmetic (left and right associative so that Grid1 + Grid2 but also
-    # 3 * Grid and Grid/0.5 work)
-
     def __eq__(self, other):
         if not isinstance(other, Grid):
             return False
@@ -520,42 +517,18 @@ class Grid(object):
         return not self.__eq__(other)
 
     def __add__(self, other):
-        """Return a new :class:`Grid` with the point-wise sum of the data.
-
-        g.__add__(h) <==> g + h
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(self.grid + _grid(other), edges=self.edges)
 
     def __sub__(self, other):
-        """Return a new :class:`Grid` with the point-wise difference of the data.
-
-        g.__sub__(h) <==> g - h
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(self.grid - _grid(other), edges=self.edges)
 
     def __mul__(self, other):
-        """Return a new :class:`Grid` with the point-wise product of the data.
-
-        g.__mul__(h) <==> g * h
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(self.grid * _grid(other), edges=self.edges)
 
     def __div__(self, other):
-        """Return a new :class:`Grid` with the point-wise quotient of the data.
-
-        g.__div__(h) <==> g/h
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(self.grid / _grid(other), edges=self.edges)
 
@@ -564,52 +537,22 @@ class Grid(object):
         return Grid(self.grid / _grid(other), edges=self.edges)
 
     def __pow__(self, other):
-        """Return a new :class:`Grid` with the point-wise power of the data.
-
-        g.__pow__(h) <==> numpy.power(g, h)
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(numpy.power(self.grid, _grid(other)), edges=self.edges)
 
     def __radd__(self, other):
-        """Return a new :class:`Grid` with the point-wise sum of the data.
-
-        g.__add__(h) <==> h + g
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(_grid(other) + self.grid, edges=self.edges)
 
     def __rsub__(self, other):
-        """Return a new :class:`Grid` with the point-wise difference of the data.
-
-        g.__sub__(h) <==> h - g
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(_grid(other) - self.grid, edges=self.edges)
 
     def __rmul__(self, other):
-        """Return a new :class:`Grid` with the point-wise product of the data.
-
-        g.__mul__(h) <==> h * g
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(_grid(other) * self.grid, edges=self.edges)
 
     def __rdiv__(self, other):
-        """Return a new :class:`Grid` with the point-wise quotient of the data.
-
-        g.__div__(h) <==> h/g
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(_grid(other) / self.grid, edges=self.edges)
 
@@ -617,12 +560,6 @@ class Grid(object):
         return Grid(_grid(other) / self.grid, edges=self.edges)
 
     def __rpow__(self, other):
-        """Return a new :class:`Grid` with the point-wise power of the data.
-
-        g.__pow__(h) <==> numpy.power(h, g)
-
-        :Returns: :class:`Grid`
-        """
         self.check_compatible(other)
         return Grid(numpy.power(_grid(other), self.grid), edges=self.edges)
 
