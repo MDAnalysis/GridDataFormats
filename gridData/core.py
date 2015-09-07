@@ -56,7 +56,7 @@ class Grid(object):
     default_format = 'DX'
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
-                 metadata=None, **kwargs):
+                 metadata={}, interpolation_spline_order=3):
         """
         Create a Grid object from data.
 
@@ -105,16 +105,12 @@ class Grid(object):
             'PYTHON': self._load_python,  # compatibility
         }
 
-        if metadata is None:
-            metadata = {}
-        self.metadata = metadata  # use this to record arbitrary data
+        self.metadata = metadata
         self.__interpolated = None  # cache for interpolated grid
-        self.__interpolation_spline_order = kwargs.pop(
-            'interpolation_spline_order', 3)
+        self.__interpolation_spline_order = interpolation_spline_order
         self.interpolation_cval = None  # default to using min(grid)
 
         if type(grid) is str:
-            # read from a file
             self.load(grid)
         elif not (grid is None or edges is None):
             # set up from histogramdd-type data
@@ -123,24 +119,22 @@ class Grid(object):
             self._update()
         elif not (grid is None or origin is None or delta is None):
             # setup from generic data
-            origin = numpy.squeeze(origin)
-            delta = numpy.squeeze(delta)
-            N = grid.ndim
-            assert (N == len(origin))
-            if delta.shape == (N, N):
-                if numpy.any(delta - numpy.diag(delta)):
-                    raise NotImplementedError(
-                        "Non-rectangular grids are not supported.")
-            elif delta.shape == (N, ):
-                delta = numpy.diagflat(delta)
-
-            elif delta.shape == ():
-                delta = numpy.diagflat(N * [delta])
-            else:
-                raise ValueError('delta = %r has the wrong shape' % delta)
+            origin = numpy.asarray(origin)
+            delta = numpy.asarray(delta)
+            if len(origin) != grid.ndim:
+                raise TypeError(
+                    "Dimension of origin is not the same as grid dimension.")
+            if delta.shape == () and numpy.isreal(delta):
+                delta = numpy.ones(grid.ndim) * delta
+            elif delta.ndim > 1:
+                raise NotImplementedError(
+                    "Non-rectangular grids are not supported.")
+            elif len(delta) != grid.ndim:
+                raise TypeError("delta should be scalar or array-like of"
+                                "len(grid.ndim)")
             # note that origin is CENTER so edges must be shifted by -0.5*delta
             self.edges = [origin[dim] +
-                          (numpy.arange(m + 1) - 0.5) * delta[dim, dim]
+                          (numpy.arange(m + 1) - 0.5) * delta[dim]
                           for dim, m in enumerate(grid.shape)]
             self.grid = numpy.asarray(grid)
             self._update()
@@ -226,7 +220,7 @@ class Grid(object):
               spline interpolation function that can generated a value for
               coordinate
         """
-        self.delta = numpy.diag(list(
+        self.delta = numpy.array(list(
             map(lambda e: (e[-1] - e[0]) / (len(e) - 1), self.edges)))
         self.midpoints = self._midpoints(self.edges)
         self.origin = numpy.array(list(map(lambda m: m[0], self.midpoints)))
@@ -324,7 +318,7 @@ class Grid(object):
         ccp4 = CCP4.CCP4()
         ccp4.read(filename)
         grid, edges = ccp4.histogramdd()
-        self.__init_n_(grid=grid, edges=edges, metadata=self.metadata)
+        self.__init__(grid=grid, edges=edges, metadata=self.metadata)
 
     def _load_dx(self, filename):
         """Initializes Grid from a OpenDX file."""

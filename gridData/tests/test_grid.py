@@ -10,7 +10,7 @@ def test_dx():
     POINTS = 8
     assert_array_equal(g.grid.flat, np.ones(POINTS))
     assert_equal(g.grid.size, POINTS)
-    assert_array_equal(g.delta, np.eye(3))
+    assert_array_equal(g.delta, np.ones(3))
     assert_array_equal(g.origin, np.zeros(3))
 
 
@@ -21,6 +21,18 @@ class TestGrid:
         self.origin = np.zeros(3)
         self.delta = np.ones(3)
         self.grid = Grid(self.griddata, origin=self.origin, delta=self.delta)
+
+    def test_init(self):
+        g = Grid(self.griddata, origin=self.origin, delta=1)
+        assert_array_equal(g.delta, self.delta)
+
+    @raises(TypeError)
+    def test_init_wrong_origin(self):
+        Grid(self.griddata, origin=np.ones(4), delta=self.delta)
+
+    @raises(TypeError)
+    def test_init_wrong_delta(self):
+        Grid(self.griddata, origin=self.origin, delta=np.ones(4))
 
     def test_equality(self):
         assert self.grid == self.grid
@@ -80,3 +92,8 @@ class TestGrid:
     @raises(TypeError)
     def test_wrong_compatibile_type(self):
         self.grid.check_compatible("foo")
+
+    @raises(NotImplementedError)
+    def test_non_orthonormal_boxes(self):
+        delta = np.eye(3)
+        Grid(self.griddata, origin=self.origin, delta=delta)
