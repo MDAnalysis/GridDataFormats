@@ -97,3 +97,13 @@ class TestGrid:
     def test_non_orthonormal_boxes(self):
         delta = np.eye(3)
         Grid(self.griddata, origin=self.origin, delta=delta)
+
+    def test_centers(self):
+        """this only checks the edges. If you know an alternative
+        algorithm that isn't an exact duplicate of the one in
+        g.centers to test this please implement it."""
+        g = Grid(self.griddata, origin=np.ones(3), delta=self.delta)
+        centers = np.array(list(g.centers()))
+        assert_array_equal(centers[0], g.origin)
+        assert_array_equal(centers[-1] - g.origin,
+                           (np.array(g.grid.shape) - 1) * self.delta)

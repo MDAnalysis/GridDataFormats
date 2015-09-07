@@ -411,12 +411,10 @@ class Grid(object):
         self.export(filename, file_format="pickle")
 
     def centers(self):
-        """Returns the coordinates of the centers of all grid cells as an iterator."""
-        # crappy
+        """Returns the coordinates of the centers of all grid cells as an
+        iterator."""
         for idx in numpy.ndindex(self.grid.shape):
-            # TODO: CHECK that this is really correct, even for non-diagonal delta
-            yield numpy.sum(self.delta / 2 + numpy.diag(idx),
-                            axis=0) + self.origin
+            yield self.delta * numpy.array(idx) + self.origin
 
     def check_compatible(self, other):
         """Check if *other* can be used in an arithmetic operation.
