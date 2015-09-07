@@ -25,8 +25,9 @@ Classes and functions
 """
 
 import os
-from six.moves import cPickle, range
+from six.moves import cPickle, range, zip
 import numpy
+from scipy import ndimage
 
 from . import OpenDX
 from . import gOpenMol
@@ -187,15 +188,13 @@ class Grid(object):
         return Grid(newgrid, edges)
 
     def resample_factor(self, factor):
-        """Resample to a new regular grid with factor*oldN cells along each dimension."""
-        from itertools import izip
+        """Resample to a new regular grid with factor*oldN cells along
+        each dimension."""
         # new number of edges N' = (N-1)*f + 1
         newlengths = [(N - 1) * float(factor) + 1 for N in self._len_edges()]
-        edges = [numpy.linspace(start,
-                                stop,
-                                num=N,
-                                endpoint=True) for (start, stop, N) in
-                 izip(self._min_edges(), self._max_edges(), newlengths)]
+        edges = [numpy.linspace(start, stop, num=N, endpoint=True)
+                 for (start, stop, N) in
+                 zip(self._min_edges(), self._max_edges(), newlengths)]
         return self.resample(edges)
 
     def _update(self):
@@ -449,8 +448,6 @@ class Grid(object):
         # http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html#scipy.interpolate.griddata
         # (does it work for nD?)
 
-        from scipy import ndimage
-
         if spline_order is None:
             # must be compatible with whatever :func:`scipy.ndimage.spline_filter` takes.
             spline_order = self.interpolation_spline_order
@@ -468,7 +465,7 @@ class Grid(object):
 
         coeffs = ndimage.spline_filter(_data, order=spline_order)
         x0 = self.origin
-        dx = self.delta.diagonal()  # fixed dx required!!
+        dx = self.delta
 
         def _transform(cnew, c0, dc):
             return (numpy.atleast_1d(cnew) - c0) / dc
@@ -572,7 +569,7 @@ def ndmeshgrid(*arrs):
     """
     #arrs = tuple(reversed(arrs)) <-- wrong on stackoverflow.com
     arrs = tuple(arrs)
-    lens = map(len, arrs)
+    lens = list(map(len, arrs))
     dim = len(arrs)
 
     sz = 1

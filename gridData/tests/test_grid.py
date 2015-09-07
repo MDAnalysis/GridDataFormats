@@ -1,5 +1,5 @@
 import numpy as np
-from numpy.testing import assert_array_equal
+from numpy.testing import assert_array_equal, assert_array_almost_equal
 from nose.tools import assert_equal, raises
 
 from gridData import Grid
@@ -107,3 +107,11 @@ class TestGrid:
         assert_array_equal(centers[0], g.origin)
         assert_array_equal(centers[-1] - g.origin,
                            (np.array(g.grid.shape) - 1) * self.delta)
+
+    def test_resample_factor(self):
+        g = self.grid.resample_factor(2)
+        assert_array_equal(g.delta, np.ones(3) * .5)
+        assert_array_equal(g.grid.shape, np.ones(3) * 6)
+        # check that the edges are the same
+        assert_array_almost_equal(g.grid[::5, ::5, ::5],
+                                  self.grid.grid[::2, ::2, ::2])
