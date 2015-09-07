@@ -464,11 +464,13 @@ class Grid(object):
         except AttributeError:
             _data = data
 
-        coeffs = ndimage.spline_filter(_data,order=spline_order)
+        coeffs = ndimage.spline_filter(_data, order=spline_order)
         x0 = self.origin
         dx = self.delta.diagonal()    # fixed dx required!!
+
         def _transform(cnew, c0, dc):
             return (numpy.atleast_1d(cnew) - c0)/dc
+
         def interpolatedF(*coordinates):
             """B-spline function over the data grid(x,y,z).
 
