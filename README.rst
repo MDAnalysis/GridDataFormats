@@ -2,7 +2,9 @@
  README for gridDataFormats
 ============================
 
-|build|
+|build| |cov|
+
+|docs|
 
 The **gridDataFormats** package provides classes to unify reading and
 writing n-dimensional datasets. One can read grid data from files,
@@ -65,3 +67,12 @@ welcome. Please fork the repository and submit a `pull request`_.
 .. |build| image:: https://travis-ci.org/MDAnalysis/GridDataFormats.svg?branch=master
                    :alt: Build Status
                    :target: https://travis-ci.org/MDAnalysis/GridDataFormats
+    
+.. |cov|   image:: https://coveralls.io/repos/MDAnalysis/mdanalysis/badge.svg?branch=develop
+    :alt: Coverage Status
+    :target: https://coveralls.io/r/MDAnalysis/GridDataFormats?branch=master
+    
+.. |docs| image:: https://readthedocs.org/projects/griddataformats/badge/?version=latest
+    :alt: Documentation Status    
+    :target: https://readthedocs.org/projects/griddataformats/?badge=latest
+    
