@@ -71,8 +71,10 @@
 <span class="c">#</span>
 <span class="c"># Part of the documentation and format specification:</span>
 <span class="c"># Copyright Science and Technologies Facilities Council, 2015.</span>
-<span class="sd">&quot;&quot;&quot;:mod:`CCP4` --- the CCP4 volumetric data format</span>
-<span class="sd">===========================================</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:`CCP4` --- the CCP4 volumetric data format</span>
+<span class="sd">===============================================</span>
 
 <span class="sd">.. versionadded:: 0.3.0</span>
 
@@ -171,14 +173,14 @@
 <span class="sd">  57-256  LABEL(20,10)    10  80 character text labels (ie. A4 format)</span>
 
 <span class="sd">Symmetry records follow - if any - stored as text as in International</span>
-<span class="sd">Tables, operators separated by `*` and grouped into &#39;lines&#39; of 80</span>
+<span class="sd">Tables, operators separated by ``*`` and grouped into &#39;lines&#39; of 80</span>
 <span class="sd">characters (i.e. symmetry operators do not cross the ends of the</span>
-<span class="sd">80-character &#39;lines&#39; and the &#39;lines&#39; do not terminate in a `*`).</span>
+<span class="sd">80-character &#39;lines&#39; and the &#39;lines&#39; do not terminate in a ``*``).</span>
 
 <span class="sd">Map data array follows.</span>
 
 <span class="sd">Note on the machine stamp: The machine stamp (word 54) is a 32-bit</span>
-<span class="sd">quantity containing a set of four `nibbles&#39; (half-bytes) - only half</span>
+<span class="sd">quantity containing a set of four &#39;nibbles&#39; (half-bytes) - only half</span>
 <span class="sd">the space is used. Each nibble is a number specifying the</span>
 <span class="sd">representation of (in C terms) double (d), float (f), int (i) and</span>
 <span class="sd">unsigned char (c) types. Thus each stamp is of the form 0xdfic0000.</span>

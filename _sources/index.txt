@@ -7,6 +7,9 @@
 GridDataFormats: Handling volumetric data in Python
 ===================================================
 
+:Release: |release|
+:Date: |today|
+
 The :mod:`gridData` module contains a simple class
 :class:`~gridData.core.Grid` that makes it easier to work with data on
 a regular grid. A limited number of commonly used formats can be read
