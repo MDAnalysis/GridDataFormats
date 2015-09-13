@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; gridDataFormats 0.3.0-dev documentation</title>
+    <title>3.2.1. OpenDX — routines to read and write simple OpenDX files &mdash; gridDataFormats 0.3.0-dev documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="gridDataFormats 0.3.0-dev documentation" href="../../index.html" />
-    <link rel="up" title="1. Formats" href="../formats.html" />
-    <link rel="next" title="&lt;no title&gt;" href="gOpenMol.html" />
-    <link rel="prev" title="1. Formats" href="../formats.html" /> 
+    <link rel="up" title="3. Formats" href="../formats.html" />
+    <link rel="next" title="3.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" />
+    <link rel="prev" title="3. Formats" href="../formats.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,23 +37,36 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="gOpenMol.html" title="&lt;no title&gt;"
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gOpenMol.html" title="3.2.2. gOpenMol — the gOpenMol plt format"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../formats.html" title="1. Formats"
+          <a href="../formats.html" title="3. Formats"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../formats.html" accesskey="U">1. Formats</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../formats.html" accesskey="U">3. Formats</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.2.1. <code class="docutils literal"><span class="pre">OpenDX</span></code> &#8212; routines to read and write simple OpenDX files</a><ul>
+<li><a class="reference internal" href="#building-a-dx-object-from-a-numpy-array-a">3.2.1.1. Building a dx object from a numpy array <code class="docutils literal"><span class="pre">A</span></code></a></li>
+<li><a class="reference internal" href="#building-a-dx-object-from-a-dx-file">3.2.1.2. Building a dx object from a dx file</a></li>
+<li><a class="reference internal" href="#classes-and-functions">3.2.1.3. Classes and functions</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="../formats.html"
-                        title="previous chapter">1. Formats</a></p>
+                        title="previous chapter">3. Formats</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="gOpenMol.html"
-                        title="next chapter">&lt;no title&gt;</a></p>
+                        title="next chapter">3.2.2. <code class="docutils literal"><span class="pre">gOpenMol</span></code> &#8212; the gOpenMol plt format</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -82,7 +95,267 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  
+  <span class="target" id="module-gridData.OpenDX"></span><div class="section" id="opendx-routines-to-read-and-write-simple-opendx-files">
+<h1>3.2.1. <code class="xref py py-mod docutils literal"><span class="pre">OpenDX</span></code> &#8212; routines to read and write simple OpenDX files<a class="headerlink" href="#opendx-routines-to-read-and-write-simple-opendx-files" title="Permalink to this headline">¶</a></h1>
+<p>The OpenDX format for multi-dimensional grid data. OpenDX is a free
+visualization software, see <a class="reference external" href="http://www.opendx.org">http://www.opendx.org</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This module only implements a primitive subset, sufficient
+to represent n-dimensional regular grids.</p>
+</div>
+<p>The OpenDX scalar file format is specified in Appendix <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm">B.2 Data
+Explorer Native Files</a> <a class="footnote-reference" href="#opendxformat" id="id1">[1]</a>.</p>
+<p>If you want to build a dx object from your data you can either use the
+convenient <a class="reference internal" href="../core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal"><span class="pre">Grid</span></code></a> class from the top level
+module (<code class="xref py py-class docutils literal"><span class="pre">gridData.Grid</span></code>) or see the lower-level methods
+described below.</p>
+<div class="section" id="building-a-dx-object-from-a-numpy-array-a">
+<h2>3.2.1.1. Building a dx object from a numpy array <code class="docutils literal"><span class="pre">A</span></code><a class="headerlink" href="#building-a-dx-object-from-a-numpy-array-a" title="Permalink to this headline">¶</a></h2>
+<p>If you have a numpy array <code class="docutils literal"><span class="pre">A</span></code> that represents a density in cartesian
+space then you can construct a dx object (named a <em>field</em> in OpenDX
+parlance) if you provide some additional information that fixes the
+coordinate system in space and defines the units along the axes.</p>
+<p>The following data are required:</p>
+<dl class="docutils">
+<dt>grid</dt>
+<dd>numpy nD array (typically a nD histogram)</dd>
+<dt>grid.shape</dt>
+<dd>the shape of the array</dd>
+<dt>origin</dt>
+<dd>the cartesian coordinates of the center of the (0,0,..,0) grid cell</dd>
+<dt>delta</dt>
+<dd><span class="math">\(n \times n\)</span> array with the length of a grid cell along
+each axis; for regular rectangular grids the off-diagonal
+elements are 0 and the diagonal ones correspond to the
+&#8216;bin width&#8217; of the histogram, eg <code class="docutils literal"><span class="pre">delta[0,0]</span> <span class="pre">=</span> <span class="pre">1.0</span></code> (Angstrom)</dd>
+</dl>
+<p>For example, to build a <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal"><span class="pre">field</span></code></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dx</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;density&#39;</span><span class="p">)</span>
+<span class="n">dx</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;positions&#39;</span><span class="p">,</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">gridpositions</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">))</span>
+<span class="n">dx</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;connections&#39;</span><span class="p">,</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">gridconnections</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="n">dx</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">grid</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>or all with the constructor:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dx</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;density&#39;</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+          <span class="n">positions</span><span class="o">=</span><span class="n">OpenDX</span><span class="o">.</span><span class="n">gridpositions</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">delta</span><span class="p">),</span>
+          <span class="n">connections</span><span class="o">=</span><span class="n">OpenDX</span><span class="o">.</span><span class="n">gridconnections</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
+          <span class="n">data</span><span class="o">=</span><span class="n">OpenDX</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">grid</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-a-dx-object-from-a-dx-file">
+<h2>3.2.1.2. Building a dx object from a dx file<a class="headerlink" href="#building-a-dx-object-from-a-dx-file" title="Permalink to this headline">¶</a></h2>
+<p>One can also read data from an existing dx file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dx</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">dx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;file.dx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The dx <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal"><span class="pre">field</span></code></a> object has a method
+<code class="xref py py-meth docutils literal"><span class="pre">histogramdd()</span></code> that produces output identical to the
+<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.9)"><code class="xref py py-func docutils literal"><span class="pre">numpy.histogramdd()</span></code></a> function. In this way, one can store nD
+histograms in a portable and universal manner:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">histogram</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="opendxformat" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The original link to the OpenDX file format specs
+<a class="reference external" href="http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF">http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF</a> is dead so I am linking
+to an archived copy at the Internet Archive , <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm">B.2 Data Explorer Native Files</a>.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes-and-functions">
+<h2>3.2.1.3. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="gridData.OpenDX.DXInitObject">
+<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXInitObject</code><span class="sig-paren">(</span><em>classtype</em>, <em>classid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Storage class that holds data to initialize one of the &#8216;real&#8217;
+classes such as OpenDX.array, OpenDX.gridconnections, ...</p>
+<p>All variables are stored in args which will be turned into the
+arguments for the DX class.</p>
+<dl class="method">
+<dt id="gridData.OpenDX.DXInitObject.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the corresponding DXclass from the data.</p>
+<p>class = DXInitObject.initialize()</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="gridData.OpenDX.DXParseError">
+<em class="property">exception </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXParseError</code><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParseError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParseError" title="Permalink to this definition">¶</a></dt>
+<dd><p>general exception for parsing errors in DX files</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridData.OpenDX.DXParser">
+<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXParser</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Brain-dead baroque implementation to read a simple (VMD) dx file.</p>
+<p>Requires a OpenDX.field instance.</p>
+<ol class="arabic simple">
+<li>scan for &#8216;object&#8217; lines:
+&#8216;object&#8217; id &#8216;class&#8217; class  [data]
+[data ...]</li>
+<li>parse data according to class</li>
+<li>construct dx field from classes</li>
+</ol>
+<dl class="method">
+<dt id="gridData.OpenDX.DXParser.apply_parser">
+<code class="descname">apply_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.apply_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.apply_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the current parser to the token stream.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.OpenDX.DXParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>DXfield</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the dx file and construct a DX field object with component classes.</p>
+<p>A <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal"><span class="pre">field</span></code></a> instance <em>DXfield</em> must be provided to be
+filled by the parser:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DXfield_object</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="n">parse</span><span class="p">(</span><span class="n">DXfield_object</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A tokenizer turns the dx file into a stream of tokens. A
+hierarchy of parsers examines the stream. The level-0 parser
+(&#8216;general&#8217;) distinguishes comments and objects (level-1). The
+object parser calls level-3 parsers depending on the object
+found. The basic idea is that of a &#8216;state machine&#8217;. There is
+one parser active at any time. The main loop is the general
+parser.</p>
+<ul class="simple">
+<li>Constructing the dx objects with classtype and classid is
+not implemented yet.</li>
+<li>Unknown tokens raise an exception.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.OpenDX.DXParser.set_parser">
+<code class="descname">set_parser</code><span class="sig-paren">(</span><em>parsername</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.set_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.set_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set parsername as the current parser.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.OpenDX.DXParser.use_parser">
+<code class="descname">use_parser</code><span class="sig-paren">(</span><em>parsername</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.use_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.use_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set parsername as the current parser and apply it.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="gridData.OpenDX.DXParserNoTokens">
+<em class="property">exception </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXParserNoTokens</code><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParserNoTokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParserNoTokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>raised when the token buffer is exhausted</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridData.OpenDX.DXclass">
+<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXclass</code><span class="sig-paren">(</span><em>classid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8216;class&#8217; object as defined by OpenDX</p>
+<dl class="method">
+<dt id="gridData.OpenDX.DXclass.ndformat">
+<code class="descname">ndformat</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass.ndformat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass.ndformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string with as many repetitions of s as self
+has dimensions (derived from shape)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.OpenDX.DXclass.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>optstring=''</em>, <em>quote=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>write the &#8216;object&#8217; line; additional args are packed in string</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridData.OpenDX.array">
+<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">array</code><span class="sig-paren">(</span><em>classid</em>, <em>array=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.array" title="Permalink to this definition">¶</a></dt>
+<dd><p>OpenDX array class</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridData.OpenDX.field">
+<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">field</code><span class="sig-paren">(</span><em>classid='0'</em>, <em>components=None</em>, <em>comments=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field" title="Permalink to this definition">¶</a></dt>
+<dd><p>OpenDX container class</p>
+<p>The <em>field</em> is the top-level object and represents the whole
+OpenDX file. It contains a number of other objects.</p>
+<p>Methods overview:</p>
+<dl class="docutils">
+<dt><code class="xref py py-meth docutils literal"><span class="pre">add()</span></code></dt>
+<dd>add a component to the field</dd>
+<dt><code class="xref py py-meth docutils literal"><span class="pre">add_comments()</span></code></dt>
+<dd>add comments</dd>
+<dt><a class="reference internal" href="#gridData.OpenDX.field.write" title="gridData.OpenDX.field.write"><code class="xref py py-meth docutils literal"><span class="pre">write()</span></code></a></dt>
+<dd>write OpenDX file to file descriptor; only simple regular
+arrays are supported. File should be readable by VMD.</dd>
+<dt><a class="reference internal" href="#gridData.OpenDX.field.read" title="gridData.OpenDX.field.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a></dt>
+<dd>construct the field from a dx file</dd>
+</dl>
+<p>Instantiated a DX object from this class and add subclasses with
+<code class="xref py py-meth docutils literal"><span class="pre">append()</span></code>.</p>
+<dl class="method">
+<dt id="gridData.OpenDX.field.histogramdd">
+<code class="descname">histogramdd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.histogramdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.histogramdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return array data as (edges,grid), i.e. a numpy nD histogram.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.OpenDX.field.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read DX field from file.</p>
+<p>dx = OpenDX.field.read(dxfile)</p>
+<p>The classid is discarded and replaced with the one from the file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.OpenDX.field.sorted_components">
+<code class="descname">sorted_components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.sorted_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.sorted_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>iterator that returns (component,object) in id order</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridData.OpenDX.field.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the complete dx object to the file.</p>
+<p>write(filename)</p>
+<p>This is the simple OpenDX format which includes the data into
+the header via the &#8216;object array ... data follows&#8217; statement.</p>
+<p>The format should be compatible with VMD&#8217;s dx reader plugin.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridData.OpenDX.gridconnections">
+<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">gridconnections</code><span class="sig-paren">(</span><em>classid</em>, <em>shape=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridconnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridconnections" title="Permalink to this definition">¶</a></dt>
+<dd><p>OpenDX gridconnections class</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridData.OpenDX.gridpositions">
+<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">gridpositions</code><span class="sig-paren">(</span><em>classid</em>, <em>shape=None</em>, <em>origin=None</em>, <em>delta=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridpositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridpositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>OpenDX gridpositions class.</p>
+<p>shape     D-tuplet describing size in each dimension
+origin    coordinates of the centre of the grid cell with index 0,0,...,0
+delta     DxD array describing the deltas</p>
+<dl class="method">
+<dt id="gridData.OpenDX.gridpositions.edges">
+<code class="descname">edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridpositions.edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridpositions.edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</p>
+<p>Only works for regular, orthonormal grids.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
 
           </div>
         </div>
@@ -96,13 +369,16 @@
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="gOpenMol.html" title="&lt;no title&gt;"
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gOpenMol.html" title="3.2.2. gOpenMol — the gOpenMol plt format"
              >next</a> |</li>
         <li class="right" >
-          <a href="../formats.html" title="1. Formats"
+          <a href="../formats.html" title="3. Formats"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../formats.html" >1. Formats</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../formats.html" >3. Formats</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

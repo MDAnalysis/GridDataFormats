@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1. Formats &mdash; gridDataFormats 0.3.0-dev documentation</title>
+    <title>3. Formats &mdash; gridDataFormats 0.3.0-dev documentation</title>
     
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="gridDataFormats 0.3.0-dev documentation" href="../index.html" />
-    <link rel="next" title="&lt;no title&gt;" href="formats/OpenDX.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="overview.html" /> 
+    <link rel="next" title="3.2.1. OpenDX — routines to read and write simple OpenDX files" href="formats/OpenDX.html" />
+    <link rel="prev" title="1. gridData – Handling grids of data" href="overview.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,10 +36,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="formats/OpenDX.html" title="&lt;no title&gt;"
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="formats/OpenDX.html" title="3.2.1. OpenDX — routines to read and write simple OpenDX files"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="overview.html" title="&lt;no title&gt;"
+          <a href="overview.html" title="1. gridData – Handling grids of data"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li> 
       </ul>
@@ -48,19 +51,19 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">1. Formats</a><ul>
-<li><a class="reference internal" href="#supported-file-formats">1.1. Supported file formats</a></li>
-<li><a class="reference internal" href="#format-specific-modules">1.2. Format-specific modules</a></li>
+<li><a class="reference internal" href="#">3. Formats</a><ul>
+<li><a class="reference internal" href="#supported-file-formats">3.1. Supported file formats</a></li>
+<li><a class="reference internal" href="#format-specific-modules">3.2. Format-specific modules</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="overview.html"
-                        title="previous chapter">&lt;no title&gt;</a></p>
+                        title="previous chapter">1. <code class="docutils literal"><span class="pre">gridData</span></code> &#8211; Handling grids of data</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="formats/OpenDX.html"
-                        title="next chapter">&lt;no title&gt;</a></p>
+                        title="next chapter">3.2.1. <code class="docutils literal"><span class="pre">OpenDX</span></code> &#8212; routines to read and write simple OpenDX files</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -90,20 +93,20 @@
           <div class="body" role="main">
             
   <div class="section" id="formats">
-<h1>1. Formats<a class="headerlink" href="#formats" title="Permalink to this headline">¶</a></h1>
+<h1>3. Formats<a class="headerlink" href="#formats" title="Permalink to this headline">¶</a></h1>
 <p>A limited number of commonly used formats can be read or written. The
 formats are particularly suitable to interface with molecular
 visualization tools such as <a class="reference external" href="http://www.ks.uiuc.edu/Research/vmd/">VMD</a> or <a class="reference external" href="http://www.pymol.org/">PyMOL</a>.</p>
 <p>Adding new formats is not difficult and user-contributed
 format reader/writer can be easily integrated&#8212;send a <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/pulls">pull request</a>.</p>
 <div class="section" id="supported-file-formats">
-<span id="id1"></span><h2>1.1. Supported file formats<a class="headerlink" href="#supported-file-formats" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>3.1. Supported file formats<a class="headerlink" href="#supported-file-formats" title="Permalink to this headline">¶</a></h2>
 <p>The package can be easily extended. The <a class="reference external" href="http://www.opendx.org/">OpenDX</a> format is widely
 understood by many molecular viewers and is sufficient for many
 applications that were encountered so far. Hence, at the moment only a
 small number of file formats is directly supported.</p>
 <table border="1" class="docutils" id="id2">
-<caption><span class="caption-text">Available file formats in <code class="xref py py-mod docutils literal"><span class="pre">gridData</span></code></span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-text">Available file formats in <a class="reference internal" href="overview.html#module-gridData" title="gridData"><code class="xref py py-mod docutils literal"><span class="pre">gridData</span></code></a></span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="14%" />
 <col width="13%" />
@@ -148,9 +151,12 @@ small number of file formats is directly supported.</p>
 </table>
 </div>
 <div class="section" id="format-specific-modules">
-<h2>1.2. Format-specific modules<a class="headerlink" href="#format-specific-modules" title="Permalink to this headline">¶</a></h2>
+<h2>3.2. Format-specific modules<a class="headerlink" href="#format-specific-modules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-<ul class="simple">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html">3.2.1. <code class="docutils literal"><span class="pre">OpenDX</span></code> &#8212; routines to read and write simple OpenDX files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/gOpenMol.html">3.2.2. <code class="docutils literal"><span class="pre">gOpenMol</span></code> &#8212; the gOpenMol plt format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/CCP4.html">3.2.3. <code class="docutils literal"><span class="pre">CCP4</span></code> &#8212; the CCP4 volumetric data format</a></li>
 </ul>
 </div>
 </div>
@@ -169,10 +175,13 @@ small number of file formats is directly supported.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="formats/OpenDX.html" title="&lt;no title&gt;"
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="formats/OpenDX.html" title="3.2.1. OpenDX — routines to read and write simple OpenDX files"
              >next</a> |</li>
         <li class="right" >
-          <a href="overview.html" title="&lt;no title&gt;"
+          <a href="overview.html" title="1. gridData – Handling grids of data"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li> 
       </ul>
