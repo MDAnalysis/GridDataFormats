@@ -35,6 +35,10 @@ sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
+# make sure sphinx always uses the current branch
+sys.path.insert(0, os.path.abspath('../..'))
+
+
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -238,7 +242,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'griddataformats', u'gridDataFormats Documentation',
-     [u'Oliver Beckstein'], 1)
+     [u'Oliver Beckstein', u'Max Linke', u'Jesse Johnson'], 1)
 ]
 
 # If true, show URL addresses after external links.
