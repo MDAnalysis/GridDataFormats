@@ -245,7 +245,7 @@ class CCP4(object):
         ccp4file.seek(52 * 4)
         mapbin = ccp4file.read(4)
         for flag in '@=<>':
-            mapstr = struct.unpack(flag + '4s', mapbin)[0]
+            mapstr = struct.unpack(flag + '4s', mapbin)[0].decode('utf-8')
             if mapstr.upper() == 'MAP ':
                 bsaflag = flag
                 break  # Only possible value according to spec.
@@ -291,7 +291,7 @@ class CCP4(object):
             binlabel = ccp4file.read(80 * header['nlabl'])
             flag = bsaflag + str(80 * header['nlabl']) + 's'
             label = struct.unpack(flag, binlabel)[0]
-            header['label'] = label.rstrip('\x00')
+            header['label'] = label.decode('utf-8').rstrip('\x00')
         else:
             header['label'] = None
         ccp4file.seek(256 * 4)
