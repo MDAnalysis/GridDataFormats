@@ -4,10 +4,8 @@
 #
 # Part of the documentation and format specification:
 # Copyright Science and Technologies Facilities Council, 2015.
-
-"""
-:mod:`CCP4` --- the CCP4 volumetric data format
-===============================================
+""":mod:`CCP4` --- the CCP4 volumetric data format
+===========================================
 
 .. versionadded:: 0.3.0
 
@@ -27,7 +25,9 @@ Background
 
 CCP4 format: http://www.ccp4.ac.uk/html/maplib.html#description
 
-Used to be more carefully documented at http://lsbr.niams.nih.gov/3demc/3demc_maplib.html but currently this is only accessible through the Google cache
+Used to be more carefully documented at
+http://lsbr.niams.nih.gov/3demc/3demc_maplib.html but currently this is only
+accessible through the Google cache
 http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html
 
 Grid data CCP4 file format
@@ -123,16 +123,15 @@ Classes
 
 """
 
-from __future__ import with_statement
-
 import warnings
 import struct
-import numpy
+import numpy as np
 from six.moves import range
 
 from .gOpenMol import Record
 
-#TODO: Consider abstracting a binary data class to handle CCP4,
+
+# TODO: Consider abstracting a binary data class to handle CCP4,
 # gOpenMol, and other binary formats.
 class CCP4(object):
     """A class to represent a CCP4_ file.
@@ -164,69 +163,54 @@ class CCP4(object):
 
     _data_bintype = 'f'
 
-    _header_struct =  (
-        Record('nc',   'I'), # of columns (fastest varying index.)
-        Record('nr',   'I'), # of rows
-        Record('ns',   'I'), # of sections (slowest varying index.)
-        Record('mode',   'I', {
+    _header_struct = (
+        Record('nc', 'I'),  # of columns (fastest varying index.)
+        Record('nr', 'I'),  # of rows
+        Record('ns', 'I'),  # of sections (slowest varying index.)
+        Record('mode', 'I', {
             0: 'envelope',
             1: 'Image of Integer*2',
-            2: 'Image of Reals', # Default expected value.
+            2: 'Image of Reals',  # Default expected value.
             3: 'Transform of Complex Integer*2',
             4: 'Transform of Complex Reals',
             5: '0',
-        }),
-        Record('ncstart', 'I'),
-        Record('nrstart', 'I'),
-        Record('nsstart', 'I'),
-        Record('nx', 'I'), # Number of gridpoints.
-        Record('ny', 'I'),
-        Record('nz', 'I'),
-        Record('xlen', 'f'), # Angstroms.
-        Record('ylen', 'f'),
-        Record('zlen', 'f'),
-        Record('alpha', 'f'), # Degrees.
-        Record('beta', 'f'),
-        Record('gamma', 'f'),
-        Record('mapc', 'I', _axis_map),
-        Record('mapr', 'I', _axis_map),
-        Record('maps', 'I', _axis_map),
-        Record('amin', 'f'),
-        Record('amax', 'f'),
-        Record('amean', 'f'),
-        Record('ispg', 'I'),
-        Record('nsymbt', 'I'),
-        Record('lskflg', 'I'),
-        # Remaining few fields are manually parsed.
+        }), Record('ncstart', 'I'), Record('nrstart', 'I'),
+        Record('nsstart', 'I'), Record('nx', 'I'),  # Number of gridpoints.
+        Record('ny', 'I'), Record('nz', 'I'), Record('xlen', 'f'),  # Angstroms.
+        Record('ylen', 'f'), Record('zlen', 'f'), Record('alpha', 'f'),  # Degrees.
+        Record('beta', 'f'), Record('gamma', 'f'),
+        Record('mapc', 'I', _axis_map), Record('mapr', 'I', _axis_map),
+        Record('maps', 'I', _axis_map), Record('amin', 'f'),
+        Record('amax', 'f'), Record('amean', 'f'), Record('ispg', 'I'),
+        Record('nsymbt', 'I'), Record('lskflg', 'I'),  # Remaining few fields are manually parsed.
     )
-
 
     def __init__(self, filename=None):
         self.filename = filename
         # Assemble format.
         self._headerfmt = "".join([r.bintype for r in self._header_struct])
 
-        if not filename is None:
+        if filename is not None:
             self.read(filename)
 
     def read(self, filename):
         """Populate the instance from the ccp4 file *filename*."""
         from struct import calcsize, unpack
-        if not filename is None:
+        if filename is not None:
             self.filename = filename
         with open(self.filename, 'rb') as ccp4:
             h = self.header = self._read_header(ccp4)
             nentries = h['nc'] * h['nr'] * h['ns']
             # Quick and dirty... slurp it all in one go.
             datafmt = h['bsaflag'] + str(nentries) + self._data_bintype
-            a = numpy.array(unpack(datafmt, ccp4.read(calcsize(datafmt))))
+            a = np.array(unpack(datafmt, ccp4.read(calcsize(datafmt))))
         self.header['filename'] = self.filename
-        #TODO: Account for the possibility that y-axis is fastest or
+        # TODO: Account for the possibility that y-axis is fastest or
         # slowest index, which unfortunately is possible in CCP4.
         order = 'C' if h['mapc'] == 'z' else 'F'
         self.array = a.reshape(h['nc'], h['nr'], h['ns'], order=order)
         self.delta = self._delta()
-        self.origin = numpy.zeros(3)
+        self.origin = np.zeros(3)
         self.rank = 3
 
     @property
@@ -240,17 +224,19 @@ class CCP4(object):
         Only works for regular, orthonormal grids.
         """
         # TODO: Add triclinic cell support.
-        return [self.delta[d,d] * numpy.arange(self.shape[d]+1) + self.origin[d]\
-                - 0.5*self.delta[d,d]     for d in range(self.rank)]
+        return [self.delta[d, d] * np.arange(self.shape[d] + 1) +
+                self.origin[d] - 0.5 * self.delta[d, d]
+                for d in range(self.rank)]
 
     def _delta(self):
         h = self.header
-        lengths = numpy.array([h['xlen'], h['ylen'], h['zlen']])
+        lengths = np.array([h['xlen'], h['ylen'], h['zlen']])
         delta = lengths / self.shape
-        return numpy.diag(delta)
+        return np.diag(delta)
 
     def _read_header(self, ccp4file):
-        """Read header bytes, try all possibilities for byte order/size/alignment."""
+        """Read header bytes, try all possibilities for byte
+        order/size/alignment."""
         # Try all endinaness and alignment options until we find
         # something that looks sensible. The machst field could be
         # used to obtain endianness, but it does not specify
@@ -259,51 +245,57 @@ class CCP4(object):
         ccp4file.seek(52 * 4)
         mapbin = ccp4file.read(4)
         for flag in '@=<>':
-            mapstr = struct.unpack(flag+'4s', mapbin)[0]
+            mapstr = struct.unpack(flag + '4s', mapbin)[0].decode('utf-8')
             if mapstr.upper() == 'MAP ':
                 bsaflag = flag
-                break # Only possible value according to spec.
+                break  # Only possible value according to spec.
         if bsaflag is None:
-            raise TypeError("Cannot decode header --- corrupted or wrong format?")
+            raise TypeError(
+                "Cannot decode header --- corrupted or wrong format?")
         ccp4file.seek(0)
 
         # Parse the top of the header (4-byte words, 1 to 25).
         nheader = struct.calcsize(self._headerfmt)
         names = [r.key for r in self._header_struct]
         bintopheader = ccp4file.read(25 * 4)
+
         def decode_header(header, bsaflag='@'):
-            h = dict(zip(names, struct.unpack(bsaflag+self._headerfmt, header)))
+            h = dict(zip(names, struct.unpack(bsaflag + self._headerfmt,
+                                              header)))
             h['bsaflag'] = bsaflag
             return h
+
         header = decode_header(bintopheader, bsaflag)
         for rec in self._header_struct:
             if not rec.is_legal_dict(header):
-                warnings.warn("Key %s: Illegal value %r" % (rec.key, header[rec.key]))
+                warnings.warn(
+                    "Key %s: Illegal value %r" % (rec.key, header[rec.key]))
 
         # Parse the latter half of the header (4-byte words, 26 to 256).
         if (header['lskflg']):
-            skewmatrix = np.fromfile(ccp4file, dtype=numpy.float32, count=9)
+            skewmatrix = np.fromfile(ccp4file, dtype=np.float32, count=9)
             header['skwmat'] = skewmatrix.reshape((3, 3))
-            header['skwtrn'] = np.fromfile(ccp4file, dtype=numpy.float32, count=3)
+            header['skwtrn'] = np.fromfile(ccp4file, dtype=np.float32, count=3)
         else:
             header['skwmat'] = header['skwtrn'] = None
             ccp4file.seek(12 * 4, 1)
-        ccp4file.seek(15 * 4, 1) # Skip future use section.
-        ccp4file.seek(4, 1) # Skip map text, already used above to verify format.
-        #TODO: Compare file specified endianness to one obtained above.
-        endiancode = struct.unpack(bsaflag+'4b', ccp4file.read(4))
-        header['endianness'] = 'little' if endiancode == (0x44, 0x41, 0, 0) else 'big'
-        header['arms'] = struct.unpack(bsaflag+'f', ccp4file.read(4))[0]
-        header['nlabl'] = struct.unpack(bsaflag+'I', ccp4file.read(4))[0]
+        ccp4file.seek(15 * 4, 1)  # Skip future use section.
+        ccp4file.seek(4, 1)  # Skip map text, already used above to verify format.
+        # TODO: Compare file specified endianness to one obtained above.
+        endiancode = struct.unpack(bsaflag + '4b', ccp4file.read(4))
+        header['endianness'] = 'little' if endiancode == (0x44, 0x41, 0, 0
+                                                          ) else 'big'
+        header['arms'] = struct.unpack(bsaflag + 'f', ccp4file.read(4))[0]
+        header['nlabl'] = struct.unpack(bsaflag + 'I', ccp4file.read(4))[0]
         if header['nlabl']:
             binlabel = ccp4file.read(80 * header['nlabl'])
             flag = bsaflag + str(80 * header['nlabl']) + 's'
             label = struct.unpack(flag, binlabel)[0]
-            header['label'] = label.rstrip('\x00')
+            header['label'] = label.decode('utf-8').rstrip('\x00')
         else:
             header['label'] = None
         ccp4file.seek(256 * 4)
-        #TODO: Parse symmetry records, if any.
+        # TODO: Parse symmetry records, if any.
         return header
 
     def histogramdd(self):
