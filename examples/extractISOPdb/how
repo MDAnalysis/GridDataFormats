@@ -1,8 +1,0 @@
-
-# save a dx file to a pdb at a given iso value
-
-python extractISOPdb.py mdpout_freq_grid.dx mdpout_freq_iso_0_1.pdb 0.1
-
-python extractISOPdb_gdf.py mdpout_freq_grid.dx mdpout_freq_iso_0_1_gdf.pdb 0.1
-
-# mdpout_freq_iso_0_1_gdf.pdb and mdpout_freq_iso_0_1.pdb should be identical
