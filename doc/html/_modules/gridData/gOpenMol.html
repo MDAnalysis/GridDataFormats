@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -25,12 +23,12 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="gridDataFormats 0.3.0-dev documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -39,13 +37,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -64,7 +62,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for gridData.gOpenMol</h1><div class="highlight"><pre>
 <span class="c"># gridDataFormats --- python modules to read and write gridded data</span>
@@ -79,15 +77,13 @@
 
 <span class="sd">.. _gOpenMol: http://www.csc.fi/english/pages/g0penMol</span>
 
-<span class="sd">The module provides a simple implementation of a reader for gOpenMol_ *plt*</span>
-<span class="sd">files. Plt files are binary files. The reader tries to guess the endianess of</span>
-<span class="sd">the file, but this can fail (with a :exc:`TypeError`); you are on your own in</span>
-<span class="sd">this case.</span>
+<span class="sd">The module provides a simple implementation of a reader for gOpenMol_</span>
+<span class="sd">*plt* files. Plt files are binary files. The :class:`Plt` reader tries</span>
+<span class="sd">to guess the endianess of the file, but this can fail (with a</span>
+<span class="sd">:exc:`TypeError`); you are on your own in this case.</span>
 
 <span class="sd">Only the reader is implemented. If you want to write gridded data use a format</span>
 <span class="sd">that is more standard, such as OpenDX (see :mod:`OpenDX`).</span>
-
-<span class="sd">.. autoclass:: Plt</span>
 
 
 <span class="sd">Background</span>
@@ -101,7 +97,7 @@
 
 
 <span class="sd">Grid data plt file format</span>
-<span class="sd">~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="sd">-------------------------</span>
 
 <span class="sd">Copyright CSC, 2005. Last modified: September 23, 2003 09:18:50</span>
 
@@ -116,18 +112,18 @@
 <span class="sd">files from different hardware platforms independent of the system type (little</span>
 <span class="sd">or big endian machines).</span>
 
-<span class="sd">Format of the binary *.plt file</span>
-<span class="sd">...............................</span>
+<span class="sd">Format of the binary ``*.plt`` file</span>
+<span class="sd">...................................</span>
 
-<span class="sd">The *.plt file binary and formatted file formats are very simple but please</span>
+<span class="sd">The ``*.plt`` file binary and formatted file formats are very simple but please</span>
 <span class="sd">observe that unformatted files written with a FORTRAN program are not pure</span>
 <span class="sd">binary files because there are file records between the values while pure</span>
 <span class="sd">binary files do not have any records between the values. gOpenMol should be</span>
 <span class="sd">able to figure out if the file is pure binary or FORTRAN unformatted but it is</span>
 <span class="sd">not very well tested.</span>
 
-<span class="sd">Binary *.plt (grid) file format</span>
-<span class="sd">...............................</span>
+<span class="sd">Binary ``*.plt`` (grid) file format</span>
+<span class="sd">...................................</span>
 
 <span class="sd">Record number and meaning::</span>
 
@@ -180,18 +176,19 @@
 <span class="sd">   -1.740280e+001 -1.759018e+001 -1.777478e+001 -1.795639e+001 -1.813387e+001 -1.830635e+001</span>
 <span class="sd">   ...</span>
 
-<span class="sd">Formatted *.plt (grid) file format</span>
-<span class="sd">..................................</span>
+<span class="sd">Formatted ``*.plt`` (grid) file format</span>
+<span class="sd">......................................</span>
 
 <span class="sd">Line numbers and variables on the line::</span>
-<span class="sd">   #1: Integer, Integer. Rank and type of surface (rank is always = 3)</span>
-<span class="sd">   #2: Integer, Integer, Integer. Zdim, Ydim, Xdim (number of points in the z,y,x directions)</span>
-<span class="sd">   #3: Float, Float, Float, Float, Float, Float. Zmin, Zmax, Ymin, Ymax, Xmin,Xmax (min and max values)</span>
-<span class="sd">   #4: ... Float. Grid data values running (x is inner loop, then y and last z) with one or several values per line:</span>
 
-<span class="sd">1. Loop in the z direction</span>
-<span class="sd">2. Loop in the y direction</span>
-<span class="sd">3. Loop in the x direction</span>
+<span class="sd">   line #1: Integer, Integer. Rank and type of surface (rank is always = 3)</span>
+<span class="sd">   line #2: Integer, Integer, Integer. Zdim, Ydim, Xdim (number of points in the z,y,x directions)</span>
+<span class="sd">   line #3: Float, Float, Float, Float, Float, Float. Zmin, Zmax, Ymin, Ymax, Xmin,Xmax (min and max values)</span>
+<span class="sd">   line #4: ... Float. Grid data values running (x is inner loop, then y and last z) with one or several values per line:</span>
+
+<span class="sd">    1. Loop in the z direction</span>
+<span class="sd">    2. Loop in the y direction</span>
+<span class="sd">    3. Loop in the x direction</span>
 
 <span class="sd">Classes</span>
 <span class="sd">-------</span>
@@ -203,6 +200,7 @@
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">struct</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span>
 
 <span class="k">class</span> <span class="nc">Record</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">bintype</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -219,7 +217,7 @@
         <span class="k">return</span> <span class="s">&quot;Record(</span><span class="si">%(key)r</span><span class="s">,</span><span class="si">%(bintype)r</span><span class="s">,...)&quot;</span> <span class="o">%</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Plt"><a class="viewcode-back" href="../../gridData/formats/gOpenMol.html#gridData.gOpenMol.Plt">[docs]</a><span class="k">class</span> <span class="nc">Plt</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A class to reprensent a gOpenMol_ plt file.</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent a gOpenMol_ plt file.</span>
 
 <span class="sd">    Only reading is implemented; either supply a filename to the constructor</span>
 <span class="sd">      &gt;&gt;&gt; G = Plt(filename)</span>
@@ -267,7 +265,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="c"># fix header_struct because I cannot do {...}.update()</span>
         <span class="n">rec_surf</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="s">&#39;surface&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">rec_surf</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="s">&#39;user-defined&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">51</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="mi">42</span><span class="p">))</span>
+        <span class="n">rec_surf</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="s">&#39;user-defined&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">51</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="mi">42</span><span class="p">))</span>
         <span class="c"># assemble format</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">bintype</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">])</span>
 
@@ -296,14 +294,14 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span>
 
     <span class="nd">@property</span>
-<div class="viewcode-block" id="Plt.edges"><a class="viewcode-back" href="../../gridData/formats/gOpenMol.html#gridData.gOpenMol.Plt.edges">[docs]</a>    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
 
 <span class="sd">        Only works for regular, orthonormal grids.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">]</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>\
-                <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">]</span>     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)]</span>
-</div>
+                <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">]</span>     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)]</span>
+
     <span class="k">def</span> <span class="nf">_delta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>
         <span class="n">qmin</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="s">&#39;xmin&#39;</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s">&#39;ymin&#39;</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s">&#39;zmin&#39;</span><span class="p">]])</span>
@@ -312,7 +310,7 @@
         <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_read_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pltfile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Read header bytes, try all possibilities for byte order/size/alignment&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Read header bytes, try all possibilities for byte order/size/alignment.&quot;&quot;&quot;</span>
         <span class="n">nheader</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span><span class="p">)</span>
         <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">key</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">]</span>
         <span class="n">binheader</span> <span class="o">=</span> <span class="n">pltfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nheader</span><span class="p">)</span>
@@ -335,15 +333,15 @@
 
 <div class="viewcode-block" id="Plt.histogramdd"><a class="viewcode-back" href="../../gridData/formats/gOpenMol.html#gridData.gOpenMol.Plt.histogramdd">[docs]</a>    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return array data as (edges,grid), i.e. a numpy nD histogram.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
-</pre></div></div></div>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span></div></div>
+</pre></div>
 
           </div>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -352,13 +350,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.0-dev documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2007-2015, Oliver Beckstein, Jesse Johnson.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2007-2015, Oliver Beckstein, Max Linke, Jesse Johnson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
