@@ -22,11 +22,13 @@ except ImportError:
     from mock import Mock as MagicMock
 
 class Mock(MagicMock):
+    __all__ = []
+
     @classmethod
     def __getattr__(cls, name):
             return Mock()
 
-MOCK_MODULES = ['numpy']
+MOCK_MODULES = ['numpy', 'scipy']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 
@@ -34,6 +36,10 @@ sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
+
+# make sure sphinx always uses the current branch
+sys.path.insert(0, os.path.abspath('../..'))
+
 
 # -- General configuration -----------------------------------------------------
 
@@ -238,7 +244,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'griddataformats', u'gridDataFormats Documentation',
-     [u'Oliver Beckstein'], 1)
+     [u'Oliver Beckstein', u'Max Linke', u'Jesse Johnson'], 1)
 ]
 
 # If true, show URL addresses after external links.
