@@ -2,6 +2,7 @@ language: python
 python:
   - "2.7"
   - "3.4"
+sudo: false
 addons:
   apt:
     packages:
@@ -35,7 +36,7 @@ after_success:
      test ${TRAVIS_BRANCH} == ${GH_DOC_BRANCH} && \
      test "${TRAVIS_BUILD_NUMBER}.1" == "${TRAVIS_JOB_NUMBER}" && \
      bash ./ci/deploy_docs.sh
-  
+
 env:
    global:
       - secure: "BzLdQUSTs6dsngJfNGjLtG++Gmi4KzYv7FEwVqUB6pXKnpMIpv+/md2zkH/Lo3UtdioR2SKytXk3/40tCbpUVD2Yjb+yc5WyyeFLQF9KeF2k9gZkmC35iSbTWt9hK+mnkdJidCK5xbfrXEbZx4FpqyDGFl8GCCjJlPOQ/KEcRVQ="
