@@ -39,7 +39,9 @@ help:
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
 clean:
-	-rm -rf $(BUILDDIR)/*
+	-for i in html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex text man changes linkcheck doctest; do \
+            rm -rf $(BUILDDIR)/$$i; \
+        done
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
