@@ -24,7 +24,7 @@ The package is licensed under the LGPL, v3 (see files COPYING_ and
 .. _`COPYING.LESSER`:
    https://raw.githubusercontent.com/MDAnalysis/GridDataFormats/master/COPYING.LESSER
 .. _Grid:
-   http://www.mdanalysis.org/GridDataFormats/doc/html/gridData/core.html#gridData.core.Grid
+   http://www.mdanalysis.org/GridDataFormats/gridData/core.html#gridData.core.Grid
 
 Installation
 ------------
@@ -44,7 +44,7 @@ are also always available at `griddataformats.readthedocs.org`_.)
 
 
 .. _GridDataFormats docs:
-   http://mdanalysis.org/GridDataFormats/doc/html/
+   http://mdanalysis.org/GridDataFormats
 .. _`griddataformats.readthedocs.org`:
    http://griddataformats.readthedocs.org
 
