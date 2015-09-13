@@ -22,14 +22,14 @@ small number of file formats is directly supported.
 
 .. table:: Available file formats in :mod:`gridData`
    
-   ==========  =========  =====  =====  =========================================
-   format      extension  read   write  remarks
-   ==========  =========  =====  =====  =========================================
-   OpenDX_     dx         x      x      subset of OpenDX implemented
-   gOpenMol_   plt        x
-   CCP4_       ccp4       x             subset implemented
-   pickle      pickle     x      x      standard Python pickle of the Grid class
-   ==========  =========  =====  =====  =========================================
+   ============================ ==========  =========  =====  =====  =========================================
+   module or class              format      extension  read   write  remarks
+   ============================ ==========  =========  =====  =====  =========================================
+   :mod:`~gridData.OpenDX`      OpenDX_     dx         x      x      subset of OpenDX implemented
+   :mod:`~gridData.gOpenMol`    gOpenMol_   plt        x
+   :mod:`~gridData.CCP4`        CCP4_       ccp4       x             subset implemented
+   :class:`~gridData.core.Grid` pickle      pickle     x      x      standard Python pickle of the Grid class
+   ============================ ==========  =========  =====  =====  =========================================
 
 
 .. _pull request: https://github.com/MDAnalysis/GridDataFormats/pulls

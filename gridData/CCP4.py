@@ -4,8 +4,10 @@
 #
 # Part of the documentation and format specification:
 # Copyright Science and Technologies Facilities Council, 2015.
-""":mod:`CCP4` --- the CCP4 volumetric data format
-===========================================
+
+"""
+:mod:`CCP4` --- the CCP4 volumetric data format
+===============================================
 
 .. versionadded:: 0.3.0
 
@@ -104,14 +106,14 @@ character text labels as follows::
   57-256  LABEL(20,10)    10  80 character text labels (ie. A4 format)
 
 Symmetry records follow - if any - stored as text as in International
-Tables, operators separated by `*` and grouped into 'lines' of 80
+Tables, operators separated by ``*`` and grouped into 'lines' of 80
 characters (i.e. symmetry operators do not cross the ends of the
-80-character 'lines' and the 'lines' do not terminate in a `*`).
+80-character 'lines' and the 'lines' do not terminate in a ``*``).
 
 Map data array follows.
 
 Note on the machine stamp: The machine stamp (word 54) is a 32-bit
-quantity containing a set of four `nibbles' (half-bytes) - only half
+quantity containing a set of four 'nibbles' (half-bytes) - only half
 the space is used. Each nibble is a number specifying the
 representation of (in C terms) double (d), float (f), int (i) and
 unsigned char (c) types. Thus each stamp is of the form 0xdfic0000.
