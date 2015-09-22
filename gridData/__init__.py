@@ -191,6 +191,7 @@ or even simpler ::
 from .core import Grid
 from . import OpenDX
 from . import gOpenMol
+from . import CCP4
 
-__all__ = ['Grid', 'OpenDX', 'gOpenMol']
-__version__ = '0.3.0-dev'
+__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4']
+__version__ = '0.3.0'
