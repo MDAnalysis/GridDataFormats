@@ -76,7 +76,7 @@ welcome. Please fork the repository and submit a `pull request`_.
     :alt: Documentation    
     :target: http://griddataformats.readthedocs.org/en/latest/
     
- .. |zenodo| image:: https://zenodo.org/badge/13219/MDAnalysis/GridDataFormats.svg
+.. |zenodo| image:: https://zenodo.org/badge/13219/MDAnalysis/GridDataFormats.svg
     :alt: Zenodo DOI
     :target: https://zenodo.org/badge/latestdoi/13219/MDAnalysis/GridDataFormats
     
