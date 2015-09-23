@@ -2,7 +2,7 @@
  README for gridDataFormats
 ============================
 
-|build| |cov| |docs|
+|build| |cov| |docs| |zenodo|
 
 The **gridDataFormats** package provides classes to unify reading and
 writing n-dimensional datasets. One can read grid data from files,
@@ -73,4 +73,8 @@ welcome. Please fork the repository and submit a `pull request`_.
 .. |docs| image:: https://readthedocs.org/projects/griddataformats/badge/?version=latest
     :alt: Documentation    
     :target: http://griddataformats.readthedocs.org/en/latest/
+    
+.. |zenodo| image:: https://zenodo.org/badge/13219/MDAnalysis/GridDataFormats.svg
+    :alt: Zenodo DOI
+    :target: https://zenodo.org/badge/latestdoi/13219/MDAnalysis/GridDataFormats
     
