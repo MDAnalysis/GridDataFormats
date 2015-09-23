@@ -4,6 +4,8 @@
 
 |build| |cov| |docs| |zenodo|
 
+|zenodo|
+
 The **gridDataFormats** package provides classes to unify reading and
 writing n-dimensional datasets. One can read grid data from files,
 make them available as a `Grid`_ object, and write out the data again.
