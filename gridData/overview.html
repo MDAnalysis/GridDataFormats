@@ -114,7 +114,7 @@ coordinates of the intersections of the grid (mesh) lines on the
 axes. In this way the grid is anchored in space.</p>
 <p>The <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal"><span class="pre">Grid</span></code></a> object can be resampled at arbitrary resolution (by
 interpolating the data). Standard algebraic operations are defined for
-grids on a point-wise basis (same as for <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a>).</p>
+grids on a point-wise basis (same as for <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.10)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a>).</p>
 </div>
 <div class="section" id="description">
 <h2>1.2. Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -135,16 +135,16 @@ corresponds to (0,0,...,0)</li>
 </ol>
 <p><a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal"><span class="pre">Grid</span></code></a> objects have some convenient properties:</p>
 <ul class="simple">
-<li>The data is represented as a <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a> and thus shares
+<li>The data is represented as a <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.10)"><code class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></code></a> and thus shares
 all the advantages coming with this sophisticated and powerful
 library.</li>
 <li>They can be manipulated arithmetically, e.g. one can simply add or
 subtract two of them and get another one, or multiply by a
 constant. Note that all operations are defined point-wise (see the
-<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/index.html#module-numpy" title="(in NumPy v1.9)"><code class="xref py py-mod docutils literal"><span class="pre">numpy</span></code></a> documentation for details) and that only grids defined
+<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/index.html#module-numpy" title="(in NumPy v1.10)"><code class="xref py py-mod docutils literal"><span class="pre">numpy</span></code></a> documentation for details) and that only grids defined
 on the same cell edges can be combined.</li>
 <li>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal"><span class="pre">Grid</span></code></a> object can also be created from within python code
-e.g. from the output of the <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.9)"><code class="xref py py-func docutils literal"><span class="pre">numpy.histogramdd()</span></code></a> function.</li>
+e.g. from the output of the <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.10)"><code class="xref py py-func docutils literal"><span class="pre">numpy.histogramdd()</span></code></a> function.</li>
 <li>The representation of the data is abstracted from the format that
 the files are saved in. This makes it straightforward to add
 additional readers for new formats.</li>
@@ -205,7 +205,7 @@ for convenient handling (especially export to other formats).  The
 <div class="highlight-python"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s">&quot;density.plt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>From the output of <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.9)"><code class="xref py py-func docutils literal"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
+<p>From the output of <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.10)"><code class="xref py py-func docutils literal"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
