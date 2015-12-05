@@ -313,7 +313,7 @@ class field(DXclass):
     def sorted_components(self):
         """iterator that returns (component,object) in id order"""
         for component, object in \
-                sorted(self.components.items(), key=lambda c, o: o.id):
+                sorted(self.components.items(), key=lambda (c, o): o.id):
             yield component, object
 
     def histogramdd(self):
