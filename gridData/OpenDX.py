@@ -91,6 +91,7 @@ from __future__ import with_statement
 
 import numpy
 import re
+from six import next
 from six.moves import range
 
 
@@ -197,11 +198,11 @@ class array(DXclass):
         # (flat iterator is equivalent to: for x: for y: for z: grid[x,y,z])
         # VMD's DX reader requires exactly 3 values per line
         values_per_line = 3
-        anext = self.array.flat.next
+        values = self.array.flat
         while 1:
             try:
                 for i in range(values_per_line):
-                    file.write(str(anext())+"\t")  # I hope this is written even if the try fails..
+                    file.write(str(next(values)) + "\t")
                 file.write('\n')
             except StopIteration:
                 file.write('\n')
@@ -321,7 +322,8 @@ class field(DXclass):
     def sorted_components(self):
         """iterator that returns (component,object) in id order"""
         for component, object in \
-                sorted(self.components.items(), key=lambda (c, o): o.id):
+                sorted(self.components.items(),
+                       key=lambda comp_obj: comp_obj[1].id):
             yield component, object
 
     def histogramdd(self):
