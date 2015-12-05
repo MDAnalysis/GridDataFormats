@@ -158,6 +158,7 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="kn">import</span> <span class="nb">next</span>
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span>
 
 
@@ -206,11 +207,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="s">&#39;positions&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>      <span class="c"># D dimensional shape</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>    <span class="c"># D vector</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>      <span class="c"># DxD array of grid spacings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>            <span class="c"># D === rank</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">):</span>
-            <span class="c"># check OpenDX specs for irreg spacing</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&#39;Only regularly spaced grids allowed.&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>      <span class="c"># DxD array of grid spacings</span>
+        <span class="c"># gridDataFormats  actually provides a simple 1D array with the deltas because only</span>
+        <span class="c"># regular grids are used but the following is a reminder that OpenDX should be able</span>
+        <span class="c"># to handle more complicated volume elements</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">):</span>
+            <span class="c"># check OpenDX specs for irreg spacing if we want to implement</span>
+            <span class="c"># anything more complicated</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&#39;Only regularly spaced grids allowed, &#39;</span>
+                                      <span class="s">&#39;not delta={}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">))</span>
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">):</span>
         <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">,</span>
                       <span class="p">(</span><span class="s">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s">&#39; </span><span class="si">%d</span><span class="s">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
@@ -256,11 +265,11 @@
         <span class="c"># (flat iterator is equivalent to: for x: for y: for z: grid[x,y,z])</span>
         <span class="c"># VMD&#39;s DX reader requires exactly 3 values per line</span>
         <span class="n">values_per_line</span> <span class="o">=</span> <span class="mi">3</span>
-        <span class="n">anext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">flat</span><span class="o">.</span><span class="n">next</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">flat</span>
         <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">values_per_line</span><span class="p">):</span>
-                    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">anext</span><span class="p">())</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">)</span>  <span class="c"># I hope this is written even if the try fails..</span>
+                    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">values</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">)</span>
                 <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
                 <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
@@ -380,7 +389,8 @@
 <div class="viewcode-block" id="field.sorted_components"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.sorted_components">[docs]</a>    <span class="k">def</span> <span class="nf">sorted_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;iterator that returns (component,object) in id order&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">component</span><span class="p">,</span> <span class="nb">object</span> <span class="ow">in</span> \
-                <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+                <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+                       <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">comp_obj</span><span class="p">:</span> <span class="n">comp_obj</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">component</span><span class="p">,</span> <span class="nb">object</span>
 </div>
 <div class="viewcode-block" id="field.histogramdd"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.histogramdd">[docs]</a>    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
