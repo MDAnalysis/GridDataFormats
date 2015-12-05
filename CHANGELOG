@@ -12,7 +12,7 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/?? 
+??/??/?? orbeckst
 
   * 0.3.1
 
@@ -21,6 +21,10 @@ The rules for this file:
   Changes
 
   Fixes
+
+  * fixed writing of DX files failed with "NotImplementedError: Only
+    regularly spaced grids allowed." (issue #21 and
+    MDAnalysis/mdanalysis#544)
 
 09/10/22 kain88-de, holocronweavers, orbeckst
 

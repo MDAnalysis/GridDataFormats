@@ -91,6 +91,7 @@ from __future__ import with_statement
 
 import numpy
 import re
+from six import next
 from six.moves import range
 
 
@@ -139,11 +140,19 @@ class gridpositions(DXclass):
         self.component = 'positions'
         self.shape = numpy.asarray(shape)      # D dimensional shape
         self.origin = numpy.asarray(origin)    # D vector
-        self.delta = numpy.asarray(delta)      # DxD array of grid spacings
         self.rank = len(self.shape)            # D === rank
-        if self.delta.shape != (self.rank,self.rank):
-            # check OpenDX specs for irreg spacing
-            raise NotImplementedError('Only regularly spaced grids allowed.')
+
+        self.delta = numpy.asarray(delta)      # DxD array of grid spacings
+        # gridDataFormats  actually provides a simple 1D array with the deltas because only
+        # regular grids are used but the following is a reminder that OpenDX should be able
+        # to handle more complicated volume elements
+        if len(self.delta.shape) == 1:
+            self.delta = numpy.diag(delta)
+        if self.delta.shape != (self.rank, self.rank):
+            # check OpenDX specs for irreg spacing if we want to implement
+            # anything more complicated
+            raise NotImplementedError('Only regularly spaced grids allowed, '
+                                      'not delta={}'.format(self.delta))
     def write(self,file):
         DXclass.write(self,file,
                       ('counts '+self.ndformat(' %d')) % tuple(self.shape))
@@ -189,11 +198,11 @@ class array(DXclass):
         # (flat iterator is equivalent to: for x: for y: for z: grid[x,y,z])
         # VMD's DX reader requires exactly 3 values per line
         values_per_line = 3
-        anext = self.array.flat.next
+        values = self.array.flat
         while 1:
             try:
                 for i in range(values_per_line):
-                    file.write(str(anext())+"\t")  # I hope this is written even if the try fails..
+                    file.write(str(next(values)) + "\t")
                 file.write('\n')
             except StopIteration:
                 file.write('\n')
@@ -313,7 +322,8 @@ class field(DXclass):
     def sorted_components(self):
         """iterator that returns (component,object) in id order"""
         for component, object in \
-                sorted(self.components.items(), key=lambda c, o: o.id):
+                sorted(self.components.items(),
+                       key=lambda comp_obj: comp_obj[1].id):
             yield component, object
 
     def histogramdd(self):
