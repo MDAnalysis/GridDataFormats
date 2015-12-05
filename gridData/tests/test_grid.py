@@ -52,17 +52,17 @@ class TestGrid:
         assert_array_equal(g.grid.flat, (2 * self.griddata).flat)
 
     def test_division(self):
-        """ __truediv__ is used in py3 by default and py2 if division
-        is imported from __future__ to make testing easier lets call
-        them explicitely"""
+        # __truediv__ is used in py3 by default and py2 if division
+        # is imported from __future__ to make testing easier lets call
+        # them explicitely
         g = self.grid.__truediv__(self.grid)
         assert_array_equal(g.grid.flat, np.ones(27))
         g = self.grid.__rtruediv__(2)
         assert_array_equal(g.grid.flat, (2 / self.griddata).flat)
 
     def test_old_division(self):
-        """this is normally ONLY invoked in python 2. To have test
-        coverage in python3 as well call it explicitely"""
+        # this is normally ONLY invoked in python 2. To have test
+        # coverage in python3 as well call it explicitely
         g = self.grid.__div__(self.grid)
         assert_array_equal(g.grid.flat, np.ones(27))
         g = self.grid.__rdiv__(2)
@@ -90,9 +90,9 @@ class TestGrid:
         Grid(self.griddata, origin=self.origin, delta=delta)
 
     def test_centers(self):
-        """this only checks the edges. If you know an alternative
-        algorithm that isn't an exact duplicate of the one in
-        g.centers to test this please implement it."""
+        # this only checks the edges. If you know an alternative
+        # algorithm that isn't an exact duplicate of the one in
+        # g.centers to test this please implement it.
         g = Grid(self.griddata, origin=np.ones(3), delta=self.delta)
         centers = np.array(list(g.centers()))
         assert_array_equal(centers[0], g.origin)
