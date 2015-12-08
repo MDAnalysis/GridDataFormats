@@ -1,3 +1,0 @@
-.. automodule:: gridData.OpenDX
-   :members:
-

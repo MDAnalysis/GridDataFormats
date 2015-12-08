@@ -2,3 +2,5 @@
 GridDataFormats.egg-info
 build
 dist
+doc/html
+doc/doctrees
