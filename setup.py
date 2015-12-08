@@ -8,7 +8,7 @@ with open('README.rst', 'r') as f:
     long_description = f.read()
 
 setup(name="GridDataFormats",
-      version="0.3.1-dev",
+      version="0.3.1",
       description="Reading and writing of data on regular grids in Python",
       long_description=long_description,
       author="Oliver Beckstein",
