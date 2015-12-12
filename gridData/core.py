@@ -27,7 +27,9 @@ Classes and functions
 import os
 from six.moves import cPickle, range, zip
 import numpy
-from scipy import ndimage
+
+# For interpolated grids: need scipy.ndimage but we import it only when needed:
+# import scipy
 
 from . import OpenDX
 from . import gOpenMol
@@ -447,6 +449,7 @@ class Grid(object):
         # for scipy >=0.9: should use scipy.interpolate.griddata
         # http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html#scipy.interpolate.griddata
         # (does it work for nD?)
+        import scipy.ndimage
 
         if spline_order is None:
             # must be compatible with whatever :func:`scipy.ndimage.spline_filter` takes.
@@ -463,7 +466,7 @@ class Grid(object):
         except AttributeError:
             _data = data
 
-        coeffs = ndimage.spline_filter(_data, order=spline_order)
+        coeffs = scipy.ndimage.spline_filter(_data, order=spline_order)
         x0 = self.origin
         dx = self.delta
 
@@ -482,12 +485,12 @@ class Grid(object):
             _coordinates = numpy.array(
                 [_transform(coordinates[i], x0[i], dx[i]) for i in range(len(
                     coordinates))])
-            return ndimage.map_coordinates(coeffs,
-                                           _coordinates,
-                                           prefilter=False,
-                                           mode='nearest',
-                                           cval=cval)
-        # mode='wrap' would be ideal but is broken: http://projects.scipy.org/scipy/ticket/796
+            return scipy.ndimage.map_coordinates(coeffs,
+                                                 _coordinates,
+                                                 prefilter=False,
+                                                 mode='nearest',
+                                                 cval=cval)
+        # mode='wrap' would be ideal but is broken: https://github.com/scipy/scipy/issues/1323
         return interpolatedF
 
     def __eq__(self, other):

@@ -1,9 +1,10 @@
 import numpy as np
-from numpy.testing import assert_array_equal, assert_array_almost_equal
+from numpy.testing import assert_array_equal, assert_array_almost_equal, dec
 from nose.tools import raises
 
 from gridData import Grid
 
+from ..tests import module_not_found
 
 class TestGrid:
 
@@ -99,6 +100,9 @@ class TestGrid:
         assert_array_equal(centers[-1] - g.origin,
                            (np.array(g.grid.shape) - 1) * self.delta)
 
+
+    @dec.skipif(module_not_found('scipy'),
+                "Test skipped because scipy is not available.")
     def test_resample_factor(self):
         g = self.grid.resample_factor(2)
         assert_array_equal(g.delta, np.ones(3) * .5)

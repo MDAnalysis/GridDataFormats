@@ -1,4 +1,4 @@
 include README README.rst INSTALL CHANGELOG COPYING COPYING.LESSER AUTHORS
-include ez_setup.py setup.py
+include setup.py
 
 

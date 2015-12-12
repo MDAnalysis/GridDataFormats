@@ -12,6 +12,20 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+12/11/2015 orbeckst
+
+  * 0.3.2
+
+  Enhancements
+
+  Changes
+
+  * can import without scipy present (scipy.ndimage will only be used
+    on demand when interpolation of a Grid is requested) (issue #25)
+
+  Fixes
+
+
 12/07/2015 orbeckst, richardjgowers
 
   * 0.3.1
