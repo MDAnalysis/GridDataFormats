@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>gridData.core &mdash; gridDataFormats 0.3.1 documentation</title>
+    <title>gridData.core &mdash; gridDataFormats 0.3.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.3.1',
+        VERSION:     '0.3.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="gridDataFormats 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="gridDataFormats 0.3.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body role="document">
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.2 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -94,7 +94,9 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="n">cPickle</span><span class="p">,</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">zip</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span>
+
+<span class="c"># For interpolated grids: need scipy.ndimage but we import it only when needed:</span>
+<span class="c"># import scipy</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">OpenDX</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">gOpenMol</span>
@@ -514,6 +516,7 @@
         <span class="c"># for scipy &gt;=0.9: should use scipy.interpolate.griddata</span>
         <span class="c"># http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html#scipy.interpolate.griddata</span>
         <span class="c"># (does it work for nD?)</span>
+        <span class="kn">import</span> <span class="nn">scipy.ndimage</span>
 
         <span class="k">if</span> <span class="n">spline_order</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c"># must be compatible with whatever :func:`scipy.ndimage.spline_filter` takes.</span>
@@ -530,7 +533,7 @@
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
 
-        <span class="n">coeffs</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">spline_filter</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">spline_order</span><span class="p">)</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">spline_filter</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">spline_order</span><span class="p">)</span>
         <span class="n">x0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span>
         <span class="n">dx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span>
 
@@ -549,12 +552,12 @@
             <span class="n">_coordinates</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
                 <span class="p">[</span><span class="n">_transform</span><span class="p">(</span><span class="n">coordinates</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x0</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dx</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span>
                     <span class="n">coordinates</span><span class="p">))])</span>
-            <span class="k">return</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">map_coordinates</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span>
-                                           <span class="n">_coordinates</span><span class="p">,</span>
-                                           <span class="n">prefilter</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                           <span class="n">mode</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">,</span>
-                                           <span class="n">cval</span><span class="o">=</span><span class="n">cval</span><span class="p">)</span>
-        <span class="c"># mode=&#39;wrap&#39; would be ideal but is broken: http://projects.scipy.org/scipy/ticket/796</span>
+            <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">map_coordinates</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span>
+                                                 <span class="n">_coordinates</span><span class="p">,</span>
+                                                 <span class="n">prefilter</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                                                 <span class="n">mode</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">,</span>
+                                                 <span class="n">cval</span><span class="o">=</span><span class="n">cval</span><span class="p">)</span>
+        <span class="c"># mode=&#39;wrap&#39; would be ideal but is broken: https://github.com/scipy/scipy/issues/1323</span>
         <span class="k">return</span> <span class="n">interpolatedF</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
@@ -670,7 +673,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.2 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
