@@ -139,7 +139,7 @@ not very well tested.</p>
 <div class="section" id="binary-plt-grid-file-format">
 <h3>3.2.2.2.2. Binary <code class="docutils literal"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#binary-plt-grid-file-format" title="Permalink to this headline">¶</a></h3>
 <p>Record number and meaning:</p>
-<div class="highlight-python"><div class="highlight"><pre>#1: Integer, rank value must always be = 3
+<div class="highlight-python"><div class="highlight"><pre><span></span>#1: Integer, rank value must always be = 3
 #2: Integer, possible values are 1 ... 50. This value is not used but
 it can be used to define the type of surface!
 Values used (you can use your own value between 1... 50):
@@ -174,7 +174,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 <li>Loop in the x direction</li>
 </ol>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>nx=2  ny=1  nz=3
+<div class="highlight-python"><div class="highlight"><pre><span></span>nx=2  ny=1  nz=3
 
 0,0,0   1,0,0     y=0, z=0
 0,0,1   1,0,0     y=0, z=1
@@ -182,7 +182,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 </pre></div>
 </div>
 <p>The formatted (the first few lines) file can look like:</p>
-<div class="highlight-python"><div class="highlight"><pre>3 2
+<div class="highlight-python"><div class="highlight"><pre><span></span>3 2
 65 65 65
 -3.300000e+001 3.200000e+001 -3.300000e+001 3.200000e+001 -3.300000e+001 3.200000e+001
 -1.625609e+001 -1.644741e+001 -1.663923e+001 -1.683115e+001 -1.702274e+001 -1.721340e+001
@@ -194,7 +194,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 <div class="section" id="formatted-plt-grid-file-format">
 <h3>3.2.2.2.3. Formatted <code class="docutils literal"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#formatted-plt-grid-file-format" title="Permalink to this headline">¶</a></h3>
 <p>Line numbers and variables on the line:</p>
-<div class="highlight-python"><div class="highlight"><pre>line #1: Integer, Integer. Rank and type of surface (rank is always = 3)
+<div class="highlight-python"><div class="highlight"><pre><span></span>line #1: Integer, Integer. Rank and type of surface (rank is always = 3)
 line #2: Integer, Integer, Integer. Zdim, Ydim, Xdim (number of points in the z,y,x directions)
 line #3: Float, Float, Float, Float, Float, Float. Zmin, Zmax, Ymin, Ymax, Xmin,Xmax (min and max values)
 line #4: ... Float. Grid data values running (x is inner loop, then y and last z) with one or several values per line:
@@ -214,12 +214,12 @@ line #4: ... Float. Grid data values running (x is inner loop, then y and last z
 <dd><p>A class to represent a <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a> plt file.</p>
 <dl class="docutils">
 <dt>Only reading is implemented; either supply a filename to the constructor</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">Plt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">Plt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd>
 <dt>or load the file with the read method</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">Plt</span><span class="p">()</span>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">Plt</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -286,7 +286,7 @@ the dict <code class="xref py py-attr docutils literal"><span class="pre">GOpenM
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2007-2015, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

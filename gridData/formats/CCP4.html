@@ -118,14 +118,14 @@ accessible through the Google cache
 <h2>3.2.3.2. Grid data CCP4 file format<a class="headerlink" href="#grid-data-ccp4-file-format" title="Permalink to this headline">¶</a></h2>
 <p>Copyright Science and Technologies Facilities Council, 2015.</p>
 <p>The overall layout of the file is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre>File header (256 longwords)
+<div class="highlight-python"><div class="highlight"><pre><span></span>File header (256 longwords)
 Symmetry information
 Map, stored as a 3-dimensional array
 </pre></div>
 </div>
 <p>The header is organised as 56 words followed by space for ten 80
 character text labels as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre> 1      NC              # of Columns    (fastest changing in map)
+<div class="highlight-python"><div class="highlight"><pre><span></span> 1      NC              # of Columns    (fastest changing in map)
  2      NR              # of Rows
  3      NS              # of Sections   (slowest changing in map)
  4      MODE            Data type
@@ -206,12 +206,12 @@ the big endian stamp is 0x11, 0x11, 0x00, 0x00.</p>
 <dd><p>A class to represent a <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">CCP4</a> file.</p>
 <dl class="docutils">
 <dt>Only reading is implemented; either supply a filename to the constructor</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd>
 <dt>or load the file with the read method</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">()</span>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -286,7 +286,7 @@ the dict <code class="xref py py-attr docutils literal"><span class="pre">CCP4.h
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2007-2015, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

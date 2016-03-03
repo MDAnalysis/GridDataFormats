@@ -90,13 +90,13 @@
 independent of the grid data format. In particular this module
 contains the <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal"><span class="pre">Grid</span></code></a> class that acts as a universal constructor
 for specific formats:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>           <span class="c"># construct</span>
-<span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="p">)</span>   <span class="c"># export to the desired format</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>           <span class="c1"># construct</span>
+<span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="p">)</span>   <span class="c1"># export to the desired format</span>
 </pre></div>
 </div>
 <p>Some formats can also be read:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">()</span>                   <span class="c"># make an empty Grid</span>
-<span class="n">g</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>             <span class="c"># populate with data from filename</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">()</span>                   <span class="c1"># make an empty Grid</span>
+<span class="n">g</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>             <span class="c1"># populate with data from filename</span>
 </pre></div>
 </div>
 <div class="section" id="classes-and-functions">
@@ -168,7 +168,7 @@ modified, <a class="reference internal" href="#gridData.core.Grid.interpolated" 
 (TODO: also recompute when interpolation_cval value is changed.)</p>
 <dl class="docutils">
 <dt>Example usage for resampling::</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">XX</span><span class="p">,</span><span class="n">YY</span><span class="p">,</span><span class="n">ZZ</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">75</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">96</span><span class="p">:</span><span class="mi">150</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mf">0.5</span><span class="p">]</span>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">XX</span><span class="p">,</span><span class="n">YY</span><span class="p">,</span><span class="n">ZZ</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">75</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">96</span><span class="p">:</span><span class="mi">150</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mf">0.5</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">FF</span> <span class="o">=</span> <span class="n">interpolated</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span><span class="n">YY</span><span class="p">,</span><span class="n">ZZ</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -259,7 +259,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2007-2015, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>
