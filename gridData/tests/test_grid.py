@@ -4,7 +4,7 @@ from nose.tools import raises
 
 from gridData import Grid
 
-from ..tests import module_not_found
+from gridData.tests import module_not_found
 
 class TestGrid:
 

@@ -1,0 +1,50 @@
+package:
+  name: griddataformats
+  version: "0.3.2"
+
+source:
+    path: .
+
+build:
+    noarch_python: True
+    script: $PYTHON setup.py install
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - six
+    - numpy
+    - scipy
+
+  run:
+    - python
+    - six
+    - numpy
+    - scipy
+
+test:
+  # Python imports
+  imports:
+    - gridData
+
+  requires:
+    # Put any additional test requirements here.  For example
+    - nose
+    - tempdir
+
+  files:
+   - gridData/tests
+
+  commands:
+    - nosetests gridData
+
+about:
+  home: http://mdanalysis.org/GridDataFormats
+  license: LGPLv3
+  license_file: COPYING.LESSER
+  summary: 'GridDataFormats provides the Python package gridData'
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
