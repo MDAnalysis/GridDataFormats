@@ -12,6 +12,14 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+xx/xx/2016 kain88-de
+
+  * 0.3.3
+
+  Changes
+
+  * Included tempdir module directly
+
 12/11/2015 orbeckst
 
   * 0.3.2

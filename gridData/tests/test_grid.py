@@ -6,6 +6,7 @@ from gridData import Grid
 
 from gridData.tests import module_not_found
 
+
 class TestGrid:
 
     def __init__(self):
@@ -99,7 +100,6 @@ class TestGrid:
         assert_array_equal(centers[0], g.origin)
         assert_array_equal(centers[-1] - g.origin,
                            (np.array(g.grid.shape) - 1) * self.delta)
-
 
     @dec.skipif(module_not_found('scipy'),
                 "Test skipped because scipy is not available.")
