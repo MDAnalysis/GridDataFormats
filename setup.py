@@ -8,7 +8,7 @@ with open('README.rst', 'r') as f:
     long_description = f.read()
 
 setup(name="GridDataFormats",
-      version="0.3.2",
+      version="0.3.3-dev",
       description="Reading and writing of data on regular grids in Python",
       long_description=long_description,
       author="Oliver Beckstein",
@@ -28,7 +28,7 @@ setup(name="GridDataFormats",
       packages=find_packages(exclude=[]),
       package_data={'gridData': ['tests/*.dx', 'tests/*.ccp4']},
       install_requires=['numpy>=1.0.3', 'six'],
-      tests_require=['nose', 'tempdir', 'numpy'],
+      tests_require=['nose', 'numpy'],
       # extras can be difficult to install through setuptools and/or
       # you might prefer to use the version available through your
       # packaging system

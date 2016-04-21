@@ -195,4 +195,4 @@ from . import CCP4
 from . import testing
 
 __all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4', 'testing']
-__version__ = '0.3.2'
+__version__ = '0.3.3-dev'
