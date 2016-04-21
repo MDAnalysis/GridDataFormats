@@ -192,6 +192,7 @@ from .core import Grid
 from . import OpenDX
 from . import gOpenMol
 from . import CCP4
+from . import testing
 
-__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4']
+__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4', 'testing']
 __version__ = '0.3.2'
