@@ -31,7 +31,6 @@ test:
   requires:
     # Put any additional test requirements here.  For example
     - nose
-    - tempdir
 
   files:
    - gridData/tests
