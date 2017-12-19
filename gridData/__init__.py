@@ -197,4 +197,8 @@ from . import CCP4
 from . import testing
 
 __all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4', 'testing']
-__version__ = '0.4.0-dev'
+
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
+

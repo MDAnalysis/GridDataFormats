@@ -3,12 +3,14 @@
 # Released under the GNU Public License 3 (or higher, your choice)
 # See the file COPYING for details.
 from setuptools import setup, find_packages
+import versioneer
 
 with open('README.rst', 'r') as f:
     long_description = f.read()
 
 setup(name="GridDataFormats",
-      version="0.4.0-dev",
+      version=versioneer.get_version(),
+      cmdclass=versioneer.get_cmdclass(),
       description="Reading and writing of data on regular grids in Python",
       long_description=long_description,
       author="Oliver Beckstein",
