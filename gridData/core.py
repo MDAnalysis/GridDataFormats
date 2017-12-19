@@ -329,7 +329,7 @@ class Grid(object):
         grid, edges = g.histogramdd()
         self.__init__(grid=grid, edges=edges, metadata=self.metadata)
 
-    def export(self, filename, file_format=None):
+    def export(self, filename, file_format=None, type=None):
         """export density to file using the given format.
 
         The format can also be deduced from the suffix of the filename
@@ -346,11 +346,33 @@ class Grid(object):
             pickle (use :meth:``Grid.load` to restore); :meth:`Grid.save`
             is simpler than ``export(format='python')``.
 
+        Parameters
+        ----------
+        filename : str
+            name of the output file
+        file_format : {'dx', 'pickle', None} (optional)
+            output file format, the default is "dx"
+        type : str (optional)
+            for DX, set the output DX array type, e.g., "double" or
+            "float"; note that PyMOL only understands "double" (see
+            issue `#35`_). By default (``None``), the DX type is
+            determined from the numpy dtype of the array of the grid
+            (and this will typically result in "double").
+
+            .. versionadded:: 0.4.0
+
+
+        .. _`#35`: https://github.com/MDAnalysis/GridDataFormats/issues/35
+
         """
         exporter = self._get_exporter(filename, file_format=file_format)
-        exporter(filename)
+        exporter(filename, type=type)
 
-    def _export_python(self, filename):
+    # note: the _export_FORMAT() methods all take the filename as a mandatory
+    # argument. They can process kwargs but they are not required to do
+    # so. However, they must ignore any kwargs that they are not processing.
+
+    def _export_python(self, filename, **kwargs):
         """Pickle the Grid object
 
         The object is dumped as a dictionary with grid and edges: This
@@ -363,10 +385,11 @@ class Grid(object):
         with open(filename, 'wb') as f:
             cPickle.dump(data, f, cPickle.HIGHEST_PROTOCOL)
 
-    def _export_dx(self, filename):
+    def _export_dx(self, filename, type=None, **kwargs):
         """Export the density grid to an OpenDX file. The file format
         is the simplest regular grid array and it is also understood
-        by VMD's and PyMOL's DX reader.
+        by VMD's and Chimera's DX reader; PyMOL requires the dx `type`
+        to be set to "double".
 
         For the file format see
         http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF
@@ -394,7 +417,8 @@ class Grid(object):
             positions=OpenDX.gridpositions(1, self.grid.shape, self.origin,
                                            self.delta),
             connections=OpenDX.gridconnections(2, self.grid.shape),
-            data=OpenDX.array(3, self.grid), )
+            data=OpenDX.array(3, self.grid, type=type),
+        )
         dx = OpenDX.field('density', components=components, comments=comments)
         dx.write(filename)
 
