@@ -227,8 +227,6 @@ class array(DXclass):
         "unsigned int": "uint32",
         "int": "int32",
         "signed int": "int32",
-        "unsigned int": "uint64", # not explicit in DX, for compatibility
-        "int": "int64",           # not explicit in DX, for compatibility
         # "hyper",                # ?
         "float": "float32",       # default
         "double": "float64",
