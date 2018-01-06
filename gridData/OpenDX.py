@@ -377,7 +377,7 @@ class field(DXclass):
             components = dict(positions=None,connections=None,data=None)
         if comments is None:
             comments = ['OpenDX written by gridData.OpenDX',
-                        'from http://github.com/orbeckst/GridDataFormats']
+                        'from https://github.com/MDAnalysis/GridDataFormats']
         elif type(comments) is not list:
             comments = [str(comments)]
         self.id = classid       # can be an arbitrary string
