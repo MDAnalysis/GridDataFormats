@@ -25,11 +25,21 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-#needs_sphinx = '1.0'
+#
+# needs_sphinx = '1.0'
 
-# Add any Sphinx extension module names here, as strings. They can be extensions
-# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.coverage', 'sphinx.ext.mathjax', 'sphinx.ext.viewcode']
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+# ones.
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx',
+              'sphinx.ext.mathjax', 'sphinx.ext.viewcode',
+              'sphinx.ext.napoleon', 'sphinx.ext.todo',
+              'alabaster']
+
+mathjax_path = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+
+# https://stackoverflow.com/questions/5599254/how-to-use-sphinxs-autodoc-to-document-a-classs-init-self-method
+autoclass_content = 'both'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -44,8 +54,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'gridDataFormats'
-copyright = u'2007-2016, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson'
+project = u'GridDataFormats'
+copyright = u'2007-2017, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -102,36 +112,76 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 if on_rtd:
     html_theme = 'default'
 else:
-    html_theme = 'sphinxdoc'
+    html_theme = 'alabaster'
 
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-#html_theme_options = {}
+    # Theme options are theme-specific and customize the look and feel of a theme
+    # further.  For a list of options available for each theme, see the
+    # documentation.
+    #
+    # styles/fonts to match http://mdanalysis.org (see public/css)
+    #
+    # /* MDAnalysis orange: #FF9200 */
+    # /* MDAnalysis gray: #808080 */
+    # /* MDAnalysis white: #FFFFFF */
+    # /* MDAnalysis black: #000000 */
 
-# Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
+    color = {'orange': '#FF9200',
+             'gray': '#808080',
+             'white': '#FFFFFF',
+             'black': '#000000',}
 
-# The name for this set of Sphinx documents.  If None, it defaults to
-# "<project> v<release> documentation".
-#html_title = None
+    html_theme_options = {
+        'logo' : "logos/mdanalysis-logo-200x150.png",
+        'logo_name': True,
+        'logo_text_align': "left",
+        'description': "data formats for gridded data",
+        'github_user': "MDAnalysis",
+        'github_repo': "GridDataFormats",
+        'github_button': False,
+        'github_banner': True,
+        'show_related': True,
+        'fixed_sidebar': False,
+        'sidebar_includehidden': True,
+        'sidebar_collapse': True,
+        # style
+        'link': color['orange'],
+        'link_hover': color['orange'],
+        'gray_1': color['gray'],
+        'narrow_sidebar_bg': color['gray'],
+        'narrow_sidebar_fg': color['white'],
+        # typography
+        #'font_size': 17,
+        'font_family': "'PT Sans', Helvetica, Arial, 'sans-serif'",
+        'head_font_family': "",
+        'code_font_size': "smaller",
+        'code_font_family': "Menlo, Monaco, 'Courier New', monospace",
+        'caption_font_size': "smaller",
+    }
 
-# A shorter title for the navigation bar.  Default is the same as html_title.
-#html_short_title = None
+    # Custom sidebar templates, maps document names to template names.
+    # alabaster sidebars
+    html_sidebars = {
+        '**': [
+            'about.html',
+            'navigation.html',
+            'relations.html',
+            'searchbox.html',
+        ]
+    }
 
-# The name of an image file (relative to this directory) to place at the top
-# of the sidebar.
-#html_logo = None
 
-# The name of an image file (within the static path) to use as favicon of the
-# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
-#html_favicon = None
+# options common to RTD and MDAnalysis theme
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# The name of an image file (within the static path) to use as favicon of the
+# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
+# pixels large.
+html_favicon = "_static/logos/mdanalysis-logo.ico"
+
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -141,8 +191,6 @@ html_static_path = ['_static']
 # typographically correct entities.
 #html_use_smartypants = True
 
-# Custom sidebar templates, maps document names to template names.
-#html_sidebars = {}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -169,13 +217,13 @@ html_static_path = ['_static']
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
 # base URL from which the finished HTML is served.
-#html_use_opensearch = ''
+html_use_opensearch = 'https://www.mdanalysis.org/GridDataFormats'
 
 # This is the file name suffix for HTML files (e.g. ".xhtml").
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'gridDataFormatsdoc'
+htmlhelp_basename = 'GridDataFormatsDoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
