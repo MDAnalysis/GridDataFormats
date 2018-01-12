@@ -2,8 +2,7 @@
 # Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser General Public License, version 3 or later.
 
-r"""
-:mod:`OpenDX` --- routines to read and write simple OpenDX files
+r""":mod:`~gridData.OpenDX` --- routines to read and write simple OpenDX files
 ================================================================
 
 The OpenDX format for multi-dimensional grid data. OpenDX is a free
@@ -19,6 +18,66 @@ If you want to build a dx object from your data you can either use the
 convenient :class:`~gridData.core.Grid` class from the top level
 module (:class:`gridData.Grid`) or see the lower-level methods
 described below.
+
+
+Reading and writing OpenDX files
+--------------------------------
+
+If you have OpenDX files from other software and you just want to
+**read** it into a Python array then you do not really need to use the
+interface in :mod:`gridData.OpenDX`: just use
+:class:`~gridData.core.Grid` and load the file::
+
+  from gridData import Grid
+  g = Grid("data.dx")
+
+This should work for files produced by common visualization programs
+(VMD_, PyMOL_, Chimera_). The documentation for :mod:`gridData` tells
+you more about what to do with the :class:`~gridData.core.Grid`
+object.
+
+If you want to **write** an OpenDX file then you just use the
+:meth:`gridData.core.Grid.export` method with `file_format="dx"` (or
+just use a filename with extension ".dx")::
+
+  g.export("data.dx")
+
+However, some visualization programs do not implement full OpenDX
+specifications and only read very specific, "OpenDX-like"
+files. :mod:`gridData.OpenDX` tries to be compatible with these
+formats. However, sometimes additional help is needed to write an
+OpenDX file that can be read by a specific software, as described
+below:
+
+Known issues for writing OpenDX files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* PyMOL_ requires OpenDX files with the type specification "double" in
+  the `class array` section (see issue `#35`_). By default (since
+  release 0.4.0), the type is set to the one that most closely
+  approximates the dtype of the numpy array :attr:`Grid.grid`, which
+  holds all data. This is often :class:`numpy.float64`, which will
+  create an OpenDX type "double", which PyMOL will read.
+
+  However, if you want to *force* a specific OpenDX type (such as
+  "float" or "double", see :attr:`gridData.OpenDX.array.dx_types` for
+  available values) then you can use the ``type`` keyword argument::
+
+    g.export("for_pymol.dx", type="double")
+
+  If you always want to be able to read OpenDX files with PyMOL, it is
+  suggested to always export with ``type="double"``.
+
+  .. versionadded:: 0.4.0
+
+
+
+.. _VMD: http://www.ks.uiuc.edu/Research/vmd/
+.. _PyMOL: http://www.pymol.org/
+.. _Chimera: https://www.cgl.ucsf.edu/chimera/
+.. _`#35`: https://github.com/MDAnalysis/GridDataFormats/issues/35
+
+
 
 
 Building a dx object from a numpy array ``A``
@@ -43,6 +102,11 @@ delta
     elements are 0 and the diagonal ones correspond to the
     'bin width' of the histogram, eg ``delta[0,0] = 1.0`` (Angstrom)
 
+The DX data type ("type" in the DX file) is determined from the
+:class:`numpy.dtype` of the :class:`numpy.ndarray` that is provided as
+the *grid* (or with the *type* keyword argument to
+:class:`gridData.OpenDX.array`).
+
 For example, to build a :class:`field`::
 
   dx = OpenDX.field('density')
@@ -66,10 +130,15 @@ One can also read data from an existing dx file::
  dx = OpenDX.field(0)
  dx.read('file.dx')
 
+Only simple arrays are read and initially stored as a 1-d
+:class:`numpy.ndarray` in the `dx.components['data'].array` with the
+:class:`numpy.dtype` determined by the DX type in the file.
+
 The dx :class:`field` object has a method
-:meth:`~OpenDX.field.histogramdd` that produces output identical to the
-:func:`numpy.histogramdd` function. In this way, one can store nD
-histograms in a portable and universal manner::
+:meth:`~OpenDX.field.histogramdd` that produces output identical to
+the :func:`numpy.histogramdd` function by taking the stored dimension
+and deltas into account. In this way, one can store nD histograms in a
+portable and universal manner::
 
   histogram, edges = dx.histogramdd()
 
@@ -94,6 +163,7 @@ import re
 from six import next
 from six.moves import range
 
+import warnings
 
 class DXclass(object):
     """'class' object as defined by OpenDX"""
@@ -182,18 +252,120 @@ class gridconnections(DXclass):
                       ('counts '+self.ndformat(' %d')) % tuple(self.shape))
 
 class array(DXclass):
-    """OpenDX array class"""
-    def __init__(self,classid,array=None,**kwargs):
+    """OpenDX array class.
+
+    See `Array Objects`_ for details.
+
+    .. _Array Objects:
+       https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440
+    """
+    #: conversion from :attr:`numpy.dtype.name` to closest OpenDX array type
+    #: (round-tripping is not guaranteed to produce identical types); not all
+    #: types are supported (e.g., strings are missing)
+    np_types = {
+        "uint8": "byte",         # DX "unsigned byte" equivalent
+        "int8": "signed byte",
+        "uint16": "unsigned short",
+        "int16": "short",         # DX "signed short" equivalent
+        "uint32": "unsigned int",
+        "int32": "int",           # DX "signed int"   equivalent
+        "uint64": "unsigned int", # not explicit in DX, for compatibility
+        "int64": "int",           # not explicit in DX, for compatibility
+        # "hyper",                # ?
+        "float32": "float",       # default
+        "float64": "double",
+        "float16": "float",       # float16 not available in DX, use float
+        # numpy "float128 not available, raise error
+        # "string" not automatically supported
+    }
+    #: conversion from OpenDX type to closest :class:`numpy.dtype`
+    #: (round-tripping is not guaranteed to produce identical types); not all
+    #: types are supported (e.g., strings and conversion to int64 are missing)
+    dx_types = {
+        "byte": "uint8",
+        "unsigned byte": "uint8",
+        "signed byte": "int8",
+        "unsigned short": "uint16",
+        "short": "int16",
+        "signed short": "int16",
+        "unsigned int": "uint32",
+        "int": "int32",
+        "signed int": "int32",
+        # "hyper",                # ?
+        "float": "float32",       # default
+        "double": "float64",
+        # "string" not automatically supported
+    }
+
+    def __init__(self, classid, array=None, type=None, **kwargs):
+        """
+        Parameters
+        ----------
+        classid : int
+        array : array_like
+        type : str (optional)
+             Set the DX type in the output file and cast `array` to
+             the closest numpy dtype.  `type` must be one of the
+             allowed types in DX files as defined under `Array
+             Objects`_.  The default ``None`` tries to set the type
+             from the :class:`numpy.dtype` of `array`.
+
+             .. versionadded:: 0.4.0
+
+        Raises
+        ------
+        ValueError
+             if `array` is not provided; or if `type` is not of the correct
+             DX type
+        """
         if array is None:
             raise ValueError('array keyword argument is required')
         self.id = classid
         self.name = 'array'
         self.component = 'data'
-        self.array = numpy.asarray(array)
-    def write(self,file):
+        # detect type https://github.com/MDAnalysis/GridDataFormats/issues/35
+        if type is None:
+            self.array = numpy.asarray(array)
+            try:
+                self.type = self.np_types[self.array.dtype.name]
+            except KeyError:
+                warnings.warn(("array dtype.name = {0} can not be automatically "
+                               "converted to a DX array type. Use the 'type' keyword "
+                               "to manually specify the correct type.").format(
+                                   self.array.dtype.name))
+                self.type = self.array.dtype.name  # will raise ValueError on writing
+        else:
+            try:
+                self.array = numpy.asarray(array, dtype=self.dx_types[type])
+            except KeyError:
+                raise ValueError(("DX type {0} cannot be converted to an "
+                                  "appropriate numpy dtype. Available "
+                                  "types are: {1}".format(type,
+                                                          list(self.dx_types.values()))))
+            self.type = type
+
+    def write(self, file):
+        """Write the *class array* section.
+
+        Parameters
+        ----------
+        file : file
+
+        Raises
+        ------
+        ValueError
+             If the `dxtype` is not a valid type, :exc:`ValueError` is
+             raised.
+
+        """
+        if self.type not in self.dx_types:
+            raise ValueError(("DX type {} is not supported in the DX format. \n"
+                              "Supported valus are: {}\n"
+                              "Use the type=<type> keyword argument.").format(
+                                  self.type, list(self.dx_types.keys())))
         DXclass.write(self,file,
-                      'type float rank 0 items %d data follows' % \
-                      self.array.size)
+                      'type "{0}" rank 0 items {1} data follows'.format(
+                          self.type, self.array.size))
         # grid data, serialized as a C array (z fastest varying)
         # (flat iterator is equivalent to: for x: for y: for z: grid[x,y,z])
         # VMD's DX reader requires exactly 3 values per line
@@ -269,7 +441,7 @@ class field(DXclass):
             components = dict(positions=None,connections=None,data=None)
         if comments is None:
             comments = ['OpenDX written by gridData.OpenDX',
-                        'from http://github.com/orbeckst/GridDataFormats']
+                        'from https://github.com/MDAnalysis/GridDataFormats']
         elif type(comments) is not list:
             comments = [str(comments)]
         self.id = classid       # can be an arbitrary string

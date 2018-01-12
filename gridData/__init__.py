@@ -99,6 +99,8 @@ The following formats are available (:ref:`supported-file-formats`):
         IBM's Data Explorer, http://www.opendx.org/
    :mod:`~gridData.gOpenMol`
         http://www.csc.fi/gopenmol/
+   :mod:`~gridData.CCP4`
+        CCP4 format http://www.ccp4.ac.uk/html/maplib.html#description
    pickle
         python pickle file (:mod:`pickle`)
 
@@ -195,4 +197,4 @@ from . import CCP4
 from . import testing
 
 __all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4', 'testing']
-__version__ = '0.3.3'
+__version__ = '0.4.0-dev'
