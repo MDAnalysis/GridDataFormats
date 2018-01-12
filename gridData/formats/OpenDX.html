@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>2.2.1. OpenDX — routines to read and write simple OpenDX files &#8212; GridDataFormats release-0.3.3+17.g3d41913 documentation</title>
+    <title>3.2.1. OpenDX — routines to read and write simple OpenDX files &#8212; GridDataFormats release-0.3.3+18.g8e338dd documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     'release-0.3.3+17.g3d41913',
+        VERSION:     'release-0.3.3+18.g8e338dd',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -23,13 +23,13 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats release-0.3.3+17.g3d41913 documentation"
+          title="Search within GridDataFormats release-0.3.3+18.g8e338dd documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" />
-    <link rel="prev" title="2. Formats" href="../formats.html" />
+    <link rel="next" title="3.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" />
+    <link rel="prev" title="3. Formats" href="../formats.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -46,7 +46,7 @@
           <div class="body" role="main">
             
   <span class="target" id="module-gridData.OpenDX"></span><div class="section" id="opendx-routines-to-read-and-write-simple-opendx-files">
-<h1>2.2.1. <a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal"><span class="pre">OpenDX</span></code></a> — routines to read and write simple OpenDX files<a class="headerlink" href="#opendx-routines-to-read-and-write-simple-opendx-files" title="Permalink to this headline">¶</a></h1>
+<h1>3.2.1. <a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal"><span class="pre">OpenDX</span></code></a> — routines to read and write simple OpenDX files<a class="headerlink" href="#opendx-routines-to-read-and-write-simple-opendx-files" title="Permalink to this headline">¶</a></h1>
 <p>The OpenDX format for multi-dimensional grid data. OpenDX is a free
 visualization software, see <a class="reference external" href="http://www.opendx.org">http://www.opendx.org</a>.</p>
 <div class="admonition note">
@@ -61,7 +61,7 @@ convenient <a class="reference internal" href="../core.html#gridData.core.Grid" 
 module (<code class="xref py py-class docutils literal"><span class="pre">gridData.Grid</span></code>) or see the lower-level methods
 described below.</p>
 <div class="section" id="reading-and-writing-opendx-files">
-<span id="opendx-read-write"></span><h2>2.2.1.1. Reading and writing OpenDX files<a class="headerlink" href="#reading-and-writing-opendx-files" title="Permalink to this headline">¶</a></h2>
+<span id="opendx-read-write"></span><h2>3.2.1.1. Reading and writing OpenDX files<a class="headerlink" href="#reading-and-writing-opendx-files" title="Permalink to this headline">¶</a></h2>
 <p>If you have OpenDX files from other software and you just want to
 <strong>read</strong> it into a Python array then you do not really need to use the
 interface in <a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal"><span class="pre">gridData.OpenDX</span></code></a>: just use
@@ -87,7 +87,7 @@ formats. However, sometimes additional help is needed to write an
 OpenDX file that can be read by a specific software, as described
 below:</p>
 <div class="section" id="known-issues-for-writing-opendx-files">
-<h3>2.2.1.1.1. Known issues for writing OpenDX files<a class="headerlink" href="#known-issues-for-writing-opendx-files" title="Permalink to this headline">¶</a></h3>
+<h3>3.2.1.1.1. Known issues for writing OpenDX files<a class="headerlink" href="#known-issues-for-writing-opendx-files" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first"><a class="reference external" href="http://www.pymol.org/">PyMOL</a> requires OpenDX files with the type specification “double” in
 the <cite>class array</cite> section (see issue <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/issues/35">#35</a>). By default (since
@@ -111,7 +111,7 @@ suggested to always export with <code class="docutils literal"><span class="pre"
 </div>
 </div>
 <div class="section" id="building-a-dx-object-from-a-numpy-array-a">
-<h2>2.2.1.2. Building a dx object from a numpy array <code class="docutils literal"><span class="pre">A</span></code><a class="headerlink" href="#building-a-dx-object-from-a-numpy-array-a" title="Permalink to this headline">¶</a></h2>
+<h2>3.2.1.2. Building a dx object from a numpy array <code class="docutils literal"><span class="pre">A</span></code><a class="headerlink" href="#building-a-dx-object-from-a-numpy-array-a" title="Permalink to this headline">¶</a></h2>
 <p>If you have a numpy array <code class="docutils literal"><span class="pre">A</span></code> that represents a density in cartesian
 space then you can construct a dx object (named a <em>field</em> in OpenDX
 parlance) if you provide some additional information that fixes the
@@ -150,7 +150,7 @@ the <em>grid</em> (or with the <em>type</em> keyword argument to
 </div>
 </div>
 <div class="section" id="building-a-dx-object-from-a-dx-file">
-<h2>2.2.1.3. Building a dx object from a dx file<a class="headerlink" href="#building-a-dx-object-from-a-dx-file" title="Permalink to this headline">¶</a></h2>
+<h2>3.2.1.3. Building a dx object from a dx file<a class="headerlink" href="#building-a-dx-object-from-a-dx-file" title="Permalink to this headline">¶</a></h2>
 <p>One can also read data from an existing dx file:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">dx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;file.dx&#39;</span><span class="p">)</span>
@@ -177,7 +177,7 @@ to an archived copy at the Internet Archive , <a class="reference external" href
 </table>
 </div>
 <div class="section" id="classes-and-functions">
-<h2>2.2.1.4. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
+<h2>3.2.1.4. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="gridData.OpenDX.DXInitObject">
 <em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXInitObject</code><span class="sig-paren">(</span><em>classtype</em>, <em>classid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject" title="Permalink to this definition">¶</a></dt>
@@ -504,17 +504,18 @@ delta     DxD array describing the deltas</p>
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">1. <code class="docutils literal"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">2. Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core.html">3. <code class="docutils literal"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic.html">2. Basic use</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">3. Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core.html">4. <code class="docutils literal"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../formats.html">2. Formats</a><ul>
-      <li>Previous: <a href="../formats.html" title="previous chapter">2. Formats</a></li>
-      <li>Next: <a href="gOpenMol.html" title="next chapter">2.2.2. <code class="docutils literal"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+  <li><a href="../formats.html">3. Formats</a><ul>
+      <li>Previous: <a href="../formats.html" title="previous chapter">3. Formats</a></li>
+      <li>Next: <a href="gOpenMol.html" title="next chapter">3.2.2. <code class="docutils literal"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
   </ul></li>
   </ul></li>
 </ul>

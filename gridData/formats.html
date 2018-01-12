@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>2. Formats &#8212; GridDataFormats release-0.3.3+17.g3d41913 documentation</title>
+    <title>3. Formats &#8212; GridDataFormats release-0.3.3+18.g8e338dd documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     'release-0.3.3+17.g3d41913',
+        VERSION:     'release-0.3.3+18.g8e338dd',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -23,13 +23,13 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats release-0.3.3+17.g3d41913 documentation"
+          title="Search within GridDataFormats release-0.3.3+18.g8e338dd documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2.2.1. OpenDX — routines to read and write simple OpenDX files" href="formats/OpenDX.html" />
-    <link rel="prev" title="1. gridData – Handling grids of data" href="overview.html" />
+    <link rel="next" title="3.2.1. OpenDX — routines to read and write simple OpenDX files" href="formats/OpenDX.html" />
+    <link rel="prev" title="2. Basic use" href="basic.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -46,14 +46,14 @@
           <div class="body" role="main">
             
   <div class="section" id="formats">
-<h1>2. Formats<a class="headerlink" href="#formats" title="Permalink to this headline">¶</a></h1>
+<h1>3. Formats<a class="headerlink" href="#formats" title="Permalink to this headline">¶</a></h1>
 <p>A limited number of commonly used formats can be read or written. The
 formats are particularly suitable to interface with molecular
 visualization tools such as <a class="reference external" href="http://www.ks.uiuc.edu/Research/vmd/">VMD</a>, <a class="reference external" href="http://www.pymol.org/">PyMOL</a>, or <a class="reference external" href="https://www.cgl.ucsf.edu/chimera/">Chimera</a>.</p>
 <p>Adding new formats is not difficult and user-contributed
 format reader/writer can be easily integrated—send a <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/pulls">pull request</a>.</p>
 <div class="section" id="supported-file-formats">
-<span id="id1"></span><h2>2.1. Supported file formats<a class="headerlink" href="#supported-file-formats" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>3.1. Supported file formats<a class="headerlink" href="#supported-file-formats" title="Permalink to this headline">¶</a></h2>
 <p>The package can be easily extended. The <a class="reference external" href="http://www.opendx.org/">OpenDX</a> format is widely
 understood by many molecular viewers and is sufficient for many
 applications that were encountered so far. Hence, at the moment only a
@@ -110,12 +110,12 @@ small number of file formats is directly supported.</p>
 </table>
 </div>
 <div class="section" id="format-specific-modules">
-<h2>2.2. Format-specific modules<a class="headerlink" href="#format-specific-modules" title="Permalink to this headline">¶</a></h2>
+<h2>3.2. Format-specific modules<a class="headerlink" href="#format-specific-modules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html">2.2.1. <code class="docutils literal"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="formats/gOpenMol.html">2.2.2. <code class="docutils literal"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
-<li class="toctree-l1"><a class="reference internal" href="formats/CCP4.html">2.2.3. <code class="docutils literal"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html">3.2.1. <code class="docutils literal"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/gOpenMol.html">3.2.2. <code class="docutils literal"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/CCP4.html">3.2.3. <code class="docutils literal"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a></li>
 </ul>
 </div>
 </div>
@@ -150,16 +150,17 @@ small number of file formats is directly supported.</p>
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">1. <code class="docutils literal"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core.html">3. <code class="docutils literal"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">2. Basic use</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">4. <code class="docutils literal"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="overview.html" title="previous chapter">1. <code class="docutils literal"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
-      <li>Next: <a href="formats/OpenDX.html" title="next chapter">2.2.1. <code class="docutils literal"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
+      <li>Previous: <a href="basic.html" title="previous chapter">2. Basic use</a></li>
+      <li>Next: <a href="formats/OpenDX.html" title="next chapter">3.2.1. <code class="docutils literal"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
   </ul></li>
 </ul>
 </div>
