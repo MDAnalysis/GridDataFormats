@@ -5,7 +5,7 @@ Formats
 
 A limited number of commonly used formats can be read or written. The
 formats are particularly suitable to interface with molecular
-visualization tools such as VMD_ or PyMOL_.
+visualization tools such as VMD_, PyMOL_, or Chimera_.
 
 Adding new formats is not difficult and user-contributed
 format reader/writer can be easily integrated---send a `pull request`_.
@@ -35,6 +35,7 @@ small number of file formats is directly supported.
 .. _pull request: https://github.com/MDAnalysis/GridDataFormats/pulls
 .. _VMD: http://www.ks.uiuc.edu/Research/vmd/
 .. _PyMOL: http://www.pymol.org/
+.. _Chimera: https://www.cgl.ucsf.edu/chimera/
 .. _OpenDX: http://www.opendx.org/
 .. _gOpenMol: http://www.csc.fi/gopenmol/
 .. _CCP4: http://www.ccp4.ac.uk/html/maplib.html#description

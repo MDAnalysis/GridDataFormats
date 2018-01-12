@@ -1,63 +1,42 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>gridData.OpenDX &mdash; gridDataFormats 0.3.3 documentation</title>
-    
-    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <title>gridData.OpenDX &#8212; GridDataFormats release-0.3.3+16.g55aae1d documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.3.3',
+        VERSION:     'release-0.3.3+16.g55aae1d',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="gridDataFormats 0.3.3 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats release-0.3.3+16.g55aae1d documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.3 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+  <body>
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -69,9 +48,9 @@
 <span class="c1"># Copyright (c) 2009-2014 Oliver Beckstein &lt;orbeckst@gmail.com&gt;</span>
 <span class="c1"># Released under the GNU Lesser General Public License, version 3 or later.</span>
 
-<span class="sd">r&quot;&quot;&quot;</span>
-<span class="sd">:mod:`OpenDX` --- routines to read and write simple OpenDX files</span>
-<span class="sd">================================================================</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:`~gridData.OpenDX` --- routines to read and write simple OpenDX files</span>
+<span class="sd">==========================================================================</span>
 
 <span class="sd">The OpenDX format for multi-dimensional grid data. OpenDX is a free</span>
 <span class="sd">visualization software, see http://www.opendx.org.</span>
@@ -86,6 +65,68 @@
 <span class="sd">convenient :class:`~gridData.core.Grid` class from the top level</span>
 <span class="sd">module (:class:`gridData.Grid`) or see the lower-level methods</span>
 <span class="sd">described below.</span>
+
+
+<span class="sd">.. _opendx-read-write:</span>
+
+<span class="sd">Reading and writing OpenDX files</span>
+<span class="sd">--------------------------------</span>
+
+<span class="sd">If you have OpenDX files from other software and you just want to</span>
+<span class="sd">**read** it into a Python array then you do not really need to use the</span>
+<span class="sd">interface in :mod:`gridData.OpenDX`: just use</span>
+<span class="sd">:class:`~gridData.core.Grid` and load the file::</span>
+
+<span class="sd">  from gridData import Grid</span>
+<span class="sd">  g = Grid(&quot;data.dx&quot;)</span>
+
+<span class="sd">This should work for files produced by common visualization programs</span>
+<span class="sd">(VMD_, PyMOL_, Chimera_). The documentation for :mod:`gridData` tells</span>
+<span class="sd">you more about what to do with the :class:`~gridData.core.Grid`</span>
+<span class="sd">object.</span>
+
+<span class="sd">If you want to **write** an OpenDX file then you just use the</span>
+<span class="sd">:meth:`gridData.core.Grid.export` method with `file_format=&quot;dx&quot;` (or</span>
+<span class="sd">just use a filename with extension &quot;.dx&quot;)::</span>
+
+<span class="sd">  g.export(&quot;data.dx&quot;)</span>
+
+<span class="sd">However, some visualization programs do not implement full OpenDX</span>
+<span class="sd">specifications and only read very specific, &quot;OpenDX-like&quot;</span>
+<span class="sd">files. :mod:`gridData.OpenDX` tries to be compatible with these</span>
+<span class="sd">formats. However, sometimes additional help is needed to write an</span>
+<span class="sd">OpenDX file that can be read by a specific software, as described</span>
+<span class="sd">below:</span>
+
+<span class="sd">Known issues for writing OpenDX files</span>
+<span class="sd">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">* PyMOL_ requires OpenDX files with the type specification &quot;double&quot; in</span>
+<span class="sd">  the `class array` section (see issue `#35`_). By default (since</span>
+<span class="sd">  release 0.4.0), the type is set to the one that most closely</span>
+<span class="sd">  approximates the dtype of the numpy array :attr:`Grid.grid`, which</span>
+<span class="sd">  holds all data. This is often :class:`numpy.float64`, which will</span>
+<span class="sd">  create an OpenDX type &quot;double&quot;, which PyMOL will read.</span>
+
+<span class="sd">  However, if you want to *force* a specific OpenDX type (such as</span>
+<span class="sd">  &quot;float&quot; or &quot;double&quot;, see :attr:`gridData.OpenDX.array.dx_types` for</span>
+<span class="sd">  available values) then you can use the ``type`` keyword argument::</span>
+
+<span class="sd">    g.export(&quot;for_pymol.dx&quot;, type=&quot;double&quot;)</span>
+
+<span class="sd">  If you always want to be able to read OpenDX files with PyMOL, it is</span>
+<span class="sd">  suggested to always export with ``type=&quot;double&quot;``.</span>
+
+<span class="sd">  .. versionadded:: 0.4.0</span>
+
+
+
+<span class="sd">.. _VMD: http://www.ks.uiuc.edu/Research/vmd/</span>
+<span class="sd">.. _PyMOL: http://www.pymol.org/</span>
+<span class="sd">.. _Chimera: https://www.cgl.ucsf.edu/chimera/</span>
+<span class="sd">.. _`#35`: https://github.com/MDAnalysis/GridDataFormats/issues/35</span>
+
+
 
 
 <span class="sd">Building a dx object from a numpy array ``A``</span>
@@ -110,6 +151,11 @@
 <span class="sd">    elements are 0 and the diagonal ones correspond to the</span>
 <span class="sd">    &#39;bin width&#39; of the histogram, eg ``delta[0,0] = 1.0`` (Angstrom)</span>
 
+<span class="sd">The DX data type (&quot;type&quot; in the DX file) is determined from the</span>
+<span class="sd">:class:`numpy.dtype` of the :class:`numpy.ndarray` that is provided as</span>
+<span class="sd">the *grid* (or with the *type* keyword argument to</span>
+<span class="sd">:class:`gridData.OpenDX.array`).</span>
+
 <span class="sd">For example, to build a :class:`field`::</span>
 
 <span class="sd">  dx = OpenDX.field(&#39;density&#39;)</span>
@@ -133,10 +179,15 @@
 <span class="sd"> dx = OpenDX.field(0)</span>
 <span class="sd"> dx.read(&#39;file.dx&#39;)</span>
 
+<span class="sd">Only simple arrays are read and initially stored as a 1-d</span>
+<span class="sd">:class:`numpy.ndarray` in the `dx.components[&#39;data&#39;].array` with the</span>
+<span class="sd">:class:`numpy.dtype` determined by the DX type in the file.</span>
+
 <span class="sd">The dx :class:`field` object has a method</span>
-<span class="sd">:meth:`~OpenDX.field.histogramdd` that produces output identical to the</span>
-<span class="sd">:func:`numpy.histogramdd` function. In this way, one can store nD</span>
-<span class="sd">histograms in a portable and universal manner::</span>
+<span class="sd">:meth:`~OpenDX.field.histogramdd` that produces output identical to</span>
+<span class="sd">the :func:`numpy.histogramdd` function by taking the stored dimension</span>
+<span class="sd">and deltas into account. In this way, one can store nD histograms in a</span>
+<span class="sd">portable and universal manner::</span>
 
 <span class="sd">  histogram, edges = dx.histogramdd()</span>
 
@@ -154,33 +205,35 @@
 <span class="sd">---------------------</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">six</span> <span class="kn">import</span> <span class="nb">next</span>
-<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="nb">next</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">range</span>
 
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 <div class="viewcode-block" id="DXclass"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass">[docs]</a><span class="k">class</span> <span class="nc">DXclass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;&#39;class&#39; object as defined by OpenDX&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;id is the object number&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>  <span class="c1"># serial number of the object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">None</span>   <span class="c1"># name of the DXclass</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="bp">None</span>   <span class="c1"># component type</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="bp">None</span>      <span class="c1"># dimensions</span>
-<div class="viewcode-block" id="DXclass.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">,</span><span class="n">optstring</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">quote</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># name of the DXclass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># component type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># dimensions</span>
+
+<div class="viewcode-block" id="DXclass.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">,</span><span class="n">optstring</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write the &#39;object&#39; line; additional args are packed in string&quot;&quot;&quot;</span>
         <span class="n">classid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">quote</span><span class="p">:</span> <span class="n">classid</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39;&quot;&#39;</span>
         <span class="c1"># Only use a *single* space between tokens; both chimera&#39;s and pymol&#39;s DX parser</span>
         <span class="c1"># does not properly implement the OpenDX specs and produces garbage with multiple</span>
         <span class="c1"># spaces. (Chimera 1.4.1, PyMOL 1.3)</span>
-        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;object &#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39; class &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span>\
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;object &#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39; class &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span>\
                    <span class="n">optstring</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Reading is currently not supported.&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DXclass.ndformat"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.ndformat">[docs]</a>    <span class="k">def</span> <span class="nf">ndformat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
@@ -199,8 +252,8 @@
 <span class="sd">    origin    coordinates of the centre of the grid cell with index 0,0,...,0</span>
 <span class="sd">    delta     DxD array describing the deltas</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">origin</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">delta</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">origin</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">delta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all keyword arguments are required&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;gridpositions&#39;</span>
@@ -219,13 +272,13 @@
             <span class="c1"># check OpenDX specs for irreg spacing if we want to implement</span>
             <span class="c1"># anything more complicated</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Only regularly spaced grids allowed, &#39;</span>
-                                      <span class="s1">&#39;not delta={}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">))</span>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">):</span>
-        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">,</span>
+                                      <span class="s1">&#39;not delta=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">):</span>
+        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">,</span>
                       <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;origin </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">))</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;origin </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">delta</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">:</span>
-            <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">((</span><span class="s1">&#39;delta &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">((</span><span class="s1">&#39;delta &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span>
 <div class="viewcode-block" id="gridpositions.edges"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.edges">[docs]</a>    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
 
@@ -237,30 +290,132 @@
 
 <div class="viewcode-block" id="gridconnections"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections">[docs]</a><span class="k">class</span> <span class="nc">gridconnections</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;OpenDX gridconnections class&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all keyword arguments are required&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;gridconnections&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="s1">&#39;connections&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># D dimensional shape</span>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">):</span>
-        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">):</span>
+        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">,</span>
                       <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="array"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array">[docs]</a><span class="k">class</span> <span class="nc">array</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;OpenDX array class&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">array</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">array</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;OpenDX array class.</span>
+
+<span class="sd">    See `Array Objects`_ for details.</span>
+
+<span class="sd">    .. _Array Objects:</span>
+<span class="sd">       https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#: conversion from :attr:`numpy.dtype.name` to closest OpenDX array type</span>
+    <span class="c1">#: (round-tripping is not guaranteed to produce identical types); not all</span>
+    <span class="c1">#: types are supported (e.g., strings are missing)</span>
+    <span class="n">np_types</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;uint8&quot;</span><span class="p">:</span> <span class="s2">&quot;byte&quot;</span><span class="p">,</span>         <span class="c1"># DX &quot;unsigned byte&quot; equivalent</span>
+        <span class="s2">&quot;int8&quot;</span><span class="p">:</span> <span class="s2">&quot;signed byte&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;uint16&quot;</span><span class="p">:</span> <span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;int16&quot;</span><span class="p">:</span> <span class="s2">&quot;short&quot;</span><span class="p">,</span>         <span class="c1"># DX &quot;signed short&quot; equivalent</span>
+        <span class="s2">&quot;uint32&quot;</span><span class="p">:</span> <span class="s2">&quot;unsigned int&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;int32&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>           <span class="c1"># DX &quot;signed int&quot;   equivalent</span>
+        <span class="s2">&quot;uint64&quot;</span><span class="p">:</span> <span class="s2">&quot;unsigned int&quot;</span><span class="p">,</span> <span class="c1"># not explicit in DX, for compatibility</span>
+        <span class="s2">&quot;int64&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>           <span class="c1"># not explicit in DX, for compatibility</span>
+        <span class="c1"># &quot;hyper&quot;,                # ?</span>
+        <span class="s2">&quot;float32&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>       <span class="c1"># default</span>
+        <span class="s2">&quot;float64&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;float16&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>       <span class="c1"># float16 not available in DX, use float</span>
+        <span class="c1"># numpy &quot;float128 not available, raise error</span>
+        <span class="c1"># &quot;string&quot; not automatically supported</span>
+    <span class="p">}</span>
+    <span class="c1">#: conversion from OpenDX type to closest :class:`numpy.dtype`</span>
+    <span class="c1">#: (round-tripping is not guaranteed to produce identical types); not all</span>
+    <span class="c1">#: types are supported (e.g., strings and conversion to int64 are missing)</span>
+    <span class="n">dx_types</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;byte&quot;</span><span class="p">:</span> <span class="s2">&quot;uint8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;unsigned byte&quot;</span><span class="p">:</span> <span class="s2">&quot;uint8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;signed byte&quot;</span><span class="p">:</span> <span class="s2">&quot;int8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;unsigned short&quot;</span><span class="p">:</span> <span class="s2">&quot;uint16&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;short&quot;</span><span class="p">:</span> <span class="s2">&quot;int16&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;signed short&quot;</span><span class="p">:</span> <span class="s2">&quot;int16&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;unsigned int&quot;</span><span class="p">:</span> <span class="s2">&quot;uint32&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;int&quot;</span><span class="p">:</span> <span class="s2">&quot;int32&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;signed int&quot;</span><span class="p">:</span> <span class="s2">&quot;int32&quot;</span><span class="p">,</span>
+        <span class="c1"># &quot;hyper&quot;,                # ?</span>
+        <span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="s2">&quot;float32&quot;</span><span class="p">,</span>       <span class="c1"># default</span>
+        <span class="s2">&quot;double&quot;</span><span class="p">:</span> <span class="s2">&quot;float64&quot;</span><span class="p">,</span>
+        <span class="c1"># &quot;string&quot; not automatically supported</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classid</span><span class="p">,</span> <span class="n">array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        classid : int</span>
+<span class="sd">        array : array_like</span>
+<span class="sd">        type : str (optional)</span>
+<span class="sd">             Set the DX type in the output file and cast `array` to</span>
+<span class="sd">             the closest numpy dtype.  `type` must be one of the</span>
+<span class="sd">             allowed types in DX files as defined under `Array</span>
+<span class="sd">             Objects`_.  The default ``None`` tries to set the type</span>
+<span class="sd">             from the :class:`numpy.dtype` of `array`.</span>
+
+<span class="sd">             .. versionadded:: 0.4.0</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">             if `array` is not provided; or if `type` is not of the correct</span>
+<span class="sd">             DX type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;array keyword argument is required&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;array&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">):</span>
-        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">,</span>
-                      <span class="s1">&#39;type float rank 0 items </span><span class="si">%d</span><span class="s1"> data follows&#39;</span> <span class="o">%</span> \
-                      <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="c1"># detect type https://github.com/MDAnalysis/GridDataFormats/issues/35</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">np_types</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">((</span><span class="s2">&quot;array dtype.name = </span><span class="si">{0}</span><span class="s2"> can not be automatically &quot;</span>
+                               <span class="s2">&quot;converted to a DX array type. Use the &#39;type&#39; keyword &quot;</span>
+                               <span class="s2">&quot;to manually specify the correct type.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># will raise ValueError on writing</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dx_types</span><span class="p">[</span><span class="nb">type</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">((</span><span class="s2">&quot;DX type </span><span class="si">{0}</span><span class="s2"> cannot be converted to an &quot;</span>
+                                  <span class="s2">&quot;appropriate numpy dtype. Available &quot;</span>
+                                  <span class="s2">&quot;types are: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span>
+                                                          <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dx_types</span><span class="o">.</span><span class="n">values</span><span class="p">()))))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+
+<div class="viewcode-block" id="array.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write the *class array* section.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file : file</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">             If the `dxtype` is not a valid type, :exc:`ValueError` is</span>
+<span class="sd">             raised.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx_types</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">((</span><span class="s2">&quot;DX type </span><span class="si">{}</span><span class="s2"> is not supported in the DX format. </span><span class="se">\n</span><span class="s2">&quot;</span>
+                              <span class="s2">&quot;Supported valus are: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                              <span class="s2">&quot;Use the type=&lt;type&gt; keyword argument.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dx_types</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">,</span>
+                      <span class="s1">&#39;type &quot;</span><span class="si">{0}</span><span class="s1">&quot; rank 0 items </span><span class="si">{1}</span><span class="s1"> data follows&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
         <span class="c1"># grid data, serialized as a C array (z fastest varying)</span>
         <span class="c1"># (flat iterator is equivalent to: for x: for y: for z: grid[x,y,z])</span>
         <span class="c1"># VMD&#39;s DX reader requires exactly 3 values per line</span>
@@ -269,12 +424,12 @@
         <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">values_per_line</span><span class="p">):</span>
-                    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">values</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">values</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-                <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="k">break</span>
-        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;attribute &quot;dep&quot; string &quot;positions&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;attribute &quot;dep&quot; string &quot;positions&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="field"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field">[docs]</a><span class="k">class</span> <span class="nc">field</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;OpenDX container class</span>
@@ -282,41 +437,32 @@
 <span class="sd">    The *field* is the top-level object and represents the whole</span>
 <span class="sd">    OpenDX file. It contains a number of other objects.</span>
 
-<span class="sd">    Methods overview:</span>
+<span class="sd">    Instantiate a DX object from this class and add subclasses with</span>
+<span class="sd">    :meth:`add`.</span>
 
-<span class="sd">    :meth:`add`</span>
-<span class="sd">        add a component to the field</span>
-<span class="sd">    :meth:`add_comments`</span>
-<span class="sd">        add comments</span>
-<span class="sd">    :meth:`write`</span>
-<span class="sd">       write OpenDX file to file descriptor; only simple regular</span>
-<span class="sd">       arrays are supported. File should be readable by VMD.</span>
-<span class="sd">    :meth:`read`</span>
-<span class="sd">        construct the field from a dx file</span>
-
-<span class="sd">    Instantiated a DX object from this class and add subclasses with</span>
-<span class="sd">    :meth:`append`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># perhaps this should not derive from DXclass as those are</span>
     <span class="c1"># objects in field but a field cannot contain itself</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="n">components</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;OpenDX object, which is build from a list of components.::</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;OpenDX object, which is build from a list of components.</span>
 
-<span class="sd">          dx = OpenDX.field(&#39;density&#39;,[gridpoints,gridconnections,array])</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
 
-<span class="sd">        :Arguments:</span>
-
-<span class="sd">           *id*</span>
+<span class="sd">        id : str</span>
 <span class="sd">               arbitrary string</span>
-<span class="sd">           *components*</span>
+<span class="sd">        components : dict</span>
 <span class="sd">               dictionary of DXclass instances (no sanity check on the</span>
 <span class="sd">               individual ids!) which correspond to</span>
-<span class="sd">                  * positions</span>
-<span class="sd">                  * connections</span>
-<span class="sd">                  * data</span>
-<span class="sd">           *comments*</span>
+
+<span class="sd">               * positions</span>
+<span class="sd">               * connections</span>
+<span class="sd">               * data</span>
+
+<span class="sd">        comments : list</span>
 <span class="sd">               list of strings; each string becomes a comment line</span>
 <span class="sd">               prefixed with &#39;#&#39;. Avoid newlines.</span>
+
 
 <span class="sd">        A field must have at least the components &#39;positions&#39;,</span>
 <span class="sd">        &#39;connections&#39;, and &#39;data&#39;. Those components are associated</span>
@@ -329,29 +475,36 @@
 <span class="sd">        objects are written and then the field object describes its</span>
 <span class="sd">        components. Objects are referenced by their unique id.)</span>
 
-<span class="sd">        .. Warning:: uniqueness of the *id* is not checked.</span>
+<span class="sd">        .. Note:: uniqueness of the *id* is not checked.</span>
+
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        Create a new dx object::</span>
+
+<span class="sd">           dx = OpenDX.field(&#39;density&#39;,[gridpoints,gridconnections,array])</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">components</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">components</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">connections</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">comments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">components</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">components</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">connections</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">comments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">comments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;OpenDX written by gridData.OpenDX&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;from http://github.com/orbeckst/GridDataFormats&#39;</span><span class="p">]</span>
+                        <span class="s1">&#39;from https://github.com/MDAnalysis/GridDataFormats&#39;</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">comments</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
             <span class="n">comments</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">comments</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>       <span class="c1"># can be an arbitrary string</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;field&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="bp">None</span>   <span class="c1"># cannot be a component of a field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># cannot be a component of a field</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">components</span> <span class="o">=</span> <span class="n">components</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span> <span class="n">comments</span>
 
-<div class="viewcode-block" id="field.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="field.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write the complete dx object to the file.</span>
-
-<span class="sd">        write(filename)</span>
 
 <span class="sd">        This is the simple OpenDX format which includes the data into</span>
 <span class="sd">        the header via the &#39;object array ... data follows&#39; statement.</span>
+
+<span class="sd">        Only simple regular arrays are supported.</span>
 
 <span class="sd">        The format should be compatible with VMD&#39;s dx reader plugin.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -365,26 +518,28 @@
             <span class="k">for</span> <span class="n">component</span><span class="p">,</span><span class="nb">object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_components</span><span class="p">():</span>
                 <span class="nb">object</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
             <span class="c1"># the field object itself</span>
-            <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">outfile</span><span class="p">,</span><span class="n">quote</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">outfile</span><span class="p">,</span><span class="n">quote</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">component</span><span class="p">,</span><span class="nb">object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_components</span><span class="p">():</span>
                 <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;component &quot;</span><span class="si">%s</span><span class="s1">&quot; value </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">component</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="n">id</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="field.read"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">file</span><span class="p">):</span>
+<div class="viewcode-block" id="field.read"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Read DX field from file.</span>
 
-<span class="sd">        dx = OpenDX.field.read(dxfile)</span>
+<span class="sd">            dx = OpenDX.field.read(dxfile)</span>
 
 <span class="sd">        The classid is discarded and replaced with the one from the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">DXfield</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">DXParser</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">DXParser</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">DXfield</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">component</span><span class="p">,</span><span class="n">DXobj</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">[</span><span class="n">component</span><span class="p">]</span> <span class="o">=</span> <span class="n">DXobj</span>
+<div class="viewcode-block" id="field.add"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">component</span><span class="p">,</span><span class="n">DXobj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;add a component to the field&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">component</span><span class="p">]</span> <span class="o">=</span> <span class="n">DXobj</span></div>
 
-    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+<div class="viewcode-block" id="field.add_comment"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add_comment">[docs]</a>    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;add comments&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="field.sorted_components"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.sorted_components">[docs]</a>    <span class="k">def</span> <span class="nf">sorted_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;iterator that returns (component,object) in id order&quot;&quot;&quot;</span>
@@ -433,10 +588,10 @@
                 <span class="s1">&#39;REAL&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;REAL&#39;</span><span class="p">],</span>
                 <span class="s1">&#39;NUMBER&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span><span class="s1">&#39;REAL&#39;</span><span class="p">]}</span>
     <span class="c1"># cast functions</span>
-    <span class="n">cast</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">r&#39;#\s*&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">s</span><span class="p">),</span>
+    <span class="n">cast</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;#\s*&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">s</span><span class="p">),</span>
             <span class="s1">&#39;WORD&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
             <span class="s1">&#39;STRING&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;QUOTEDSTRING&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;BARESTRING&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="s1">&#39;WHITESPACE&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="s1">&#39;WHITESPACE&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s1">&#39;NUMBER&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;REAL&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">code</span><span class="p">,</span><span class="n">text</span><span class="p">):</span>
@@ -446,9 +601,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">v</span>
     <span class="k">def</span> <span class="nf">iscode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">code</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">[</span><span class="n">code</span><span class="p">]</span>  <span class="c1"># use many -&gt; 1 mappings</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ascode</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ascode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return text cast to the correct type or the selected type&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">ascode</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ascode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ascode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cast</span><span class="p">[</span><span class="n">ascode</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -496,7 +651,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># the regexes must match with the categories defined in the Token class</span>
-    <span class="n">dx_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;&quot;&quot;</span>
+    <span class="n">dx_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    (?P&lt;COMMENT&gt;\#.*$)            # comment (until end of line)</span>
 <span class="s2">    |(?P&lt;WORD&gt;(object|class|counts|origin|delta|type|counts|rank|items|data))</span>
 <span class="s2">    |&quot;(?P&lt;QUOTEDSTRING&gt;[^\&quot;]*)&quot;   # string in double quotes  (quotes removed)</span>
@@ -558,7 +713,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">DXfield</span> <span class="o">=</span> <span class="n">DXfield</span>              <span class="c1"># OpenDX.field (used by comment parser)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span> <span class="o">=</span> <span class="bp">None</span>           <span class="c1"># containers for data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span> <span class="o">=</span> <span class="kc">None</span>           <span class="c1"># containers for data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="p">[]</span>                   <span class="c1"># |</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>                    <span class="c1"># token buffer</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="bp">self</span><span class="o">.</span><span class="n">dxfile</span><span class="p">:</span>
@@ -885,24 +1040,73 @@
           </div>
         </div>
       </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/logos/mdanalysis-logo-200x150.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">GridDataFormats</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">data formats for gridded data</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html">1. <code class="docutils literal"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/formats.html">2. Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html">3. <code class="docutils literal"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.3 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
-      </ul>
+    <div class="footer">
+      &copy;2007-2017, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
     </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2007-2016, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
-    </div>
+
+    
+    <a href="https://github.com/MDAnalysis/GridDataFormats" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
   </body>
 </html>

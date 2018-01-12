@@ -1,94 +1,44 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>3.2.3. CCP4 — the CCP4 volumetric data format &mdash; gridDataFormats 0.3.3 documentation</title>
-    
-    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <title>2.2.3. CCP4 — the CCP4 volumetric data format &#8212; GridDataFormats release-0.3.3+16.g55aae1d documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.3.3',
+        VERSION:     'release-0.3.3+16.g55aae1d',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="gridDataFormats 0.3.3 documentation" href="../../index.html" />
-    <link rel="up" title="3. Formats" href="../formats.html" />
-    <link rel="next" title="4. gridData.core — Core functionality for storing n-D grids" href="../core.html" />
-    <link rel="prev" title="3.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" /> 
-  </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="../core.html" title="4. gridData.core — Core functionality for storing n-D grids"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="gOpenMol.html" title="3.2.2. gOpenMol — the gOpenMol plt format"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.3 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../formats.html" accesskey="U">3. Formats</a> &raquo;</li> 
-      </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">3.2.3. <code class="docutils literal"><span class="pre">CCP4</span></code> &#8212; the CCP4 volumetric data format</a><ul>
-<li><a class="reference internal" href="#background">3.2.3.1. Background</a></li>
-<li><a class="reference internal" href="#grid-data-ccp4-file-format">3.2.3.2. Grid data CCP4 file format</a></li>
-<li><a class="reference internal" href="#classes">3.2.3.3. Classes</a></li>
-</ul>
-</li>
-</ul>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats release-0.3.3+16.g55aae1d documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. gridData.core — Core functionality for storing n-D grids" href="../core.html" />
+    <link rel="prev" title="2.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="gOpenMol.html"
-                        title="previous chapter">3.2.2. <code class="docutils literal"><span class="pre">gOpenMol</span></code> &#8212; the gOpenMol plt format</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../core.html"
-                        title="next chapter">4. <code class="docutils literal"><span class="pre">gridData.core</span></code> &#8212; Core functionality for storing n-D grids</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../../_sources/gridData/formats/CCP4.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+  </head>
+  <body>
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -96,7 +46,7 @@
           <div class="body" role="main">
             
   <span class="target" id="module-gridData.CCP4"></span><div class="section" id="ccp4-the-ccp4-volumetric-data-format">
-<h1>3.2.3. <code class="xref py py-mod docutils literal"><span class="pre">CCP4</span></code> &#8212; the CCP4 volumetric data format<a class="headerlink" href="#ccp4-the-ccp4-volumetric-data-format" title="Permalink to this headline">¶</a></h1>
+<h1>2.2.3. <code class="xref py py-mod docutils literal"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format<a class="headerlink" href="#ccp4-the-ccp4-volumetric-data-format" title="Permalink to this headline">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified">New in version 0.3.0.</span></p>
 </div>
@@ -107,7 +57,7 @@ to guess the endianess of the file, but this can fail (with a
 <p>Only the reader is implemented. If you want to write gridded data use a format
 that is more standard, such as OpenDX (see <code class="xref py py-mod docutils literal"><span class="pre">OpenDX</span></code>).</p>
 <div class="section" id="background">
-<h2>3.2.3.1. Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<h2>2.2.3.1. Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
 <p>CCP4 format: <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">http://www.ccp4.ac.uk/html/maplib.html#description</a></p>
 <p>Used to be more carefully documented at
 <a class="reference external" href="http://lsbr.niams.nih.gov/3demc/3demc_maplib.html">http://lsbr.niams.nih.gov/3demc/3demc_maplib.html</a> but currently this is only
@@ -115,83 +65,83 @@ accessible through the Google cache
 <a class="reference external" href="http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html">http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html</a></p>
 </div>
 <div class="section" id="grid-data-ccp4-file-format">
-<h2>3.2.3.2. Grid data CCP4 file format<a class="headerlink" href="#grid-data-ccp4-file-format" title="Permalink to this headline">¶</a></h2>
+<h2>2.2.3.2. Grid data CCP4 file format<a class="headerlink" href="#grid-data-ccp4-file-format" title="Permalink to this headline">¶</a></h2>
 <p>Copyright Science and Technologies Facilities Council, 2015.</p>
 <p>The overall layout of the file is as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>File header (256 longwords)
-Symmetry information
-Map, stored as a 3-dimensional array
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">File</span> <span class="n">header</span> <span class="p">(</span><span class="mi">256</span> <span class="n">longwords</span><span class="p">)</span>
+<span class="n">Symmetry</span> <span class="n">information</span>
+<span class="n">Map</span><span class="p">,</span> <span class="n">stored</span> <span class="k">as</span> <span class="n">a</span> <span class="mi">3</span><span class="o">-</span><span class="n">dimensional</span> <span class="n">array</span>
 </pre></div>
 </div>
 <p>The header is organised as 56 words followed by space for ten 80
 character text labels as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span> 1      NC              # of Columns    (fastest changing in map)
- 2      NR              # of Rows
- 3      NS              # of Sections   (slowest changing in map)
- 4      MODE            Data type
-                          0 = envelope stored as signed bytes (from
-                              -128 lowest to 127 highest)
-                          1 = Image     stored as Integer*2
-                          2 = Image     stored as Reals
-                          3 = Transform stored as Complex Integer*2
-                          4 = Transform stored as Complex Reals
-                          5 == 0
+<div class="highlight-default"><div class="highlight"><pre><span></span> <span class="mi">1</span>      <span class="n">NC</span>              <span class="c1"># of Columns    (fastest changing in map)</span>
+ <span class="mi">2</span>      <span class="n">NR</span>              <span class="c1"># of Rows</span>
+ <span class="mi">3</span>      <span class="n">NS</span>              <span class="c1"># of Sections   (slowest changing in map)</span>
+ <span class="mi">4</span>      <span class="n">MODE</span>            <span class="n">Data</span> <span class="nb">type</span>
+                          <span class="mi">0</span> <span class="o">=</span> <span class="n">envelope</span> <span class="n">stored</span> <span class="k">as</span> <span class="n">signed</span> <span class="nb">bytes</span> <span class="p">(</span><span class="kn">from</span>
+                              <span class="o">-</span><span class="mi">128</span> <span class="n">lowest</span> <span class="n">to</span> <span class="mi">127</span> <span class="n">highest</span><span class="p">)</span>
+                          <span class="mi">1</span> <span class="o">=</span> <span class="n">Image</span>     <span class="n">stored</span> <span class="k">as</span> <span class="n">Integer</span><span class="o">*</span><span class="mi">2</span>
+                          <span class="mi">2</span> <span class="o">=</span> <span class="n">Image</span>     <span class="n">stored</span> <span class="k">as</span> <span class="n">Reals</span>
+                          <span class="mi">3</span> <span class="o">=</span> <span class="n">Transform</span> <span class="n">stored</span> <span class="k">as</span> <span class="n">Complex</span> <span class="n">Integer</span><span class="o">*</span><span class="mi">2</span>
+                          <span class="mi">4</span> <span class="o">=</span> <span class="n">Transform</span> <span class="n">stored</span> <span class="k">as</span> <span class="n">Complex</span> <span class="n">Reals</span>
+                          <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span>
 
-                          Note: Mode 2 is the normal mode used in
-                                the CCP4 programs. Other modes than 2 and 0
-                                may NOT WORK
+                          <span class="n">Note</span><span class="p">:</span> <span class="n">Mode</span> <span class="mi">2</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">normal</span> <span class="n">mode</span> <span class="n">used</span> <span class="ow">in</span>
+                                <span class="n">the</span> <span class="n">CCP4</span> <span class="n">programs</span><span class="o">.</span> <span class="n">Other</span> <span class="n">modes</span> <span class="n">than</span> <span class="mi">2</span> <span class="ow">and</span> <span class="mi">0</span>
+                                <span class="n">may</span> <span class="n">NOT</span> <span class="n">WORK</span>
 
- 5      NCSTART         Number of first COLUMN  in map
- 6      NRSTART         Number of first ROW     in map
- 7      NSSTART         Number of first SECTION in map
- 8      NX              Number of intervals along X
- 9      NY              Number of intervals along Y
-10      NZ              Number of intervals along Z
-11      X length        Cell Dimensions (Angstroms)
-12      Y length                     &quot;
-13      Z length                     &quot;
-14      Alpha           Cell Angles     (Degrees)
-15      Beta                         &quot;
-16      Gamma                        &quot;
-17      MAPC            Which axis corresponds to Cols.  (1,2,3 for X,Y,Z)
-18      MAPR            Which axis corresponds to Rows   (1,2,3 for X,Y,Z)
-19      MAPS            Which axis corresponds to Sects. (1,2,3 for X,Y,Z)
-20      AMIN            Minimum density value
-21      AMAX            Maximum density value
-22      AMEAN           Mean    density value    (Average)
-23      ISPG            Space group number
-24      NSYMBT          Number of bytes used for storing symmetry operators
-25      LSKFLG          Flag for skew transformation, =0 none, =1 if foll
-26-34   SKWMAT          Skew matrix S (in order S11, S12, S13, S21 etc) if
-                        LSKFLG .ne. 0.
-35-37   SKWTRN          Skew translation t if LSKFLG .ne. 0.
-                        Skew transformation is from standard orthogonal
-                        coordinate frame (as used for atoms) to orthogonal
-                        map frame, as
+ <span class="mi">5</span>      <span class="n">NCSTART</span>         <span class="n">Number</span> <span class="n">of</span> <span class="n">first</span> <span class="n">COLUMN</span>  <span class="ow">in</span> <span class="nb">map</span>
+ <span class="mi">6</span>      <span class="n">NRSTART</span>         <span class="n">Number</span> <span class="n">of</span> <span class="n">first</span> <span class="n">ROW</span>     <span class="ow">in</span> <span class="nb">map</span>
+ <span class="mi">7</span>      <span class="n">NSSTART</span>         <span class="n">Number</span> <span class="n">of</span> <span class="n">first</span> <span class="n">SECTION</span> <span class="ow">in</span> <span class="nb">map</span>
+ <span class="mi">8</span>      <span class="n">NX</span>              <span class="n">Number</span> <span class="n">of</span> <span class="n">intervals</span> <span class="n">along</span> <span class="n">X</span>
+ <span class="mi">9</span>      <span class="n">NY</span>              <span class="n">Number</span> <span class="n">of</span> <span class="n">intervals</span> <span class="n">along</span> <span class="n">Y</span>
+<span class="mi">10</span>      <span class="n">NZ</span>              <span class="n">Number</span> <span class="n">of</span> <span class="n">intervals</span> <span class="n">along</span> <span class="n">Z</span>
+<span class="mi">11</span>      <span class="n">X</span> <span class="n">length</span>        <span class="n">Cell</span> <span class="n">Dimensions</span> <span class="p">(</span><span class="n">Angstroms</span><span class="p">)</span>
+<span class="mi">12</span>      <span class="n">Y</span> <span class="n">length</span>                     <span class="s2">&quot;</span>
+<span class="mi">13</span>      <span class="n">Z</span> <span class="n">length</span>                     <span class="s2">&quot;</span>
+<span class="mi">14</span>      <span class="n">Alpha</span>           <span class="n">Cell</span> <span class="n">Angles</span>     <span class="p">(</span><span class="n">Degrees</span><span class="p">)</span>
+<span class="mi">15</span>      <span class="n">Beta</span>                         <span class="s2">&quot;</span>
+<span class="mi">16</span>      <span class="n">Gamma</span>                        <span class="s2">&quot;</span>
+<span class="mi">17</span>      <span class="n">MAPC</span>            <span class="n">Which</span> <span class="n">axis</span> <span class="n">corresponds</span> <span class="n">to</span> <span class="n">Cols</span><span class="o">.</span>  <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span> <span class="k">for</span> <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span>
+<span class="mi">18</span>      <span class="n">MAPR</span>            <span class="n">Which</span> <span class="n">axis</span> <span class="n">corresponds</span> <span class="n">to</span> <span class="n">Rows</span>   <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span> <span class="k">for</span> <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span>
+<span class="mi">19</span>      <span class="n">MAPS</span>            <span class="n">Which</span> <span class="n">axis</span> <span class="n">corresponds</span> <span class="n">to</span> <span class="n">Sects</span><span class="o">.</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span> <span class="k">for</span> <span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span>
+<span class="mi">20</span>      <span class="n">AMIN</span>            <span class="n">Minimum</span> <span class="n">density</span> <span class="n">value</span>
+<span class="mi">21</span>      <span class="n">AMAX</span>            <span class="n">Maximum</span> <span class="n">density</span> <span class="n">value</span>
+<span class="mi">22</span>      <span class="n">AMEAN</span>           <span class="n">Mean</span>    <span class="n">density</span> <span class="n">value</span>    <span class="p">(</span><span class="n">Average</span><span class="p">)</span>
+<span class="mi">23</span>      <span class="n">ISPG</span>            <span class="n">Space</span> <span class="n">group</span> <span class="n">number</span>
+<span class="mi">24</span>      <span class="n">NSYMBT</span>          <span class="n">Number</span> <span class="n">of</span> <span class="nb">bytes</span> <span class="n">used</span> <span class="k">for</span> <span class="n">storing</span> <span class="n">symmetry</span> <span class="n">operators</span>
+<span class="mi">25</span>      <span class="n">LSKFLG</span>          <span class="n">Flag</span> <span class="k">for</span> <span class="n">skew</span> <span class="n">transformation</span><span class="p">,</span> <span class="o">=</span><span class="mi">0</span> <span class="n">none</span><span class="p">,</span> <span class="o">=</span><span class="mi">1</span> <span class="k">if</span> <span class="n">foll</span>
+<span class="mi">26</span><span class="o">-</span><span class="mi">34</span>   <span class="n">SKWMAT</span>          <span class="n">Skew</span> <span class="n">matrix</span> <span class="n">S</span> <span class="p">(</span><span class="ow">in</span> <span class="n">order</span> <span class="n">S11</span><span class="p">,</span> <span class="n">S12</span><span class="p">,</span> <span class="n">S13</span><span class="p">,</span> <span class="n">S21</span> <span class="n">etc</span><span class="p">)</span> <span class="k">if</span>
+                        <span class="n">LSKFLG</span> <span class="o">.</span><span class="n">ne</span><span class="o">.</span> <span class="mf">0.</span>
+<span class="mi">35</span><span class="o">-</span><span class="mi">37</span>   <span class="n">SKWTRN</span>          <span class="n">Skew</span> <span class="n">translation</span> <span class="n">t</span> <span class="k">if</span> <span class="n">LSKFLG</span> <span class="o">.</span><span class="n">ne</span><span class="o">.</span> <span class="mf">0.</span>
+                        <span class="n">Skew</span> <span class="n">transformation</span> <span class="ow">is</span> <span class="kn">from</span> <span class="nn">standard</span> <span class="n">orthogonal</span>
+                        <span class="n">coordinate</span> <span class="n">frame</span> <span class="p">(</span><span class="k">as</span> <span class="n">used</span> <span class="k">for</span> <span class="n">atoms</span><span class="p">)</span> <span class="n">to</span> <span class="n">orthogonal</span>
+                        <span class="nb">map</span> <span class="n">frame</span><span class="p">,</span> <span class="k">as</span>
 
-                                Xo(map) = S * (Xo(atoms) - t)
+                                <span class="n">Xo</span><span class="p">(</span><span class="nb">map</span><span class="p">)</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="n">Xo</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
 
-38      future use       (some of these are used by the MSUBSX routines
- .          &quot;              in MAPBRICK, MAPCONT and FRODO)
- .          &quot;   (all set to zero by default)
- .          &quot;
-52          &quot;
+<span class="mi">38</span>      <span class="n">future</span> <span class="n">use</span>       <span class="p">(</span><span class="n">some</span> <span class="n">of</span> <span class="n">these</span> <span class="n">are</span> <span class="n">used</span> <span class="n">by</span> <span class="n">the</span> <span class="n">MSUBSX</span> <span class="n">routines</span>
+ <span class="o">.</span>          <span class="s2">&quot;              in MAPBRICK, MAPCONT and FRODO)</span>
+ <span class="o">.</span>          <span class="s2">&quot;   (all set to zero by default)</span>
+ <span class="o">.</span>          <span class="s2">&quot;</span>
+<span class="mi">52</span>          <span class="s2">&quot;</span>
 
-53    MAP             Character string &#39;MAP &#39; to identify file type
-54    MACHST          Machine stamp indicating the machine type
-                        which wrote file
-55      ARMS            Rms deviation of map from mean density
-56      NLABL           Number of labels being used
-57-256  LABEL(20,10)    10  80 character text labels (ie. A4 format)
+<span class="mi">53</span>    <span class="n">MAP</span>             <span class="n">Character</span> <span class="n">string</span> <span class="s1">&#39;MAP &#39;</span> <span class="n">to</span> <span class="n">identify</span> <span class="n">file</span> <span class="nb">type</span>
+<span class="mi">54</span>    <span class="n">MACHST</span>          <span class="n">Machine</span> <span class="n">stamp</span> <span class="n">indicating</span> <span class="n">the</span> <span class="n">machine</span> <span class="nb">type</span>
+                        <span class="n">which</span> <span class="n">wrote</span> <span class="n">file</span>
+<span class="mi">55</span>      <span class="n">ARMS</span>            <span class="n">Rms</span> <span class="n">deviation</span> <span class="n">of</span> <span class="nb">map</span> <span class="kn">from</span> <span class="nn">mean</span> <span class="n">density</span>
+<span class="mi">56</span>      <span class="n">NLABL</span>           <span class="n">Number</span> <span class="n">of</span> <span class="n">labels</span> <span class="n">being</span> <span class="n">used</span>
+<span class="mi">57</span><span class="o">-</span><span class="mi">256</span>  <span class="n">LABEL</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>    <span class="mi">10</span>  <span class="mi">80</span> <span class="n">character</span> <span class="n">text</span> <span class="n">labels</span> <span class="p">(</span><span class="n">ie</span><span class="o">.</span> <span class="n">A4</span> <span class="nb">format</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Symmetry records follow - if any - stored as text as in International
-Tables, operators separated by <code class="docutils literal"><span class="pre">*</span></code> and grouped into &#8216;lines&#8217; of 80
+Tables, operators separated by <code class="docutils literal"><span class="pre">*</span></code> and grouped into ‘lines’ of 80
 characters (i.e. symmetry operators do not cross the ends of the
-80-character &#8216;lines&#8217; and the &#8216;lines&#8217; do not terminate in a <code class="docutils literal"><span class="pre">*</span></code>).</p>
+80-character ‘lines’ and the ‘lines’ do not terminate in a <code class="docutils literal"><span class="pre">*</span></code>).</p>
 <p>Map data array follows.</p>
 <p>Note on the machine stamp: The machine stamp (word 54) is a 32-bit
-quantity containing a set of four &#8216;nibbles&#8217; (half-bytes) - only half
+quantity containing a set of four ‘nibbles’ (half-bytes) - only half
 the space is used. Each nibble is a number specifying the
 representation of (in C terms) double (d), float (f), int (i) and
 unsigned char (c) types. Thus each stamp is of the form 0xdfic0000.
@@ -199,19 +149,19 @@ For little endian hardware the stamp is 0x44, 0x41, 0x00, 0x00 while
 the big endian stamp is 0x11, 0x11, 0x00, 0x00.</p>
 </div>
 <div class="section" id="classes">
-<h2>3.2.3.3. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<h2>2.2.3.3. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="gridData.CCP4.CCP4">
 <em class="property">class </em><code class="descclassname">gridData.CCP4.</code><code class="descname">CCP4</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class to represent a <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">CCP4</a> file.</p>
 <dl class="docutils">
 <dt>Only reading is implemented; either supply a filename to the constructor</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd>
 <dt>or load the file with the read method</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">()</span>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -223,7 +173,7 @@ the dict <code class="xref py py-attr docutils literal"><span class="pre">CCP4.h
 <dt><code class="xref py py-attr docutils literal"><span class="pre">CCP4.shape</span></code></dt>
 <dd>D-tuplet describing size in each dimension</dd>
 <dt><code class="xref py py-attr docutils literal"><span class="pre">CCP4.origin</span></code></dt>
-<dd>coordinates of the centre of the grid cell with index 0,0,...,0</dd>
+<dd>coordinates of the centre of the grid cell with index 0,0,…,0</dd>
 <dt><code class="xref py py-attr docutils literal"><span class="pre">CCP4.delta</span></code></dt>
 <dd>DxD array describing the deltas</dd>
 </dl>
@@ -263,30 +213,78 @@ the dict <code class="xref py py-attr docutils literal"><span class="pre">CCP4.h
           </div>
         </div>
       </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/logos/mdanalysis-logo-200x150.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">GridDataFormats</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">data formats for gridded data</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">1. <code class="docutils literal"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">2. Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core.html">3. <code class="docutils literal"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../formats.html">2. Formats</a><ul>
+      <li>Previous: <a href="gOpenMol.html" title="previous chapter">2.2.2. <code class="docutils literal"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+      <li>Next: <a href="../core.html" title="next chapter">3. <code class="docutils literal"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="../core.html" title="4. gridData.core — Core functionality for storing n-D grids"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="gOpenMol.html" title="3.2.2. gOpenMol — the gOpenMol plt format"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">gridDataFormats 0.3.3 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../formats.html" >3. Formats</a> &raquo;</li> 
-      </ul>
+    <div class="footer">
+      &copy;2007-2017, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/gridData/formats/CCP4.rst.txt"
+          rel="nofollow">Page source</a>
     </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2007-2016, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
-    </div>
+
+    
+    <a href="https://github.com/MDAnalysis/GridDataFormats" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
   </body>
 </html>

@@ -1,83 +1,43 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>4. gridData.core — Core functionality for storing n-D grids &mdash; gridDataFormats 0.3.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <title>3. gridData.core — Core functionality for storing n-D grids &#8212; GridDataFormats release-0.3.3+16.g55aae1d documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.3.3',
+        VERSION:     'release-0.3.3+16.g55aae1d',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="gridDataFormats 0.3.3 documentation" href="../index.html" />
-    <link rel="prev" title="3.2.3. CCP4 — the CCP4 volumetric data format" href="formats/CCP4.html" /> 
-  </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="formats/CCP4.html" title="3.2.3. CCP4 — the CCP4 volumetric data format"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">gridDataFormats 0.3.3 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">4. <code class="docutils literal"><span class="pre">gridData.core</span></code> &#8212; Core functionality for storing n-D grids</a><ul>
-<li><a class="reference internal" href="#classes-and-functions">4.1. Classes and functions</a></li>
-</ul>
-</li>
-</ul>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats release-0.3.3+16.g55aae1d documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2.2.3. CCP4 — the CCP4 volumetric data format" href="formats/CCP4.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="formats/CCP4.html"
-                        title="previous chapter">3.2.3. <code class="docutils literal"><span class="pre">CCP4</span></code> &#8212; the CCP4 volumetric data format</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/gridData/core.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+  </head>
+  <body>
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -85,32 +45,77 @@
           <div class="body" role="main">
             
   <span class="target" id="module-gridData.core"></span><div class="section" id="griddata-core-core-functionality-for-storing-n-d-grids">
-<h1>4. <a class="reference internal" href="#module-gridData.core" title="gridData.core"><code class="xref py py-mod docutils literal"><span class="pre">gridData.core</span></code></a> &#8212; Core functionality for storing n-D grids<a class="headerlink" href="#griddata-core-core-functionality-for-storing-n-d-grids" title="Permalink to this headline">¶</a></h1>
+<h1>3. <a class="reference internal" href="#module-gridData.core" title="gridData.core"><code class="xref py py-mod docutils literal"><span class="pre">gridData.core</span></code></a> — Core functionality for storing n-D grids<a class="headerlink" href="#griddata-core-core-functionality-for-storing-n-d-grids" title="Permalink to this headline">¶</a></h1>
 <p>The <code class="xref py py-mod docutils literal"><span class="pre">core</span></code> module contains classes and functions that are
 independent of the grid data format. In particular this module
 contains the <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal"><span class="pre">Grid</span></code></a> class that acts as a universal constructor
 for specific formats:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>           <span class="c1"># construct</span>
-<span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="p">)</span>   <span class="c1"># export to the desired format</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>           <span class="c1"># construct</span>
+<span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>   <span class="c1"># export to the desired format</span>
 </pre></div>
 </div>
 <p>Some formats can also be read:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">()</span>                   <span class="c1"># make an empty Grid</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">()</span>                   <span class="c1"># make an empty Grid</span>
 <span class="n">g</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>             <span class="c1"># populate with data from filename</span>
 </pre></div>
 </div>
 <div class="section" id="classes-and-functions">
-<h2>4.1. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
+<h2>3.1. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="gridData.core.Grid">
 <em class="property">class </em><code class="descclassname">gridData.core.</code><code class="descname">Grid</code><span class="sig-paren">(</span><em>grid=None</em>, <em>edges=None</em>, <em>origin=None</em>, <em>delta=None</em>, <em>metadata={}</em>, <em>interpolation_spline_order=3</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to manage a multidimensional grid object.</p>
-<p>The export(format=&#8217;dx&#8217;) method always exports a 3D object, the
+<p>The export(format=’dx’) method always exports a 3D object, the
 rest should work for an array of any dimension.</p>
 <p>The grid (Grid.grid) can be manipulated as a standard numpy
 array.</p>
 <p>The attribute Grid.metadata holds a user-defined dictionary that
 can be used to annotate the data. It is saved with save().</p>
+<p>Create a Grid object from data.</p>
+<dl class="docutils">
+<dt>From a numpy.histogramdd()::</dt>
+<dd>grid,edges = numpy.histogramdd(…)
+g = Grid(grid,edges=edges)</dd>
+<dt>From an arbitrary grid::</dt>
+<dd>g = Grid(grid,origin=origin,delta=delta)</dd>
+<dt>From a saved file::</dt>
+<dd>g = Grid(filename)</dd>
+<dt>or</dt>
+<dd>g = Grid()
+g.load(filename)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><dl class="first last docutils">
+<dt>grid</dt>
+<dd><p class="first last">histogram or density, defined on numpy nD array</p>
+</dd>
+<dt>edges</dt>
+<dd><p class="first last">list of arrays, the lower and upper bin edges along the axes
+(both are output by numpy.histogramdd())</p>
+</dd>
+<dt>origin</dt>
+<dd><p class="first last">cartesian coordinates of the center of grid[0,0,…,0]</p>
+</dd>
+<dt>delta</dt>
+<dd><p class="first last">Either n x n array containing the cell lengths in each dimension,
+or n x 1 array for rectangular arrays.</p>
+</dd>
+<dt>metadata</dt>
+<dd><p class="first last">a user defined dictionary of arbitrary values
+associated with the density; the class does not touch
+metadata[] but stores it with save()</p>
+</dd>
+<dt>interpolation_spline_order</dt>
+<dd><p class="first last">order of interpolation function for resampling; cubic splines = 3 [3]</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="gridData.core.Grid.centers">
 <code class="descname">centers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.centers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.centers" title="Permalink to this definition">¶</a></dt>
@@ -138,11 +143,11 @@ iterator.</p>
 
 <dl class="method">
 <dt id="gridData.core.Grid.export">
-<code class="descname">export</code><span class="sig-paren">(</span><em>filename</em>, <em>file_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.export" title="Permalink to this definition">¶</a></dt>
+<code class="descname">export</code><span class="sig-paren">(</span><em>filename</em>, <em>file_format=None</em>, <em>type=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.export" title="Permalink to this definition">¶</a></dt>
 <dd><p>export density to file using the given format.</p>
 <p>The format can also be deduced from the suffix of the filename
 though the <em>format</em> keyword takes precedence.</p>
-<p>The default format for export() is &#8216;dx&#8217;.  Use &#8216;dx&#8217; for
+<p>The default format for export() is ‘dx’.  Use ‘dx’ for
 visualization.</p>
 <p>Implemented formats:</p>
 <dl class="docutils">
@@ -152,6 +157,27 @@ visualization.</p>
 <dd>pickle (use :meth:<code class="docutils literal"><span class="pre">Grid.load`</span> <span class="pre">to</span> <span class="pre">restore);</span> <span class="pre">:meth:`Grid.save`</span>
 <span class="pre">is</span> <span class="pre">simpler</span> <span class="pre">than</span> <span class="pre">``export(format='python')</span></code>.</dd>
 </dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of the output file</li>
+<li><strong>file_format</strong> (<em>{'dx'</em><em>, </em><em>'pickle'</em><em>, </em><em>None}</em><em> (</em><em>optional</em><em>)</em>) – output file format, the default is “dx”</li>
+<li><strong>type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or
+“float”; note that PyMOL only understands “double” (see
+issue <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/issues/35">#35</a>). By default (<code class="docutils literal"><span class="pre">None</span></code>), the DX type is
+determined from the numpy dtype of the array of the grid
+(and this will typically result in “double”).</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.4.0.</span></p>
+</div>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -159,7 +185,7 @@ visualization.</p>
 <code class="descname">interpolated</code><a class="headerlink" href="#gridData.core.Grid.interpolated" title="Permalink to this definition">¶</a></dt>
 <dd><p>B-spline function over the data grid(x,y,z).</p>
 <blockquote>
-<div>interpolated([x1,x2,...],[y1,y2,...],[z1,z2,...]) -&gt; F[x1,y1,z1],F[x2,y2,z2],...</div></blockquote>
+<div>interpolated([x1,x2,…],[y1,y2,…],[z1,z2,…]) -&gt; F[x1,y1,z1],F[x2,y2,z2],…</div></blockquote>
 <p>The interpolation order is set in <code class="xref py py-attr docutils literal"><span class="pre">Grid.interpolation_spline_order</span></code>.</p>
 <p>The interpolated function is computed once and is cached for better
 performance. Whenever <code class="xref py py-attr docutils literal"><span class="pre">interpolation_spline_order</span></code> is
@@ -168,7 +194,7 @@ modified, <a class="reference internal" href="#gridData.core.Grid.interpolated" 
 (TODO: also recompute when interpolation_cval value is changed.)</p>
 <dl class="docutils">
 <dt>Example usage for resampling::</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">XX</span><span class="p">,</span><span class="n">YY</span><span class="p">,</span><span class="n">ZZ</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">75</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">96</span><span class="p">:</span><span class="mi">150</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mf">0.5</span><span class="p">]</span>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">XX</span><span class="p">,</span><span class="n">YY</span><span class="p">,</span><span class="n">ZZ</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">75</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">96</span><span class="p">:</span><span class="mi">150</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mf">0.5</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">FF</span> <span class="o">=</span> <span class="n">interpolated</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span><span class="n">YY</span><span class="p">,</span><span class="n">ZZ</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -183,7 +209,7 @@ modified, <a class="reference internal" href="#gridData.core.Grid.interpolated" 
 <blockquote>
 <div>Grid.load(&lt;filename&gt;.pickle)
 Grid.load(&lt;filename&gt;.dx)</div></blockquote>
-<p>The load() method calls the class&#8217;s constructor method and
+<p>The load() method calls the class’s constructor method and
 completely resets all values, based on the loaded data.</p>
 </dd></dl>
 
@@ -192,10 +218,10 @@ completely resets all values, based on the loaded data.</p>
 <code class="descname">resample</code><span class="sig-paren">(</span><em>edges</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.resample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.resample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample data to a new grid with edges <em>edges</em>.</p>
 <blockquote>
-<div>resample(edges) &#8211;&gt; Grid</div></blockquote>
+<div>resample(edges) –&gt; Grid</div></blockquote>
 <p>or</p>
 <blockquote>
-<div>resample(otherGrid) &#8211;&gt; Grid</div></blockquote>
+<div>resample(otherGrid) –&gt; Grid</div></blockquote>
 <p>The order of the interpolation is set by
 <code class="xref py py-attr docutils literal"><span class="pre">Grid.interpolation_spline_order</span></code>.</p>
 </dd></dl>
@@ -213,7 +239,7 @@ each dimension.</p>
 <dd><p>Save a grid object to &lt;filename&gt;.pickle</p>
 <blockquote>
 <div>Grid.save(filename)</div></blockquote>
-<p>Internally, this calls Grid.export(filename,format=&#8221;python&#8221;). A grid can be
+<p>Internally, this calls Grid.export(filename,format=”python”). A grid can be
 regenerated from the saved data with</p>
 <blockquote>
 <div>g = Grid(filename=&lt;filename&gt;)</div></blockquote>
@@ -240,26 +266,75 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
           </div>
         </div>
       </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logos/mdanalysis-logo-200x150.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">GridDataFormats</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">data formats for gridded data</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1. <code class="docutils literal"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats.html">2. Formats</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. <code class="docutils literal"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="formats/CCP4.html" title="previous chapter">2.2.3. <code class="docutils literal"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="formats/CCP4.html" title="3.2.3. CCP4 — the CCP4 volumetric data format"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">gridDataFormats 0.3.3 documentation</a> &raquo;</li> 
-      </ul>
+    <div class="footer">
+      &copy;2007-2017, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/gridData/core.rst.txt"
+          rel="nofollow">Page source</a>
     </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2007-2016, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
-    </div>
+
+    
+    <a href="https://github.com/MDAnalysis/GridDataFormats" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
   </body>
 </html>
