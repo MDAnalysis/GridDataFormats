@@ -5,7 +5,7 @@ env:
       - GH_REPOSITORY: github.com/MDAnalysis/GridDataFormats.git
       - GIT_CI_USER: TravisCI
       - GIT_CI_EMAIL: TravisCI@mdanalysis.org
-      - MDA_DOCDIR: doc/html
+      - MDA_DOCDIR: build/sphinx/html
    matrix:
    - SETUP=full
    - SETUP=minimal
@@ -32,7 +32,7 @@ script:
      test ${TRAVIS_PULL_REQUEST} == "false" && \
      test ${TRAVIS_BRANCH} == ${GH_DOC_BRANCH} && \
      test "${TRAVIS_BUILD_NUMBER}.1" == "${TRAVIS_JOB_NUMBER}" && \
-     (cd ./doc && make clean html) || \
+     python setup.py build_sphinx || \
      true
 after_success:
   - coveralls
