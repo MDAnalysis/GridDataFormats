@@ -99,6 +99,8 @@ The following formats are available (:ref:`supported-file-formats`):
         IBM's Data Explorer, http://www.opendx.org/
    :mod:`~gridData.gOpenMol`
         http://www.csc.fi/gopenmol/
+   :mod:`~gridData.CCP4`
+        CCP4 format http://www.ccp4.ac.uk/html/maplib.html#description
    pickle
         python pickle file (:mod:`pickle`)
 
