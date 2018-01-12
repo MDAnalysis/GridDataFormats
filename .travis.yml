@@ -1,6 +1,6 @@
 env:
    global:
-      - secure: "BzLdQUSTs6dsngJfNGjLtG++Gmi4KzYv7FEwVqUB6pXKnpMIpv+/md2zkH/Lo3UtdioR2SKytXk3/40tCbpUVD2Yjb+yc5WyyeFLQF9KeF2k9gZkmC35iSbTWt9hK+mnkdJidCK5xbfrXEbZx4FpqyDGFl8GCCjJlPOQ/KEcRVQ="
+      - secure: "BQ6qt3AOkcapuzOAkct8LbpyF3MngFk/+v/HlSg9Cxfo1CrYZOuwzemLI+pXKTbJiJcUF2UbooaoQANk9uKc9/NZfBdWG8NRncV+c3QGceWJTU7NaDle04Gp1cmnH6a7YRWN652xaPa80vlM/hMtCLg9zSnk6HQXNlTcdrfzWus="
       - GH_DOC_BRANCH: master
       - GH_REPOSITORY: github.com/MDAnalysis/GridDataFormats.git
       - GIT_CI_USER: TravisCI
