@@ -35,6 +35,7 @@ and enhancement requests through the `issue tracker`_.
    :maxdepth: 1
 
    gridData/overview
+   gridData/basic
    gridData/formats
    gridData/core
 

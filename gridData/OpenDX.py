@@ -2,8 +2,9 @@
 # Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser General Public License, version 3 or later.
 
-r""":mod:`~gridData.OpenDX` --- routines to read and write simple OpenDX files
-================================================================
+r"""
+:mod:`~gridData.OpenDX` --- routines to read and write simple OpenDX files
+==========================================================================
 
 The OpenDX format for multi-dimensional grid data. OpenDX is a free
 visualization software, see http://www.opendx.org.
@@ -19,6 +20,8 @@ convenient :class:`~gridData.core.Grid` class from the top level
 module (:class:`gridData.Grid`) or see the lower-level methods
 described below.
 
+
+.. _opendx-read-write:
 
 Reading and writing OpenDX files
 --------------------------------
@@ -173,6 +176,7 @@ class DXclass(object):
         self.name = None   # name of the DXclass
         self.component = None   # component type
         self.D = None      # dimensions
+
     def write(self,file,optstring="",quote=False):
         """write the 'object' line; additional args are packed in string"""
         classid = str(self.id)
@@ -387,41 +391,32 @@ class field(DXclass):
     The *field* is the top-level object and represents the whole
     OpenDX file. It contains a number of other objects.
 
-    Methods overview:
+    Instantiate a DX object from this class and add subclasses with
+    :meth:`add`.
 
-    :meth:`add`
-        add a component to the field
-    :meth:`add_comments`
-        add comments
-    :meth:`write`
-       write OpenDX file to file descriptor; only simple regular
-       arrays are supported. File should be readable by VMD.
-    :meth:`read`
-        construct the field from a dx file
-
-    Instantiated a DX object from this class and add subclasses with
-    :meth:`append`.
     """
     # perhaps this should not derive from DXclass as those are
     # objects in field but a field cannot contain itself
     def __init__(self,classid='0',components=None,comments=None):
-        """OpenDX object, which is build from a list of components.::
+        """OpenDX object, which is build from a list of components.
 
-          dx = OpenDX.field('density',[gridpoints,gridconnections,array])
+        Parameters
+        ----------
 
-        :Arguments:
-
-           *id*
+        id : str
                arbitrary string
-           *components*
+        components : dict
                dictionary of DXclass instances (no sanity check on the
                individual ids!) which correspond to
-                  * positions
-                  * connections
-                  * data
-           *comments*
+
+               * positions
+               * connections
+               * data
+
+        comments : list
                list of strings; each string becomes a comment line
                prefixed with '#'. Avoid newlines.
+
 
         A field must have at least the components 'positions',
         'connections', and 'data'. Those components are associated
@@ -434,7 +429,14 @@ class field(DXclass):
         objects are written and then the field object describes its
         components. Objects are referenced by their unique id.)
 
-        .. Warning:: uniqueness of the *id* is not checked.
+        .. Note:: uniqueness of the *id* is not checked.
+
+
+        Example
+        -------
+        Create a new dx object::
+
+           dx = OpenDX.field('density',[gridpoints,gridconnections,array])
 
         """
         if components is None:
@@ -450,13 +452,13 @@ class field(DXclass):
         self.components = components
         self.comments= comments
 
-    def write(self,filename):
+    def write(self, filename):
         """Write the complete dx object to the file.
-
-        write(filename)
 
         This is the simple OpenDX format which includes the data into
         the header via the 'object array ... data follows' statement.
+
+        Only simple regular arrays are supported.
 
         The format should be compatible with VMD's dx reader plugin.
         """
@@ -477,7 +479,7 @@ class field(DXclass):
     def read(self,file):
         """Read DX field from file.
 
-        dx = OpenDX.field.read(dxfile)
+            dx = OpenDX.field.read(dxfile)
 
         The classid is discarded and replaced with the one from the file.
         """
@@ -486,9 +488,11 @@ class field(DXclass):
         p.parse(DXfield)
 
     def add(self,component,DXobj):
+        """add a component to the field"""
         self[component] = DXobj
 
     def add_comment(self,comment):
+        """add comments"""
         self.comments.append(comment)
 
     def sorted_components(self):
