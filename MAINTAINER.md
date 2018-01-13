@@ -1,22 +1,22 @@
-How to build package
---------------------
-To build and run tests on the package for python 2/3 use the following command
+Update Conda-forge package
+--------------------------------
 
-    `conda build . --python 3.5 --python 2.7`
+*After* a PyPi release update the conda-forge package. For this do the following
+on a local checkout of the package
+[feedstock](https://github.com/conda-forge/griddataformats-feedstock)
 
-To build the package the `meta.yaml` is building from the current source
-directory
+1. create a new branch
+1. conda smithy rerender
+1. update the sha256 in the `meta.yaml`
+1. update version number
 
-If the build fails because `tempdir` is missing add the MDAnalysis channel
-to your `.condarc`.
+Afterwards upload the new branch to your **own fork** of the feedstock and
+generate a PR. Once all tests pass merge the PR and the package will be
+published.
 
-Prepare for a release
----------------------
 
-Update the version string in `meta.yaml`
+Update package on MDAnalysis channel
+---------------------------------------------
 
-Pushing to official MDAnalysis channel
---------------------------------------
-
-To upload to your own channel `anaconda upload <where conda build the package>`.
-To upload to the MDAnalysis channel add the flag `-u MDAnalysis`
+Don't. We don't have the man power to update all the dependencies we need in the
+channel ourselves. Relying on conda-forge is more reliant.
