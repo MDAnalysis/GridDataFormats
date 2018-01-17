@@ -131,7 +131,7 @@ else:
              'black': '#000000',}
 
     html_theme_options = {
-        'logo' : "logos/mdanalysis-logo-200x150.png",
+        'logo' : "logos/mdanalysis-griddataformats-logo.png",
         'logo_name': True,
         'logo_text_align': "left",
         'description': "data formats for gridded data",
