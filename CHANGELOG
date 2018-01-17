@@ -12,6 +12,16 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+01/17/2017 orbeckst, kain88-de
+
+  * 0.4.0
+
+  Changes/Enhancements
+
+  * Type of DX arrays is now set based on the numpy array dtype or can
+    be manually set by the user to increase interoperability with
+    tools such as PyMOL (issue #35)
+
 05/13/2016 kain88-de
 
   * 0.3.3
