@@ -85,5 +85,5 @@ def test_write_dx_byte(nptype="uint8", dxtype="byte"):
 
 
 @raises(ValueError)
-def test_write_dx_ValueError(nptype="float128", dxtype="unknown"):
+def test_write_dx_ValueError(nptype="longdouble", dxtype="unknown"):
     return _test_write_dx(nptype=nptype, dxtype=dxtype)
