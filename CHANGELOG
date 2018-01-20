@@ -12,6 +12,14 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+01/19/2018 rathann
+
+  * 0.4.1
+  
+  Fixes
+  
+  * Fixed testsuite on 32bit architectures (issue #44)
+
 01/17/2017 orbeckst, kain88-de
 
   * 0.4.0
