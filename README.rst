@@ -1,10 +1,10 @@
 ============================
- README for gridDataFormats
+ README for GridDataFormats
 ============================
 
 |build| |cov| |docs| |zenodo| |conda|
 
-The **gridDataFormats** package provides classes to unify reading and
+The **GridDataFormats** package provides classes to unify reading and
 writing n-dimensional datasets. One can read grid data from files,
 make them available as a `Grid`_ object, and write out the data again.
 
@@ -12,22 +12,28 @@ Availability
 ------------
 
 The package is licensed under the LGPL, v3 (see files COPYING_ and
-`COPYING.LESSER`_) and is available from
+`COPYING.LESSER`_) and is available 
 
-* the Python Package Index under the name `GridDataFormats`_
-* the GitHub repository https://github.com/MDAnalysis/GridDataFormats
+* from the Python Package Index under the name `GridDataFormats`_
+* as a conda package from the *conda-forge* channel, `conda-forge/griddataformats`_ 
+* in source from the GitHub repository https://github.com/MDAnalysis/GridDataFormats
 
 .. _GridDataFormats:
    https://pypi.python.org/pypi/GridDataFormats
+.. _`conda-forge/griddataformats`:
+   https://anaconda.org/conda-forge/griddataformats
 .. _COPYING:
    https://raw.githubusercontent.com/MDAnalysis/GridDataFormats/master/COPYING
 .. _`COPYING.LESSER`:
    https://raw.githubusercontent.com/MDAnalysis/GridDataFormats/master/COPYING.LESSER
 .. _Grid:
-   http://www.mdanalysis.org/GridDataFormats/gridData/core.html#gridData.core.Grid
+   https://www.mdanalysis.org/GridDataFormats/gridData/core.html#gridData.core.Grid
 
 Installation
 ------------
+
+Installing GridDataFormats with ``pip``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Install with `pip`_::
 
@@ -36,17 +42,33 @@ Install with `pip`_::
 .. _pip: https://pip.pypa.io/
 
 
+Installing GridDataFormats with ``conda``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Installing *GridDataFormats* from the *conda-forge* channel can be
+achieved by adding "conda-forge" to your channels with::
+
+    conda config --add channels conda-forge
+
+Once the *conda-forge* channel has been enabled, *GridDataFormats* can
+be installed with::
+
+    conda install griddataformats
+
+
+
 Documentation
 -------------
 
-For the release docs see the `GridDataFormats docs`_. (The latest docs
-are also always available at `griddataformats.readthedocs.org`_.)
+For the latest docs see the `GridDataFormats docs`_. (Multiple
+versions of the docs are also available at
+`griddataformats.readthedocs.org`_.)
 
 
 .. _GridDataFormats docs:
-   http://mdanalysis.org/GridDataFormats
+   https://www.mdanalysis.org/GridDataFormats
 .. _`griddataformats.readthedocs.org`:
-   http://griddataformats.readthedocs.org
+   https://griddataformats.readthedocs.org
 
 
 Contributing
@@ -78,6 +100,6 @@ welcome. Please fork the repository and submit a `pull request`_.
     :alt: Zenodo DOI
     :target: https://zenodo.org/badge/latestdoi/13219/MDAnalysis/GridDataFormats
 
-.. |conda| image:: https://anaconda.org/mdanalysis/griddataformats/badges/version.svg
+.. |conda| image:: https://anaconda.org/conda-forge/griddataformats/badges/version.svg
     :alt: Anaconda
-    :target: https://anaconda.org/MDAnalysis/griddataformats
+    :target: https://anaconda.org/conda-forge/griddataformats

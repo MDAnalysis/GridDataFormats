@@ -9,7 +9,8 @@ GridDataFormats: Handling volumetric data in Python
 
 :Release: |release|
 :Date: |today|
-
+:Citation: |zenodo|
+       
 The :mod:`gridData` module contains a simple class
 :class:`~gridData.core.Grid` that makes it easier to work with data on
 a regular grid. A limited number of commonly used formats can be read
@@ -27,6 +28,11 @@ and enhancement requests through the `issue tracker`_.
    https://www.gnu.org/licenses/lgpl-3.0.en.html
 .. _GridDataFormats: https://pypi.python.org/pypi/GridDataFormats/
 .. _issue tracker: https://github.com/MDAnalysis/GridDataFormats/issues
+
+.. |zenodo| image:: https://zenodo.org/badge/13219/MDAnalysis/GridDataFormats.svg
+    :alt: Zenodo DOI
+    :target: https://zenodo.org/badge/latestdoi/13219/MDAnalysis/GridDataFormats
+
 
 .. rubric:: Contents
 
