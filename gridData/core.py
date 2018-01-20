@@ -64,15 +64,20 @@ class Grid(object):
         Create a Grid object from data.
 
         From a numpy.histogramdd()::
+
           grid,edges = numpy.histogramdd(...)
           g = Grid(grid,edges=edges)
 
         From an arbitrary grid::
+
           g = Grid(grid,origin=origin,delta=delta)
 
         From a saved file::
+
           g = Grid(filename)
-        or
+
+        or ::
+
           g = Grid()
           g.load(filename)
 
@@ -146,38 +151,72 @@ class Grid(object):
             # print "Setting up empty grid object. Use Grid.load(filename)."
             pass
 
-    def interpolation_spline_order():
+    @property
+    def interpolation_spline_order(self):
         """Order of the B-spline interpolation of the data.
 
         3 = cubic; 4 & 5 are also supported
 
-        Only choose values that are acceptable to :func:`scipy.ndimage.spline_filter`!
+        Only choose values that are acceptable to
+        :func:`scipy.ndimage.spline_filter`!
+
+        See Also
+        --------
+        interpolated
         """
 
-        def fget(self):
-            return self.__interpolation_spline_order
+        return self.__interpolation_spline_order
 
-        def fset(self, x):
-            # As we cache the interpolation function, we need to rebuild the cache
-            # whenever the interpolation order changes: this is handled by _update()
-            self.__interpolation_spline_order = x
-            self._update()
+    @interpolation_spline_order.setter
+    def interpolation_spline_order(self, x):
+        """Setting the ``interpolation_spline_order`` updates :func:`interpolated`
 
-        return locals()
+        Because we cache the interpolation function, we need to rebuild the
+        cache whenever the interpolation order changes: this is
+        handled by :meth:`_update`
 
-    interpolation_spline_order = property(**interpolation_spline_order())
+        """
+        self.__interpolation_spline_order = x
+        self._update()
+
 
     def resample(self, edges):
         """Resample data to a new grid with edges *edges*.
 
-          resample(edges) --> Grid
+        This method creates a new grid with the data from the current
+        grid resampled to a regular grid specified by *edges*.  The
+        order of the interpolation is set by
+        :attr:`Grid.interpolation_spline_order`: change the value
+        *before* calling :meth:`resample`.
 
-        or
+        Parameters
+        ----------
+        edges : tuple of arrays or Grid
+             edges of the new grid or a :class:`Grid` instance that
+             provides :attr:`Grid.edges`
 
-          resample(otherGrid) --> Grid
+        Returns
+        -------
+        Grid
+             a new :class:`Grid` with the data interpolated over the
+             new grid cells
 
-        The order of the interpolation is set by
-        :attr:`Grid.interpolation_spline_order`.
+
+        Examples
+        --------
+
+        Providing *edges* (a tuple of three arrays, indicating the
+        boundaries of each grid cell)::
+
+          g = grid.resample(edges)
+
+        As a convenience, one can also supply another :class:`Grid` as
+        the argument for this method ::
+
+          g = grid.resample(othergrid)
+
+        and the edges are taken from :attr:`Grid.edges`.
+
         """
         try:
             edges = edges.edges  # can also supply another Grid
@@ -190,8 +229,27 @@ class Grid(object):
         return Grid(newgrid, edges)
 
     def resample_factor(self, factor):
-        """Resample to a new regular grid with factor*oldN cells along
-        each dimension."""
+        """Resample to a new regular grid.
+
+
+        Parameters
+        ----------
+        factor : float
+            The number of grid cells are scaled with `factor` in each
+            dimension, i.e., ``factor * N_i`` cells along each
+            dimension i.
+
+
+        Returns
+        -------
+        Grid
+
+
+        See Also
+        --------
+        resample
+
+        """
         # new number of edges N' = (N-1)*f + 1
         newlengths = [(N - 1) * float(factor) + 1 for N in self._len_edges()]
         edges = [numpy.linspace(start, stop, num=N, endpoint=True)
@@ -201,8 +259,6 @@ class Grid(object):
 
     def _update(self):
         """compute/update all derived data
-
-        Grid._update()
 
         Can be called without harm and is idem-potent.
 
@@ -227,20 +283,36 @@ class Grid(object):
     def interpolated(self):
         """B-spline function over the data grid(x,y,z).
 
+        The :func:`interpolated` function allows one to obtain data
+        values for any values of the coordinates::
+
            interpolated([x1,x2,...],[y1,y2,...],[z1,z2,...]) -> F[x1,y1,z1],F[x2,y2,z2],...
 
-        The interpolation order is set in :attr:`Grid.interpolation_spline_order`.
+        The interpolation order is set in
+        :attr:`Grid.interpolation_spline_order`.
 
         The interpolated function is computed once and is cached for better
         performance. Whenever :attr:`~Grid.interpolation_spline_order` is
         modified, :meth:`Grid.interpolated` is recomputed.
 
         The value for unknown data is set in :attr:`Grid.interpolation_cval`
-        (TODO: also recompute when interpolation_cval value is changed.)
+        (TODO: also recompute when ``interpolation_cval`` value is changed.)
 
+        Example
+        -------
         Example usage for resampling::
-           >>> XX,YY,ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
-           >>> FF = interpolated(XX,YY,ZZ)
+
+           XX, YY, ZZ = numpy.mgrid[40:75:0.5, 96:150:0.5, 20:50:0.5]
+           FF = interpolated(XX, YY, ZZ)
+
+        Note
+        ----
+        Values are interpolated with a spline function. It is possible
+        that the spline will generate values that would not normally
+        appear in the data. For example, a density is non-negative but
+        a cubic spline interpolation can generate negative values,
+        especially at the boundary between 0 and high values.
+
         """
         if self.__interpolated is None:
             self.__interpolated = self._interpolationFunctionFactory()
@@ -343,7 +415,7 @@ class Grid(object):
         dx
             :mod:`OpenDX`
         pickle
-            pickle (use :meth:``Grid.load` to restore); :meth:`Grid.save`
+            pickle (use :meth:`Grid.load` to restore); :meth:`Grid.save`
             is simpler than ``export(format='python')``.
 
         Parameters
@@ -386,13 +458,15 @@ class Grid(object):
             cPickle.dump(data, f, cPickle.HIGHEST_PROTOCOL)
 
     def _export_dx(self, filename, type=None, **kwargs):
-        """Export the density grid to an OpenDX file. The file format
-        is the simplest regular grid array and it is also understood
-        by VMD's and Chimera's DX reader; PyMOL requires the dx `type`
-        to be set to "double".
+        """Export the density grid to an OpenDX file.
+
+        The file format is the simplest regular grid array and it is
+        also understood by VMD's and Chimera's DX reader; PyMOL
+        requires the dx `type` to be set to "double".
 
         For the file format see
         http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF
+
         """
         root, ext = os.path.splitext(filename)
         filename = root + '.dx'
@@ -425,12 +499,17 @@ class Grid(object):
     def save(self, filename):
         """Save a grid object to <filename>.pickle
 
-           Grid.save(filename)
+        Internally, this calls
+        ``Grid.export(filename, format="python")``. A grid can be
+        regenerated from the saved data with ::
 
-        Internally, this calls Grid.export(filename,format="python"). A grid can be
-        regenerated from the saved data with
+           g = Grid(filename="grid.pickle")
 
-           g = Grid(filename=<filename>)
+        .. note::
+           The pickle format depends on the Python version and
+           therefore it is not guaranteed that a grid saved with, say,
+           Python 2.7 can also be read with Python 3.5. The OpenDX format
+           is a better alternative for portability.
 
         """
         self.export(filename, file_format="pickle")
