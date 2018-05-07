@@ -24,7 +24,7 @@ install:
   - if [[ $SETUP == 'full' ]]; then conda create --yes -q -n pyenv python=$TRAVIS_PYTHON_VERSION numpy scipy nose sphinx; fi
   - if [[ $SETUP == 'minimal' ]]; then conda create --yes -q -n pyenv python=$TRAVIS_PYTHON_VERSION numpy nose sphinx; fi
   - source activate pyenv
-  - pip install coveralls tempdir
+  - pip install coveralls tempdir sphinx-sitemap
   - pip install -v ./
 script:
   - nosetests -v --with-coverage --cover-package gridData --process-timeout=120 --processes=2 gridData
