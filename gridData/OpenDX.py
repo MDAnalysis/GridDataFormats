@@ -611,10 +611,8 @@ class DXParser(object):
     |"(?P<QUOTEDSTRING>[^\"]*)"   # string in double quotes  (quotes removed)
     |(?P<WHITESPACE>\s+)          # white space
     |(?P<REAL>[-+]?               # true real number (decimal point or
-          (\d+\.\d*([eE][-+]\d+)?)  # scientific notation)
-          |(\d*\.\d+([eE][-+]\d+)?)
-          |(\d[eE][-+]\d+))
-    |(?P<INTEGER>[-+]?\d+)       # integer
+    (\d+(\.\d*)?|\.\d+)           # scientific notation)
+    ([eE][-+]?\d+)?)
     |(?P<BARESTRING>[a-zA-Z_][^\s\#\"]+) # unquoted strings, starting with non-numeric
     """, re.VERBOSE)
 
@@ -775,10 +773,12 @@ class DXParser(object):
         if tok.equals('counts'):
             shape = []
             try:
-                while self.__peek().iscode('INTEGER'):
+                while True:
+                    # raises exception if not an int
+                    self.__peek().value('int')
                     tok = self.__consume()
-                    shape.append(tok.value())
-            except DXParserNoTokens:
+                    shape.append(tok.value('int'))
+            except (DXParserNoTokens,ValueError):
                 pass
             if len(shape) == 0:
                 raise DXParseError('gridpositions: no shape parameters')
@@ -820,7 +820,6 @@ class DXParser(object):
         pattern:
         object 2 class gridconnections counts 97 93 99
         """
-
         try:
             tok = self.__consume()
         except DXParserNoTokens:
@@ -829,10 +828,12 @@ class DXParser(object):
         if tok.equals('counts'):
             shape = []
             try:
-                while self.__peek().iscode('INTEGER'):
+                while True:
+                    # raises exception if not an int
+                    self.__peek().value('int')
                     tok = self.__consume()
-                    shape.append(tok.value())
-            except DXParserNoTokens:
+                    shape.append(tok.value('int'))
+            except (DXParserNoTokens,ValueError):
                 pass
             if len(shape) == 0:
                 raise DXParseError('gridconnections: no shape parameters')
@@ -865,16 +866,18 @@ class DXParser(object):
             self.currentobject['type'] = tok.value()
         elif tok.equals('rank'):
             tok = self.__consume()
-            if not tok.iscode('INTEGER'):
+            try:
+                self.currentobject['rank'] = tok.value('int')
+            except ValueError:
                 raise DXParseError('array: rank was "%s", not an integer.'%\
                                    tok.text)
-            self.currentobject['rank'] = tok.value()
         elif tok.equals('items'):
             tok = self.__consume()
-            if not tok.iscode('INTEGER'):
+            try:
+                self.currentobject['size'] = tok.value('int')
+            except ValueError:
                 raise DXParseError('array: items was "%s", not an integer.'%\
                                    tok.text)
-            self.currentobject['size'] = tok.value()
         elif tok.equals('data'):
             tok = self.__consume()
             if not tok.iscode('STRING'):
@@ -885,6 +888,8 @@ class DXParser(object):
                             'array: Only the "data follows header" format is supported.')
             if not self.currentobject['size']:
                 raise DXParseError("array: missing number of items")
+            # This is the slow part.  Once we get here, we are just
+            # reading in a long list of floats but using the parser is expensive.
             self.currentobject['array'] = [self.__consume().value('REAL') \
                                            for i in range(self.currentobject['size'])]
         elif tok.equals('attribute'):
