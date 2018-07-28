@@ -775,9 +775,9 @@ class DXParser(object):
             try:
                 while True:
                     # raises exception if not an int
-                    self.__peek().value('int')
+                    self.__peek().value('INTEGER')
                     tok = self.__consume()
-                    shape.append(tok.value('int'))
+                    shape.append(tok.value('INTEGER'))
             except (DXParserNoTokens,ValueError):
                 pass
             if len(shape) == 0:
@@ -830,9 +830,9 @@ class DXParser(object):
             try:
                 while True:
                     # raises exception if not an int
-                    self.__peek().value('int')
+                    self.__peek().value('INTEGER')
                     tok = self.__consume()
-                    shape.append(tok.value('int'))
+                    shape.append(tok.value('INTEGER'))
             except (DXParserNoTokens,ValueError):
                 pass
             if len(shape) == 0:
@@ -867,14 +867,14 @@ class DXParser(object):
         elif tok.equals('rank'):
             tok = self.__consume()
             try:
-                self.currentobject['rank'] = tok.value('int')
+                self.currentobject['rank'] = tok.value('INTEGER')
             except ValueError:
                 raise DXParseError('array: rank was "%s", not an integer.'%\
                                    tok.text)
         elif tok.equals('items'):
             tok = self.__consume()
             try:
-                self.currentobject['size'] = tok.value('int')
+                self.currentobject['size'] = tok.value('INTEGER')
             except ValueError:
                 raise DXParseError('array: items was "%s", not an integer.'%\
                                    tok.text)
@@ -889,9 +889,19 @@ class DXParser(object):
             if not self.currentobject['size']:
                 raise DXParseError("array: missing number of items")
             # This is the slow part.  Once we get here, we are just
-            # reading in a long list of floats but using the parser is expensive.
-            self.currentobject['array'] = [self.__consume().value('REAL') \
-                                           for i in range(self.currentobject['size'])]
+            # reading in a long list of numbers.  Conversion to floats
+            # will be done later when the numpy array is created.
+
+            # Don't assume anything about whitespace or the number of elements per row
+            self.currentobject['array'] = []
+            while len(self.currentobject['array']) <self.currentobject['size']:
+                 self.currentobject['array'].extend(self.dxfile.readline().strip().split())
+
+            # If you assume that there are three elements per row
+            # (except the last) the following version works and is a little faster.
+            # for i in range(int(numpy.ceil(self.currentobject['size']/3))):
+            #     self.currentobject['array'].append(self.dxfile.readline())
+            # self.currentobject['array'] = ' '.join(self.currentobject['array']).split()
         elif tok.equals('attribute'):
             # not used at the moment
             attribute = self.__consume().value()
