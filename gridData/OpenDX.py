@@ -778,7 +778,7 @@ class DXParser(object):
                     self.__peek().value('INTEGER')
                     tok = self.__consume()
                     shape.append(tok.value('INTEGER'))
-            except (DXParserNoTokens,ValueError):
+            except (DXParserNoTokens, ValueError):
                 pass
             if len(shape) == 0:
                 raise DXParseError('gridpositions: no shape parameters')
@@ -833,7 +833,7 @@ class DXParser(object):
                     self.__peek().value('INTEGER')
                     tok = self.__consume()
                     shape.append(tok.value('INTEGER'))
-            except (DXParserNoTokens,ValueError):
+            except (DXParserNoTokens, ValueError):
                 pass
             if len(shape) == 0:
                 raise DXParseError('gridconnections: no shape parameters')
