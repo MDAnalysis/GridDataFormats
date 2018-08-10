@@ -12,6 +12,15 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+07/10/2018 tluchko
+
+  * 0.4.2
+
+  Fixes/Enhancements
+
+  * Fixed reading in DX files containing scientific notation
+  * Improved DX parsing speed
+
 01/19/2018 rathann
 
   * 0.4.1
