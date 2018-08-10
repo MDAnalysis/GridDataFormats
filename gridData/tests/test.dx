@@ -1,5 +1,5 @@
 object 1 class gridpositions counts 2 2 2
-origin 0 0 0
+origin 20.1 3e0 -1e1
 delta 1.00 0 0
 delta 0 1.00 0
 delta 0 0 1.00
