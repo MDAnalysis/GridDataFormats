@@ -14,7 +14,7 @@ def test_read_dx():
     POINTS = 8
     ref = np.ones(POINTS)
     ref[4] = 1e-6
-    ref[5] = 1e+6
+    ref[5] = -1e+6
     assert_equal(g.grid.flat, ref)
     assert_equal(g.grid.size, POINTS)
     assert_equal(g.delta, np.ones(3))
