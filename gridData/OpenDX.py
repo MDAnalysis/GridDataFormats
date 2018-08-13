@@ -605,13 +605,16 @@ class DXParser(object):
     """
 
     # the regexes must match with the categories defined in the Token class
+    # REAL regular expression will catch both integers and floats.
+    # Taken from
+    # https://docs.python.org/3/library/re.html#simulating-scanf
     dx_regex = re.compile(r"""
     (?P<COMMENT>\#.*$)            # comment (until end of line)
     |(?P<WORD>(object|class|counts|origin|delta|type|counts|rank|items|data))
     |"(?P<QUOTEDSTRING>[^\"]*)"   # string in double quotes  (quotes removed)
     |(?P<WHITESPACE>\s+)          # white space
     |(?P<REAL>[-+]?               # true real number (decimal point or
-    (\d+(\.\d*)?|\.\d+)           # scientific notation)
+    (\d+(\.\d*)?|\.\d+)           # scientific notation) and integers
     ([eE][-+]?\d+)?)
     |(?P<BARESTRING>[a-zA-Z_][^\s\#\"]+) # unquoted strings, starting with non-numeric
     """, re.VERBOSE)
