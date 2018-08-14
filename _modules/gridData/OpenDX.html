@@ -6,16 +6,16 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>gridData.OpenDX &#8212; GridDataFormats 0.4.0+4.g030628d documentation</title>
+    <title>gridData.OpenDX &#8212; GridDataFormats 0.4.0+5.g4f1ec45 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.4.0+4.g030628d documentation"
+          title="Search within GridDataFormats 0.4.0+5.g4f1ec45 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -32,6 +32,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for gridData.OpenDX</h1><div class="highlight"><pre>
@@ -642,16 +644,17 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># the regexes must match with the categories defined in the Token class</span>
+    <span class="c1"># REAL regular expression will catch both integers and floats.</span>
+    <span class="c1"># Taken from</span>
+    <span class="c1"># https://docs.python.org/3/library/re.html#simulating-scanf</span>
     <span class="n">dx_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    (?P&lt;COMMENT&gt;\#.*$)            # comment (until end of line)</span>
 <span class="s2">    |(?P&lt;WORD&gt;(object|class|counts|origin|delta|type|counts|rank|items|data))</span>
 <span class="s2">    |&quot;(?P&lt;QUOTEDSTRING&gt;[^\&quot;]*)&quot;   # string in double quotes  (quotes removed)</span>
 <span class="s2">    |(?P&lt;WHITESPACE&gt;\s+)          # white space</span>
 <span class="s2">    |(?P&lt;REAL&gt;[-+]?               # true real number (decimal point or</span>
-<span class="s2">          (\d+\.\d*([eE][-+]\d+)?)  # scientific notation)</span>
-<span class="s2">          |(\d*\.\d+([eE][-+]\d+)?)</span>
-<span class="s2">          |(\d[eE][-+]\d+))</span>
-<span class="s2">    |(?P&lt;INTEGER&gt;[-+]?\d+)       # integer</span>
+<span class="s2">    (\d+(\.\d*)?|\.\d+)           # scientific notation) and integers</span>
+<span class="s2">    ([eE][-+]?\d+)?)</span>
 <span class="s2">    |(?P&lt;BARESTRING&gt;[a-zA-Z_][^\s\#\&quot;]+) # unquoted strings, starting with non-numeric</span>
 <span class="s2">    &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
 
@@ -812,10 +815,12 @@
         <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s1">&#39;counts&#39;</span><span class="p">):</span>
             <span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">__peek</span><span class="p">()</span><span class="o">.</span><span class="n">iscode</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">):</span>
+                <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="c1"># raises exception if not an int</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__peek</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">)</span>
                     <span class="n">tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__consume</span><span class="p">()</span>
-                    <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
-            <span class="k">except</span> <span class="n">DXParserNoTokens</span><span class="p">:</span>
+                    <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">))</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">DXParserNoTokens</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
                 <span class="k">pass</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">DXParseError</span><span class="p">(</span><span class="s1">&#39;gridpositions: no shape parameters&#39;</span><span class="p">)</span>
@@ -857,7 +862,6 @@
 <span class="sd">        pattern:</span>
 <span class="sd">        object 2 class gridconnections counts 97 93 99</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="k">try</span><span class="p">:</span>
             <span class="n">tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__consume</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">DXParserNoTokens</span><span class="p">:</span>
@@ -866,10 +870,12 @@
         <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s1">&#39;counts&#39;</span><span class="p">):</span>
             <span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">__peek</span><span class="p">()</span><span class="o">.</span><span class="n">iscode</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">):</span>
+                <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="c1"># raises exception if not an int</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__peek</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">)</span>
                     <span class="n">tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__consume</span><span class="p">()</span>
-                    <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
-            <span class="k">except</span> <span class="n">DXParserNoTokens</span><span class="p">:</span>
+                    <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">))</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">DXParserNoTokens</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
                 <span class="k">pass</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">DXParseError</span><span class="p">(</span><span class="s1">&#39;gridconnections: no shape parameters&#39;</span><span class="p">)</span>
@@ -902,16 +908,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">tok</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">):</span>
             <span class="n">tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__consume</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">tok</span><span class="o">.</span><span class="n">iscode</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">DXParseError</span><span class="p">(</span><span class="s1">&#39;array: rank was &quot;</span><span class="si">%s</span><span class="s1">&quot;, not an integer.&#39;</span><span class="o">%</span>\
                                    <span class="n">tok</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">tok</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">):</span>
             <span class="n">tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__consume</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">tok</span><span class="o">.</span><span class="n">iscode</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">DXParseError</span><span class="p">(</span><span class="s1">&#39;array: items was &quot;</span><span class="si">%s</span><span class="s1">&quot;, not an integer.&#39;</span><span class="o">%</span>\
                                    <span class="n">tok</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">tok</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">):</span>
             <span class="n">tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__consume</span><span class="p">()</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">tok</span><span class="o">.</span><span class="n">iscode</span><span class="p">(</span><span class="s1">&#39;STRING&#39;</span><span class="p">):</span>
@@ -922,8 +930,20 @@
                             <span class="s1">&#39;array: Only the &quot;data follows header&quot; format is supported.&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]:</span>
                 <span class="k">raise</span> <span class="n">DXParseError</span><span class="p">(</span><span class="s2">&quot;array: missing number of items&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;array&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__consume</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;REAL&#39;</span><span class="p">)</span> \
-                                           <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">])]</span>
+            <span class="c1"># This is the slow part.  Once we get here, we are just</span>
+            <span class="c1"># reading in a long list of numbers.  Conversion to floats</span>
+            <span class="c1"># will be done later when the numpy array is created.</span>
+
+            <span class="c1"># Don&#39;t assume anything about whitespace or the number of elements per row</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;array&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;array&#39;</span><span class="p">])</span> <span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]:</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">[</span><span class="s1">&#39;array&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dxfile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+            <span class="c1"># If you assume that there are three elements per row</span>
+            <span class="c1"># (except the last) the following version works and is a little faster.</span>
+            <span class="c1"># for i in range(int(numpy.ceil(self.currentobject[&#39;size&#39;]/3))):</span>
+            <span class="c1">#     self.currentobject[&#39;array&#39;].append(self.dxfile.readline())</span>
+            <span class="c1"># self.currentobject[&#39;array&#39;] = &#39; &#39;.join(self.currentobject[&#39;array&#39;]).split()</span>
         <span class="k">elif</span> <span class="n">tok</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="s1">&#39;attribute&#39;</span><span class="p">):</span>
             <span class="c1"># not used at the moment</span>
             <span class="n">attribute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__consume</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
@@ -1029,6 +1049,7 @@
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -1090,8 +1111,8 @@
       &copy;2007-2018, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson, Dominik Mierzejewski.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 
