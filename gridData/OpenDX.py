@@ -605,16 +605,17 @@ class DXParser(object):
     """
 
     # the regexes must match with the categories defined in the Token class
+    # REAL regular expression will catch both integers and floats.
+    # Taken from
+    # https://docs.python.org/3/library/re.html#simulating-scanf
     dx_regex = re.compile(r"""
     (?P<COMMENT>\#.*$)            # comment (until end of line)
     |(?P<WORD>(object|class|counts|origin|delta|type|counts|rank|items|data))
     |"(?P<QUOTEDSTRING>[^\"]*)"   # string in double quotes  (quotes removed)
     |(?P<WHITESPACE>\s+)          # white space
     |(?P<REAL>[-+]?               # true real number (decimal point or
-          (\d+\.\d*([eE][-+]\d+)?)  # scientific notation)
-          |(\d*\.\d+([eE][-+]\d+)?)
-          |(\d[eE][-+]\d+))
-    |(?P<INTEGER>[-+]?\d+)       # integer
+    (\d+(\.\d*)?|\.\d+)           # scientific notation) and integers
+    ([eE][-+]?\d+)?)
     |(?P<BARESTRING>[a-zA-Z_][^\s\#\"]+) # unquoted strings, starting with non-numeric
     """, re.VERBOSE)
 
@@ -775,10 +776,12 @@ class DXParser(object):
         if tok.equals('counts'):
             shape = []
             try:
-                while self.__peek().iscode('INTEGER'):
+                while True:
+                    # raises exception if not an int
+                    self.__peek().value('INTEGER')
                     tok = self.__consume()
-                    shape.append(tok.value())
-            except DXParserNoTokens:
+                    shape.append(tok.value('INTEGER'))
+            except (DXParserNoTokens, ValueError):
                 pass
             if len(shape) == 0:
                 raise DXParseError('gridpositions: no shape parameters')
@@ -820,7 +823,6 @@ class DXParser(object):
         pattern:
         object 2 class gridconnections counts 97 93 99
         """
-
         try:
             tok = self.__consume()
         except DXParserNoTokens:
@@ -829,10 +831,12 @@ class DXParser(object):
         if tok.equals('counts'):
             shape = []
             try:
-                while self.__peek().iscode('INTEGER'):
+                while True:
+                    # raises exception if not an int
+                    self.__peek().value('INTEGER')
                     tok = self.__consume()
-                    shape.append(tok.value())
-            except DXParserNoTokens:
+                    shape.append(tok.value('INTEGER'))
+            except (DXParserNoTokens, ValueError):
                 pass
             if len(shape) == 0:
                 raise DXParseError('gridconnections: no shape parameters')
@@ -865,16 +869,18 @@ class DXParser(object):
             self.currentobject['type'] = tok.value()
         elif tok.equals('rank'):
             tok = self.__consume()
-            if not tok.iscode('INTEGER'):
+            try:
+                self.currentobject['rank'] = tok.value('INTEGER')
+            except ValueError:
                 raise DXParseError('array: rank was "%s", not an integer.'%\
                                    tok.text)
-            self.currentobject['rank'] = tok.value()
         elif tok.equals('items'):
             tok = self.__consume()
-            if not tok.iscode('INTEGER'):
+            try:
+                self.currentobject['size'] = tok.value('INTEGER')
+            except ValueError:
                 raise DXParseError('array: items was "%s", not an integer.'%\
                                    tok.text)
-            self.currentobject['size'] = tok.value()
         elif tok.equals('data'):
             tok = self.__consume()
             if not tok.iscode('STRING'):
@@ -885,8 +891,20 @@ class DXParser(object):
                             'array: Only the "data follows header" format is supported.')
             if not self.currentobject['size']:
                 raise DXParseError("array: missing number of items")
-            self.currentobject['array'] = [self.__consume().value('REAL') \
-                                           for i in range(self.currentobject['size'])]
+            # This is the slow part.  Once we get here, we are just
+            # reading in a long list of numbers.  Conversion to floats
+            # will be done later when the numpy array is created.
+
+            # Don't assume anything about whitespace or the number of elements per row
+            self.currentobject['array'] = []
+            while len(self.currentobject['array']) <self.currentobject['size']:
+                 self.currentobject['array'].extend(self.dxfile.readline().strip().split())
+
+            # If you assume that there are three elements per row
+            # (except the last) the following version works and is a little faster.
+            # for i in range(int(numpy.ceil(self.currentobject['size']/3))):
+            #     self.currentobject['array'].append(self.dxfile.readline())
+            # self.currentobject['array'] = ' '.join(self.currentobject['array']).split()
         elif tok.equals('attribute'):
             # not used at the moment
             attribute = self.__consume().value()

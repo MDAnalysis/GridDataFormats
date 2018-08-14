@@ -12,10 +12,13 @@ from gridData.testing import tempdir
 def test_read_dx():
     g = Grid('gridData/tests/test.dx')
     POINTS = 8
-    assert_equal(g.grid.flat, np.ones(POINTS))
+    ref = np.ones(POINTS)
+    ref[4] = 1e-6
+    ref[5] = -1e+6
+    assert_equal(g.grid.flat, ref)
     assert_equal(g.grid.size, POINTS)
     assert_equal(g.delta, np.ones(3))
-    assert_equal(g.origin, np.zeros(3))
+    assert_equal(g.origin, np.array([20.1, 3., -10.]))
 
 
 def _test_write_dx(counts=100, ndim=3, nptype="float32", dxtype="float"):
