@@ -88,9 +88,9 @@ welcome. Please fork the repository and submit a `pull request`_.
     :alt: Build Status
     :target: https://travis-ci.org/MDAnalysis/GridDataFormats
 
-.. |cov| image:: https://coveralls.io/repos/MDAnalysis/GridDataFormats/badge.svg?branch=master&service=github
+.. |cov| image:: https://codecov.io/gh/MDAnalysis/GridDataFormats/branch/master/graph/badge.svg
      :alt: Coverage Status
-     :target: https://coveralls.io/github/MDAnalysis/GridDataFormats?branch=master
+     :target: https://codecov.io/gh/MDAnalysis/GridDataFormats
 
 .. |docs| image:: https://readthedocs.org/projects/griddataformats/badge/?version=latest
     :alt: Documentation
