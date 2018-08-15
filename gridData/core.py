@@ -23,8 +23,12 @@ Classes and functions
 ---------------------
 
 """
+# Having consistent truedivision in this module is essential so that
+# its behavior is fully consistent in Python 2 and Python 3.
+from __future__ import absolute_import, division
 
 import os
+import six
 from six.moves import cPickle, range, zip
 import numpy
 
@@ -617,13 +621,23 @@ class Grid(object):
         self.check_compatible(other)
         return Grid(self.grid * _grid(other), edges=self.edges)
 
-    def __div__(self, other):
+    def __truediv__(self, other):
+        # truediv will always do true division (in Python 2 and Python 3);
+        # we use from __future__ include division everywhere
         self.check_compatible(other)
         return Grid(self.grid / _grid(other), edges=self.edges)
 
-    def __truediv__(self, other):
+    def __div__(self, other):
+        # in Python 2 only (without __future__.division): will do "classic division"
+        # https://docs.python.org/2/reference/datamodel.html#object.__div__
+        if not six.PY2:
+            raise NotImplementedError("__div__ is only available in Python 2, use __truediv__")
         self.check_compatible(other)
-        return Grid(self.grid / _grid(other), edges=self.edges)
+        return Grid(self.grid.__div__(_grid(other)), edges=self.edges)
+
+    def __floordiv__(self, other):
+        self.check_compatible(other)
+        return Grid(self.grid // _grid(other), edges=self.edges)
 
     def __pow__(self, other):
         self.check_compatible(other)
@@ -641,12 +655,21 @@ class Grid(object):
         self.check_compatible(other)
         return Grid(_grid(other) * self.grid, edges=self.edges)
 
-    def __rdiv__(self, other):
+    def __rtruediv__(self, other):
         self.check_compatible(other)
         return Grid(_grid(other) / self.grid, edges=self.edges)
 
-    def __rtruediv__(self, other):
-        return Grid(_grid(other) / self.grid, edges=self.edges)
+    def __rdiv__(self, other):
+        # in Python 2 only (without __future__.division): will do "classic division"
+        # https://docs.python.org/2/reference/datamodel.html#object.__div__
+        if not six.PY2:
+            raise NotImplementedError("__rdiv__ is only available in Python 2, use __rtruediv__")
+        self.check_compatible(other)
+        return Grid(self.grid.__rdiv__(_grid(other)), edges=self.edges)
+
+    def __rfloordiv__(self, other):
+        self.check_compatible(other)
+        return Grid(_grid(other) // self.grid, edges=self.edges)
 
     def __rpow__(self, other):
         self.check_compatible(other)

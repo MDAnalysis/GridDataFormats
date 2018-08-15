@@ -124,6 +124,7 @@ Classes
 -------
 
 """
+from __future__ import absolute_import, division
 
 import warnings
 import struct
