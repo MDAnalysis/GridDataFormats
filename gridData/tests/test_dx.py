@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division
+
 import numpy as np
 from numpy.testing import assert_equal, assert_almost_equal
 
@@ -6,8 +8,10 @@ import pytest
 import gridData.OpenDX
 from gridData import Grid
 
+from . import datafiles
+
 def test_read_dx():
-    g = Grid('gridData/tests/test.dx')
+    g = Grid(datafiles.DX)
     POINTS = 8
     ref = np.ones(POINTS)
     ref[4] = 1e-6
