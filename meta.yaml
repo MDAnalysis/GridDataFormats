@@ -1,6 +1,6 @@
 package:
   name: griddataformats
-  version: "0.4.0"
+  version: "0.4.2"
 
 source:
     path: .
@@ -29,17 +29,16 @@ test:
     - gridData
 
   requires:
-    # Put any additional test requirements here.  For example
-    - nose
+    - pytest
 
   files:
    - gridData/tests
 
   commands:
-    - nosetests gridData
+    - pytest gridData
 
 about:
-  home: http://mdanalysis.org/GridDataFormats
+  home: https://www.mdanalysis.org/GridDataFormats
   license: LGPLv3
   license_file: COPYING.LESSER
   summary: 'GridDataFormats provides the Python package gridData'
