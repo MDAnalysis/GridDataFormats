@@ -12,12 +12,13 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/2018 tluchko, orbeckst
+??/??/2018 rathann, tluchko, orbeckst
 
-  * 0.4.2
+  * 0.4.1
 
   Fixes
 
+  * Fixed testsuite on 32bit architectures (issue #44)
   * Improved DX parsing speed (#2)
   * Fixed reading in DX files containing scientific notation (PR #52)
   * Added missing floordivision to Grid (PR #53)
@@ -28,14 +29,6 @@ The rules for this file:
   * use truedivision consistently throughout the package and the tests (PR #52)
   * installation now requires scipy (it is much easier to install than it
     used to)
-
-01/19/2018 rathann
-
-  * 0.4.1
-
-  Fixes
-
-  * Fixed testsuite on 32bit architectures (issue #44)
 
 01/17/2017 orbeckst, kain88-de
 
