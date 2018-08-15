@@ -20,11 +20,12 @@ The rules for this file:
 
   * Improved DX parsing speed (#2)
   * Fixed reading in DX files containing scientific notation (PR #52)
+  * Added missing floordivision to Grid (PR #53)
 
   Changes (do not affect user)
 
   * use pytest as testing framework (#49)
-
+  * use truedivision consistently throughout the package and the tests (PR #52)
 
 01/19/2018 rathann
 
