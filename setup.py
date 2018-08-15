@@ -30,7 +30,7 @@ setup(name="GridDataFormats",
       packages=find_packages(exclude=[]),
       package_data={'gridData': ['tests/*.dx', 'tests/*.ccp4']},
       install_requires=['numpy>=1.0.3', 'six'],
-      tests_require=['nose', 'numpy'],
+      tests_require=['pytest', 'numpy'],
       # extras can be difficult to install through setuptools and/or
       # you might prefer to use the version available through your
       # packaging system
