@@ -111,9 +111,8 @@ from .core import Grid
 from . import OpenDX
 from . import gOpenMol
 from . import CCP4
-from . import testing
 
-__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4', 'testing']
+__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4']
 
 from ._version import get_versions
 __version__ = get_versions()['version']

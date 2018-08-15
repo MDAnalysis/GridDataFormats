@@ -1,13 +1,10 @@
 import numpy as np
 from numpy.testing import assert_equal, assert_almost_equal
 
-from nose.tools import raises
+import pytest
 
 import gridData.OpenDX
 from gridData import Grid
-
-from gridData.testing import tempdir
-
 
 def test_read_dx():
     g = Grid('gridData/tests/test.dx')
@@ -21,7 +18,7 @@ def test_read_dx():
     assert_equal(g.origin, np.array([20.1, 3., -10.]))
 
 
-def _test_write_dx(counts=100, ndim=3, nptype="float32", dxtype="float"):
+def _test_write_dx(tmpdir, counts=100, ndim=3, nptype="float32", dxtype="float"):
     h, edges = np.histogramdd(np.random.random((counts, ndim)), bins=10)
     g = Grid(h, edges)
 
@@ -30,7 +27,7 @@ def _test_write_dx(counts=100, ndim=3, nptype="float32", dxtype="float"):
 
     assert_equal(g.grid.sum(), counts)
 
-    with tempdir.in_tempdir():
+    with tmpdir.as_cwd():
         outfile = "grid.dx"
         g.export(outfile)
         g2 = Grid(outfile)
@@ -53,40 +50,39 @@ def _test_write_dx(counts=100, ndim=3, nptype="float32", dxtype="float"):
 
 # conversion from numpy array to DX file
 
-def test_write_dx_float_float16(nptype="float16", dxtype="float"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_float_float16(tmpdir, nptype="float16", dxtype="float"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_float_float32(nptype="float32", dxtype="float"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_float_float32(tmpdir, nptype="float32", dxtype="float"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_double_float64(nptype="float64", dxtype="double"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_double_float64(tmpdir, nptype="float64", dxtype="double"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_int_int64(nptype="int64", dxtype="int"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_int_int64(tmpdir, nptype="int64", dxtype="int"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_int_int32(nptype="int32", dxtype="int"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_int_int32(tmpdir, nptype="int32", dxtype="int"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_unsigned_int_uint32(nptype="uint32", dxtype="unsigned int"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_unsigned_int_uint32(tmpdir, nptype="uint32", dxtype="unsigned int"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_unsigned_int_uint64(nptype="uint64", dxtype="unsigned int"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_unsigned_int_uint64(tmpdir, nptype="uint64", dxtype="unsigned int"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_short_int16(nptype="int16", dxtype="short"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_short_int16(tmpdir, nptype="int16", dxtype="short"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_unsigned_short_uint16(nptype="uint16", dxtype="unsigned short"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_unsigned_short_uint16(tmpdir, nptype="uint16", dxtype="unsigned short"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_signed_byte(nptype="int8", dxtype="signed byte"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_signed_byte(tmpdir, nptype="int8", dxtype="signed byte"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-def test_write_dx_byte(nptype="uint8", dxtype="byte"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_byte(tmpdir, nptype="uint8", dxtype="byte"):
+    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
 
-
-@raises(ValueError)
-def test_write_dx_ValueError(nptype="longdouble", dxtype="unknown"):
-    return _test_write_dx(nptype=nptype, dxtype=dxtype)
+def test_write_dx_ValueError(tmpdir, nptype="longdouble", dxtype="unknown"):
+    with pytest.raises(ValueError):
+        _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
