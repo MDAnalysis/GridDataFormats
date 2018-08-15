@@ -26,6 +26,8 @@ The rules for this file:
 
   * use pytest as testing framework (#49)
   * use truedivision consistently throughout the package and the tests (PR #52)
+  * installation now requires scipy (it is much easier to install than it
+    used to)
 
 01/19/2018 rathann
 
