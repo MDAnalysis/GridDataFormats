@@ -4,8 +4,9 @@
 # See the file COPYING for details.
 from setuptools import setup, find_packages
 import versioneer
+import codecs
 
-with open('README.rst', 'r') as f:
+with codecs.open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name="GridDataFormats",
@@ -30,13 +31,7 @@ setup(name="GridDataFormats",
       packages=find_packages(exclude=[]),
       package_data={'gridData': ['tests/datafiles/*.dx', 'tests/datafiles/*.ccp4',
                                  'tests/datafiles/*.plt']},
-      install_requires=['numpy>=1.0.3', 'six'],
+      install_requires=['numpy>=1.0.3', 'six', 'scipy'],
       tests_require=['pytest', 'numpy'],
-      # extras can be difficult to install through setuptools and/or
-      # you might prefer to use the version available through your
-      # packaging system
-      extras_require={'remapping':  ['scipy',  # for remapping/interpolation
-                                     ],
-                      },
       zip_safe=True,
       )
