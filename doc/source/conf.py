@@ -278,7 +278,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'griddataformats', u'gridDataFormats Documentation',
-     authors.split(), u'Jesse Johnson'], 1)
+     authors.split(), 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -292,7 +292,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'gridDataFormats', u'gridDataFormats Documentation',
-   u'Oliver Beckstein', 'gridDataFormats', 'One line description of project.',
+   authors, 'gridDataFormats', 'Grid structure for regular data together with common format readers.',
    'Miscellaneous'),
 ]
 
