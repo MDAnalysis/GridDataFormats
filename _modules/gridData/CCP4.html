@@ -1,0 +1,424 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>gridData.CCP4 &#8212; GridDataFormats 0.4.0+18.g84368d4 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats 0.4.0+18.g84368d4 documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for gridData.CCP4</h1><div class="highlight"><pre>
+<span></span><span class="c1"># gridDataFormats --- python modules to read and write gridded data</span>
+<span class="c1"># Copyright (c) 2009-2014 Oliver Beckstein &lt;orbeckst@gmail.com&gt;</span>
+<span class="c1"># Released under the GNU Lesser General Public License, version 3 or later.</span>
+<span class="c1">#</span>
+<span class="c1"># Part of the documentation and format specification:</span>
+<span class="c1"># Copyright Science and Technologies Facilities Council, 2015.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:`CCP4` --- the CCP4 volumetric data format</span>
+<span class="sd">===============================================</span>
+
+<span class="sd">.. versionadded:: 0.3.0</span>
+
+<span class="sd">.. _CCP4: http://www.ccp4.ac.uk/html/maplib.html#description</span>
+
+<span class="sd">The module provides a simple implementation of a reader for CCP4_</span>
+<span class="sd">*ccp4* files. CCP4 files are binary files. The :class:`CCP4` reader tries</span>
+<span class="sd">to guess the endianess of the file, but this can fail (with a</span>
+<span class="sd">:exc:`TypeError`); you are on your own in this case.</span>
+
+<span class="sd">Only the reader is implemented. If you want to write gridded data use a format</span>
+<span class="sd">that is more standard, such as OpenDX (see :mod:`OpenDX`).</span>
+
+
+<span class="sd">Background</span>
+<span class="sd">----------</span>
+
+<span class="sd">CCP4 format: http://www.ccp4.ac.uk/html/maplib.html#description</span>
+
+<span class="sd">Used to be more carefully documented at</span>
+<span class="sd">http://lsbr.niams.nih.gov/3demc/3demc_maplib.html but currently this is only</span>
+<span class="sd">accessible through the Google cache</span>
+<span class="sd">http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html</span>
+
+<span class="sd">Grid data CCP4 file format</span>
+<span class="sd">--------------------------</span>
+
+<span class="sd">Copyright Science and Technologies Facilities Council, 2015.</span>
+
+<span class="sd">The overall layout of the file is as follows::</span>
+
+<span class="sd">    File header (256 longwords)</span>
+<span class="sd">    Symmetry information</span>
+<span class="sd">    Map, stored as a 3-dimensional array</span>
+
+<span class="sd">The header is organised as 56 words followed by space for ten 80</span>
+<span class="sd">character text labels as follows::</span>
+
+<span class="sd">   1      NC              # of Columns    (fastest changing in map)</span>
+<span class="sd">   2      NR              # of Rows</span>
+<span class="sd">   3      NS              # of Sections   (slowest changing in map)</span>
+<span class="sd">   4      MODE            Data type</span>
+<span class="sd">                            0 = envelope stored as signed bytes (from</span>
+<span class="sd">                                -128 lowest to 127 highest)</span>
+<span class="sd">                            1 = Image     stored as Integer*2</span>
+<span class="sd">                            2 = Image     stored as Reals</span>
+<span class="sd">                            3 = Transform stored as Complex Integer*2</span>
+<span class="sd">                            4 = Transform stored as Complex Reals</span>
+<span class="sd">                            5 == 0</span>
+
+<span class="sd">                            Note: Mode 2 is the normal mode used in</span>
+<span class="sd">                                  the CCP4 programs. Other modes than 2 and 0</span>
+<span class="sd">                                  may NOT WORK</span>
+
+<span class="sd">   5      NCSTART         Number of first COLUMN  in map</span>
+<span class="sd">   6      NRSTART         Number of first ROW     in map</span>
+<span class="sd">   7      NSSTART         Number of first SECTION in map</span>
+<span class="sd">   8      NX              Number of intervals along X</span>
+<span class="sd">   9      NY              Number of intervals along Y</span>
+<span class="sd">  10      NZ              Number of intervals along Z</span>
+<span class="sd">  11      X length        Cell Dimensions (Angstroms)</span>
+<span class="sd">  12      Y length                     &quot;</span>
+<span class="sd">  13      Z length                     &quot;</span>
+<span class="sd">  14      Alpha           Cell Angles     (Degrees)</span>
+<span class="sd">  15      Beta                         &quot;</span>
+<span class="sd">  16      Gamma                        &quot;</span>
+<span class="sd">  17      MAPC            Which axis corresponds to Cols.  (1,2,3 for X,Y,Z)</span>
+<span class="sd">  18      MAPR            Which axis corresponds to Rows   (1,2,3 for X,Y,Z)</span>
+<span class="sd">  19      MAPS            Which axis corresponds to Sects. (1,2,3 for X,Y,Z)</span>
+<span class="sd">  20      AMIN            Minimum density value</span>
+<span class="sd">  21      AMAX            Maximum density value</span>
+<span class="sd">  22      AMEAN           Mean    density value    (Average)</span>
+<span class="sd">  23      ISPG            Space group number</span>
+<span class="sd">  24      NSYMBT          Number of bytes used for storing symmetry operators</span>
+<span class="sd">  25      LSKFLG          Flag for skew transformation, =0 none, =1 if foll</span>
+<span class="sd">  26-34   SKWMAT          Skew matrix S (in order S11, S12, S13, S21 etc) if</span>
+<span class="sd">                          LSKFLG .ne. 0.</span>
+<span class="sd">  35-37   SKWTRN          Skew translation t if LSKFLG .ne. 0.</span>
+<span class="sd">                          Skew transformation is from standard orthogonal</span>
+<span class="sd">                          coordinate frame (as used for atoms) to orthogonal</span>
+<span class="sd">                          map frame, as</span>
+
+<span class="sd">                                  Xo(map) = S * (Xo(atoms) - t)</span>
+
+<span class="sd">  38      future use       (some of these are used by the MSUBSX routines</span>
+<span class="sd">   .          &quot;              in MAPBRICK, MAPCONT and FRODO)</span>
+<span class="sd">   .          &quot;   (all set to zero by default)</span>
+<span class="sd">   .          &quot;</span>
+<span class="sd">  52          &quot;</span>
+
+<span class="sd">  53    MAP             Character string &#39;MAP &#39; to identify file type</span>
+<span class="sd">  54    MACHST          Machine stamp indicating the machine type</span>
+<span class="sd">                          which wrote file</span>
+<span class="sd">  55      ARMS            Rms deviation of map from mean density</span>
+<span class="sd">  56      NLABL           Number of labels being used</span>
+<span class="sd">  57-256  LABEL(20,10)    10  80 character text labels (ie. A4 format)</span>
+
+<span class="sd">Symmetry records follow - if any - stored as text as in International</span>
+<span class="sd">Tables, operators separated by ``*`` and grouped into &#39;lines&#39; of 80</span>
+<span class="sd">characters (i.e. symmetry operators do not cross the ends of the</span>
+<span class="sd">80-character &#39;lines&#39; and the &#39;lines&#39; do not terminate in a ``*``).</span>
+
+<span class="sd">Map data array follows.</span>
+
+<span class="sd">Note on the machine stamp: The machine stamp (word 54) is a 32-bit</span>
+<span class="sd">quantity containing a set of four &#39;nibbles&#39; (half-bytes) - only half</span>
+<span class="sd">the space is used. Each nibble is a number specifying the</span>
+<span class="sd">representation of (in C terms) double (d), float (f), int (i) and</span>
+<span class="sd">unsigned char (c) types. Thus each stamp is of the form 0xdfic0000.</span>
+<span class="sd">For little endian hardware the stamp is 0x44, 0x41, 0x00, 0x00 while</span>
+<span class="sd">the big endian stamp is 0x11, 0x11, 0x00, 0x00.</span>
+
+<span class="sd">Classes</span>
+<span class="sd">-------</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">range</span>
+
+<span class="kn">from</span> <span class="nn">.gOpenMol</span> <span class="k">import</span> <span class="n">Record</span>
+
+
+<span class="c1"># TODO: Consider abstracting a binary data class to handle CCP4,</span>
+<span class="c1"># gOpenMol, and other binary formats.</span>
+<div class="viewcode-block" id="CCP4"><a class="viewcode-back" href="../../gridData/formats/CCP4.html#gridData.CCP4.CCP4">[docs]</a><span class="k">class</span> <span class="nc">CCP4</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent a CCP4_ file.</span>
+
+<span class="sd">    Only reading is implemented; either supply a filename to the constructor</span>
+<span class="sd">      &gt;&gt;&gt; G = CCP4(filename)</span>
+<span class="sd">    or load the file with the read method</span>
+<span class="sd">      &gt;&gt;&gt; G = CCP4()</span>
+<span class="sd">      &gt;&gt;&gt; G.read(filename)</span>
+
+<span class="sd">    The data is held in :attr:`CCP4.array` and all header information is in</span>
+<span class="sd">    the dict :attr:`CCP4.header`.</span>
+
+<span class="sd">    :attr:`CCP4.shape`</span>
+<span class="sd">         D-tuplet describing size in each dimension</span>
+<span class="sd">    :attr:`CCP4.origin`</span>
+<span class="sd">         coordinates of the centre of the grid cell with index 0,0,...,0</span>
+<span class="sd">    :attr:`CCP4.delta`</span>
+<span class="sd">         DxD array describing the deltas</span>
+
+<span class="sd">    .. Note:: The following features of the CCP4 format are *not* implemented:</span>
+<span class="sd">       * triclinic boxes</span>
+<span class="sd">       * symmetry records</span>
+<span class="sd">       * index ordering besides standard column-major and row-major</span>
+<span class="sd">       * non-standard fields, such any in filed in future use block</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_axis_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;z&#39;</span><span class="p">}</span>
+
+    <span class="n">_data_bintype</span> <span class="o">=</span> <span class="s1">&#39;f&#39;</span>
+
+    <span class="n">_header_struct</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nc&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span>  <span class="c1"># of columns (fastest varying index.)</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nr&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span>  <span class="c1"># of rows</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;ns&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span>  <span class="c1"># of sections (slowest varying index.)</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;envelope&#39;</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Image of Integer*2&#39;</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Image of Reals&#39;</span><span class="p">,</span>  <span class="c1"># Default expected value.</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Transform of Complex Integer*2&#39;</span><span class="p">,</span>
+            <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;Transform of Complex Reals&#39;</span><span class="p">,</span>
+            <span class="mi">5</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+        <span class="p">}),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;ncstart&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nrstart&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nsstart&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nx&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span>  <span class="c1"># Number of gridpoints.</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;ny&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nz&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;xlen&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span>  <span class="c1"># Angstroms.</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;ylen&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;zlen&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span>  <span class="c1"># Degrees.</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;mapc&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="n">_axis_map</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;mapr&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="n">_axis_map</span><span class="p">),</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;maps&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="n">_axis_map</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;amin&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;amax&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;amean&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;ispg&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span>
+        <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nsymbt&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span> <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;lskflg&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span>  <span class="c1"># Remaining few fields are manually parsed.</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="c1"># Assemble format.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">bintype</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CCP4.read"><a class="viewcode-back" href="../../gridData/formats/CCP4.html#gridData.CCP4.CCP4.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Populate the instance from the ccp4 file *filename*.&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">struct</span> <span class="k">import</span> <span class="n">calcsize</span><span class="p">,</span> <span class="n">unpack</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ccp4</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_header</span><span class="p">(</span><span class="n">ccp4</span><span class="p">)</span>
+            <span class="n">nentries</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;nc&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;nr&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;ns&#39;</span><span class="p">]</span>
+            <span class="c1"># Quick and dirty... slurp it all in one go.</span>
+            <span class="n">datafmt</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;bsaflag&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nentries</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_bintype</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unpack</span><span class="p">(</span><span class="n">datafmt</span><span class="p">,</span> <span class="n">ccp4</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">calcsize</span><span class="p">(</span><span class="n">datafmt</span><span class="p">))))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
+        <span class="c1"># TODO: Account for the possibility that y-axis is fastest or</span>
+        <span class="c1"># slowest index, which unfortunately is possible in CCP4.</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span> <span class="k">if</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;mapc&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;z&#39;</span> <span class="k">else</span> <span class="s1">&#39;F&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;nc&#39;</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;nr&#39;</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;ns&#39;</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delta</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
+
+<span class="sd">        Only works for regular, orthonormal grids.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Add triclinic cell support.</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">_delta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;xlen&#39;</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;ylen&#39;</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;zlen&#39;</span><span class="p">]])</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">lengths</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_read_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ccp4file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read header bytes, try all possibilities for byte</span>
+<span class="sd">        order/size/alignment.&quot;&quot;&quot;</span>
+        <span class="c1"># Try all endinaness and alignment options until we find</span>
+        <span class="c1"># something that looks sensible. The machst field could be</span>
+        <span class="c1"># used to obtain endianness, but it does not specify</span>
+        <span class="c1"># alignment.</span>
+        <span class="n">bsaflag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">ccp4file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">52</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">mapbin</span> <span class="o">=</span> <span class="n">ccp4file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="s1">&#39;@=&lt;&gt;&#39;</span><span class="p">:</span>
+            <span class="n">mapstr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">flag</span> <span class="o">+</span> <span class="s1">&#39;4s&#39;</span><span class="p">,</span> <span class="n">mapbin</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mapstr</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;MAP &#39;</span><span class="p">:</span>
+                <span class="n">bsaflag</span> <span class="o">=</span> <span class="n">flag</span>
+                <span class="k">break</span>  <span class="c1"># Only possible value according to spec.</span>
+        <span class="k">if</span> <span class="n">bsaflag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot decode header --- corrupted or wrong format?&quot;</span><span class="p">)</span>
+        <span class="n">ccp4file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Parse the top of the header (4-byte words, 1 to 25).</span>
+        <span class="n">nheader</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span><span class="p">)</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">key</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">]</span>
+        <span class="n">bintopheader</span> <span class="o">=</span> <span class="n">ccp4file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">25</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">decode_header</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">bsaflag</span><span class="o">=</span><span class="s1">&#39;@&#39;</span><span class="p">):</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">bsaflag</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span><span class="p">,</span>
+                                              <span class="n">header</span><span class="p">)))</span>
+            <span class="n">h</span><span class="p">[</span><span class="s1">&#39;bsaflag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bsaflag</span>
+            <span class="k">return</span> <span class="n">h</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="n">decode_header</span><span class="p">(</span><span class="n">bintopheader</span><span class="p">,</span> <span class="n">bsaflag</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">rec</span><span class="o">.</span><span class="n">is_legal_dict</span><span class="p">(</span><span class="n">header</span><span class="p">):</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s2">&quot;Key </span><span class="si">%s</span><span class="s2">: Illegal value </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">header</span><span class="p">[</span><span class="n">rec</span><span class="o">.</span><span class="n">key</span><span class="p">]))</span>
+
+        <span class="c1"># Parse the latter half of the header (4-byte words, 26 to 256).</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;lskflg&#39;</span><span class="p">]):</span>
+            <span class="n">skewmatrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">ccp4file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;skwmat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">skewmatrix</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;skwtrn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">ccp4file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;skwmat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;skwtrn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">ccp4file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">12</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">ccp4file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">15</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Skip future use section.</span>
+        <span class="n">ccp4file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Skip map text, already used above to verify format.</span>
+        <span class="c1"># TODO: Compare file specified endianness to one obtained above.</span>
+        <span class="n">endiancode</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">bsaflag</span> <span class="o">+</span> <span class="s1">&#39;4b&#39;</span><span class="p">,</span> <span class="n">ccp4file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;endianness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;little&#39;</span> <span class="k">if</span> <span class="n">endiancode</span> <span class="o">==</span> <span class="p">(</span><span class="mh">0x44</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+                                                          <span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;big&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;arms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">bsaflag</span> <span class="o">+</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">ccp4file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;nlabl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">bsaflag</span> <span class="o">+</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="n">ccp4file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;nlabl&#39;</span><span class="p">]:</span>
+            <span class="n">binlabel</span> <span class="o">=</span> <span class="n">ccp4file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">80</span> <span class="o">*</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;nlabl&#39;</span><span class="p">])</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="n">bsaflag</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">80</span> <span class="o">*</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;nlabl&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;s&#39;</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span> <span class="n">binlabel</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">ccp4file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">256</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="c1"># TODO: Parse symmetry records, if any.</span>
+        <span class="k">return</span> <span class="n">header</span>
+
+<div class="viewcode-block" id="CCP4.histogramdd"><a class="viewcode-back" href="../../gridData/formats/CCP4.html#gridData.CCP4.CCP4.histogramdd">[docs]</a>    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return array data as (edges,grid), i.e. a numpy nD histogram.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/logos/mdanalysis-griddataformats-logo.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">GridDataFormats</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">data formats for gridded data</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html">1. <code class="docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/basic.html">2. Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/formats.html">3. Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html">4. <code class="docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2007-2018, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/MDAnalysis/GridDataFormats" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
