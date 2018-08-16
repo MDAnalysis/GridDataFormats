@@ -66,6 +66,19 @@ def test_write_dx(tmpdir, nptype, dxtype, counts=100, ndim=3):
 
     assert_equal(out_dxtype, dxtype)
 
-def test_write_dx_ValueError(tmpdir, nptype="longdouble", dxtype="unknown"):
+@pytest.mark.parametrize('nptype', ("complex64", "complex128", "bool_"))
+@pytest.mark.filterwarnings("ignore:array dtype.name =")
+def test_write_dx_ValueError(tmpdir, nptype, counts=100, ndim=3):
+    h, edges = np.histogramdd(np.random.random((counts, ndim)), bins=10)
+    g = Grid(h, edges)
+
+    # hack the grid to be a different dtype
+    g.grid = g.grid.astype(nptype)
+
     with pytest.raises(ValueError):
-        test_write_dx(tmpdir, nptype, dxtype)
+        with tmpdir.as_cwd():
+            outfile = "grid.dx"
+            g.export(outfile)
+
+
+
