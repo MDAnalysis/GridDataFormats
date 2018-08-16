@@ -22,7 +22,22 @@ def test_read_dx():
     assert_equal(g.origin, np.array([20.1, 3., -10.]))
 
 
-def _test_write_dx(tmpdir, counts=100, ndim=3, nptype="float32", dxtype="float"):
+@pytest.mark.parametrize("nptype,dxtype", [
+    ("float16", "float"),
+    ("float32", "float"),
+    ("float64", "double"),
+    ("int64", "int"),
+    ("int32", "int"),
+    ("uint32", "unsigned int"),
+    ("uint64", "unsigned int"),
+    ("int16", "short"),
+    ("uint16", "unsigned short"),
+    ("int8", "signed byte"),
+    ("uint8", "byte"),
+])
+def test_write_dx(tmpdir, nptype, dxtype, counts=100, ndim=3):
+    # conversion from numpy array to DX file
+
     h, edges = np.histogramdd(np.random.random((counts, ndim)), bins=10)
     g = Grid(h, edges)
 
@@ -51,42 +66,6 @@ def _test_write_dx(tmpdir, counts=100, ndim=3, nptype="float32", dxtype="float")
 
     assert_equal(out_dxtype, dxtype)
 
-
-# conversion from numpy array to DX file
-
-def test_write_dx_float_float16(tmpdir, nptype="float16", dxtype="float"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_float_float32(tmpdir, nptype="float32", dxtype="float"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_double_float64(tmpdir, nptype="float64", dxtype="double"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_int_int64(tmpdir, nptype="int64", dxtype="int"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_int_int32(tmpdir, nptype="int32", dxtype="int"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_unsigned_int_uint32(tmpdir, nptype="uint32", dxtype="unsigned int"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_unsigned_int_uint64(tmpdir, nptype="uint64", dxtype="unsigned int"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_short_int16(tmpdir, nptype="int16", dxtype="short"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_unsigned_short_uint16(tmpdir, nptype="uint16", dxtype="unsigned short"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_signed_byte(tmpdir, nptype="int8", dxtype="signed byte"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
-def test_write_dx_byte(tmpdir, nptype="uint8", dxtype="byte"):
-    return _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
-
 def test_write_dx_ValueError(tmpdir, nptype="longdouble", dxtype="unknown"):
     with pytest.raises(ValueError):
-        _test_write_dx(tmpdir, nptype=nptype, dxtype=dxtype)
+        test_write_dx(tmpdir, nptype, dxtype)
