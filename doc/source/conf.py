@@ -59,7 +59,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'GridDataFormats'
-copyright = u'2007-2018, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson, Dominik Mierzejewski'
+authors = u'Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski'
+copyright = u'2007-2018, ' + authors
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -247,7 +248,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'gridDataFormats.tex', u'gridDataFormats Documentation',
-   u'Oliver Beckstein', 'manual'),
+   authors, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -277,7 +278,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'griddataformats', u'gridDataFormats Documentation',
-     [u'Oliver Beckstein', u'Max Linke', u'Jesse Johnson'], 1)
+     authors.split(), u'Jesse Johnson'], 1)
 ]
 
 # If true, show URL addresses after external links.
