@@ -22,6 +22,7 @@ The rules for this file:
   * Improved DX parsing speed (#2)
   * Fixed reading in DX files containing scientific notation (PR #52)
   * Added missing floordivision to Grid (PR #53)
+  * fix test on ARM (#51)
 
   Changes (do not affect user)
 
