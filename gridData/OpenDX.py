@@ -301,7 +301,8 @@ class array(DXclass):
         # "string" not automatically supported
     }
 
-    def __init__(self, classid, array=None, type=None, **kwargs):
+    def __init__(self, classid, array=None, type=None, typequote='"',
+                 **kwargs):
         """
         Parameters
         ----------
@@ -347,6 +348,7 @@ class array(DXclass):
                                   "types are: {1}".format(type,
                                                           list(self.dx_types.values()))))
             self.type = type
+        self.typequote = typequote
 
     def write(self, file):
         """Write the *class array* section.
@@ -367,9 +369,10 @@ class array(DXclass):
                               "Supported valus are: {}\n"
                               "Use the type=<type> keyword argument.").format(
                                   self.type, list(self.dx_types.keys())))
+        typelabel = (self.typequote+self.type+self.typequote)
         DXclass.write(self,file,
-                      'type "{0}" rank 0 items {1} data follows'.format(
-                          self.type, self.array.size))
+                      'type {0} rank 0 items {1} data follows'.format(
+                          typelabel, self.array.size))
         # grid data, serialized as a C array (z fastest varying)
         # (flat iterator is equivalent to: for x: for y: for z: grid[x,y,z])
         # VMD's DX reader requires exactly 3 values per line
