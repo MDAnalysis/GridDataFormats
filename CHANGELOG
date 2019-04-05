@@ -23,6 +23,7 @@ The rules for this file:
   * Fixed reading in DX files containing scientific notation (PR #52)
   * Added missing floordivision to Grid (PR #53)
   * fix test on ARM (#51)
+  * fix incorrect reading of ncstart and nrstart in CCP4 (#57)
 
   Changes (do not affect user)
 
