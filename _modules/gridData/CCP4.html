@@ -6,16 +6,17 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>gridData.CCP4 &#8212; GridDataFormats 0.4.0+20.g43d398f documentation</title>
+    <title>gridData.CCP4 &#8212; GridDataFormats 0.4.0+23.gecd4d01 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.4.0+20.g43d398f documentation"
+          title="Search within GridDataFormats 0.4.0+23.gecd4d01 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -237,7 +238,6 @@
 
 <div class="viewcode-block" id="CCP4.read"><a class="viewcode-back" href="../../gridData/formats/CCP4.html#gridData.CCP4.CCP4.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Populate the instance from the ccp4 file *filename*.&quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">struct</span> <span class="k">import</span> <span class="n">calcsize</span><span class="p">,</span> <span class="n">unpack</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ccp4</span><span class="p">:</span>
@@ -245,7 +245,7 @@
             <span class="n">nentries</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;nc&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;nr&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;ns&#39;</span><span class="p">]</span>
             <span class="c1"># Quick and dirty... slurp it all in one go.</span>
             <span class="n">datafmt</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;bsaflag&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nentries</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_bintype</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unpack</span><span class="p">(</span><span class="n">datafmt</span><span class="p">,</span> <span class="n">ccp4</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">calcsize</span><span class="p">(</span><span class="n">datafmt</span><span class="p">))))</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">datafmt</span><span class="p">,</span> <span class="n">ccp4</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="n">datafmt</span><span class="p">))))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
         <span class="c1"># TODO: Account for the possibility that y-axis is fastest or</span>
         <span class="c1"># slowest index, which unfortunately is possible in CCP4.</span>
@@ -276,13 +276,20 @@
         <span class="n">delta</span> <span class="o">=</span> <span class="n">lengths</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_read_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ccp4file</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Read header bytes, try all possibilities for byte</span>
-<span class="sd">        order/size/alignment.&quot;&quot;&quot;</span>
-        <span class="c1"># Try all endinaness and alignment options until we find</span>
-        <span class="c1"># something that looks sensible. The machst field could be</span>
-        <span class="c1"># used to obtain endianness, but it does not specify</span>
-        <span class="c1"># alignment.</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_detect_byteorder</span><span class="p">(</span><span class="n">ccp4file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Detect the byteorder of stream `ccp4file` and return format character.</span>
+
+<span class="sd">        Try all endinaness and alignment options until we find</span>
+<span class="sd">        something that looks sensible (&quot;MAPS &quot; in the first 4 bytes).</span>
+
+<span class="sd">        (The ``machst`` field could be used to obtain endianness, but</span>
+<span class="sd">        it does not specify alignment.)</span>
+
+<span class="sd">        .. SeeAlso::</span>
+
+<span class="sd">          :mod:`struct`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">bsaflag</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">ccp4file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">52</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
         <span class="n">mapbin</span> <span class="o">=</span> <span class="n">ccp4file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
@@ -291,10 +298,16 @@
             <span class="k">if</span> <span class="n">mapstr</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;MAP &#39;</span><span class="p">:</span>
                 <span class="n">bsaflag</span> <span class="o">=</span> <span class="n">flag</span>
                 <span class="k">break</span>  <span class="c1"># Only possible value according to spec.</span>
-        <span class="k">if</span> <span class="n">bsaflag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                 <span class="s2">&quot;Cannot decode header --- corrupted or wrong format?&quot;</span><span class="p">)</span>
         <span class="n">ccp4file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bsaflag</span>
+
+    <span class="k">def</span> <span class="nf">_read_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ccp4file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read header bytes&quot;&quot;&quot;</span>
+
+        <span class="n">bsaflag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_byteorder</span><span class="p">(</span><span class="n">ccp4file</span><span class="p">)</span>
 
         <span class="c1"># Parse the top of the header (4-byte words, 1 to 25).</span>
         <span class="n">nheader</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span><span class="p">)</span>
@@ -408,8 +421,8 @@
       &copy;2007-2018, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 
