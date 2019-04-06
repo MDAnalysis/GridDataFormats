@@ -144,6 +144,17 @@ class TestGrid(object):
         assert_array_almost_equal(g.grid[::5, ::5, ::5],
                                   data['grid'].grid[::2, ::2, ::2])
 
+    def test_pickle(self, data, tmpdir):
+        g = data['grid']
+        fn = str(tmpdir.mkdir('grid').join('grid.pkl'))
+        g.save(fn)
+
+        h = Grid()
+        h.load(fn, file_format="pickle")
+
+        assert h == g
+
+
 
 def test_inheritance(data):
     class DerivedGrid(Grid):

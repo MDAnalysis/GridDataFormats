@@ -106,14 +106,16 @@ class Grid(object):
         # file formats are guess from extension == lower case key
         self._exporters = {
             'DX': self._export_dx,
-            'PICKLE': self._export_python,
+            'PKL': self._export_python,
+            'PICKLE': self._export_python,  # compatibility
             'PYTHON': self._export_python,  # compatibility
         }
         self._loaders = {
             'CCP4': self._load_cpp4,
             'DX': self._load_dx,
             'PLT': self._load_plt,
-            'PICKLE': self._load_python,
+            'PKL': self._export_python,
+            'PICKLE': self._load_python,  # compatibility
             'PYTHON': self._load_python,  # compatibility
         }
 
@@ -454,9 +456,6 @@ class Grid(object):
         The object is dumped as a dictionary with grid and edges: This
         is sufficient to recreate the grid object with __init__().
         """
-        root, ext = os.path.splitext(filename)
-        filename = root + ".pickle"
-
         data = dict(grid=self.grid, edges=self.edges, metadata=self.metadata)
         with open(filename, 'wb') as f:
             cPickle.dump(data, f, cPickle.HIGHEST_PROTOCOL)
@@ -603,8 +602,10 @@ class Grid(object):
     def __eq__(self, other):
         if not isinstance(other, Grid):
             return False
-        return numpy.all(other.grid == self.grid) and numpy.all(
-            other.origin == self.origin) and other.edges == self.edges
+        return numpy.all(other.grid == self.grid) and \
+            numpy.all(other.origin == self.origin) and \
+            numpy.all(numpy.all(other_edge == self_edge) for other_edge, self_edge in
+                      zip(other.edges, self.edges))
 
     def __ne__(self, other):
         return not self.__eq__(other)
