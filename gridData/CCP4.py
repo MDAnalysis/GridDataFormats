@@ -177,7 +177,7 @@ class CCP4(object):
             3: 'Transform of Complex Integer*2',
             4: 'Transform of Complex Reals',
             5: '0',
-        }), Record('ncstart', 'I'), Record('nrstart', 'I'),
+        }), Record('ncstart', 'i'), Record('nrstart', 'i'),
         Record('nsstart', 'I'), Record('nx', 'I'),  # Number of gridpoints.
         Record('ny', 'I'), Record('nz', 'I'), Record('xlen', 'f'),  # Angstroms.
         Record('ylen', 'f'), Record('zlen', 'f'), Record('alpha', 'f'),  # Degrees.
