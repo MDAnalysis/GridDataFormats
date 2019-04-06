@@ -256,7 +256,7 @@ class Grid(object):
         """
         # new number of edges N' = (N-1)*f + 1
         newlengths = [(N - 1) * float(factor) + 1 for N in self._len_edges()]
-        edges = [numpy.linspace(start, stop, num=N, endpoint=True)
+        edges = [numpy.linspace(start, stop, num=int(N), endpoint=True)
                  for (start, stop, N) in
                  zip(self._min_edges(), self._max_edges(), newlengths)]
         return self.resample(edges)
