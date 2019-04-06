@@ -60,7 +60,7 @@ def ccp4data():
     ('nlabl', 1),
     ('label', ' Map from fft                                                                   '),
 ])
-def test_ccp4_integer_reading(ccp4data, name, value):
+def test_ccp4_read_header(ccp4data, name, value):
     if type(value) is float:
         assert_almost_equal(ccp4data.header[name], value, decimal=6)
     else:

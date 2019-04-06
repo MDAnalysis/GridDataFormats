@@ -33,6 +33,8 @@ The rules for this file:
   * Added missing floordivision to Grid (PR #53)
   * fix test on ARM (#51)
   * fix incorrect reading of ncstart and nrstart in CCP4 (#57)
+  * fix that arithemtical operations broke inheritance (#56)
+  * fix so that subclasses of ndarray are retained on input (#56)
 
   Changes (do not affect user)
 
