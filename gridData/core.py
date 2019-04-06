@@ -230,7 +230,7 @@ class Grid(object):
         coordinates = ndmeshgrid(*midpoints)
         # feed a meshgrid to generate all points
         newgrid = self.interpolated(*coordinates)
-        return Grid(newgrid, edges)
+        return self.__class__(newgrid, edges)
 
     def resample_factor(self, factor):
         """Resample to a new regular grid.
@@ -611,21 +611,21 @@ class Grid(object):
 
     def __add__(self, other):
         self.check_compatible(other)
-        return Grid(self.grid + _grid(other), edges=self.edges)
+        return self.__class__(self.grid + _grid(other), edges=self.edges)
 
     def __sub__(self, other):
         self.check_compatible(other)
-        return Grid(self.grid - _grid(other), edges=self.edges)
+        return self.__class__(self.grid - _grid(other), edges=self.edges)
 
     def __mul__(self, other):
         self.check_compatible(other)
-        return Grid(self.grid * _grid(other), edges=self.edges)
+        return self.__class__(self.grid * _grid(other), edges=self.edges)
 
     def __truediv__(self, other):
         # truediv will always do true division (in Python 2 and Python 3);
         # we use from __future__ include division everywhere
         self.check_compatible(other)
-        return Grid(self.grid / _grid(other), edges=self.edges)
+        return self.__class__(self.grid / _grid(other), edges=self.edges)
 
     def __div__(self, other):
         # in Python 2 only (without __future__.division): will do "classic division"
@@ -633,31 +633,31 @@ class Grid(object):
         if not six.PY2:
             raise NotImplementedError("__div__ is only available in Python 2, use __truediv__")
         self.check_compatible(other)
-        return Grid(self.grid.__div__(_grid(other)), edges=self.edges)
+        return self.__class__(self.grid.__div__(_grid(other)), edges=self.edges)
 
     def __floordiv__(self, other):
         self.check_compatible(other)
-        return Grid(self.grid // _grid(other), edges=self.edges)
+        return self.__class__(self.grid // _grid(other), edges=self.edges)
 
     def __pow__(self, other):
         self.check_compatible(other)
-        return Grid(numpy.power(self.grid, _grid(other)), edges=self.edges)
+        return self.__class__(numpy.power(self.grid, _grid(other)), edges=self.edges)
 
     def __radd__(self, other):
         self.check_compatible(other)
-        return Grid(_grid(other) + self.grid, edges=self.edges)
+        return self.__class__(_grid(other) + self.grid, edges=self.edges)
 
     def __rsub__(self, other):
         self.check_compatible(other)
-        return Grid(_grid(other) - self.grid, edges=self.edges)
+        return self.__class__(_grid(other) - self.grid, edges=self.edges)
 
     def __rmul__(self, other):
         self.check_compatible(other)
-        return Grid(_grid(other) * self.grid, edges=self.edges)
+        return self.__class__(_grid(other) * self.grid, edges=self.edges)
 
     def __rtruediv__(self, other):
         self.check_compatible(other)
-        return Grid(_grid(other) / self.grid, edges=self.edges)
+        return self.__class__(_grid(other) / self.grid, edges=self.edges)
 
     def __rdiv__(self, other):
         # in Python 2 only (without __future__.division): will do "classic division"
@@ -665,22 +665,22 @@ class Grid(object):
         if not six.PY2:
             raise NotImplementedError("__rdiv__ is only available in Python 2, use __rtruediv__")
         self.check_compatible(other)
-        return Grid(self.grid.__rdiv__(_grid(other)), edges=self.edges)
+        return self.__class__(self.grid.__rdiv__(_grid(other)), edges=self.edges)
 
     def __rfloordiv__(self, other):
         self.check_compatible(other)
-        return Grid(_grid(other) // self.grid, edges=self.edges)
+        return self.__class__(_grid(other) // self.grid, edges=self.edges)
 
     def __rpow__(self, other):
         self.check_compatible(other)
-        return Grid(numpy.power(_grid(other), self.grid), edges=self.edges)
+        return self.__class__(numpy.power(_grid(other), self.grid), edges=self.edges)
 
     def __repr__(self):
         try:
             bins = self.grid.shape
         except AttributeError:
             bins = "no"
-        return '<Grid with ' + str(bins) + ' bins>'
+        return '<{0} with {1!r} bins>'.format(self.__class__, bins)
 
 
 def ndmeshgrid(*arrs):

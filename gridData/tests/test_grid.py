@@ -2,24 +2,24 @@ from __future__ import absolute_import, division
 import six
 
 import numpy as np
-from numpy.testing import assert_array_equal, assert_array_almost_equal
+from numpy.testing import (assert_array_equal, assert_array_almost_equal,
+                           assert_almost_equal)
 
 import pytest
 
 from gridData import Grid
 
-class TestGrid(object):
-    @staticmethod
-    @pytest.fixture(scope="class")
-    def data():
-        d = dict(
-            griddata=np.arange(1, 28).reshape(3, 3, 3),
-            origin=np.zeros(3),
-            delta=np.ones(3))
-        d['grid'] = Grid(d['griddata'], origin=d['origin'],
-                         delta=d['delta'])
-        return d
+@pytest.fixture(scope="class")
+def data():
+    d = dict(
+        griddata=np.arange(1, 28).reshape(3, 3, 3),
+        origin=np.zeros(3),
+        delta=np.ones(3))
+    d['grid'] = Grid(d['griddata'], origin=d['origin'],
+                     delta=d['delta'])
+    return d
 
+class TestGrid(object):
     def test_init(self, data):
         g = Grid(data['griddata'], origin=data['origin'],
                  delta=1)
@@ -47,7 +47,7 @@ class TestGrid(object):
         g = g + data['grid']
         assert_array_equal(g.grid.flat, (2 + (2 * data['griddata'])).flat)
 
-    def test_substraction(self, data):
+    def test_subtraction(self, data):
         g = data['grid'] - data['grid']
         assert_array_equal(g.grid.flat, np.zeros(27))
         g = 2 - data['grid']
@@ -140,3 +140,19 @@ class TestGrid(object):
         # check that the edges are the same
         assert_array_almost_equal(g.grid[::5, ::5, ::5],
                                   data['grid'].grid[::2, ::2, ::2])
+
+
+def test_inheritance(data):
+    class DerivedGrid(Grid):
+        pass
+
+    dg = DerivedGrid(data['griddata'], origin=data['origin'],
+                     delta=data['delta'])
+    result = dg + dg - 2.5 * dg / (dg + 5.3)
+
+    assert isinstance(result, DerivedGrid)
+
+    g = data['grid']
+    ref = g + g - 2.5 * g / (dg + 5.3)
+    assert_almost_equal(result.grid, ref.grid)
+
