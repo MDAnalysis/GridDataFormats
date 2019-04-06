@@ -12,6 +12,15 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+??/??/2019 giacomofiorin
+
+  * 0.5.0
+
+  Fixes
+
+  * Allow parsing DX files by NAMD's GridForces module (typequote keyword, #58)
+  * Allow parsing DX files by Pymol's buggy floating-point parser (#58)
+
 ??/??/2018 rathann, tluchko, orbeckst
 
   * 0.4.1
@@ -23,6 +32,7 @@ The rules for this file:
   * Fixed reading in DX files containing scientific notation (PR #52)
   * Added missing floordivision to Grid (PR #53)
   * fix test on ARM (#51)
+  * fix incorrect reading of ncstart and nrstart in CCP4 (#57)
 
   Changes (do not affect user)
 
