@@ -21,6 +21,7 @@ def test_ccp4(g):
     assert_almost_equal(g.delta, [3./4, .5, 2./3])
     assert_equal(g.origin, np.zeros(3))
 
+
 @pytest.fixture(scope="module")
 def ccp4data():
     return CCP4.CCP4(datafiles.CCP4_1JZV)
@@ -60,5 +61,13 @@ def ccp4data():
     ('label', ' Map from fft                                                                   '),
 ])
 def test_ccp4_integer_reading(ccp4data, name, value):
-    assert_equal(ccp4data.header[name], value)
+    if type(value) is float:
+        assert_almost_equal(ccp4data.header[name], value, decimal=6)
+    else:
+        assert_equal(ccp4data.header[name], value)
 
+
+def test_byteorder():
+    with open(datafiles.CCP4, 'rb') as ccp4file:
+        flag = CCP4.CCP4._detect_byteorder(ccp4file)
+    assert flag in ("@", "=", "<"), "flag {} is not '<'".format(flag)

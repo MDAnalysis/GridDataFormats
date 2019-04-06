@@ -198,7 +198,6 @@ class CCP4(object):
 
     def read(self, filename):
         """Populate the instance from the ccp4 file *filename*."""
-        from struct import calcsize, unpack
         if filename is not None:
             self.filename = filename
         with open(self.filename, 'rb') as ccp4:
@@ -206,7 +205,7 @@ class CCP4(object):
             nentries = h['nc'] * h['nr'] * h['ns']
             # Quick and dirty... slurp it all in one go.
             datafmt = h['bsaflag'] + str(nentries) + self._data_bintype
-            a = np.array(unpack(datafmt, ccp4.read(calcsize(datafmt))))
+            a = np.array(struct.unpack(datafmt, ccp4.read(struct.calcsize(datafmt))))
         self.header['filename'] = self.filename
         # TODO: Account for the possibility that y-axis is fastest or
         # slowest index, which unfortunately is possible in CCP4.
@@ -237,13 +236,20 @@ class CCP4(object):
         delta = lengths / self.shape
         return np.diag(delta)
 
-    def _read_header(self, ccp4file):
-        """Read header bytes, try all possibilities for byte
-        order/size/alignment."""
-        # Try all endinaness and alignment options until we find
-        # something that looks sensible. The machst field could be
-        # used to obtain endianness, but it does not specify
-        # alignment.
+    @staticmethod
+    def _detect_byteorder(ccp4file):
+        """Detect the byteorder of stream `ccp4file` and return format character.
+
+        Try all endinaness and alignment options until we find
+        something that looks sensible ("MAPS " in the first 4 bytes).
+
+        (The ``machst`` field could be used to obtain endianness, but
+        it does not specify alignment.)
+
+        .. SeeAlso::
+
+          :mod:`struct`
+        """
         bsaflag = None
         ccp4file.seek(52 * 4)
         mapbin = ccp4file.read(4)
@@ -252,10 +258,16 @@ class CCP4(object):
             if mapstr.upper() == 'MAP ':
                 bsaflag = flag
                 break  # Only possible value according to spec.
-        if bsaflag is None:
+        else:
             raise TypeError(
                 "Cannot decode header --- corrupted or wrong format?")
         ccp4file.seek(0)
+        return bsaflag
+
+    def _read_header(self, ccp4file):
+        """Read header bytes"""
+
+        bsaflag = self._detect_byteorder(ccp4file)
 
         # Parse the top of the header (4-byte words, 1 to 25).
         nheader = struct.calcsize(self._headerfmt)
