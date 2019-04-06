@@ -9,6 +9,9 @@ import pytest
 
 from gridData import Grid
 
+def f_arithmetic(g):
+    return g + g - 2.5 * g / (g + 5.3)
+
 @pytest.fixture(scope="class")
 def data():
     d = dict(
@@ -148,11 +151,20 @@ def test_inheritance(data):
 
     dg = DerivedGrid(data['griddata'], origin=data['origin'],
                      delta=data['delta'])
-    result = dg + dg - 2.5 * dg / (dg + 5.3)
+    result = f_arithmetic(dg)
 
     assert isinstance(result, DerivedGrid)
 
-    g = data['grid']
-    ref = g + g - 2.5 * g / (dg + 5.3)
+    ref = f_arithmetic(data['grid'])
     assert_almost_equal(result.grid, ref.grid)
 
+def test_anyarray(data):
+    ma = np.ma.MaskedArray(data['griddata'])
+    mg = Grid(ma, origin=data['origin'], delta=data['delta'])
+
+    assert isinstance(mg.grid, ma.__class__)
+
+    result = f_arithmetic(mg)
+    ref = f_arithmetic(data['grid'])
+
+    assert_almost_equal(result.grid, ref.grid)

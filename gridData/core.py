@@ -126,13 +126,13 @@ class Grid(object):
             self.load(grid)
         elif not (grid is None or edges is None):
             # set up from histogramdd-type data
-            self.grid = numpy.asarray(grid)
+            self.grid = numpy.asanyarray(grid)
             self.edges = edges
             self._update()
         elif not (grid is None or origin is None or delta is None):
             # setup from generic data
-            origin = numpy.asarray(origin)
-            delta = numpy.asarray(delta)
+            origin = numpy.asanyarray(origin)
+            delta = numpy.asanyarray(delta)
             if len(origin) != grid.ndim:
                 raise TypeError(
                     "Dimension of origin is not the same as grid dimension.")
@@ -148,7 +148,7 @@ class Grid(object):
             self.edges = [origin[dim] +
                           (numpy.arange(m + 1) - 0.5) * delta[dim]
                           for dim, m in enumerate(grid.shape)]
-            self.grid = numpy.asarray(grid)
+            self.grid = numpy.asanyarray(grid)
             self._update()
         else:
             # empty, must manually populate with load()
@@ -709,7 +709,7 @@ def ndmeshgrid(*arrs):
     for i, arr in enumerate(arrs):
         slc = [1] * dim
         slc[i] = lens[i]
-        arr2 = numpy.asarray(arr).reshape(slc)
+        arr2 = numpy.asanyarray(arr).reshape(slc)
         for j, sz in enumerate(lens):
             if j != i:
                 arr2 = arr2.repeat(sz, axis=j)
