@@ -434,11 +434,10 @@ class Grid(object):
             output file format, the default is "dx"
 
         type : str (optional)
-            for DX, set the output DX array type, e.g., "double" or
-            "float"; note that PyMOL only understands "double" (see
-            issue `#35`_). By default (``None``), the DX type is
-            determined from the numpy dtype of the array of the grid
-            (and this will typically result in "double").
+            for DX, set the output DX array type, e.g., "double" or "float".
+            By default (``None``), the DX type is determined from the numpy
+            dtype of the array of the grid (and this will typically result in
+            "double").
 
             .. versionadded:: 0.4.0
 
