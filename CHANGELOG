@@ -12,6 +12,15 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+??/??/2019 giacomofiorin
+
+  * 0.5.0
+
+  Fixes
+
+  * Allow parsing DX files by NAMD's GridForces module (typequote keyword, #58)
+  * Allow parsing DX files by Pymol's buggy floating-point parser (#58)
+
 04/06/2019 rathann, tluchko, orbeckst
 
   * 0.4.1

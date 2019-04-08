@@ -407,7 +407,7 @@ class Grid(object):
         grid, edges = g.histogramdd()
         self.__init__(grid=grid, edges=edges, metadata=self.metadata)
 
-    def export(self, filename, file_format=None, type=None):
+    def export(self, filename, file_format=None, type=None, typequote='"'):
         """export density to file using the given format.
 
         The format can also be deduced from the suffix of the filename
@@ -426,25 +426,34 @@ class Grid(object):
 
         Parameters
         ----------
+
         filename : str
             name of the output file
+
         file_format : {'dx', 'pickle', None} (optional)
             output file format, the default is "dx"
+
         type : str (optional)
-            for DX, set the output DX array type, e.g., "double" or
-            "float"; note that PyMOL only understands "double" (see
-            issue `#35`_). By default (``None``), the DX type is
-            determined from the numpy dtype of the array of the grid
-            (and this will typically result in "double").
+            for DX, set the output DX array type, e.g., "double" or "float".
+            By default (``None``), the DX type is determined from the numpy
+            dtype of the array of the grid (and this will typically result in
+            "double").
 
             .. versionadded:: 0.4.0
 
-
         .. _`#35`: https://github.com/MDAnalysis/GridDataFormats/issues/35
+
+        typequote : str (optional)
+            For DX, set the character used to quote the type string;
+            by default this is a double-quote character, '"'.
+            Custom parsers like the one from NAMD-GridForces (backend for MDFF)
+            expect no quotes, and typequote='' may be used to appease them.
+
+            .. versionadded:: 0.5.0
 
         """
         exporter = self._get_exporter(filename, file_format=file_format)
-        exporter(filename, type=type)
+        exporter(filename, type=type, typequote=typequote)
 
     # note: the _export_FORMAT() methods all take the filename as a mandatory
     # argument. They can process kwargs but they are not required to do
@@ -460,7 +469,7 @@ class Grid(object):
         with open(filename, 'wb') as f:
             cPickle.dump(data, f, cPickle.HIGHEST_PROTOCOL)
 
-    def _export_dx(self, filename, type=None, **kwargs):
+    def _export_dx(self, filename, type=None, typequote='"', **kwargs):
         """Export the density grid to an OpenDX file.
 
         The file format is the simplest regular grid array and it is
@@ -494,7 +503,7 @@ class Grid(object):
             positions=OpenDX.gridpositions(1, self.grid.shape, self.origin,
                                            self.delta),
             connections=OpenDX.gridconnections(2, self.grid.shape),
-            data=OpenDX.array(3, self.grid, type=type),
+            data=OpenDX.array(3, self.grid, type=type, typequote=typequote),
         )
         dx = OpenDX.field('density', components=components, comments=comments)
         dx.write(filename)
