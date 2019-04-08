@@ -450,7 +450,7 @@ class Grid(object):
             Custom parsers like the one from NAMD-GridForces (backend for MDFF)
             expect no quotes, and typequote='' may be used to appease them.
 
-            .. versionadded:: after 0.5.0
+            .. versionadded:: 0.5.0
 
         """
         exporter = self._get_exporter(filename, file_format=file_format)
