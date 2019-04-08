@@ -4,6 +4,7 @@
 ===========================
 
 The rules for this file:
+  * release numbering uses semantic versioning 2.0 https://semver.org/
   * entries are sorted newest-first.
   * summarize sets of changes - don't reproduce every git log comment here.
   * don't ever delete anything.
@@ -16,9 +17,12 @@ The rules for this file:
 
   * 0.5.0
 
+  Enhancements
+  
+  * Allow parsing DX files by NAMD's GridForces module (new typequote keyword, #58)
+
   Fixes
 
-  * Allow parsing DX files by NAMD's GridForces module (typequote keyword, #58)
   * Allow parsing DX files by Pymol's buggy floating-point parser (#58)
 
 04/06/2019 rathann, tluchko, orbeckst
