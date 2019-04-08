@@ -21,7 +21,7 @@ The rules for this file:
   * Allow parsing DX files by NAMD's GridForces module (typequote keyword, #58)
   * Allow parsing DX files by Pymol's buggy floating-point parser (#58)
 
-??/??/2018 rathann, tluchko, orbeckst
+04/06/2019 rathann, tluchko, orbeckst
 
   * 0.4.1
 
@@ -35,6 +35,8 @@ The rules for this file:
   * fix incorrect reading of ncstart and nrstart in CCP4 (#57)
   * fix that arithemtical operations broke inheritance (#56)
   * fix so that subclasses of ndarray are retained on input (#56)
+  * fix Grid.save(filename) so that it respects the user's filename (#64)
+  * fix grid equality test g == h (relied on old numpy behavior)
 
   Changes (do not affect user)
 
