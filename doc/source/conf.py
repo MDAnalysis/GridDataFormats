@@ -59,8 +59,9 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'GridDataFormats'
-authors = u'Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski'
-copyright = u'2007-2018, ' + authors
+authors = (u'Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, '
+           u'Dominik Mierzejewski, Giacomo Fiorin')
+copyright = u'2007-2019, ' + authors
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

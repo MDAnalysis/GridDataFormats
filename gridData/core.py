@@ -441,8 +441,6 @@ class Grid(object):
 
             .. versionadded:: 0.4.0
 
-        .. _`#35`: https://github.com/MDAnalysis/GridDataFormats/issues/35
-
         typequote : str (optional)
             For DX, set the character used to quote the type string;
             by default this is a double-quote character, '"'.
