@@ -395,7 +395,7 @@ class Grid(object):
         loader(filename)
 
     def _load_python(self, filename):
-        with open(filename, 'rb') as f:
+        with open(str(filename), 'rb') as f:
             saved = cPickle.load(f)
         self.__init__(grid=saved['grid'],
                       edges=saved['edges'],
@@ -479,7 +479,7 @@ class Grid(object):
         is sufficient to recreate the grid object with __init__().
         """
         data = dict(grid=self.grid, edges=self.edges, metadata=self.metadata)
-        with open(filename, 'wb') as f:
+        with open(str(filename), 'wb') as f:
             cPickle.dump(data, f, cPickle.HIGHEST_PROTOCOL)
 
     def _export_dx(self, filename, type=None, typequote='"', **kwargs):

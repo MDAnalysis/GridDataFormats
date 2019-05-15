@@ -471,7 +471,7 @@ class field(DXclass):
         """
         # comments (VMD chokes on lines of len > 80, so truncate)
         maxcol = 80
-        with open(filename, 'w') as outfile:
+        with open(str(filename), 'w') as outfile:
             for line in self.comments:
                 comment = '# '+str(line)
                 outfile.write(comment[:maxcol]+'\n')
@@ -640,8 +640,8 @@ class DXParser(object):
 
         Note that quotes are removed from quoted strings.
         """
-        self.filename = filename
-        self.field = field('grid data',comments=['filename: {0}'.format(str(self.filename))])
+        self.filename = str(filename)
+        self.field = field('grid data',comments=['filename: {0}'.format(self.filename)])
         # other variables are initialised every time parse() is called
 
         self.parsers = {'general':self.__general,
