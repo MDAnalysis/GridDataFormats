@@ -17,6 +17,11 @@ The rules for this file:
 
   * 0.5.0
 
+  Changes
+
+  * supported/tested on Python 2.7, >=3.5 (official 3.4 support was
+    dropped: it might still work but is not tested anymore)
+
   Enhancements
 
   * Allow parsing DX files by NAMD's GridForces module (new typequote keyword, #58)
