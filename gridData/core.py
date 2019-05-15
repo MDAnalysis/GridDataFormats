@@ -63,7 +63,8 @@ class Grid(object):
     default_format = 'DX'
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
-                 metadata={}, interpolation_spline_order=3):
+                 metadata={}, interpolation_spline_order=3,
+                 file_format=None):
         """
         Create a Grid object from data.
 
@@ -87,7 +88,7 @@ class Grid(object):
 
         :Arguments:
           grid
-            histogram or density, defined on numpy nD array
+            histogram or density, defined on numpy nD array, or filename
           edges
             list of arrays, the lower and upper bin edges along the axes
             (both are output by numpy.histogramdd())
@@ -102,6 +103,14 @@ class Grid(object):
             metadata[] but stores it with save()
           interpolation_spline_order
             order of interpolation function for resampling; cubic splines = 3 [3]
+          file_format
+             file format; only necessary when ``grid`` is a filename (see :meth:`Grid.load`);
+             default is ``None`` and the file format is autodetected.
+
+
+        .. versionchanged:: 0.5.0
+           New *file_format* keyword argument.
+
         """
         # file formats are guess from extension == lower case key
         self._exporters = {
@@ -126,8 +135,8 @@ class Grid(object):
 
         if grid is not None:
             try:
-                self.load(grid)
-            except (IOError, OSError):
+                self.load(grid, file_format=file_format)
+            except (IOError, OSError, ValueError):
                 raise
             except Exception as err:
                 if edges is not None:
@@ -157,7 +166,6 @@ class Grid(object):
                     self.grid = numpy.asanyarray(grid)
                     self._update()
                 else:
-                    print(err)
                     raise ValueError("Wrong/missing data to set up Grid. Use Grid() or "
                                      "Grid(grid=<array>, edges=<list>) or "
                                      "Grid(grid=<array>, origin=(x0, y0, z0), delta=(dx, dy, dz)):\n"

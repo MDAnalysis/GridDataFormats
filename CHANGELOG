@@ -20,6 +20,8 @@ The rules for this file:
   Enhancements
 
   * Allow parsing DX files by NAMD's GridForces module (new typequote keyword, #58)
+  * New keyword argument ``Grid(grid=<file>, file_format=<str>)`` to set file format when
+    reading from a file (#33)
 
   Fixes
 

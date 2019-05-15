@@ -206,7 +206,7 @@ class CCP4(object):
             # Quick and dirty... slurp it all in one go.
             datafmt = h['bsaflag'] + str(nentries) + self._data_bintype
             a = np.array(struct.unpack(datafmt, ccp4.read(struct.calcsize(datafmt))))
-        self.header['filename'] = self.filename
+        self.header['filename'] = str(self.filename)
         # TODO: Account for the possibility that y-axis is fastest or
         # slowest index, which unfortunately is possible in CCP4.
         order = 'C' if h['mapc'] == 'z' else 'F'
