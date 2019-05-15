@@ -36,6 +36,22 @@ class TestGrid(object):
         with pytest.raises(TypeError):
             Grid(data['griddata'], origin=data['origin'], delta=np.ones(4))
 
+    def test_empty_Grid(self):
+        g = Grid()
+        assert isinstance(g, Grid)
+
+    def test_init_missing_delta_ValueError(self, data):
+        with pytest.raises(ValueError):
+            Grid(data['griddata'], origin=data['origin'])
+
+    def test_init_missing_origin_ValueError(self, data):
+        with pytest.raises(ValueError):
+            Grid(data['griddata'], delta=data['delta'])
+
+    def test_init_wrong_data_exception(self):
+        with pytest.raises(IOError):
+            Grid("__does_not_exist__")
+
     def test_equality(self, data):
         assert data['grid'] == data['grid']
         assert data['grid'] != 'foo'
@@ -154,7 +170,14 @@ class TestGrid(object):
 
         assert h == g
 
+    def test_pickle_pathobjects(self, data, tmpdir):
+        g = data['grid']
+        fn = tmpdir.mkdir('grid').join('grid.pickle')
+        g.save(fn)
 
+        h = Grid(fn)
+
+        assert h == g
 
 def test_inheritance(data):
     class DerivedGrid(Grid):

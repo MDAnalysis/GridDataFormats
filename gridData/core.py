@@ -114,7 +114,7 @@ class Grid(object):
             'CCP4': self._load_cpp4,
             'DX': self._load_dx,
             'PLT': self._load_plt,
-            'PKL': self._export_python,
+            'PKL': self._load_python,
             'PICKLE': self._load_python,  # compatibility
             'PYTHON': self._load_python,  # compatibility
         }
@@ -124,38 +124,45 @@ class Grid(object):
         self.__interpolation_spline_order = interpolation_spline_order
         self.interpolation_cval = None  # default to using min(grid)
 
-        if type(grid) is str:
-            self.load(grid)
-        elif not (grid is None or edges is None):
-            # set up from histogramdd-type data
-            self.grid = numpy.asanyarray(grid)
-            self.edges = edges
-            self._update()
-        elif not (grid is None or origin is None or delta is None):
-            # setup from generic data
-            origin = numpy.asanyarray(origin)
-            delta = numpy.asanyarray(delta)
-            if len(origin) != grid.ndim:
-                raise TypeError(
-                    "Dimension of origin is not the same as grid dimension.")
-            if delta.shape == () and numpy.isreal(delta):
-                delta = numpy.ones(grid.ndim) * delta
-            elif delta.ndim > 1:
-                raise NotImplementedError(
-                    "Non-rectangular grids are not supported.")
-            elif len(delta) != grid.ndim:
-                raise TypeError("delta should be scalar or array-like of"
-                                "len(grid.ndim)")
-            # note that origin is CENTER so edges must be shifted by -0.5*delta
-            self.edges = [origin[dim] +
-                          (numpy.arange(m + 1) - 0.5) * delta[dim]
-                          for dim, m in enumerate(grid.shape)]
-            self.grid = numpy.asanyarray(grid)
-            self._update()
-        else:
-            # empty, must manually populate with load()
-            # print "Setting up empty grid object. Use Grid.load(filename)."
-            pass
+        if grid is not None:
+            try:
+                self.load(grid)
+            except (IOError, OSError):
+                raise
+            except Exception as err:
+                if edges is not None:
+                    # set up from histogramdd-type data
+                    self.grid = numpy.asanyarray(grid)
+                    self.edges = edges
+                    self._update()
+                elif origin is not None and delta is not None:
+                    # setup from generic data
+                    origin = numpy.asanyarray(origin)
+                    delta = numpy.asanyarray(delta)
+                    if len(origin) != grid.ndim:
+                        raise TypeError(
+                            "Dimension of origin is not the same as grid dimension.")
+                    if delta.shape == () and numpy.isreal(delta):
+                        delta = numpy.ones(grid.ndim) * delta
+                    elif delta.ndim > 1:
+                        raise NotImplementedError(
+                            "Non-rectangular grids are not supported.")
+                    elif len(delta) != grid.ndim:
+                        raise TypeError("delta should be scalar or array-like of"
+                                        "len(grid.ndim)")
+                    # note that origin is CENTER so edges must be shifted by -0.5*delta
+                    self.edges = [origin[dim] +
+                                  (numpy.arange(m + 1) - 0.5) * delta[dim]
+                                  for dim, m in enumerate(grid.shape)]
+                    self.grid = numpy.asanyarray(grid)
+                    self._update()
+                else:
+                    print(err)
+                    raise ValueError("Wrong/missing data to set up Grid. Use Grid() or "
+                                     "Grid(grid=<array>, edges=<list>) or "
+                                     "Grid(grid=<array>, origin=(x0, y0, z0), delta=(dx, dy, dz)):\n"
+                                     "grid={0} edges={1} origin={2} delta={3}".format(
+                                         grid, edges, origin, delta))
 
     @property
     def interpolation_spline_order(self):
