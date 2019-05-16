@@ -27,9 +27,12 @@ Classes and functions
 # its behavior is fully consistent in Python 2 and Python 3.
 from __future__ import absolute_import, division
 
-import os
 import six
 from six.moves import cPickle, range, zip
+
+import os
+import errno
+
 import numpy
 
 # For interpolated grids: need scipy.ndimage but we import it only when needed:
@@ -134,11 +137,26 @@ class Grid(object):
         self.interpolation_cval = None  # default to using min(grid)
 
         if grid is not None:
-            try:
-                self.load(grid, file_format=file_format)
-            except (IOError, OSError, ValueError):
-                raise
-            except Exception as err:
+            if isinstance(grid, six.string_types):
+                # can probably safely try to load() it...
+                filename = grid
+            else:
+                try:
+                    # Can we read this as a file?
+                    # Use str(x) to work with py.path.LocalPath and pathlib.Path instances
+                    # even for Python < 3.6
+                    with open(str(grid), 'rb'):
+                        pass
+                except (OSError, IOError):
+                    # no, this is probably an array-like thingy
+                    filename = None
+                else:
+                    # yes, let's use it as a file
+                    filename = str(grid)
+
+            if filename is not None:
+                self.load(filename, file_format=file_format)
+            else:
                 if edges is not None:
                     # set up from histogramdd-type data
                     self.grid = numpy.asanyarray(grid)
@@ -391,11 +409,17 @@ class Grid(object):
         The load() method calls the class's constructor method and
         completely resets all values, based on the loaded data.
         """
+        filename = str(filename)
+        if not os.path.exists(filename):
+            # check before we try to detect the file type because
+            # _guess_fileformat() does not work well with things that
+            # are not really a file
+            raise IOError(errno.ENOENT, "file not found", filename)
         loader = self._get_loader(filename, file_format=file_format)
         loader(filename)
 
     def _load_python(self, filename):
-        with open(str(filename), 'rb') as f:
+        with open(filename, 'rb') as f:
             saved = cPickle.load(f)
         self.__init__(grid=saved['grid'],
                       edges=saved['edges'],
@@ -465,6 +489,7 @@ class Grid(object):
             .. versionadded:: 0.5.0
 
         """
+        filename = str(filename)
         exporter = self._get_exporter(filename, file_format=file_format)
         exporter(filename, type=type, typequote=typequote)
 
@@ -479,7 +504,7 @@ class Grid(object):
         is sufficient to recreate the grid object with __init__().
         """
         data = dict(grid=self.grid, edges=self.edges, metadata=self.metadata)
-        with open(str(filename), 'wb') as f:
+        with open(filename, 'wb') as f:
             cPickle.dump(data, f, cPickle.HIGHEST_PROTOCOL)
 
     def _export_dx(self, filename, type=None, typequote='"', **kwargs):
