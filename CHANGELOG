@@ -13,17 +13,26 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/2019 giacomofiorin
+??/??/2019 giacomofiorin, orbeckst
 
   * 0.5.0
 
+  Changes
+
+  * supported/tested on Python 2.7, >=3.5 (official 3.4 support was
+    dropped: it might still work but is not tested anymore)
+
   Enhancements
-  
+
   * Allow parsing DX files by NAMD's GridForces module (new typequote keyword, #58)
+  * New keyword argument ``Grid(grid=<file>, file_format=<str>)`` to set file format when
+    reading from a file (#33)
 
   Fixes
 
   * Allow parsing DX files by Pymol's buggy floating-point parser (#58)
+  * Fixed loading of pickle files with .pkl suffix
+  * Better input handling when constructing a Grid object (#59)
 
 04/06/2019 rathann, tluchko, orbeckst
 

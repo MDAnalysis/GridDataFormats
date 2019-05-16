@@ -27,9 +27,12 @@ Classes and functions
 # its behavior is fully consistent in Python 2 and Python 3.
 from __future__ import absolute_import, division
 
-import os
 import six
 from six.moves import cPickle, range, zip
+
+import os
+import errno
+
 import numpy
 
 # For interpolated grids: need scipy.ndimage but we import it only when needed:
@@ -63,7 +66,8 @@ class Grid(object):
     default_format = 'DX'
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
-                 metadata={}, interpolation_spline_order=3):
+                 metadata={}, interpolation_spline_order=3,
+                 file_format=None):
         """
         Create a Grid object from data.
 
@@ -87,7 +91,7 @@ class Grid(object):
 
         :Arguments:
           grid
-            histogram or density, defined on numpy nD array
+            histogram or density, defined on numpy nD array, or filename
           edges
             list of arrays, the lower and upper bin edges along the axes
             (both are output by numpy.histogramdd())
@@ -102,6 +106,14 @@ class Grid(object):
             metadata[] but stores it with save()
           interpolation_spline_order
             order of interpolation function for resampling; cubic splines = 3 [3]
+          file_format
+             file format; only necessary when ``grid`` is a filename (see :meth:`Grid.load`);
+             default is ``None`` and the file format is autodetected.
+
+
+        .. versionchanged:: 0.5.0
+           New *file_format* keyword argument.
+
         """
         # file formats are guess from extension == lower case key
         self._exporters = {
@@ -114,7 +126,7 @@ class Grid(object):
             'CCP4': self._load_cpp4,
             'DX': self._load_dx,
             'PLT': self._load_plt,
-            'PKL': self._export_python,
+            'PKL': self._load_python,
             'PICKLE': self._load_python,  # compatibility
             'PYTHON': self._load_python,  # compatibility
         }
@@ -124,38 +136,59 @@ class Grid(object):
         self.__interpolation_spline_order = interpolation_spline_order
         self.interpolation_cval = None  # default to using min(grid)
 
-        if type(grid) is str:
-            self.load(grid)
-        elif not (grid is None or edges is None):
-            # set up from histogramdd-type data
-            self.grid = numpy.asanyarray(grid)
-            self.edges = edges
-            self._update()
-        elif not (grid is None or origin is None or delta is None):
-            # setup from generic data
-            origin = numpy.asanyarray(origin)
-            delta = numpy.asanyarray(delta)
-            if len(origin) != grid.ndim:
-                raise TypeError(
-                    "Dimension of origin is not the same as grid dimension.")
-            if delta.shape == () and numpy.isreal(delta):
-                delta = numpy.ones(grid.ndim) * delta
-            elif delta.ndim > 1:
-                raise NotImplementedError(
-                    "Non-rectangular grids are not supported.")
-            elif len(delta) != grid.ndim:
-                raise TypeError("delta should be scalar or array-like of"
-                                "len(grid.ndim)")
-            # note that origin is CENTER so edges must be shifted by -0.5*delta
-            self.edges = [origin[dim] +
-                          (numpy.arange(m + 1) - 0.5) * delta[dim]
-                          for dim, m in enumerate(grid.shape)]
-            self.grid = numpy.asanyarray(grid)
-            self._update()
-        else:
-            # empty, must manually populate with load()
-            # print "Setting up empty grid object. Use Grid.load(filename)."
-            pass
+        if grid is not None:
+            if isinstance(grid, six.string_types):
+                # can probably safely try to load() it...
+                filename = grid
+            else:
+                try:
+                    # Can we read this as a file?
+                    # Use str(x) to work with py.path.LocalPath and pathlib.Path instances
+                    # even for Python < 3.6
+                    with open(str(grid), 'rb'):
+                        pass
+                except (OSError, IOError):
+                    # no, this is probably an array-like thingy
+                    filename = None
+                else:
+                    # yes, let's use it as a file
+                    filename = str(grid)
+
+            if filename is not None:
+                self.load(filename, file_format=file_format)
+            else:
+                if edges is not None:
+                    # set up from histogramdd-type data
+                    self.grid = numpy.asanyarray(grid)
+                    self.edges = edges
+                    self._update()
+                elif origin is not None and delta is not None:
+                    # setup from generic data
+                    origin = numpy.asanyarray(origin)
+                    delta = numpy.asanyarray(delta)
+                    if len(origin) != grid.ndim:
+                        raise TypeError(
+                            "Dimension of origin is not the same as grid dimension.")
+                    if delta.shape == () and numpy.isreal(delta):
+                        delta = numpy.ones(grid.ndim) * delta
+                    elif delta.ndim > 1:
+                        raise NotImplementedError(
+                            "Non-rectangular grids are not supported.")
+                    elif len(delta) != grid.ndim:
+                        raise TypeError("delta should be scalar or array-like of"
+                                        "len(grid.ndim)")
+                    # note that origin is CENTER so edges must be shifted by -0.5*delta
+                    self.edges = [origin[dim] +
+                                  (numpy.arange(m + 1) - 0.5) * delta[dim]
+                                  for dim, m in enumerate(grid.shape)]
+                    self.grid = numpy.asanyarray(grid)
+                    self._update()
+                else:
+                    raise ValueError("Wrong/missing data to set up Grid. Use Grid() or "
+                                     "Grid(grid=<array>, edges=<list>) or "
+                                     "Grid(grid=<array>, origin=(x0, y0, z0), delta=(dx, dy, dz)):\n"
+                                     "grid={0} edges={1} origin={2} delta={3}".format(
+                                         grid, edges, origin, delta))
 
     @property
     def interpolation_spline_order(self):
@@ -376,6 +409,12 @@ class Grid(object):
         The load() method calls the class's constructor method and
         completely resets all values, based on the loaded data.
         """
+        filename = str(filename)
+        if not os.path.exists(filename):
+            # check before we try to detect the file type because
+            # _guess_fileformat() does not work well with things that
+            # are not really a file
+            raise IOError(errno.ENOENT, "file not found", filename)
         loader = self._get_loader(filename, file_format=file_format)
         loader(filename)
 
@@ -450,6 +489,7 @@ class Grid(object):
             .. versionadded:: 0.5.0
 
         """
+        filename = str(filename)
         exporter = self._get_exporter(filename, file_format=file_format)
         exporter(filename, type=type, typequote=typequote)
 

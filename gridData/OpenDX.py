@@ -471,7 +471,7 @@ class field(DXclass):
         """
         # comments (VMD chokes on lines of len > 80, so truncate)
         maxcol = 80
-        with open(filename,'w') as outfile:
+        with open(str(filename), 'w') as outfile:
             for line in self.comments:
                 comment = '# '+str(line)
                 outfile.write(comment[:maxcol]+'\n')
@@ -627,7 +627,7 @@ class DXParser(object):
     """, re.VERBOSE)
 
 
-    def __init__(self,filename):
+    def __init__(self, filename):
         """Setup a parser for a simple DX file (from VMD)
 
         >>> DXfield_object = OpenDX.field(id)
@@ -640,8 +640,8 @@ class DXParser(object):
 
         Note that quotes are removed from quoted strings.
         """
-        self.filename = filename
-        self.field = field('grid data',comments=['filename: '+self.filename])
+        self.filename = str(filename)
+        self.field = field('grid data',comments=['filename: {0}'.format(self.filename)])
         # other variables are initialised every time parse() is called
 
         self.parsers = {'general':self.__general,
@@ -678,7 +678,7 @@ class DXParser(object):
         self.currentobject = None           # containers for data
         self.objects = []                   # |
         self.tokens = []                    # token buffer
-        with open(self.filename,'r') as self.dxfile:
+        with open(self.filename, 'r') as self.dxfile:
             self.use_parser('general')      # parse the whole file and populate self.objects
 
         # assemble field from objects

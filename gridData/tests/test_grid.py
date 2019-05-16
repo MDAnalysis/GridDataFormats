@@ -23,6 +23,13 @@ def data():
     return d
 
 class TestGrid(object):
+    @pytest.fixture
+    def pklfile(self, data, tmpdir):
+        g = data['grid']
+        fn = tmpdir.mkdir('grid').join('grid.dat')
+        g.save(fn)  # always saves as pkl
+        return fn
+
     def test_init(self, data):
         g = Grid(data['griddata'], origin=data['origin'],
                  delta=1)
@@ -35,6 +42,26 @@ class TestGrid(object):
     def test_init_wrong_delta(self, data):
         with pytest.raises(TypeError):
             Grid(data['griddata'], origin=data['origin'], delta=np.ones(4))
+
+    def test_empty_Grid(self):
+        g = Grid()
+        assert isinstance(g, Grid)
+
+    def test_init_missing_delta_ValueError(self, data):
+        with pytest.raises(ValueError):
+            Grid(data['griddata'], origin=data['origin'])
+
+    def test_init_missing_origin_ValueError(self, data):
+        with pytest.raises(ValueError):
+            Grid(data['griddata'], delta=data['delta'])
+
+    def test_init_wrong_data_exception(self):
+        with pytest.raises(IOError):
+            Grid("__does_not_exist__")
+
+    def test_load_wrong_fileformat_ValueError(self):
+        with pytest.raises(ValueError):
+            Grid(grid=True, file_format="xxx")
 
     def test_equality(self, data):
         assert data['grid'] == data['grid']
@@ -144,16 +171,54 @@ class TestGrid(object):
         assert_array_almost_equal(g.grid[::5, ::5, ::5],
                                   data['grid'].grid[::2, ::2, ::2])
 
-    def test_pickle(self, data, tmpdir):
+    def test_load_pickle(self, data, tmpdir):
         g = data['grid']
         fn = str(tmpdir.mkdir('grid').join('grid.pkl'))
         g.save(fn)
 
         h = Grid()
-        h.load(fn, file_format="pickle")
+        h.load(fn)
 
         assert h == g
 
+    def test_init_pickle_pathobjects(self, data, tmpdir):
+        g = data['grid']
+        fn = tmpdir.mkdir('grid').join('grid.pickle')
+        g.save(fn)
+
+        h = Grid(fn)
+
+        assert h == g
+
+    @pytest.mark.parametrize("fileformat", ("pkl", "PKL", "pickle", "python"))
+    def test_load_fileformat(self, data, pklfile, fileformat):
+        h = Grid(pklfile, file_format="pkl")
+        assert h == data['grid']
+
+    # At the moment, reading the file with the wrong parser does not give
+    # good error messages.
+    @pytest.mark.xfail
+    @pytest.mark.parametrize("fileformat", ("ccp4", "plt", "dx"))
+    def test_load_wrong_fileformat(self, data, pklfile, fileformat):
+        with pytest.raises('ValueError'):
+            Grid(pklfile, file_format=fileformat)
+
+    # just check that we can export without stupid failures; detailed
+    # format checks in separate tests
+    @pytest.mark.parametrize("fileformat", ("dx", "pkl"))
+    def test_export(self, data, fileformat, tmpdir):
+        g = data['grid']
+        fn = tmpdir.mkdir('grid_export').join("grid.{}".format(fileformat))
+        g.export(fn)   # check that path objects work
+        h = Grid(fn)   # use format autodetection
+        assert g == h
+
+    @pytest.mark.parametrize("fileformat", ("ccp4", "plt"))
+    def test_export_not_supported(self, data, fileformat, tmpdir):
+        g = data['grid']
+        fn = tmpdir.mkdir('grid_export').join("grid.{}".format(fileformat))
+        with pytest.raises(ValueError):
+            g.export(fn)
 
 
 def test_inheritance(data):
