@@ -1,12 +1,10 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>3.2.1. OpenDX — routines to read and write simple OpenDX files &#8212; GridDataFormats 0.4.1+10.g3eeb043 documentation</title>
+    <meta charset="utf-8" />
+    <title>3.2.1. OpenDX — routines to read and write simple OpenDX files &#8212; GridDataFormats 0.4.1+16.g1fa2261 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -16,7 +14,7 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.4.1+10.g3eeb043 documentation"
+          title="Search within GridDataFormats 0.4.1+16.g1fa2261 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -44,12 +42,12 @@
 <p>The OpenDX format for multi-dimensional grid data. OpenDX is a free
 visualization software, see <a class="reference external" href="http://www.opendx.org">http://www.opendx.org</a>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This module only implements a primitive subset, sufficient
+<p class="admonition-title">Note</p>
+<p>This module only implements a primitive subset, sufficient
 to represent n-dimensional regular grids.</p>
 </div>
 <p>The OpenDX scalar file format is specified in Appendix <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm">B.2 Data
-Explorer Native Files</a> <a class="footnote-reference" href="#opendxformat" id="id1">[1]</a>.</p>
+Explorer Native Files</a> <a class="footnote-reference brackets" href="#opendxformat" id="id1">1</a>.</p>
 <p>If you want to build a dx object from your data you can either use the
 convenient <a class="reference internal" href="../core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> class from the top level
 module (<code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.Grid</span></code>) or see the lower-level methods
@@ -83,7 +81,7 @@ below:</p>
 <div class="section" id="known-issues-for-writing-opendx-files">
 <h3>3.2.1.1.1. Known issues for writing OpenDX files<a class="headerlink" href="#known-issues-for-writing-opendx-files" title="Permalink to this headline">¶</a></h3>
 <ul>
-<li><p class="first"><a class="reference external" href="http://www.pymol.org/">PyMOL</a> requires OpenDX files with the type specification “double” in
+<li><p><a class="reference external" href="http://www.pymol.org/">PyMOL</a> requires OpenDX files with the type specification “double” in
 the <cite>class array</cite> section (see issue <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/issues/35">#35</a>). By default (since
 release 0.4.0), the type is set to the one that most closely
 approximates the dtype of the numpy array <code class="xref py py-attr docutils literal notranslate"><span class="pre">Grid.grid</span></code>, which
@@ -98,7 +96,7 @@ available values) then you can use the <code class="docutils literal notranslate
 <p>If you always want to be able to read OpenDX files with PyMOL, it is
 suggested to always export with <code class="docutils literal notranslate"><span class="pre">type=&quot;double&quot;</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 0.4.0.</span></p>
+<p><span class="versionmodified added">New in version 0.4.0.</span></p>
 </div>
 </li>
 </ul>
@@ -111,18 +109,18 @@ space then you can construct a dx object (named a <em>field</em> in OpenDX
 parlance) if you provide some additional information that fixes the
 coordinate system in space and defines the units along the axes.</p>
 <p>The following data are required:</p>
-<dl class="docutils">
-<dt>grid</dt>
-<dd>numpy nD array (typically a nD histogram)</dd>
-<dt>grid.shape</dt>
-<dd>the shape of the array</dd>
-<dt>origin</dt>
-<dd>the cartesian coordinates of the center of the (0,0,..,0) grid cell</dd>
-<dt>delta</dt>
-<dd><span class="math notranslate nohighlight">\(n \times n\)</span> array with the length of a grid cell along
+<dl class="simple">
+<dt>grid</dt><dd><p>numpy nD array (typically a nD histogram)</p>
+</dd>
+<dt>grid.shape</dt><dd><p>the shape of the array</p>
+</dd>
+<dt>origin</dt><dd><p>the cartesian coordinates of the center of the (0,0,..,0) grid cell</p>
+</dd>
+<dt>delta</dt><dd><p><span class="math notranslate nohighlight">\(n \times n\)</span> array with the length of a grid cell along
 each axis; for regular rectangular grids the off-diagonal
 elements are 0 and the diagonal ones correspond to the
-‘bin width’ of the histogram, eg <code class="docutils literal notranslate"><span class="pre">delta[0,0]</span> <span class="pre">=</span> <span class="pre">1.0</span></code> (Angstrom)</dd>
+‘bin width’ of the histogram, eg <code class="docutils literal notranslate"><span class="pre">delta[0,0]</span> <span class="pre">=</span> <span class="pre">1.0</span></code> (Angstrom)</p>
+</dd>
 </dl>
 <p>The DX data type (“type” in the DX file) is determined from the
 <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> that is provided as
@@ -161,14 +159,13 @@ portable and universal manner:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">()</span>
 </pre></div>
 </div>
-<table class="docutils footnote" frame="void" id="opendxformat" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The original link to the OpenDX file format specs
+<dl class="footnote brackets">
+<dt class="label" id="opendxformat"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>The original link to the OpenDX file format specs
 <a class="reference external" href="http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF">http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF</a> is dead so I am linking
-to an archived copy at the Internet Archive , <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm">B.2 Data Explorer Native Files</a>.</td></tr>
-</tbody>
-</table>
+to an archived copy at the Internet Archive , <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm">B.2 Data Explorer Native Files</a>.</p>
+</dd>
+</dl>
 </div>
 <div class="section" id="classes-and-functions">
 <h2>3.2.1.4. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
@@ -200,11 +197,11 @@ arguments for the DX class.</p>
 <dd><p>Brain-dead baroque implementation to read a simple (VMD) dx file.</p>
 <p>Requires a OpenDX.field instance.</p>
 <ol class="arabic simple">
-<li>scan for ‘object’ lines:
+<li><p>scan for ‘object’ lines:
 ‘object’ id ‘class’ class  [data]
-[data …]</li>
-<li>parse data according to class</li>
-<li>construct dx field from classes</li>
+[data …]</p></li>
+<li><p>parse data according to class</p></li>
+<li><p>construct dx field from classes</p></li>
 </ol>
 <p>Setup a parser for a simple DX file (from VMD)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">DXfield_object</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
@@ -240,9 +237,9 @@ found. The basic idea is that of a ‘state machine’. There is
 one parser active at any time. The main loop is the general
 parser.</p>
 <ul class="simple">
-<li>Constructing the dx objects with classtype and classid is
-not implemented yet.</li>
-<li>Unknown tokens raise an exception.</li>
+<li><p>Constructing the dx objects with classtype and classid is
+not implemented yet.</p></li>
+<li><p>Unknown tokens raise an exception.</p></li>
 </ul>
 </dd></dl>
 
@@ -291,31 +288,27 @@ has dimensions (derived from shape)</p>
 <em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">array</code><span class="sig-paren">(</span><em>classid</em>, <em>array=None</em>, <em>type=None</em>, <em>typequote='&quot;'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.array" title="Permalink to this definition">¶</a></dt>
 <dd><p>OpenDX array class.</p>
 <p>See <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440">Array Objects</a> for details.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – </li>
-<li><strong>array</strong> (<em>array_like</em>) – </li>
-<li><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – </p></li>
+<li><p><strong>array</strong> (<em>array_like</em>) – </p></li>
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
 the closest numpy dtype.  <cite>type</cite> must be one of the
 allowed types in DX files as defined under <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440">Array
 Objects</a>.  The default <code class="docutils literal notranslate"><span class="pre">None</span></code> tries to set the type
 from the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of <cite>array</cite>.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 0.4.0.</span></p>
+<p><span class="versionmodified added">New in version 0.4.0.</span></p>
 </div>
-</li>
+</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if <cite>array</cite> is not provided; or if <cite>type</cite> is not of the correct
-DX type</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if <cite>array</cite> is not provided; or if <cite>type</cite> is not of the correct
+    DX type</p>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="gridData.OpenDX.array.dx_types">
 <code class="descname">dx_types</code><em class="property"> = {'byte': 'uint8', 'double': 'float64', 'float': 'float32', 'int': 'int32', 'short': 'int16', 'signed byte': 'int8', 'signed int': 'int32', 'signed short': 'int16', 'unsigned byte': 'uint8', 'unsigned int': 'uint32', 'unsigned short': 'uint16'}</em><a class="headerlink" href="#gridData.OpenDX.array.dx_types" title="Permalink to this definition">¶</a></dt>
@@ -336,17 +329,15 @@ types are supported (e.g., strings are missing)</p>
 <dt id="gridData.OpenDX.array.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#array.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.array.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the <em>class array</em> section.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>file</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
-raised.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>file</em>) – </p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
+    raised.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -360,27 +351,23 @@ OpenDX file. It contains a number of other objects.</p>
 <p>Instantiate a DX object from this class and add subclasses with
 <a class="reference internal" href="#gridData.OpenDX.field.add" title="gridData.OpenDX.field.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code></a>.</p>
 <p>OpenDX object, which is build from a list of components.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – arbitrary string</li>
-<li><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – arbitrary string</p></li>
+<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
 individual ids!) which correspond to</p>
 <ul>
-<li>positions</li>
-<li>connections</li>
-<li>data</li>
+<li><p>positions</p></li>
+<li><p>connections</p></li>
+<li><p>data</p></li>
 </ul>
-</li>
-<li><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – list of strings; each string becomes a comment line
-prefixed with ‘#’. Avoid newlines.</li>
+</p></li>
+<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – list of strings; each string becomes a comment line
+prefixed with ‘#’. Avoid newlines.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>A field must have at least the components ‘positions’,
 ‘connections’, and ‘data’. Those components are associated
 with objects belonging to the field. When writing a dx file
@@ -391,8 +378,8 @@ separate object list. When dumping the dx file, first all
 objects are written and then the field object describes its
 components. Objects are referenced by their unique id.)</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">uniqueness of the <em>id</em> is not checked.</p>
+<p class="admonition-title">Note</p>
+<p>uniqueness of the <em>id</em> is not checked.</p>
 </div>
 <p class="rubric">Example</p>
 <p>Create a new dx object:</p>
@@ -422,7 +409,8 @@ components. Objects are referenced by their unique id.)</p>
 <code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read DX field from file.</p>
 <blockquote>
-<div>dx = OpenDX.field.read(dxfile)</div></blockquote>
+<div><p>dx = OpenDX.field.read(dxfile)</p>
+</div></blockquote>
 <p>The classid is discarded and replaced with the one from the file.</p>
 </dd></dl>
 
@@ -510,10 +498,10 @@ delta     DxD array describing the deltas</p>
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../overview.html">1. <code class="docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">1. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic.html">2. Basic use</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../formats.html">3. Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core.html">4. <code class="docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core.html">4. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
 <div class="relations">
@@ -522,7 +510,7 @@ delta     DxD array describing the deltas</p>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../formats.html">3. Formats</a><ul>
       <li>Previous: <a href="../formats.html" title="previous chapter">3. Formats</a></li>
-      <li>Next: <a href="gOpenMol.html" title="next chapter">3.2.2. <code class="docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+      <li>Next: <a href="gOpenMol.html" title="next chapter">3.2.2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -533,8 +521,6 @@ delta     DxD array describing the deltas</p>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -547,7 +533,7 @@ delta     DxD array describing the deltas</p>
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
