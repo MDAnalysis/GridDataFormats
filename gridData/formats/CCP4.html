@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>3.2.3. CCP4 — the CCP4 volumetric data format &#8212; GridDataFormats 0.4.1+16.g1fa2261 documentation</title>
+    <title>4.2.3. CCP4 — the CCP4 volumetric data format &#8212; GridDataFormats 0.5.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -14,13 +14,13 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.4.1+16.g1fa2261 documentation"
+          title="Search within GridDataFormats 0.5.0 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4. gridData.core — Core functionality for storing n-D grids" href="../core.html" />
-    <link rel="prev" title="3.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" />
+    <link rel="next" title="5. gridData.core — Core functionality for storing n-D grids" href="../core.html" />
+    <link rel="prev" title="4.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -38,7 +38,7 @@
           <div class="body" role="main">
             
   <span class="target" id="module-gridData.CCP4"></span><div class="section" id="ccp4-the-ccp4-volumetric-data-format">
-<h1>3.2.3. <code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format<a class="headerlink" href="#ccp4-the-ccp4-volumetric-data-format" title="Permalink to this headline">¶</a></h1>
+<h1>4.2.3. <code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format<a class="headerlink" href="#ccp4-the-ccp4-volumetric-data-format" title="Permalink to this headline">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.3.0.</span></p>
 </div>
@@ -49,7 +49,7 @@ to guess the endianess of the file, but this can fail (with a
 <p>Only the reader is implemented. If you want to write gridded data use a format
 that is more standard, such as OpenDX (see <code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code>).</p>
 <div class="section" id="background">
-<h2>3.2.3.1. Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.3.1. Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
 <p>CCP4 format: <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">http://www.ccp4.ac.uk/html/maplib.html#description</a></p>
 <p>Used to be more carefully documented at
 <a class="reference external" href="http://lsbr.niams.nih.gov/3demc/3demc_maplib.html">http://lsbr.niams.nih.gov/3demc/3demc_maplib.html</a> but currently this is only
@@ -57,7 +57,7 @@ accessible through the Google cache
 <a class="reference external" href="http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html">http://webcache.googleusercontent.com/search?q=cache:KRSvXB0S3dsJ:lsbr.niams.nih.gov/3demc/3demc_maplib.html</a></p>
 </div>
 <div class="section" id="grid-data-ccp4-file-format">
-<h2>3.2.3.2. Grid data CCP4 file format<a class="headerlink" href="#grid-data-ccp4-file-format" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.3.2. Grid data CCP4 file format<a class="headerlink" href="#grid-data-ccp4-file-format" title="Permalink to this headline">¶</a></h2>
 <p>Copyright Science and Technologies Facilities Council, 2015.</p>
 <p>The overall layout of the file is as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">File</span> <span class="n">header</span> <span class="p">(</span><span class="mi">256</span> <span class="n">longwords</span><span class="p">)</span>
@@ -141,7 +141,7 @@ For little endian hardware the stamp is 0x44, 0x41, 0x00, 0x00 while
 the big endian stamp is 0x11, 0x11, 0x00, 0x00.</p>
 </div>
 <div class="section" id="classes">
-<h2>3.2.3.3. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.3.3. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="gridData.CCP4.CCP4">
 <em class="property">class </em><code class="descclassname">gridData.CCP4.</code><code class="descname">CCP4</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4" title="Permalink to this definition">¶</a></dt>
@@ -228,19 +228,20 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../overview.html">1. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic.html">2. Basic use</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">3. Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core.html">4. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic.html">3. Basic use</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">4. Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core.html">5. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../formats.html">3. Formats</a><ul>
-      <li>Previous: <a href="gOpenMol.html" title="previous chapter">3.2.2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
-      <li>Next: <a href="../core.html" title="next chapter">4. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+  <li><a href="../formats.html">4. Formats</a><ul>
+      <li>Previous: <a href="gOpenMol.html" title="previous chapter">4.2.2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+      <li>Next: <a href="../core.html" title="next chapter">5. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
   </ul></li>
   </ul></li>
 </ul>

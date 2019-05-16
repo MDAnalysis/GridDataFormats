@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>1. gridData – Handling grids of data &#8212; GridDataFormats 0.4.1+16.g1fa2261 documentation</title>
+    <title>2. gridData – Handling grids of data &#8212; GridDataFormats 0.5.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,13 +14,13 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.4.1+16.g1fa2261 documentation"
+          title="Search within GridDataFormats 0.5.0 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. Basic use" href="basic.html" />
-    <link rel="prev" title="GridDataFormats: Handling volumetric data in Python" href="../index.html" />
+    <link rel="next" title="3. Basic use" href="basic.html" />
+    <link rel="prev" title="1. Installation" href="../installation.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -38,9 +38,9 @@
           <div class="body" role="main">
             
   <span class="target" id="module-gridData"></span><div class="section" id="griddata-handling-grids-of-data">
-<h1>1. <a class="reference internal" href="#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a> – Handling grids of data<a class="headerlink" href="#griddata-handling-grids-of-data" title="Permalink to this headline">¶</a></h1>
+<h1>2. <a class="reference internal" href="#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a> – Handling grids of data<a class="headerlink" href="#griddata-handling-grids-of-data" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
-<h2>1.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>2.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>This module contains classes that allow importing and exporting of
 simple gridded data, A grid is an N-dimensional array that represents
 a discrete mesh over a region of space. The array axes are taken to be
@@ -53,7 +53,7 @@ interpolating the data). Standard algebraic operations are defined for
 grids on a point-wise basis (same as for <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
 </div>
 <div class="section" id="description">
-<h2>1.2. Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<h2>2.2. Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>The package reads grid data from files, makes them available as a
 <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object, and allows one to write out the data again.</p>
 <p>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> consists of a rectangular, regular, N-dimensional
@@ -89,7 +89,7 @@ other programs such as VMD or PyMOL.</p></li>
 </ul>
 </div>
 <div class="section" id="reading-grid-data-files">
-<h2>1.3. Reading grid data files<a class="headerlink" href="#reading-grid-data-files" title="Permalink to this headline">¶</a></h2>
+<h2>2.3. Reading grid data files<a class="headerlink" href="#reading-grid-data-files" title="Permalink to this headline">¶</a></h2>
 <p>Some <a class="reference internal" href="#formats">Formats</a> can be read directly from a file on disk:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
@@ -97,7 +97,7 @@ other programs such as VMD or PyMOL.</p></li>
 <p><em>filename</em> could be, for instance, “density.dx”.</p>
 </div>
 <div class="section" id="constructing-a-grid">
-<h2>1.4. Constructing a Grid<a class="headerlink" href="#constructing-a-grid" title="Permalink to this headline">¶</a></h2>
+<h2>2.4. Constructing a Grid<a class="headerlink" href="#constructing-a-grid" title="Permalink to this headline">¶</a></h2>
 <p>Data from an n-dimensional array can be packaged as a <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>
 for convenient handling (especially export to other formats).  The
 <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> class acts as a universal constructor:</p>
@@ -110,7 +110,7 @@ for convenient handling (especially export to other formats).  The
 <p>See the doc string for <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> for details.</p>
 </div>
 <div class="section" id="formats">
-<h2>1.5. Formats<a class="headerlink" href="#formats" title="Permalink to this headline">¶</a></h2>
+<h2>2.5. Formats<a class="headerlink" href="#formats" title="Permalink to this headline">¶</a></h2>
 <p>The following formats are available (<a class="reference internal" href="formats.html#supported-file-formats"><span class="std std-ref">Supported file formats</span></a>):</p>
 <blockquote>
 <div><dl class="simple">
@@ -156,18 +156,19 @@ for convenient handling (especially export to other formats).  The
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic.html">2. Basic use</a></li>
-<li class="toctree-l1"><a class="reference internal" href="formats.html">3. Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core.html">4. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">3. Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats.html">4. Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">5. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../index.html" title="previous chapter">GridDataFormats: Handling volumetric data in Python</a></li>
-      <li>Next: <a href="basic.html" title="next chapter">2. Basic use</a></li>
+      <li>Previous: <a href="../installation.html" title="previous chapter">1. Installation</a></li>
+      <li>Next: <a href="basic.html" title="next chapter">3. Basic use</a></li>
   </ul></li>
 </ul>
 </div>

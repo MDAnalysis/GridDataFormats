@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>1. Installation &#8212; GridDataFormats 0.5.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats 0.5.0 documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="shortcut icon" href="_static/mdanalysis-logo.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. gridData – Handling grids of data" href="gridData/overview.html" />
+    <link rel="prev" title="GridDataFormats: Handling volumetric data in Python" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<h1>1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>GridDataFormats can be easily installed via the <a class="reference internal" href="#conda-install"><span class="std std-ref">conda</span></a> or
+<a class="reference internal" href="#pip-install"><span class="std std-ref">pip</span></a> package managers.</p>
+<p>It is a pure-python package but it has a few other packages (namely
+scipy) as dependencies that contain compiled code. For ease of
+installation we recommend <a class="reference internal" href="#conda-install"><span class="std std-ref">conda</span></a> but
+<a class="reference internal" href="#pip-install"><span class="std std-ref">pip</span></a> and installation from source are also fully
+supported.</p>
+<div class="section" id="installing-griddataformats-with-conda">
+<span id="conda-install"></span><h2>1.1. Installing GridDataFormats with <code class="docutils literal notranslate"><span class="pre">conda</span></code><a class="headerlink" href="#installing-griddataformats-with-conda" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://docs.conda.io/">conda</a> package manager installs, runs, and updates whole
+environments with all their dependencies.</p>
+<p>Installing <em>GridDataFormats</em> from the <em>conda-forge</em> channel can be
+achieved by adding “conda-forge” to your channels with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+</pre></div>
+</div>
+<p>Once the <em>conda-forge</em> channel has been enabled, <em>GridDataFormats</em> can
+be installed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">griddataformats</span>
+</pre></div>
+</div>
+<p>Any missing dependencies will be automatically downloaded and
+installed in the appropriate versions.</p>
+<p>You can later update with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">update</span> <span class="n">griddataformats</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-griddataformats-with-pip">
+<span id="pip-install"></span><h2>1.2. Installing GridDataFormats with <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#installing-griddataformats-with-pip" title="Permalink to this headline">¶</a></h2>
+<p>Install with <a class="reference external" href="https://pip.pypa.io/">pip</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">gridDataFormats</span>
+</pre></div>
+</div>
+<p>and you can later update with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">gridDataFormats</span>
+</pre></div>
+</div>
+<p><cite>pip</cite> also automatically downloads all missing dependencies and will
+attempt to compile them if necessary; this step can fail if you do not
+have the correct build environment with the necessary compilers
+installed. You should then read the <a class="reference external" href="https://pip.pypa.io/">pip</a> documentation to learn what
+is needed or switch to the <a class="reference internal" href="#conda-install"><span class="std std-ref">conda installation</span></a>.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logos/mdanalysis-griddataformats-logo.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">GridDataFormats</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">data formats for gridded data</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gridData/overview.html">2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gridData/basic.html">3. Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gridData/formats.html">4. Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gridData/core.html">5. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">GridDataFormats: Handling volumetric data in Python</a></li>
+      <li>Next: <a href="gridData/overview.html" title="next chapter">2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/MDAnalysis/GridDataFormats" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
