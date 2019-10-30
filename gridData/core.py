@@ -125,6 +125,7 @@ class Grid(object):
         self._loaders = {
             'CCP4': self._load_cpp4,
             'DX': self._load_dx,
+            'DXGZ': self._load_dxgz,
             'PLT': self._load_plt,
             'PKL': self._load_python,
             'PICKLE': self._load_python,  # compatibility
@@ -436,6 +437,13 @@ class Grid(object):
         """Initializes Grid from a OpenDX file."""
         dx = OpenDX.field(0)
         dx.read(filename)
+        grid, edges = dx.histogramdd()
+        self.__init__(grid=grid, edges=edges, metadata=self.metadata)
+
+    def _load_dxgz(self, filename):
+        """Initializes Grid from a OpenDX file."""
+        dx = OpenDX.field(0)
+        dx.read(filename, gz=True)
         grid, edges = dx.histogramdd()
         self.__init__(grid=grid, edges=edges, metadata=self.metadata)
 

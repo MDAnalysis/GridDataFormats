@@ -165,6 +165,7 @@ import numpy
 import re
 from six import next
 from six.moves import range
+import gzip
 
 import warnings
 
@@ -483,7 +484,7 @@ class field(DXclass):
             for component,object in self.sorted_components():
                 outfile.write('component "%s" value %s\n' % (component,str(object.id)))
 
-    def read(self,file):
+    def read(self, file, gz=False):
         """Read DX field from file.
 
             dx = OpenDX.field.read(dxfile)
@@ -492,7 +493,7 @@ class field(DXclass):
         """
         DXfield = self
         p = DXParser(file)
-        p.parse(DXfield)
+        p.parse(DXfield, gz)
 
     def add(self,component,DXobj):
         """add a component to the field"""
@@ -652,7 +653,7 @@ class DXParser(object):
                         }
 
 
-    def parse(self,DXfield):
+    def parse(self, DXfield, gz=False):
         """Parse the dx file and construct a DX field object with component classes.
 
         A :class:`field` instance *DXfield* must be provided to be
@@ -678,8 +679,13 @@ class DXParser(object):
         self.currentobject = None           # containers for data
         self.objects = []                   # |
         self.tokens = []                    # token buffer
-        with open(self.filename, 'r') as self.dxfile:
-            self.use_parser('general')      # parse the whole file and populate self.objects
+
+        if gz:
+            with gzip.open(self.filename, 'rt') as self.dxfile:
+                self.use_parser('general')      # parse the whole file and populate self.objects
+        else:
+            with open(self.filename, 'r') as self.dxfile:
+                self.use_parser('general')      # parse the whole file and populate self.objects
 
         # assemble field from objects
         for o in self.objects:
