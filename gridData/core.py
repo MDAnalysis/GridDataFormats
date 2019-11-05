@@ -119,7 +119,6 @@ class Grid(object):
         # file formats are guess from extension == lower case key
         self._exporters = {
             'DX': self._export_dx,
-            'DXGZ': self._export_dxgz,
             'PKL': self._export_python,
             'PICKLE': self._export_python,  # compatibility
             'PYTHON': self._export_python,  # compatibility
@@ -127,7 +126,6 @@ class Grid(object):
         self._loaders = {
             'CCP4': self._load_cpp4,
             'DX': self._load_dx,
-            'DXGZ': self._load_dxgz,
             'PLT': self._load_plt,
             'PKL': self._load_python,
             'PICKLE': self._load_python,  # compatibility
@@ -383,7 +381,11 @@ class Grid(object):
         else:
             available = self._loaders
         if file_format is None:
-            file_format = os.path.splitext(filename)[1][1:]
+            splitted = os.path.splitext(filename)
+            if splitted[1][1:] in ('gz', ):
+                file_format = os.path.splitext(splitted[0])[1][1:]
+            else:
+                file_format = splitted[1][1:]
         file_format = file_format.upper()
         if not file_format:
             file_format = self.default_format
@@ -435,16 +437,12 @@ class Grid(object):
         grid, edges = ccp4.histogramdd()
         self.__init__(grid=grid, edges=edges, metadata=self.metadata)
 
-    def _load_dx(self, filename, gz=False):
+    def _load_dx(self, filename):
         """Initializes Grid from a OpenDX file."""
         dx = OpenDX.field(0)
-        dx.read(filename, gz)
+        dx.read(filename)
         grid, edges = dx.histogramdd()
         self.__init__(grid=grid, edges=edges, metadata=self.metadata)
-
-    def _load_dxgz(self, filename):
-        """Initializes Grid from a gzipped OpenDX file."""
-        self._load_dx(filename=filename, gz=True)
 
     def _load_plt(self, filename):
         """Initialize Grid from gOpenMol plt file."""
@@ -552,18 +550,12 @@ class Grid(object):
         )
         dx = OpenDX.field('density', components=components, comments=comments)
         dx.write(filename)
-
-    def _export_dxgz(self, filename, type=None, typequote='"', **kwargs):
-        self._export_dx(filename, type, typequote, **kwargs)
-        root, ext = os.path.splitext(filename)
-        filename = root + '.dx'
-
-        with open(filename, 'rb') as in_file:
-            gz_filename = filename + '.gz'
-            with gzip.open(gz_filename, 'wb') as out_file:
-                for l in in_file:
-                    out_file.write(l)
-        os.remove(filename)
+        if ext == '.gz':
+            with open(filename, 'rb') as in_file:
+                with gzip.open(root + ext, 'wb') as out_file:
+                    for l in in_file:
+                        out_file.write(l)
+            os.remove(filename)
 
     def save(self, filename):
         """Save a grid object to <filename>.pickle

@@ -484,7 +484,7 @@ class field(DXclass):
             for component,object in self.sorted_components():
                 outfile.write('component "%s" value %s\n' % (component,str(object.id)))
 
-    def read(self, file, gz=False):
+    def read(self, file):
         """Read DX field from file.
 
             dx = OpenDX.field.read(dxfile)
@@ -493,7 +493,7 @@ class field(DXclass):
         """
         DXfield = self
         p = DXParser(file)
-        p.parse(DXfield, gz)
+        p.parse(DXfield)
 
     def add(self,component,DXobj):
         """add a component to the field"""
@@ -653,7 +653,7 @@ class DXParser(object):
                         }
 
 
-    def parse(self, DXfield, gz=False):
+    def parse(self, DXfield):
         """Parse the dx file and construct a DX field object with component classes.
 
         A :class:`field` instance *DXfield* must be provided to be
@@ -680,12 +680,12 @@ class DXParser(object):
         self.objects = []                   # |
         self.tokens = []                    # token buffer
 
-        if gz:
+        if self.filename.endswith('.gz'):
             with gzip.open(self.filename, 'rt') as self.dxfile:
-                self.use_parser('general')      # parse the whole file and populate self.objects
+                            self.use_parser('general')
         else:
             with open(self.filename, 'r') as self.dxfile:
-                self.use_parser('general')      # parse the whole file and populate self.objects
+                        self.use_parser('general')      # parse the whole file and populate self.objects
 
         # assemble field from objects
         for o in self.objects:
