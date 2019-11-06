@@ -13,13 +13,13 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-11/06/2019 eloyfelix, orbeckst
+??/??/2019 eloyfelix
 
   * 0.6.0
 
   Enhancements
 
-  * Allow parsing/writting gzipped DX files
+  * Allow parsing/writing gzipped DX files
 
 
 05/16/2019 giacomofiorin, orbeckst

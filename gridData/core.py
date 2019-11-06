@@ -549,13 +549,9 @@ class Grid(object):
             data=OpenDX.array(3, self.grid, type=type, typequote=typequote),
         )
         dx = OpenDX.field('density', components=components, comments=comments)
-        dx.write(filename)
         if ext == '.gz':
-            with open(filename, 'rb') as in_file:
-                with gzip.open(root + ext, 'wb') as out_file:
-                    for l in in_file:
-                        out_file.write(l)
-            os.remove(filename)
+            filename = root + ext
+        dx.write(filename)
 
     def save(self, filename):
         """Save a grid object to <filename>.pickle
