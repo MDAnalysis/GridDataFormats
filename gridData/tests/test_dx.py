@@ -10,7 +10,7 @@ from gridData import Grid
 
 from . import datafiles
 
-@pytest.mark.parametrize("infile", [datafiles.DX, datafiles.DX+'.gz'])
+@pytest.mark.parametrize("infile", [datafiles.DX, datafiles.DXGZ])
 def test_read_dx(infile):
     g = Grid(infile)
     POINTS = 8
