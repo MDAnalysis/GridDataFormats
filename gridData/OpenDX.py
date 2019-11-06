@@ -166,7 +166,6 @@ import re
 from six import next
 from six.moves import range
 import gzip
-import bz2
 
 import warnings
 
@@ -179,18 +178,23 @@ class DXclass(object):
         self.component = None   # component type
         self.D = None      # dimensions
 
-    def write(self,file,optstring="",quote=False):
+    def write(self, file, optstring="", quote=False):
         """write the 'object' line; additional args are packed in string"""
         classid = str(self.id)
         if quote: classid = '"'+classid+'"'
         # Only use a *single* space between tokens; both chimera's and pymol's DX parser
         # does not properly implement the OpenDX specs and produces garbage with multiple
         # spaces. (Chimera 1.4.1, PyMOL 1.3)
-        to_write = 'object '+classid+' class '+str(self.name)+' '+\
-            optstring+'\n'
-        if isinstance(file, (gzip.GzipFile, bz2.BZ2File)):
+        to_write = 'object '+classid+' class '+str(self.name)+' '+optstring+'\n'
+        if isinstance(file, gzip.GzipFile):
             to_write = to_write.encode()
         file.write(to_write)
+
+    def write_line(self, file, line="", quote=False):
+        """write a line to the file"""
+        if isinstance(file, gzip.GzipFile):
+            line = line.encode()
+        file.write(line)
 
     def read(self,file):
         raise NotImplementedError('Reading is currently not supported.')
@@ -232,18 +236,14 @@ class gridpositions(DXclass):
             # anything more complicated
             raise NotImplementedError('Only regularly spaced grids allowed, '
                                       'not delta={}'.format(self.delta))
-    def write(self,file):
-        to_write = ('counts '+self.ndformat(' %d')) % tuple(self.shape)
-        DXclass.write(self, file, to_write)
-        to_write = 'origin %f %f %f\n' % tuple(self.origin)
-        if isinstance(file, (gzip.GzipFile, bz2.BZ2File)):
-            to_write = to_write.encode()
-        file.write(to_write)
+    def write(self, file):
+        DXclass.write(self, file, ('counts '+self.ndformat(' %d')) %
+                      tuple(self.shape))
+        DXclass.write_line(self, file, 'origin %f %f %f\n' %
+                           tuple(self.origin))
         for delta in self.delta:
-            to_write = ('delta '+self.ndformat(' %f')+'\n') % tuple(delta)
-            if isinstance(file, (gzip.GzipFile, bz2.BZ2File)):
-                to_write = to_write.encode()
-            file.write(to_write)
+            DXclass.write_line(
+                self, file, ('delta '+self.ndformat(' %f')+'\n') % tuple(delta))
 
     def edges(self):
         """Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.
@@ -397,24 +397,13 @@ class array(DXclass):
         while 1:
             try:
                 for i in range(values_per_line):
-                    to_write = fmt_string.format(next(values)) + "\t"
-                    if isinstance(file, (gzip.GzipFile, bz2.BZ2File)):
-                        to_write = to_write.encode()
-                    file.write(to_write)
-                if isinstance(file, (gzip.GzipFile, bz2.BZ2File)):
-                    file.write(b'\n')
-                else:
-                    file.write('\n')
+                    DXclass.write_line(
+                        self, file, fmt_string.format(next(values)) + "\t")
+                DXclass.write_line(self, file, '\n')
             except StopIteration:
-                if isinstance(file, (gzip.GzipFile, bz2.BZ2File)):
-                    file.write(b'\n')
-                else:
-                    file.write('\n')
+                DXclass.write_line(self, file, '\n')
                 break
-        to_write = 'attribute "dep" string "positions"\n'
-        if isinstance(file, (gzip.GzipFile, bz2.BZ2File)):
-            to_write = to_write.encode()
-        file.write(to_write)
+        DXclass.write_line(self, file, 'attribute "dep" string "positions"\n')
 
 class field(DXclass):
     """OpenDX container class
@@ -505,20 +494,15 @@ class field(DXclass):
         with self._openfile(str(filename)) as outfile:
             for line in self.comments:
                 comment = '# '+str(line)
-                to_write = comment[:maxcol]+'\n'
-                if isinstance(outfile, (gzip.GzipFile, bz2.BZ2File)):
-                    to_write = to_write.encode()
-                outfile.write(to_write)
+                DXclass.write_line(self, outfile, comment[:maxcol]+'\n')
             # each individual object
-            for component,object in self.sorted_components():
+            for component, object in self.sorted_components():
                 object.write(outfile)
             # the field object itself
-            DXclass.write(self,outfile,quote=True)
-            for component,object in self.sorted_components():
-                to_write = 'component "%s" value %s\n' % (component,str(object.id))
-                if isinstance(outfile, (gzip.GzipFile, bz2.BZ2File)):
-                    to_write = to_write.encode()
-                outfile.write(to_write)
+            DXclass.write(self, outfile, quote=True)
+            for component, object in self.sorted_components():
+                DXclass.write_line(self, outfile, 'component "%s" value %s\n' % (
+                    component, str(object.id)))
 
     def read(self, file):
         """Read DX field from file.
