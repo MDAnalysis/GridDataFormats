@@ -383,7 +383,11 @@ class Grid(object):
         else:
             available = self._loaders
         if file_format is None:
-            file_format = os.path.splitext(filename)[1][1:]
+            splitted = os.path.splitext(filename)
+            if splitted[1][1:] in ('gz', ):
+                file_format = os.path.splitext(splitted[0])[1][1:]
+            else:
+                file_format = splitted[1][1:]
         file_format = file_format.upper()
         if not file_format:
             file_format = self.default_format
@@ -547,6 +551,8 @@ class Grid(object):
             data=OpenDX.array(3, self.grid, type=type, typequote=typequote),
         )
         dx = OpenDX.field('density', components=components, comments=comments)
+        if ext == '.gz':
+            filename = root + ext
         dx.write(filename)
 
     def save(self, filename):

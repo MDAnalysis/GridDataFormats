@@ -5,6 +5,7 @@ from pkg_resources import resource_filename
 __all__ = ["DX", "CCP4", "gOpenMol"]
 
 DX = resource_filename(__name__, 'test.dx')
+DXGZ = resource_filename(__name__, 'test.dx.gz')
 CCP4 = resource_filename(__name__, 'test.ccp4')
 # from http://www.ebi.ac.uk/pdbe/coordinates/files/1jzv.ccp4
 # (see issue #57)
