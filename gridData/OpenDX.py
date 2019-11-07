@@ -701,10 +701,10 @@ class DXParser(object):
 
         if self.filename.endswith('.gz'):
             with gzip.open(self.filename, 'rt') as self.dxfile:
-                            self.use_parser('general')
+                self.use_parser('general')
         else:
             with open(self.filename, 'r') as self.dxfile:
-                        self.use_parser('general')      # parse the whole file and populate self.objects
+                self.use_parser('general')      # parse the whole file and populate self.objects
 
         # assemble field from objects
         for o in self.objects:
