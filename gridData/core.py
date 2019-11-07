@@ -32,7 +32,6 @@ from six.moves import cPickle, range, zip
 
 import os
 import errno
-import gzip
 
 import numpy
 
