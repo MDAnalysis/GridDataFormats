@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>4.2.2. gOpenMol — the gOpenMol plt format &#8212; GridDataFormats 0.5.0 documentation</title>
+    <title>4.2.2. gOpenMol — the gOpenMol plt format &#8212; GridDataFormats 0.5.0+1.g37e6d0c documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0 documentation"
+          title="Search within GridDataFormats 0.5.0+1.g37e6d0c documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -42,7 +42,7 @@
 <p>The module provides a simple implementation of a reader for <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a>
 <em>plt</em> files. Plt files are binary files. The <a class="reference internal" href="#gridData.gOpenMol.Plt" title="gridData.gOpenMol.Plt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plt</span></code></a> reader tries
 to guess the endianess of the file, but this can fail (with a
-<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>); you are on your own in this case.</p>
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>); you are on your own in this case.</p>
 <p>Only the reader is implemented. If you want to write gridded data use a format
 that is more standard, such as OpenDX (see <code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code>).</p>
 <div class="section" id="background">
@@ -147,7 +147,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 <h2>4.2.2.3. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="gridData.gOpenMol.Plt">
-<em class="property">class </em><code class="descclassname">gridData.gOpenMol.</code><code class="descname">Plt</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.gOpenMol.Plt" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.gOpenMol.</code><code class="sig-name descname">Plt</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.gOpenMol.Plt" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class to represent a <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a> plt file.</p>
 <dl>
 <dt>Only reading is implemented; either supply a filename to the constructor</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">Plt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -170,22 +170,22 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
 <dt><code class="xref py py-attr docutils literal notranslate"><span class="pre">Plt.delta</span></code></dt><dd><p>DxD array describing the deltas</p>
 </dd>
 </dl>
-<dl class="attribute">
+<dl class="method">
 <dt id="gridData.gOpenMol.Plt.edges">
-<code class="descname">edges</code><a class="headerlink" href="#gridData.gOpenMol.Plt.edges" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">edges</code><a class="headerlink" href="#gridData.gOpenMol.Plt.edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</p>
 <p>Only works for regular, orthonormal grids.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.gOpenMol.Plt.histogramdd">
-<code class="descname">histogramdd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt.histogramdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.gOpenMol.Plt.histogramdd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">histogramdd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt.histogramdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.gOpenMol.Plt.histogramdd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return array data as (edges,grid), i.e. a numpy nD histogram.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.gOpenMol.Plt.read">
-<code class="descname">read</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.gOpenMol.Plt.read" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.gOpenMol.Plt.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate the instance from the plt file <em>filename</em>.</p>
 </dd></dl>
 
@@ -242,10 +242,10 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -259,7 +259,7 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

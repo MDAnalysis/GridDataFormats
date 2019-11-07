@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>4.2.1. OpenDX — routines to read and write simple OpenDX files &#8212; GridDataFormats 0.5.0 documentation</title>
+    <title>4.2.1. OpenDX — routines to read and write simple OpenDX files &#8212; GridDataFormats 0.5.0+1.g37e6d0c documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0 documentation"
+          title="Search within GridDataFormats 0.5.0+1.g37e6d0c documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -123,7 +123,7 @@ elements are 0 and the diagonal ones correspond to the
 </dd>
 </dl>
 <p>The DX data type (“type” in the DX file) is determined from the
-<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> that is provided as
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> that is provided as
 the <em>grid</em> (or with the <em>type</em> keyword argument to
 <a class="reference internal" href="#gridData.OpenDX.array" title="gridData.OpenDX.array"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenDX.array</span></code></a>).</p>
 <p>For example, to build a <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">field</span></code></a>:</p>
@@ -149,11 +149,11 @@ the <em>grid</em> (or with the <em>type</em> keyword argument to
 </pre></div>
 </div>
 <p>Only simple arrays are read and initially stored as a 1-d
-<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in the <cite>dx.components[‘data’].array</cite> with the
-<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> determined by the DX type in the file.</p>
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in the <cite>dx.components[‘data’].array</cite> with the
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> determined by the DX type in the file.</p>
 <p>The dx <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">field</span></code></a> object has a method
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">histogramdd()</span></code> that produces output identical to
-the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.16)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function by taking the stored dimension
+the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.17)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function by taking the stored dimension
 and deltas into account. In this way, one can store nD histograms in a
 portable and universal manner:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">()</span>
@@ -171,14 +171,14 @@ to an archived copy at the Internet Archive , <a class="reference external" href
 <h2>4.2.1.4. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="gridData.OpenDX.DXInitObject">
-<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXInitObject</code><span class="sig-paren">(</span><em>classtype</em>, <em>classid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">DXInitObject</code><span class="sig-paren">(</span><em class="sig-param">classtype</em>, <em class="sig-param">classid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Storage class that holds data to initialize one of the ‘real’
 classes such as OpenDX.array, OpenDX.gridconnections, …</p>
 <p>All variables are stored in args which will be turned into the
 arguments for the DX class.</p>
 <dl class="method">
 <dt id="gridData.OpenDX.DXInitObject.initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject.initialize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject.initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the corresponding DXclass from the data.</p>
 <p>class = DXInitObject.initialize()</p>
 </dd></dl>
@@ -187,13 +187,13 @@ arguments for the DX class.</p>
 
 <dl class="exception">
 <dt id="gridData.OpenDX.DXParseError">
-<em class="property">exception </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXParseError</code><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParseError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParseError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">DXParseError</code><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParseError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParseError" title="Permalink to this definition">¶</a></dt>
 <dd><p>general exception for parsing errors in DX files</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="gridData.OpenDX.DXParser">
-<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXParser</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">DXParser</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Brain-dead baroque implementation to read a simple (VMD) dx file.</p>
 <p>Requires a OpenDX.field instance.</p>
 <ol class="arabic simple">
@@ -215,13 +215,13 @@ component layout is currently ignored.</p>
 <p>Note that quotes are removed from quoted strings.</p>
 <dl class="method">
 <dt id="gridData.OpenDX.DXParser.apply_parser">
-<code class="descname">apply_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.apply_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.apply_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">apply_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.apply_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.apply_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply the current parser to the token stream.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.DXParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>DXfield</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">DXfield</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the dx file and construct a DX field object with component classes.</p>
 <p>A <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">field</span></code></a> instance <em>DXfield</em> must be provided to be
 filled by the parser:</p>
@@ -245,13 +245,13 @@ not implemented yet.</p></li>
 
 <dl class="method">
 <dt id="gridData.OpenDX.DXParser.set_parser">
-<code class="descname">set_parser</code><span class="sig-paren">(</span><em>parsername</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.set_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.set_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_parser</code><span class="sig-paren">(</span><em class="sig-param">parsername</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.set_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.set_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set parsername as the current parser.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.DXParser.use_parser">
-<code class="descname">use_parser</code><span class="sig-paren">(</span><em>parsername</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.use_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.use_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">use_parser</code><span class="sig-paren">(</span><em class="sig-param">parsername</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParser.use_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParser.use_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set parsername as the current parser and apply it.</p>
 </dd></dl>
 
@@ -259,25 +259,25 @@ not implemented yet.</p></li>
 
 <dl class="exception">
 <dt id="gridData.OpenDX.DXParserNoTokens">
-<em class="property">exception </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXParserNoTokens</code><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParserNoTokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParserNoTokens" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">DXParserNoTokens</code><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXParserNoTokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXParserNoTokens" title="Permalink to this definition">¶</a></dt>
 <dd><p>raised when the token buffer is exhausted</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="gridData.OpenDX.DXclass">
-<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">DXclass</code><span class="sig-paren">(</span><em>classid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">DXclass</code><span class="sig-paren">(</span><em class="sig-param">classid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass" title="Permalink to this definition">¶</a></dt>
 <dd><p>‘class’ object as defined by OpenDX</p>
 <p>id is the object number</p>
 <dl class="method">
 <dt id="gridData.OpenDX.DXclass.ndformat">
-<code class="descname">ndformat</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass.ndformat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass.ndformat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ndformat</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass.ndformat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass.ndformat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a string with as many repetitions of s as self
 has dimensions (derived from shape)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.DXclass.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>file</em>, <em>optstring=''</em>, <em>quote=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass.write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">stream</em>, <em class="sig-param">optstring=''</em>, <em class="sig-param">quote=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXclass.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXclass.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>write the ‘object’ line; additional args are packed in string</p>
 </dd></dl>
 
@@ -285,19 +285,19 @@ has dimensions (derived from shape)</p>
 
 <dl class="class">
 <dt id="gridData.OpenDX.array">
-<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">array</code><span class="sig-paren">(</span><em>classid</em>, <em>array=None</em>, <em>type=None</em>, <em>typequote='&quot;'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.array" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">array</code><span class="sig-paren">(</span><em class="sig-param">classid</em>, <em class="sig-param">array=None</em>, <em class="sig-param">type=None</em>, <em class="sig-param">typequote='&quot;'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.array" title="Permalink to this definition">¶</a></dt>
 <dd><p>OpenDX array class.</p>
 <p>See <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440">Array Objects</a> for details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – </p></li>
+<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – </p></li>
 <li><p><strong>array</strong> (<em>array_like</em>) – </p></li>
-<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
 the closest numpy dtype.  <cite>type</cite> must be one of the
 allowed types in DX files as defined under <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440">Array
 Objects</a>.  The default <code class="docutils literal notranslate"><span class="pre">None</span></code> tries to set the type
-from the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of <cite>array</cite>.</p>
+from the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of <cite>array</cite>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.4.0.</span></p>
 </div>
@@ -305,36 +305,36 @@ from the <a class="reference external" href="https://docs.scipy.org/doc/numpy/re
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if <cite>array</cite> is not provided; or if <cite>type</cite> is not of the correct
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <cite>array</cite> is not provided; or if <cite>type</cite> is not of the correct
     DX type</p>
 </dd>
 </dl>
 <dl class="attribute">
 <dt id="gridData.OpenDX.array.dx_types">
-<code class="descname">dx_types</code><em class="property"> = {'byte': 'uint8', 'double': 'float64', 'float': 'float32', 'int': 'int32', 'short': 'int16', 'signed byte': 'int8', 'signed int': 'int32', 'signed short': 'int16', 'unsigned byte': 'uint8', 'unsigned int': 'uint32', 'unsigned short': 'uint16'}</em><a class="headerlink" href="#gridData.OpenDX.array.dx_types" title="Permalink to this definition">¶</a></dt>
-<dd><p>conversion from OpenDX type to closest <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a>
+<code class="sig-name descname">dx_types</code><em class="property"> = {'byte': 'uint8', 'double': 'float64', 'float': 'float32', 'int': 'int32', 'short': 'int16', 'signed byte': 'int8', 'signed int': 'int32', 'signed short': 'int16', 'unsigned byte': 'uint8', 'unsigned int': 'uint32', 'unsigned short': 'uint16'}</em><a class="headerlink" href="#gridData.OpenDX.array.dx_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>conversion from OpenDX type to closest <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a>
 (round-tripping is not guaranteed to produce identical types); not all
 types are supported (e.g., strings and conversion to int64 are missing)</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="gridData.OpenDX.array.np_types">
-<code class="descname">np_types</code><em class="property"> = {'float16': 'float', 'float32': 'float', 'float64': 'double', 'int16': 'short', 'int32': 'int', 'int64': 'int', 'int8': 'signed byte', 'uint16': 'unsigned short', 'uint32': 'unsigned int', 'uint64': 'unsigned int', 'uint8': 'byte'}</em><a class="headerlink" href="#gridData.OpenDX.array.np_types" title="Permalink to this definition">¶</a></dt>
-<dd><p>conversion from <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.name.html#numpy.dtype.name" title="(in NumPy v1.16)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">numpy.dtype.name</span></code></a> to closest OpenDX array type
+<code class="sig-name descname">np_types</code><em class="property"> = {'float16': 'float', 'float32': 'float', 'float64': 'double', 'int16': 'short', 'int32': 'int', 'int64': 'int', 'int8': 'signed byte', 'uint16': 'unsigned short', 'uint32': 'unsigned int', 'uint64': 'unsigned int', 'uint8': 'byte'}</em><a class="headerlink" href="#gridData.OpenDX.array.np_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>conversion from <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.name.html#numpy.dtype.name" title="(in NumPy v1.17)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">numpy.dtype.name</span></code></a> to closest OpenDX array type
 (round-tripping is not guaranteed to produce identical types); not all
 types are supported (e.g., strings are missing)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.array.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#array.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.array.write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#array.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.array.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the <em>class array</em> section.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>file</strong> (<em>file</em>) – </p>
+<dd class="field-odd"><p><strong>stream</strong> (<em>stream</em>) – </p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
     raised.</p>
 </dd>
 </dl>
@@ -344,7 +344,7 @@ types are supported (e.g., strings are missing)</p>
 
 <dl class="class">
 <dt id="gridData.OpenDX.field">
-<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">field</code><span class="sig-paren">(</span><em>classid='0'</em>, <em>components=None</em>, <em>comments=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">field</code><span class="sig-paren">(</span><em class="sig-param">classid='0'</em>, <em class="sig-param">components=None</em>, <em class="sig-param">comments=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field" title="Permalink to this definition">¶</a></dt>
 <dd><p>OpenDX container class</p>
 <p>The <em>field</em> is the top-level object and represents the whole
 OpenDX file. It contains a number of other objects.</p>
@@ -354,8 +354,8 @@ OpenDX file. It contains a number of other objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – arbitrary string</p></li>
-<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – arbitrary string</p></li>
+<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
 individual ids!) which correspond to</p>
 <ul>
 <li><p>positions</p></li>
@@ -363,7 +363,7 @@ individual ids!) which correspond to</p>
 <li><p>data</p></li>
 </ul>
 </p></li>
-<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – list of strings; each string becomes a comment line
+<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – list of strings; each string becomes a comment line
 prefixed with ‘#’. Avoid newlines.</p></li>
 </ul>
 </dd>
@@ -388,25 +388,25 @@ components. Objects are referenced by their unique id.)</p>
 </div>
 <dl class="method">
 <dt id="gridData.OpenDX.field.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>component</em>, <em>DXobj</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.add" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">DXobj</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>add a component to the field</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.field.add_comment">
-<code class="descname">add_comment</code><span class="sig-paren">(</span><em>comment</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.add_comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.add_comment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_comment</code><span class="sig-paren">(</span><em class="sig-param">comment</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.add_comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.add_comment" title="Permalink to this definition">¶</a></dt>
 <dd><p>add comments</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.field.histogramdd">
-<code class="descname">histogramdd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.histogramdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.histogramdd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">histogramdd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.histogramdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.histogramdd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return array data as (edges,grid), i.e. a numpy nD histogram.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.field.read">
-<code class="descname">read</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.read" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read DX field from file.</p>
 <blockquote>
 <div><p>dx = OpenDX.field.read(dxfile)</p>
@@ -416,13 +416,13 @@ components. Objects are referenced by their unique id.)</p>
 
 <dl class="method">
 <dt id="gridData.OpenDX.field.sorted_components">
-<code class="descname">sorted_components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.sorted_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.sorted_components" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sorted_components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.sorted_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.sorted_components" title="Permalink to this definition">¶</a></dt>
 <dd><p>iterator that returns (component,object) in id order</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.field.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.field.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the complete dx object to the file.</p>
 <p>This is the simple OpenDX format which includes the data into
 the header via the ‘object array … data follows’ statement.</p>
@@ -434,11 +434,12 @@ the header via the ‘object array … data follows’ statement.</p>
 
 <dl class="class">
 <dt id="gridData.OpenDX.gridconnections">
-<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">gridconnections</code><span class="sig-paren">(</span><em>classid</em>, <em>shape=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridconnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridconnections" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">gridconnections</code><span class="sig-paren">(</span><em class="sig-param">classid</em>, <em class="sig-param">shape=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridconnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridconnections" title="Permalink to this definition">¶</a></dt>
 <dd><p>OpenDX gridconnections class</p>
+<p>id is the object number</p>
 <dl class="method">
 <dt id="gridData.OpenDX.gridconnections.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridconnections.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridconnections.write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridconnections.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridconnections.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>write the ‘object’ line; additional args are packed in string</p>
 </dd></dl>
 
@@ -446,21 +447,22 @@ the header via the ‘object array … data follows’ statement.</p>
 
 <dl class="class">
 <dt id="gridData.OpenDX.gridpositions">
-<em class="property">class </em><code class="descclassname">gridData.OpenDX.</code><code class="descname">gridpositions</code><span class="sig-paren">(</span><em>classid</em>, <em>shape=None</em>, <em>origin=None</em>, <em>delta=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridpositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridpositions" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">gridpositions</code><span class="sig-paren">(</span><em class="sig-param">classid</em>, <em class="sig-param">shape=None</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">delta=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridpositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridpositions" title="Permalink to this definition">¶</a></dt>
 <dd><p>OpenDX gridpositions class.</p>
 <p>shape     D-tuplet describing size in each dimension
 origin    coordinates of the centre of the grid cell with index 0,0,…,0
 delta     DxD array describing the deltas</p>
+<p>id is the object number</p>
 <dl class="method">
 <dt id="gridData.OpenDX.gridpositions.edges">
-<code class="descname">edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridpositions.edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridpositions.edges" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridpositions.edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridpositions.edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</p>
 <p>Only works for regular, orthonormal grids.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.OpenDX.gridpositions.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridpositions.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridpositions.write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">stream</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#gridpositions.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.gridpositions.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>write the ‘object’ line; additional args are packed in string</p>
 </dd></dl>
 
@@ -517,10 +519,10 @@ delta     DxD array describing the deltas</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -534,7 +536,7 @@ delta     DxD array describing the deltas</p>
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

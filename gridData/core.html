@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>5. gridData.core — Core functionality for storing n-D grids &#8212; GridDataFormats 0.5.0 documentation</title>
+    <title>5. gridData.core — Core functionality for storing n-D grids &#8212; GridDataFormats 0.5.0+1.g37e6d0c documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0 documentation"
+          title="Search within GridDataFormats 0.5.0+1.g37e6d0c documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -55,7 +55,7 @@ for specific formats:</p>
 <h2>5.1. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="gridData.core.Grid">
-<em class="property">class </em><code class="descclassname">gridData.core.</code><code class="descname">Grid</code><span class="sig-paren">(</span><em>grid=None</em>, <em>edges=None</em>, <em>origin=None</em>, <em>delta=None</em>, <em>metadata={}</em>, <em>interpolation_spline_order=3</em>, <em>file_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.core.</code><code class="sig-name descname">Grid</code><span class="sig-paren">(</span><em class="sig-param">grid=None</em>, <em class="sig-param">edges=None</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">delta=None</em>, <em class="sig-param">metadata={}</em>, <em class="sig-param">interpolation_spline_order=3</em>, <em class="sig-param">file_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to manage a multidimensional grid object.</p>
 <p>The export(format=’dx’) method always exports a 3D object, the
 rest should work for an array of any dimension.</p>
@@ -112,14 +112,14 @@ default is <code class="docutils literal notranslate"><span class="pre">None</sp
 </div>
 <dl class="method">
 <dt id="gridData.core.Grid.centers">
-<code class="descname">centers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.centers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.centers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">centers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.centers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.centers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the coordinates of the centers of all grid cells as an
 iterator.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.core.Grid.check_compatible">
-<code class="descname">check_compatible</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.check_compatible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.check_compatible" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_compatible</code><span class="sig-paren">(</span><em class="sig-param">other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.check_compatible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.check_compatible" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if <em>other</em> can be used in an arithmetic operation.</p>
 <ol class="arabic simple">
 <li><p><em>other</em> is a scalar</p></li>
@@ -127,14 +127,14 @@ iterator.</p>
 </ol>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> if not compatible.</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> if not compatible.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridData.core.Grid.export">
-<code class="descname">export</code><span class="sig-paren">(</span><em>filename</em>, <em>file_format=None</em>, <em>type=None</em>, <em>typequote='&quot;'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.export" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">file_format=None</em>, <em class="sig-param">type=None</em>, <em class="sig-param">typequote='&quot;'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.export" title="Permalink to this definition">¶</a></dt>
 <dd><p>export density to file using the given format.</p>
 <p>The format can also be deduced from the suffix of the filename
 though the <em>format</em> keyword takes precedence.</p>
@@ -151,9 +151,9 @@ is simpler than <code class="docutils literal notranslate"><span class="pre">exp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – name of the output file</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – name of the output file</p></li>
 <li><p><strong>file_format</strong> (<em>{'dx'</em><em>, </em><em>'pickle'</em><em>, </em><em>None}</em><em> (</em><em>optional</em><em>)</em>) – output file format, the default is “dx”</p></li>
-<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
 By default (<code class="docutils literal notranslate"><span class="pre">None</span></code>), the DX type is determined from the numpy
 dtype of the array of the grid (and this will typically result in
 “double”).</p>
@@ -161,7 +161,7 @@ dtype of the array of the grid (and this will typically result in
 <p><span class="versionmodified added">New in version 0.4.0.</span></p>
 </div>
 </p></li>
-<li><p><strong>typequote</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>For DX, set the character used to quote the type string;
+<li><p><strong>typequote</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>For DX, set the character used to quote the type string;
 by default this is a double-quote character, ‘”’.
 Custom parsers like the one from NAMD-GridForces (backend for MDFF)
 expect no quotes, and typequote=’’ may be used to appease them.</p>
@@ -174,9 +174,9 @@ expect no quotes, and typequote=’’ may be used to appease them.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="gridData.core.Grid.interpolated">
-<code class="descname">interpolated</code><a class="headerlink" href="#gridData.core.Grid.interpolated" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">interpolated</code><a class="headerlink" href="#gridData.core.Grid.interpolated" title="Permalink to this definition">¶</a></dt>
 <dd><p>B-spline function over the data grid(x,y,z).</p>
 <p>The <a class="reference internal" href="#gridData.core.Grid.interpolated" title="gridData.core.Grid.interpolated"><code class="xref py py-func docutils literal notranslate"><span class="pre">interpolated()</span></code></a> function allows one to obtain data
 values for any values of the coordinates:</p>
@@ -206,13 +206,13 @@ especially at the boundary between 0 and high values.</p>
 </div>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="gridData.core.Grid.interpolation_spline_order">
-<code class="descname">interpolation_spline_order</code><a class="headerlink" href="#gridData.core.Grid.interpolation_spline_order" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">interpolation_spline_order</code><a class="headerlink" href="#gridData.core.Grid.interpolation_spline_order" title="Permalink to this definition">¶</a></dt>
 <dd><p>Order of the B-spline interpolation of the data.</p>
 <p>3 = cubic; 4 &amp; 5 are also supported</p>
 <p>Only choose values that are acceptable to
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.2.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.3.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#gridData.core.Grid.interpolated" title="gridData.core.Grid.interpolated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interpolated</span></code></a></p>
@@ -221,7 +221,7 @@ especially at the boundary between 0 and high values.</p>
 
 <dl class="method">
 <dt id="gridData.core.Grid.load">
-<code class="descname">load</code><span class="sig-paren">(</span><em>filename</em>, <em>file_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">file_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load saved (pickled or dx) grid and edges from &lt;filename&gt;.pickle</p>
 <blockquote>
 <div><p>Grid.load(&lt;filename&gt;.pickle)
@@ -233,7 +233,7 @@ completely resets all values, based on the loaded data.</p>
 
 <dl class="method">
 <dt id="gridData.core.Grid.resample">
-<code class="descname">resample</code><span class="sig-paren">(</span><em>edges</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.resample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.resample" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">resample</code><span class="sig-paren">(</span><em class="sig-param">edges</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.resample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.resample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample data to a new grid with edges <em>edges</em>.</p>
 <p>This method creates a new grid with the data from the current
 grid resampled to a regular grid specified by <em>edges</em>.  The
@@ -269,11 +269,11 @@ the argument for this method</p>
 
 <dl class="method">
 <dt id="gridData.core.Grid.resample_factor">
-<code class="descname">resample_factor</code><span class="sig-paren">(</span><em>factor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.resample_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.resample_factor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">resample_factor</code><span class="sig-paren">(</span><em class="sig-param">factor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.resample_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.resample_factor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample to a new regular grid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The number of grid cells are scaled with <cite>factor</cite> in each
+<dd class="field-odd"><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The number of grid cells are scaled with <cite>factor</cite> in each
 dimension, i.e., <code class="docutils literal notranslate"><span class="pre">factor</span> <span class="pre">*</span> <span class="pre">N_i</span></code> cells along each
 dimension i.</p>
 </dd>
@@ -292,7 +292,7 @@ dimension i.</p>
 
 <dl class="method">
 <dt id="gridData.core.Grid.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.save" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a grid object to &lt;filename&gt;.pickle</p>
 <p>Internally, this calls
 <code class="docutils literal notranslate"><span class="pre">Grid.export(filename,</span> <span class="pre">format=&quot;python&quot;)</span></code>. A grid can be
@@ -313,7 +313,7 @@ is a better alternative for portability.</p>
 
 <dl class="function">
 <dt id="gridData.core.ndmeshgrid">
-<code class="descclassname">gridData.core.</code><code class="descname">ndmeshgrid</code><span class="sig-paren">(</span><em>*arrs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#ndmeshgrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.ndmeshgrid" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">gridData.core.</code><code class="sig-name descname">ndmeshgrid</code><span class="sig-paren">(</span><em class="sig-param">*arrs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#ndmeshgrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.ndmeshgrid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a mesh grid for N dimensions.</p>
 <p>The input are N arrays, each of which contains the values along one axis of
 the coordinate system. The arrays do not have to have the same number of
@@ -371,10 +371,10 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -388,7 +388,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

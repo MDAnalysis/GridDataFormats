@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>gridData.OpenDX &#8212; GridDataFormats 0.5.0 documentation</title>
+    <title>gridData.OpenDX &#8212; GridDataFormats 0.5.0+1.g37e6d0c documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0 documentation"
+          title="Search within GridDataFormats 0.5.0+1.g37e6d0c documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -203,6 +203,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="nb">next</span>
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">import</span> <span class="nn">gzip</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
 
@@ -215,17 +216,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># component type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># dimensions</span>
 
-<div class="viewcode-block" id="DXclass.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">,</span><span class="n">optstring</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="DXclass.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">optstring</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write the &#39;object&#39; line; additional args are packed in string&quot;&quot;&quot;</span>
         <span class="n">classid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">quote</span><span class="p">:</span> <span class="n">classid</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39;&quot;&#39;</span>
         <span class="c1"># Only use a *single* space between tokens; both chimera&#39;s and pymol&#39;s DX parser</span>
         <span class="c1"># does not properly implement the OpenDX specs and produces garbage with multiple</span>
         <span class="c1"># spaces. (Chimera 1.4.1, PyMOL 1.3)</span>
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;object &#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39; class &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span>\
-                   <span class="n">optstring</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+        <span class="n">to_write</span> <span class="o">=</span> <span class="s1">&#39;object &#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39; class &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">optstring</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">to_write</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;write a line to the file&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">gzip</span><span class="o">.</span><span class="n">GzipFile</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Reading is currently not supported.&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DXclass.ndformat"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.ndformat">[docs]</a>    <span class="k">def</span> <span class="nf">ndformat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
@@ -265,12 +273,14 @@
             <span class="c1"># anything more complicated</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Only regularly spaced grids allowed, &#39;</span>
                                       <span class="s1">&#39;not delta=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">))</span>
-<div class="viewcode-block" id="gridpositions.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">):</span>
-        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">,</span>
-                      <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;origin </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">))</span>
+<div class="viewcode-block" id="gridpositions.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">gridpositions</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;origin </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">delta</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">:</span>
-            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">((</span><span class="s1">&#39;delta &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span>
+                <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;delta &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="gridpositions.edges"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.edges">[docs]</a>    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
 
@@ -289,9 +299,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;gridconnections&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="s1">&#39;connections&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># D dimensional shape</span>
-<div class="viewcode-block" id="gridconnections.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">):</span>
-        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">,</span>
-                      <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span></div></div>
+
+<div class="viewcode-block" id="gridconnections.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">gridconnections</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span></div></div>
+
 
 <div class="viewcode-block" id="array"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array">[docs]</a><span class="k">class</span> <span class="nc">array</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;OpenDX array class.</span>
@@ -388,12 +400,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">typequote</span> <span class="o">=</span> <span class="n">typequote</span>
 
-<div class="viewcode-block" id="array.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+<div class="viewcode-block" id="array.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write the *class array* section.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        file : file</span>
+<span class="sd">        stream : stream</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
@@ -408,9 +420,9 @@
                               <span class="s2">&quot;Use the type=&lt;type&gt; keyword argument.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                                   <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dx_types</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
         <span class="n">typelabel</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">typequote</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">typequote</span><span class="p">)</span>
-        <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">,</span>
-                      <span class="s1">&#39;type </span><span class="si">{0}</span><span class="s1"> rank 0 items </span><span class="si">{1}</span><span class="s1"> data follows&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                          <span class="n">typelabel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;type </span><span class="si">{0}</span><span class="s1"> rank 0 items </span><span class="si">{1}</span><span class="s1"> data follows&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">typelabel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+
         <span class="c1"># grid data, serialized as a C array (z fastest varying)</span>
         <span class="c1"># (flat iterator is equivalent to: for x: for y: for z: grid[x,y,z])</span>
         <span class="c1"># VMD&#39;s DX reader requires exactly 3 values per line</span>
@@ -423,12 +435,12 @@
         <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">values_per_line</span><span class="p">):</span>
-                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fmt_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">values</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">fmt_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">values</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="k">break</span>
-        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;attribute &quot;dep&quot; string &quot;positions&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;attribute &quot;dep&quot; string &quot;positions&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="field"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field">[docs]</a><span class="k">class</span> <span class="nc">field</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;OpenDX container class</span>
@@ -497,6 +509,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">components</span> <span class="o">=</span> <span class="n">components</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span> <span class="n">comments</span>
 
+    <span class="k">def</span> <span class="nf">_openfile_writing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a regular or gz file stream for writing&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="field.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write the complete dx object to the file.</span>
 
@@ -509,19 +528,20 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># comments (VMD chokes on lines of len &gt; 80, so truncate)</span>
         <span class="n">maxcol</span> <span class="o">=</span> <span class="mi">80</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_openfile_writing</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
                 <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;# &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">comment</span><span class="p">[:</span><span class="n">maxcol</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">comment</span><span class="p">[:</span><span class="n">maxcol</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="c1"># each individual object</span>
-            <span class="k">for</span> <span class="n">component</span><span class="p">,</span><span class="nb">object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_components</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">component</span><span class="p">,</span> <span class="nb">object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_components</span><span class="p">():</span>
                 <span class="nb">object</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
             <span class="c1"># the field object itself</span>
-            <span class="n">DXclass</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">outfile</span><span class="p">,</span><span class="n">quote</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">component</span><span class="p">,</span><span class="nb">object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_components</span><span class="p">():</span>
-                <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;component &quot;</span><span class="si">%s</span><span class="s1">&quot; value </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">component</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="n">id</span><span class="p">)))</span></div>
+            <span class="nb">super</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">component</span><span class="p">,</span> <span class="nb">object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_components</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s1">&#39;component &quot;</span><span class="si">%s</span><span class="s1">&quot; value </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">component</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="n">id</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="field.read"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file</span><span class="p">):</span>
+<div class="viewcode-block" id="field.read"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Read DX field from file.</span>
 
 <span class="sd">            dx = OpenDX.field.read(dxfile)</span>
@@ -529,7 +549,7 @@
 <span class="sd">        The classid is discarded and replaced with the one from the file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">DXfield</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">DXParser</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">DXParser</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">DXfield</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="field.add"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">component</span><span class="p">,</span><span class="n">DXobj</span><span class="p">):</span>
@@ -690,7 +710,7 @@
                         <span class="p">}</span>
 
 
-<div class="viewcode-block" id="DXParser.parse"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">DXfield</span><span class="p">):</span>
+<div class="viewcode-block" id="DXParser.parse"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DXfield</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Parse the dx file and construct a DX field object with component classes.</span>
 
 <span class="sd">        A :class:`field` instance *DXfield* must be provided to be</span>
@@ -716,8 +736,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span> <span class="o">=</span> <span class="kc">None</span>           <span class="c1"># containers for data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="p">[]</span>                   <span class="c1"># |</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>                    <span class="c1"># token buffer</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="bp">self</span><span class="o">.</span><span class="n">dxfile</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">use_parser</span><span class="p">(</span><span class="s1">&#39;general&#39;</span><span class="p">)</span>      <span class="c1"># parse the whole file and populate self.objects</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="bp">self</span><span class="o">.</span><span class="n">dxfile</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">use_parser</span><span class="p">(</span><span class="s1">&#39;general&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="bp">self</span><span class="o">.</span><span class="n">dxfile</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">use_parser</span><span class="p">(</span><span class="s1">&#39;general&#39;</span><span class="p">)</span>      <span class="c1"># parse the whole file and populate self.objects</span>
 
         <span class="c1"># assemble field from objects</span>
         <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
@@ -1099,10 +1124,10 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -1116,7 +1141,7 @@
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
