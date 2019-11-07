@@ -10,8 +10,9 @@ from gridData import Grid
 
 from . import datafiles
 
-def test_read_dx():
-    g = Grid(datafiles.DX)
+@pytest.mark.parametrize("infile", [datafiles.DX, datafiles.DXGZ])
+def test_read_dx(infile):
+    g = Grid(infile)
     POINTS = 8
     ref = np.ones(POINTS)
     ref[4] = 1e-6
@@ -21,7 +22,7 @@ def test_read_dx():
     assert_equal(g.delta, np.ones(3))
     assert_equal(g.origin, np.array([20.1, 3., -10.]))
 
-
+@pytest.mark.parametrize("outfile", ["grid.dx", "grid.dx.gz"])
 @pytest.mark.parametrize("nptype,dxtype", [
     ("float16", "float"),
     ("float32", "float"),
@@ -35,7 +36,7 @@ def test_read_dx():
     ("int8", "signed byte"),
     ("uint8", "byte"),
 ])
-def test_write_dx(tmpdir, nptype, dxtype, counts=100, ndim=3):
+def test_write_dx(tmpdir, nptype, dxtype, outfile, counts=100, ndim=3):
     # conversion from numpy array to DX file
 
     h, edges = np.histogramdd(np.random.random((counts, ndim)), bins=10)
@@ -47,7 +48,6 @@ def test_write_dx(tmpdir, nptype, dxtype, counts=100, ndim=3):
     assert_equal(g.grid.sum(), counts)
 
     with tmpdir.as_cwd():
-        outfile = "grid.dx"
         g.export(outfile)
         g2 = Grid(outfile)
 
@@ -66,9 +66,10 @@ def test_write_dx(tmpdir, nptype, dxtype, counts=100, ndim=3):
 
     assert_equal(out_dxtype, dxtype)
 
+@pytest.mark.parametrize("outfile", ["grid.dx", "grid.dx.gz"])
 @pytest.mark.parametrize('nptype', ("complex64", "complex128", "bool_"))
 @pytest.mark.filterwarnings("ignore:array dtype.name =")
-def test_write_dx_ValueError(tmpdir, nptype, counts=100, ndim=3):
+def test_write_dx_ValueError(tmpdir, nptype, outfile, counts=100, ndim=3):
     h, edges = np.histogramdd(np.random.random((counts, ndim)), bins=10)
     g = Grid(h, edges)
 
@@ -77,8 +78,5 @@ def test_write_dx_ValueError(tmpdir, nptype, counts=100, ndim=3):
 
     with pytest.raises(ValueError):
         with tmpdir.as_cwd():
-            outfile = "grid.dx"
             g.export(outfile)
-
-
 
