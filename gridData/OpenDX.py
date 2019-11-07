@@ -186,9 +186,7 @@ class DXclass(object):
         # does not properly implement the OpenDX specs and produces garbage with multiple
         # spaces. (Chimera 1.4.1, PyMOL 1.3)
         to_write = 'object '+classid+' class '+str(self.name)+' '+optstring+'\n'
-        if isinstance(stream, gzip.GzipFile):
-            to_write = to_write.encode()
-        stream.write(to_write)
+        self._write_line(stream, to_write)
 
     @staticmethod
     def _write_line(stream, line="", quote=False):
