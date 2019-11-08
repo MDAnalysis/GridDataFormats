@@ -131,10 +131,7 @@ class Grid(object):
             'PYTHON': self._load_python,  # compatibility
         }
 
-        if metadata is not None:
-            self.metadata = metadata
-        else:
-            self.metadata = {} # prevent sharing of mutable dict between instances
+        self.metadata = metadata if metadata is not None else {}
         self.__interpolated = None  # cache for interpolated grid
         self.__interpolation_spline_order = interpolation_spline_order
         self.interpolation_cval = None  # default to using min(grid)
