@@ -13,13 +13,18 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/2019 eloyfelix
+??/??/2019 eloyfelix, renehamburger1993
 
   * 0.6.0
 
   Enhancements
 
   * Allow parsing/writing gzipped DX files
+  
+  
+  Fixes
+  
+  * fix initialization of mutable instance variable of Grid class (metadata dict) (#71)
 
 
 05/16/2019 giacomofiorin, orbeckst
