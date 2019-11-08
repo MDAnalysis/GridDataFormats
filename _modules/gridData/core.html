@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>gridData.core &#8212; GridDataFormats 0.5.0+1.g37e6d0c documentation</title>
+    <title>gridData.core &#8212; GridDataFormats 0.5.0+2.g7a76d62 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+1.g37e6d0c documentation"
+          title="Search within GridDataFormats 0.5.0+2.g7a76d62 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -104,7 +104,7 @@
     <span class="n">default_format</span> <span class="o">=</span> <span class="s1">&#39;DX&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">metadata</span><span class="o">=</span><span class="p">{},</span> <span class="n">interpolation_spline_order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                 <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interpolation_spline_order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                  <span class="n">file_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a Grid object from data.</span>
@@ -169,7 +169,7 @@
             <span class="s1">&#39;PYTHON&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_python</span><span class="p">,</span>  <span class="c1"># compatibility</span>
         <span class="p">}</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span> <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__interpolated</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># cache for interpolated grid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__interpolation_spline_order</span> <span class="o">=</span> <span class="n">interpolation_spline_order</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interpolation_cval</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># default to using min(grid)</span>
