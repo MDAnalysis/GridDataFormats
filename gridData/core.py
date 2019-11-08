@@ -66,7 +66,7 @@ class Grid(object):
     default_format = 'DX'
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
-                 metadata={}, interpolation_spline_order=3,
+                 metadata=None, interpolation_spline_order=3,
                  file_format=None):
         """
         Create a Grid object from data.
@@ -131,7 +131,7 @@ class Grid(object):
             'PYTHON': self._load_python,  # compatibility
         }
 
-        self.metadata = metadata
+        self.metadata = metadata if metadata is not None else {}
         self.__interpolated = None  # cache for interpolated grid
         self.__interpolation_spline_order = interpolation_spline_order
         self.interpolation_cval = None  # default to using min(grid)
