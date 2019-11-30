@@ -157,38 +157,7 @@ class Grid(object):
             if filename is not None:
                 self.load(filename, file_format=file_format)
             else:
-                if edges is not None:
-                    # set up from histogramdd-type data
-                    self.grid = numpy.asanyarray(grid)
-                    self.edges = edges
-                    self._update()
-                elif origin is not None and delta is not None:
-                    # setup from generic data
-                    origin = numpy.asanyarray(origin)
-                    delta = numpy.asanyarray(delta)
-                    if len(origin) != grid.ndim:
-                        raise TypeError(
-                            "Dimension of origin is not the same as grid dimension.")
-                    if delta.shape == () and numpy.isreal(delta):
-                        delta = numpy.ones(grid.ndim) * delta
-                    elif delta.ndim > 1:
-                        raise NotImplementedError(
-                            "Non-rectangular grids are not supported.")
-                    elif len(delta) != grid.ndim:
-                        raise TypeError("delta should be scalar or array-like of"
-                                        "len(grid.ndim)")
-                    # note that origin is CENTER so edges must be shifted by -0.5*delta
-                    self.edges = [origin[dim] +
-                                  (numpy.arange(m + 1) - 0.5) * delta[dim]
-                                  for dim, m in enumerate(grid.shape)]
-                    self.grid = numpy.asanyarray(grid)
-                    self._update()
-                else:
-                    raise ValueError("Wrong/missing data to set up Grid. Use Grid() or "
-                                     "Grid(grid=<array>, edges=<list>) or "
-                                     "Grid(grid=<array>, origin=(x0, y0, z0), delta=(dx, dy, dz)):\n"
-                                     "grid={0} edges={1} origin={2} delta={3}".format(
-                                         grid, edges, origin, delta))
+                self._load(grid, edges, metadata, origin, delta)
 
     @property
     def interpolation_spline_order(self):
@@ -404,6 +373,40 @@ class Grid(object):
                                                 file_format=file_format,
                                                 export=False)]
 
+    def _load(self, grid=None, edges=None, metadata=None, origin=None, delta=None):
+        if edges is not None:
+            # set up from histogramdd-type data
+            self.grid = numpy.asanyarray(grid)
+            self.edges = edges
+            self._update()
+        elif origin is not None and delta is not None:
+            # setup from generic data
+            origin = numpy.asanyarray(origin)
+            delta = numpy.asanyarray(delta)
+            if len(origin) != grid.ndim:
+                raise TypeError(
+                    "Dimension of origin is not the same as grid dimension.")
+            if delta.shape == () and numpy.isreal(delta):
+                delta = numpy.ones(grid.ndim) * delta
+            elif delta.ndim > 1:
+                raise NotImplementedError(
+                    "Non-rectangular grids are not supported.")
+            elif len(delta) != grid.ndim:
+                raise TypeError("delta should be scalar or array-like of"
+                                "len(grid.ndim)")
+            # note that origin is CENTER so edges must be shifted by -0.5*delta
+            self.edges = [origin[dim] +
+                            (numpy.arange(m + 1) - 0.5) * delta[dim]
+                            for dim, m in enumerate(grid.shape)]
+            self.grid = numpy.asanyarray(grid)
+            self._update()
+        else:
+            raise ValueError("Wrong/missing data to set up Grid. Use Grid() or "
+                                "Grid(grid=<array>, edges=<list>) or "
+                                "Grid(grid=<array>, origin=(x0, y0, z0), delta=(dx, dy, dz)):\n"
+                                "grid={0} edges={1} origin={2} delta={3}".format(
+                                    grid, edges, origin, delta))
+
     def load(self, filename, file_format=None):
         """Load saved (pickled or dx) grid and edges from <filename>.pickle
 
@@ -425,30 +428,30 @@ class Grid(object):
     def _load_python(self, filename):
         with open(filename, 'rb') as f:
             saved = cPickle.load(f)
-        self.__init__(grid=saved['grid'],
-                      edges=saved['edges'],
-                      metadata=saved['metadata'])
+        self._load(grid=saved['grid'],
+                   edges=saved['edges'],
+                   metadata=saved['metadata'])
 
     def _load_cpp4(self, filename):
         """Initializes Grid from a CCP4 file."""
         ccp4 = CCP4.CCP4()
         ccp4.read(filename)
         grid, edges = ccp4.histogramdd()
-        self.__init__(grid=grid, edges=edges, metadata=self.metadata)
+        self._load(grid=grid, edges=edges, metadata=self.metadata)
 
     def _load_dx(self, filename):
         """Initializes Grid from a OpenDX file."""
         dx = OpenDX.field(0)
         dx.read(filename)
         grid, edges = dx.histogramdd()
-        self.__init__(grid=grid, edges=edges, metadata=self.metadata)
+        self._load(grid=grid, edges=edges, metadata=self.metadata)
 
     def _load_plt(self, filename):
         """Initialize Grid from gOpenMol plt file."""
         g = gOpenMol.Plt()
         g.read(filename)
         grid, edges = g.histogramdd()
-        self.__init__(grid=grid, edges=edges, metadata=self.metadata)
+        self._load(grid=grid, edges=edges, metadata=self.metadata)
 
     def export(self, filename, file_format=None, type=None, typequote='"'):
         """export density to file using the given format.
