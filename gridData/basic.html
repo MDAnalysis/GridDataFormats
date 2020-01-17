@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>3. Basic use &#8212; GridDataFormats 0.5.0+2.g7a76d62 documentation</title>
+    <title>3. Basic use &#8212; GridDataFormats 0.5.0+3.gcf8ed57 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+2.g7a76d62 documentation"
+          title="Search within GridDataFormats 0.5.0+3.gcf8ed57 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,14 +38,14 @@
           <div class="body" role="main">
             
   <div class="section" id="basic-use">
-<h1>3. Basic use<a class="headerlink" href="#basic-use" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3. </span>Basic use<a class="headerlink" href="#basic-use" title="Permalink to this headline">¶</a></h1>
 <p>In most cases, only one class is important, the
 <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>, so we just load this right away:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gridData</span> <span class="k">import</span> <span class="n">Grid</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gridData</span> <span class="kn">import</span> <span class="n">Grid</span>
 </pre></div>
 </div>
 <div class="section" id="loading-data">
-<h2>3.1. Loading data<a class="headerlink" href="#loading-data" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.1. </span>Loading data<a class="headerlink" href="#loading-data" title="Permalink to this headline">¶</a></h2>
 <p>From a OpenDX file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">&quot;density.dx&quot;</span><span class="p">)</span>
 </pre></div>
@@ -67,7 +67,7 @@ Chimera.)</p>
 <p>For other ways to load data, see the docs for <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>.</p>
 </div>
 <div class="section" id="writing-out-data">
-<h2>3.2. Writing out data<a class="headerlink" href="#writing-out-data" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Writing out data<a class="headerlink" href="#writing-out-data" title="Permalink to this headline">¶</a></h2>
 <p>Some formats support writing data (see
 <a class="reference internal" href="formats.html#supported-file-formats"><span class="std std-ref">Supported file formats</span></a> for more details), using the
 <a class="reference internal" href="core.html#gridData.core.Grid.export" title="gridData.core.Grid.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gridData.core.Grid.export()</span></code></a> method:</p>
@@ -83,7 +83,7 @@ Chimera.)</p>
 keywords, which are documented separately.</p>
 </div>
 <div class="section" id="subtracting-two-densities">
-<h2>3.3. Subtracting two densities<a class="headerlink" href="#subtracting-two-densities" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.3. </span>Subtracting two densities<a class="headerlink" href="#subtracting-two-densities" title="Permalink to this headline">¶</a></h2>
 <p>Assuming one has two densities that were generated on the same grid
 positions, stored in files <code class="docutils literal notranslate"><span class="pre">A.dx</span></code> and <code class="docutils literal notranslate"><span class="pre">B.dx</span></code>, one first reads the
 data into two <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> objects:</p>
@@ -103,7 +103,7 @@ data into two <a class="reference internal" href="core.html#gridData.core.Grid" 
 viewer, or later read-in again.</p>
 </div>
 <div class="section" id="resampling">
-<h2>3.4. Resampling<a class="headerlink" href="#resampling" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.4. </span>Resampling<a class="headerlink" href="#resampling" title="Permalink to this headline">¶</a></h2>
 <p>Load data:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">&#39;A.dx&#39;</span><span class="p">)</span>
 </pre></div>
@@ -176,8 +176,8 @@ abruptly.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="overview.html" title="previous chapter">2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
-      <li>Next: <a href="formats.html" title="next chapter">4. Formats</a></li>
+      <li>Previous: <a href="overview.html" title="previous chapter"><span class="section-number">2. </span><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+      <li>Next: <a href="formats.html" title="next chapter"><span class="section-number">4. </span>Formats</a></li>
   </ul></li>
 </ul>
 </div>
@@ -199,7 +199,7 @@ abruptly.</p>
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

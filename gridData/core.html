@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>5. gridData.core — Core functionality for storing n-D grids &#8212; GridDataFormats 0.5.0+2.g7a76d62 documentation</title>
+    <title>5. gridData.core — Core functionality for storing n-D grids &#8212; GridDataFormats 0.5.0+3.gcf8ed57 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+2.g7a76d62 documentation"
+          title="Search within GridDataFormats 0.5.0+3.gcf8ed57 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -37,7 +37,7 @@
           <div class="body" role="main">
             
   <span class="target" id="module-gridData.core"></span><div class="section" id="griddata-core-core-functionality-for-storing-n-d-grids">
-<h1>5. <a class="reference internal" href="#module-gridData.core" title="gridData.core"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a> — Core functionality for storing n-D grids<a class="headerlink" href="#griddata-core-core-functionality-for-storing-n-d-grids" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">5. </span><a class="reference internal" href="#module-gridData.core" title="gridData.core"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a> — Core functionality for storing n-D grids<a class="headerlink" href="#griddata-core-core-functionality-for-storing-n-d-grids" title="Permalink to this headline">¶</a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">core</span></code> module contains classes and functions that are
 independent of the grid data format. In particular this module
 contains the <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> class that acts as a universal constructor
@@ -52,7 +52,7 @@ for specific formats:</p>
 </pre></div>
 </div>
 <div class="section" id="classes-and-functions">
-<h2>5.1. Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.1. </span>Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="gridData.core.Grid">
 <em class="property">class </em><code class="sig-prename descclassname">gridData.core.</code><code class="sig-name descname">Grid</code><span class="sig-paren">(</span><em class="sig-param">grid=None</em>, <em class="sig-param">edges=None</em>, <em class="sig-param">origin=None</em>, <em class="sig-param">delta=None</em>, <em class="sig-param">metadata=None</em>, <em class="sig-param">interpolation_spline_order=3</em>, <em class="sig-param">file_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.core.Grid" title="Permalink to this definition">¶</a></dt>
@@ -212,7 +212,7 @@ especially at the boundary between 0 and high values.</p>
 <dd><p>Order of the B-spline interpolation of the data.</p>
 <p>3 = cubic; 4 &amp; 5 are also supported</p>
 <p>Only choose values that are acceptable to
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.3.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.4.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#gridData.core.Grid.interpolated" title="gridData.core.Grid.interpolated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interpolated</span></code></a></p>
@@ -366,7 +366,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="formats/CCP4.html" title="previous chapter">4.2.3. <code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a></li>
+      <li>Previous: <a href="formats/CCP4.html" title="previous chapter"><span class="section-number">4.2.3. </span><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a></li>
   </ul></li>
 </ul>
 </div>
@@ -388,7 +388,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
