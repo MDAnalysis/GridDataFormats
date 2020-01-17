@@ -25,6 +25,7 @@ The rules for this file:
   Fixes
   
   * fix initialization of mutable instance variable of Grid class (metadata dict) (#71)
+  * fix multiple __init__ calls (#73)
 
 
 05/16/2019 giacomofiorin, orbeckst
