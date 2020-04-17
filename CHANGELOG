@@ -4,6 +4,7 @@
 ===========================
 
 The rules for this file:
+  * release numbering uses semantic versioning 2.0 https://semver.org/
   * entries are sorted newest-first.
   * summarize sets of changes - don't reproduce every git log comment here.
   * don't ever delete anything.
@@ -12,13 +13,65 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-01/19/2018 rathann
+??/??/2019 eloyfelix, renehamburger1993
 
-  * 0.4.1
+  * 0.6.0
+
+  Enhancements
+
+  * Allow parsing/writing gzipped DX files
+  
   
   Fixes
   
+  * fix initialization of mutable instance variable of Grid class (metadata dict) (#71)
+  * fix multiple __init__ calls (#73)
+
+
+05/16/2019 giacomofiorin, orbeckst
+
+  * 0.5.0
+
+  Changes
+
+  * supported/tested on Python 2.7, >=3.5 (official 3.4 support was
+    dropped: it might still work but is not tested anymore)
+
+  Enhancements
+
+  * Allow parsing DX files by NAMD's GridForces module (new typequote keyword, #58)
+  * New keyword argument ``Grid(grid=<file>, file_format=<str>)`` to set file format when
+    reading from a file (#33)
+
+  Fixes
+
+  * Allow parsing DX files by Pymol's buggy floating-point parser (#58)
+  * Fixed loading of pickle files with .pkl suffix
+  * Better input handling when constructing a Grid object (#59)
+
+04/06/2019 rathann, tluchko, orbeckst
+
+  * 0.4.1
+
+  Fixes
+
   * Fixed testsuite on 32bit architectures (issue #44)
+  * Improved DX parsing speed (#2)
+  * Fixed reading in DX files containing scientific notation (PR #52)
+  * Added missing floordivision to Grid (PR #53)
+  * fix test on ARM (#51)
+  * fix incorrect reading of ncstart and nrstart in CCP4 (#57)
+  * fix that arithemtical operations broke inheritance (#56)
+  * fix so that subclasses of ndarray are retained on input (#56)
+  * fix Grid.save(filename) so that it respects the user's filename (#64)
+  * fix grid equality test g == h (relied on old numpy behavior)
+
+  Changes (do not affect user)
+
+  * use pytest as testing framework (#49)
+  * use truedivision consistently throughout the package and the tests (PR #52)
+  * installation now requires scipy (it is much easier to install than it
+    used to)
 
 01/17/2017 orbeckst, kain88-de
 

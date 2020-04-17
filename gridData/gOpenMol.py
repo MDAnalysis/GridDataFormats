@@ -128,7 +128,7 @@ Classes
 
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, with_statement
 
 import warnings
 import struct
@@ -195,7 +195,7 @@ class Plt(object):
     _data_bintype = 'f'   #  write(&value,sizeof(float),1L,output);
 
     def __init__(self, filename=None):
-        self.filename = filename
+        self.filename = str(filename)
         # fix header_struct because I cannot do {...}.update()
         rec_surf = [r for r in self._header_struct if r.key == 'surface'][0]
         rec_surf.values.update(dict((k,'user-defined') for k in range(4,51) if k != 42))
@@ -209,7 +209,7 @@ class Plt(object):
         """Populate the instance from the plt file *filename*."""
         from struct import calcsize, unpack
         if not filename is None:
-            self.filename = filename
+            self.filename = str(filename)
         with open(self.filename, 'rb') as plt:
             h = self.header = self._read_header(plt)
             nentries = h['nx'] * h['ny'] * h['nz']

@@ -34,9 +34,13 @@ sys.path.insert(0, os.path.abspath('../..'))
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx',
               'sphinx.ext.mathjax', 'sphinx.ext.viewcode',
               'sphinx.ext.napoleon', 'sphinx.ext.todo',
+              'sphinx_sitemap',
               'alabaster']
 
 mathjax_path = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+
+# for sitemap with https://github.com/jdillard/sphinx-sitemap
+site_url = "https://www.mdanalysis.org/GridDataFormats/"
 
 # https://stackoverflow.com/questions/5599254/how-to-use-sphinxs-autodoc-to-document-a-classs-init-self-method
 autoclass_content = 'both'
@@ -55,7 +59,9 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'GridDataFormats'
-copyright = u'2007-2018, Oliver Beckstein, Jan Domanski, Max Linke, Jesse Johnson, Dominik Mierzejewski'
+authors = (u'Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, '
+           u'Dominik Mierzejewski, Giacomo Fiorin')
+copyright = u'2007-2019, ' + authors
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -243,7 +249,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'gridDataFormats.tex', u'gridDataFormats Documentation',
-   u'Oliver Beckstein', 'manual'),
+   authors, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -273,7 +279,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'griddataformats', u'gridDataFormats Documentation',
-     [u'Oliver Beckstein', u'Max Linke', u'Jesse Johnson'], 1)
+     authors.split(), 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -287,7 +293,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'gridDataFormats', u'gridDataFormats Documentation',
-   u'Oliver Beckstein', 'gridDataFormats', 'One line description of project.',
+   authors, 'gridDataFormats', 'Grid structure for regular data together with common format readers.',
    'Miscellaneous'),
 ]
 

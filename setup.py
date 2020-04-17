@@ -4,8 +4,9 @@
 # See the file COPYING for details.
 from setuptools import setup, find_packages
 import versioneer
+import codecs
 
-with open('README.rst', 'r') as f:
+with codecs.open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name="GridDataFormats",
@@ -23,19 +24,23 @@ setup(name="GridDataFormats",
                    'Environment :: Console',
                    'Intended Audience :: Science/Research',
                    'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+                   'Operating System :: POSIX',
+                   'Operating System :: MacOS :: MacOS X',
+                   'Operating System :: Microsoft :: Windows ',
                    'Programming Language :: Python',
+                   'Programming Language :: Python :: 2',
+                   'Programming Language :: Python :: 2.7',
+                   'Programming Language :: Python :: 3',
+                   'Programming Language :: Python :: 3.5',
+                   'Programming Language :: Python :: 3.6',
+                   'Programming Language :: Python :: 3.7',
                    'Topic :: Scientific/Engineering',
                    'Topic :: Software Development :: Libraries :: Python Modules',
-                     ],
+      ],
       packages=find_packages(exclude=[]),
-      package_data={'gridData': ['tests/*.dx', 'tests/*.ccp4']},
-      install_requires=['numpy>=1.0.3', 'six'],
-      tests_require=['nose', 'numpy'],
-      # extras can be difficult to install through setuptools and/or
-      # you might prefer to use the version available through your
-      # packaging system
-      extras_require={'remapping':  ['scipy',  # for remapping/interpolation
-                                     ],
-                      },
+      package_data={'gridData': ['tests/datafiles/*.dx', 'tests/datafiles/*.dx.gz',
+                                 'tests/datafiles/*.ccp4', 'tests/datafiles/*.plt']},
+      install_requires=['numpy>=1.0.3', 'six', 'scipy'],
+      tests_require=['pytest', 'numpy'],
       zip_safe=True,
       )

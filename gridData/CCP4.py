@@ -124,6 +124,7 @@ Classes
 -------
 
 """
+from __future__ import absolute_import, division
 
 import warnings
 import struct
@@ -176,7 +177,7 @@ class CCP4(object):
             3: 'Transform of Complex Integer*2',
             4: 'Transform of Complex Reals',
             5: '0',
-        }), Record('ncstart', 'I'), Record('nrstart', 'I'),
+        }), Record('ncstart', 'i'), Record('nrstart', 'i'),
         Record('nsstart', 'I'), Record('nx', 'I'),  # Number of gridpoints.
         Record('ny', 'I'), Record('nz', 'I'), Record('xlen', 'f'),  # Angstroms.
         Record('ylen', 'f'), Record('zlen', 'f'), Record('alpha', 'f'),  # Degrees.
@@ -188,7 +189,7 @@ class CCP4(object):
     )
 
     def __init__(self, filename=None):
-        self.filename = filename
+        self.filename = str(filename)
         # Assemble format.
         self._headerfmt = "".join([r.bintype for r in self._header_struct])
 
@@ -197,15 +198,14 @@ class CCP4(object):
 
     def read(self, filename):
         """Populate the instance from the ccp4 file *filename*."""
-        from struct import calcsize, unpack
         if filename is not None:
-            self.filename = filename
+            self.filename = str(filename)
         with open(self.filename, 'rb') as ccp4:
             h = self.header = self._read_header(ccp4)
             nentries = h['nc'] * h['nr'] * h['ns']
             # Quick and dirty... slurp it all in one go.
             datafmt = h['bsaflag'] + str(nentries) + self._data_bintype
-            a = np.array(unpack(datafmt, ccp4.read(calcsize(datafmt))))
+            a = np.array(struct.unpack(datafmt, ccp4.read(struct.calcsize(datafmt))))
         self.header['filename'] = self.filename
         # TODO: Account for the possibility that y-axis is fastest or
         # slowest index, which unfortunately is possible in CCP4.
@@ -236,13 +236,20 @@ class CCP4(object):
         delta = lengths / self.shape
         return np.diag(delta)
 
-    def _read_header(self, ccp4file):
-        """Read header bytes, try all possibilities for byte
-        order/size/alignment."""
-        # Try all endinaness and alignment options until we find
-        # something that looks sensible. The machst field could be
-        # used to obtain endianness, but it does not specify
-        # alignment.
+    @staticmethod
+    def _detect_byteorder(ccp4file):
+        """Detect the byteorder of stream `ccp4file` and return format character.
+
+        Try all endinaness and alignment options until we find
+        something that looks sensible ("MAPS " in the first 4 bytes).
+
+        (The ``machst`` field could be used to obtain endianness, but
+        it does not specify alignment.)
+
+        .. SeeAlso::
+
+          :mod:`struct`
+        """
         bsaflag = None
         ccp4file.seek(52 * 4)
         mapbin = ccp4file.read(4)
@@ -251,10 +258,16 @@ class CCP4(object):
             if mapstr.upper() == 'MAP ':
                 bsaflag = flag
                 break  # Only possible value according to spec.
-        if bsaflag is None:
+        else:
             raise TypeError(
                 "Cannot decode header --- corrupted or wrong format?")
         ccp4file.seek(0)
+        return bsaflag
+
+    def _read_header(self, ccp4file):
+        """Read header bytes"""
+
+        bsaflag = self._detect_byteorder(ccp4file)
 
         # Parse the top of the header (4-byte words, 1 to 25).
         nheader = struct.calcsize(self._headerfmt)

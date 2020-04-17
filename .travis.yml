@@ -1,3 +1,5 @@
+sudo: false
+language: python
 env:
    global:
       - secure: "BQ6qt3AOkcapuzOAkct8LbpyF3MngFk/+v/HlSg9Cxfo1CrYZOuwzemLI+pXKTbJiJcUF2UbooaoQANk9uKc9/NZfBdWG8NRncV+c3QGceWJTU7NaDle04Gp1cmnH6a7YRWN652xaPa80vlM/hMtCLg9zSnk6HQXNlTcdrfzWus="
@@ -6,14 +8,13 @@ env:
       - GIT_CI_USER: TravisCI
       - GIT_CI_EMAIL: TravisCI@mdanalysis.org
       - MDA_DOCDIR: build/sphinx/html
-   matrix:
-   - SETUP=full
-   - SETUP=minimal
-language: python
+      - CONDA_DEPENDENCIES="numpy scipy pytest pytest-cov sphinx"
+      - PIP_DEPENDENCIES="codecov sphinx-sitemap"
 python:
+  - "3.7"
+  - "3.6"
   - "3.5"
   - "2.7"
-sudo: false
 before_install:
   - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
   - chmod +x miniconda.sh
@@ -21,13 +22,12 @@ before_install:
   - export PATH=/home/travis/miniconda/bin:$PATH
   - conda update --yes conda
 install:
-  - if [[ $SETUP == 'full' ]]; then conda create --yes -q -n pyenv python=$TRAVIS_PYTHON_VERSION numpy scipy nose sphinx; fi
-  - if [[ $SETUP == 'minimal' ]]; then conda create --yes -q -n pyenv python=$TRAVIS_PYTHON_VERSION numpy nose sphinx; fi
+  - conda create --yes -q -n pyenv python=$TRAVIS_PYTHON_VERSION $CONDA_DEPENDENCIES
   - source activate pyenv
-  - pip install coveralls tempdir
+  - pip install ${PIP_DEPENDENCIES}
   - pip install -v ./
 script:
-  - nosetests -v --with-coverage --cover-package gridData --process-timeout=120 --processes=2 gridData
+  - pytest --cov=gridData ./gridData/tests
   - |
      test ${TRAVIS_PULL_REQUEST} == "false" && \
      test ${TRAVIS_BRANCH} == ${GH_DOC_BRANCH} && \
@@ -35,7 +35,7 @@ script:
      python setup.py build_sphinx || \
      true
 after_success:
-  - coveralls
+  - codecov
   - |
      test ${TRAVIS_PULL_REQUEST} == "false" && \
      test ${TRAVIS_BRANCH} == ${GH_DOC_BRANCH} && \
