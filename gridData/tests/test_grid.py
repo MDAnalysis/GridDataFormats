@@ -151,12 +151,23 @@ class TestGrid(object):
         with pytest.raises(NotImplementedError):
             Grid(data['griddata'], origin=data['origin'], delta=delta)
 
-    def test_centers(self, data):
+    def test_centers_false(self, data):
         # this only checks the edges. If you know an alternative
         # algorithm that isn't an exact duplicate of the one in
         # g.centers to test this please implement it.
         g = Grid(data['griddata'], origin=np.ones(3), delta=data['delta'])
-        centers = np.array(list(g.centers()))
+        centers = np.array(list(g.centers(False)))
+        offset = g.delta * 0.5
+        assert_array_equal(centers[0], g.origin + offset)
+        assert_array_equal(centers[-1] - g.origin - offset,
+                           (np.array(g.grid.shape) - 1) * data['delta'])
+
+    def test_centers_true(self, data):
+        # this only checks the edges. If you know an alternative
+        # algorithm that isn't an exact duplicate of the one in
+        # g.centers to test this please implement it.
+        g = Grid(data['griddata'], origin=np.ones(3), delta=data['delta'])
+        centers = np.array(list(g.centers(True)))
         assert_array_equal(centers[0], g.origin)
         assert_array_equal(centers[-1] - g.origin,
                            (np.array(g.grid.shape) - 1) * data['delta'])

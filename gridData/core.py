@@ -112,7 +112,7 @@ class Grid(object):
 
 
         .. versionchanged:: 0.5.0
-           New *file_format* keyword argument.
+           New *file_format* keyword argument
 
         """
         # file formats are guess from extension == lower case key
@@ -573,11 +573,25 @@ class Grid(object):
         """
         self.export(filename, file_format="pickle")
 
-    def centers(self):
+    def centers(self, origin_centered=False):
         """Returns the coordinates of the centers of all grid cells as an
-        iterator."""
+        iterator.
+
+        Parameters
+        ----------
+        origin_centered : bool
+            When is set to True the origin will be set to the lower-left corner of the grid following
+            the APBS DX format specifications.
+
+            When is set to False the origin will be set to the center of the first grid cell following
+            the official DX format specifications.
+
+            .. versionchanged:: 0.6.0
+             New *origin_centered* keyword argument
+        """
         for idx in numpy.ndindex(self.grid.shape):
-            yield self.delta * numpy.array(idx) + self.origin + (self.delta * 0.5)
+            offset = 0.5 * self.delta if not origin_centered else 0
+            yield self.delta * numpy.array(idx) + self.origin + offset
 
     def check_compatible(self, other):
         """Check if *other* can be used in an arithmetic operation.
