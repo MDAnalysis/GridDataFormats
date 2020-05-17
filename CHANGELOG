@@ -13,13 +13,15 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/2019 eloyfelix, renehamburger1993
+??/??/2020 eloyfelix, renehamburger1993, acruzpr
 
   * 0.6.0
 
   Enhancements
 
   * Allow parsing/writing gzipped DX files
+  * Allow the generation of coordinates for the cell centers using the origin as defined by APBS DX file format
+   or as defined by the Original DX file format (#78)
   
   
   Fixes
