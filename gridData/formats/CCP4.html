@@ -1,20 +1,21 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>4.2.3. CCP4 — the CCP4 volumetric data format &#8212; GridDataFormats 0.5.0+3.gcf8ed57 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.2.3. CCP4 — the CCP4 volumetric data format &#8212; GridDataFormats 0.5.0+5.ga895ec9 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+3.gcf8ed57 documentation"
+          title="Search within GridDataFormats 0.5.0+5.ga895ec9 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -142,9 +143,9 @@ the big endian stamp is 0x11, 0x11, 0x00, 0x00.</p>
 </div>
 <div class="section" id="classes">
 <h2><span class="section-number">4.2.3.3. </span>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="gridData.CCP4.CCP4">
-<em class="property">class </em><code class="sig-prename descclassname">gridData.CCP4.</code><code class="sig-name descname">CCP4</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gridData.CCP4.</code><code class="sig-name descname">CCP4</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class to represent a <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">CCP4</a> file.</p>
 <dl>
 <dt>Only reading is implemented; either supply a filename to the constructor</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -175,22 +176,22 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
 * index ordering besides standard column-major and row-major
 * non-standard fields, such any in filed in future use block</p>
 </div>
-<dl class="method">
+<dl class="py method">
 <dt id="gridData.CCP4.CCP4.edges">
 <em class="property">property </em><code class="sig-name descname">edges</code><a class="headerlink" href="#gridData.CCP4.CCP4.edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</p>
 <p>Only works for regular, orthonormal grids.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="gridData.CCP4.CCP4.histogramdd">
 <code class="sig-name descname">histogramdd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4.histogramdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4.histogramdd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return array data as (edges,grid), i.e. a numpy nD histogram.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="gridData.CCP4.CCP4.read">
-<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4.read" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.CCP4.CCP4.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate the instance from the ccp4 file <em>filename</em>.</p>
 </dd></dl>
 
@@ -255,16 +256,17 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
+
     <div class="footer">
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -279,5 +281,14 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
     
 
     
+<div class="footer"><p>This page uses <a href="https://www.goatcounter.com/">
+GoatCounter</a> to collect statistics. You can disable it by blocking
+    the JavaScript coming from gc.zgo.at</p>
+<p>You can look at the data that is being collected at
+  https://mdanalysis.goatcounter.com/</p>
+<script data-goatcounter="https://mdanalysis.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</div>
+
   </body>
 </html>

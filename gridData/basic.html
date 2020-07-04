@@ -1,20 +1,21 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>3. Basic use &#8212; GridDataFormats 0.5.0+3.gcf8ed57 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. Basic use &#8212; GridDataFormats 0.5.0+5.ga895ec9 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+3.gcf8ed57 documentation"
+          title="Search within GridDataFormats 0.5.0+5.ga895ec9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -57,7 +58,7 @@ Chimera.)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">&quot;density.plt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>From the output of <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.17)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
+<p>From the output of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.19)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -190,16 +191,17 @@ abruptly.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
+
     <div class="footer">
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -214,5 +216,14 @@ abruptly.</p>
     
 
     
+<div class="footer"><p>This page uses <a href="https://www.goatcounter.com/">
+GoatCounter</a> to collect statistics. You can disable it by blocking
+    the JavaScript coming from gc.zgo.at</p>
+<p>You can look at the data that is being collected at
+  https://mdanalysis.goatcounter.com/</p>
+<script data-goatcounter="https://mdanalysis.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</div>
+
   </body>
 </html>

@@ -1,20 +1,21 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>2. gridData – Handling grids of data &#8212; GridDataFormats 0.5.0+3.gcf8ed57 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2. gridData – Handling grids of data &#8212; GridDataFormats 0.5.0+5.ga895ec9 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+3.gcf8ed57 documentation"
+          title="Search within GridDataFormats 0.5.0+5.ga895ec9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -50,7 +51,7 @@ coordinates of the intersections of the grid (mesh) lines on the
 axes. In this way the grid is anchored in space.</p>
 <p>The <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can be resampled at arbitrary resolution (by
 interpolating the data). Standard algebraic operations are defined for
-grids on a point-wise basis (same as for <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
+grids on a point-wise basis (same as for <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
 </div>
 <div class="section" id="description">
 <h2><span class="section-number">2.2. </span>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -71,16 +72,16 @@ corresponds to (0,0,…,0)</p></li>
 </ol>
 <p><a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> objects have some convenient properties:</p>
 <ul class="simple">
-<li><p>The data is represented as a <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> and thus shares
+<li><p>The data is represented as a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> and thus shares
 all the advantages coming with this sophisticated and powerful
 library.</p></li>
 <li><p>They can be manipulated arithmetically, e.g. one can simply add or
 subtract two of them and get another one, or multiply by a
 constant. Note that all operations are defined point-wise (see the
-<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/index.html#module-numpy" title="(in NumPy v1.17)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> documentation for details) and that only grids defined
+<a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.19)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> documentation for details) and that only grids defined
 on the same cell edges can be combined.</p></li>
 <li><p>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can also be created from within python code
-e.g. from the output of the <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.17)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function.</p></li>
+e.g. from the output of the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.19)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function.</p></li>
 <li><p>The representation of the data is abstracted from the format that
 the files are saved in. This makes it straightforward to add
 additional readers for new formats.</p></li>
@@ -181,16 +182,17 @@ for convenient handling (especially export to other formats).  The
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
+
     <div class="footer">
       &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -205,5 +207,14 @@ for convenient handling (especially export to other formats).  The
     
 
     
+<div class="footer"><p>This page uses <a href="https://www.goatcounter.com/">
+GoatCounter</a> to collect statistics. You can disable it by blocking
+    the JavaScript coming from gc.zgo.at</p>
+<p>You can look at the data that is being collected at
+  https://mdanalysis.goatcounter.com/</p>
+<script data-goatcounter="https://mdanalysis.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</div>
+
   </body>
 </html>
