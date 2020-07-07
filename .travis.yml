@@ -1,4 +1,4 @@
-sudo: false
+version: ~> 1.0
 language: python
 env:
    global:
@@ -8,14 +8,21 @@ env:
       - GIT_CI_USER: TravisCI
       - GIT_CI_EMAIL: TravisCI@mdanalysis.org
       - MDA_DOCDIR: build/sphinx/html
-      - CONDA_DEPENDENCIES="numpy scipy pytest pytest-cov sphinx"
-      - PIP_DEPENDENCIES="codecov sphinx-sitemap"
+      - CONDA_DEPENDENCIES="numpy scipy pytest pytest-cov"
+      - CONDA_DOC_DEPENDENCIES="sphinx"
+      - PIP_DEPENDENCIES="codecov"
+      - PIP_DOC_DEPENDENCIES="sphinx-sitemap"
+      
 python:
   - "3.7"
   - "3.6"
   - "3.5"
-  - "2.7"
-    PIP_DEPENDENCIES="codecov"
+
+jobs:
+  include:
+    - python: "2.7"
+      env: PIP_DOC_DEPENDENCIES="" CONDA_DOC_DEPENDENCIES=""
+
 before_install:
   - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
   - chmod +x miniconda.sh
@@ -23,9 +30,9 @@ before_install:
   - export PATH=/home/travis/miniconda/bin:$PATH
   - conda update --yes conda
 install:
-  - conda create --yes -q -n pyenv python=$TRAVIS_PYTHON_VERSION $CONDA_DEPENDENCIES
+  - conda create --yes -q -n pyenv python=$TRAVIS_PYTHON_VERSION $CONDA_DEPENDENCIES $CONDA_DOC_DEPENDENCIES
   - source activate pyenv
-  - pip install ${PIP_DEPENDENCIES}
+  - pip install ${PIP_DEPENDENCIES} ${PIP_DOC_DEPENDENCIES}
   - pip install -v ./
 script:
   - pytest --cov=gridData ./gridData/tests
