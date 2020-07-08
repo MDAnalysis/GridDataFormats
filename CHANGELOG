@@ -13,17 +13,17 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/2019 eloyfelix, renehamburger1993
+??/??/2019 eloyfelix, renehamburger1993, lilyminium
 
   * 0.6.0
 
   Enhancements
 
   * Allow parsing/writing gzipped DX files
-  
-  
+  * Update doc theme to use sphinx-rtd-theme (#80)
+
   Fixes
-  
+
   * fix initialization of mutable instance variable of Grid class (metadata dict) (#71)
   * fix multiple __init__ calls (#73)
 

@@ -21,6 +21,7 @@ import sys, os
 # make sure sphinx always uses the current branch
 sys.path.insert(0, os.path.abspath('../..'))
 
+import sphinx_rtd_theme
 
 # -- General configuration -----------------------------------------------------
 
@@ -35,7 +36,7 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx',
               'sphinx.ext.mathjax', 'sphinx.ext.viewcode',
               'sphinx.ext.napoleon', 'sphinx.ext.todo',
               'sphinx_sitemap',
-              'alabaster']
+             ]
 
 mathjax_path = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 
@@ -60,8 +61,8 @@ master_doc = 'index'
 # General information about the project.
 project = u'GridDataFormats'
 authors = (u'Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, '
-           u'Dominik Mierzejewski, Giacomo Fiorin')
-copyright = u'2007-2019, ' + authors
+           u'Dominik Mierzejewski, Giacomo Fiorin', 'Lily Wang')
+copyright = u'2007-2020, ' + authors
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -101,7 +102,7 @@ exclude_patterns = []
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'default'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -112,68 +113,37 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-# on ReadTheDocs: use their theme
-# https://read-the-docs.readthedocs.org/en/latest/faq.html#how-do-i-change-behavior-for-read-the-docs
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-if on_rtd:
-    html_theme = 'default'
-else:
-    html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
-    # Theme options are theme-specific and customize the look and feel of a theme
-    # further.  For a list of options available for each theme, see the
-    # documentation.
-    #
-    # styles/fonts to match http://mdanalysis.org (see public/css)
-    #
-    # /* MDAnalysis orange: #FF9200 */
-    # /* MDAnalysis gray: #808080 */
-    # /* MDAnalysis white: #FFFFFF */
-    # /* MDAnalysis black: #000000 */
+html_theme_path = [
+    sphinx_rtd_theme.get_html_theme_path()
+]
 
-    color = {'orange': '#FF9200',
-             'gray': '#808080',
-             'white': '#FFFFFF',
-             'black': '#000000',}
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+#
+# styles/fonts to match https://userguide.mdanalysis.org
+#
+# /* MDAnalysis orange: #FF9200 */
+# /* MDAnalysis gray: #808080 */
+# /* MDAnalysis white: #FFFFFF */
+# /* MDAnalysis black: #000000 */
 
-    html_theme_options = {
-        'logo' : "logos/mdanalysis-griddataformats-logo.png",
-        'logo_name': True,
-        'logo_text_align': "left",
-        'description': "data formats for gridded data",
-        'github_user': "MDAnalysis",
-        'github_repo': "GridDataFormats",
-        'github_button': False,
-        'github_banner': True,
-        'show_related': True,
-        'fixed_sidebar': False,
-        'sidebar_includehidden': True,
-        'sidebar_collapse': True,
-        # style
-        'link': color['orange'],
-        'link_hover': color['orange'],
-        'gray_1': color['gray'],
-        'narrow_sidebar_bg': color['gray'],
-        'narrow_sidebar_fg': color['white'],
-        # typography
-        #'font_size': 17,
-        'font_family': "'PT Sans', Helvetica, Arial, 'sans-serif'",
-        'head_font_family': "",
-        'code_font_size': "smaller",
-        'code_font_family': "Menlo, Monaco, 'Courier New', monospace",
-        'caption_font_size': "smaller",
-    }
-
-    # Custom sidebar templates, maps document names to template names.
-    # alabaster sidebars
-    html_sidebars = {
-        '**': [
-            'about.html',
-            'navigation.html',
-            'relations.html',
-            'searchbox.html',
-        ]
-    }
+html_theme_options = {
+    'canonical_url': '',
+    'logo_only': True,
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': False,
+    'style_nav_header_background': 'white',
+    # Toc options
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False,
+}
 
 
 # options common to RTD and MDAnalysis theme
@@ -181,7 +151,14 @@ else:
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
+# For RTD theme: custom.css to override theme defaults.
 html_static_path = ['_static']
+html_css_files = ['custom.css']
+
+
+# The name of an image file (relative to this directory) to place at the top
+# of the sidebar. -- use theme (only enable if NOT using html_sidebars)
+html_logo = "_static/logos/mdanalysis-griddataformats-logo.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
