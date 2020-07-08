@@ -33,7 +33,7 @@ test -n "${GH_TOKEN}" || die "GH_TOKEN is empty: need OAuth GitHub token to cont
 test -n "${GH_REPOSITORY}" || die "GH_REPOSITORY must be set in .travis.yml" 100
 test -n "${MDA_DOCDIR}" || die "MDA_DOCDIR must be set in .travis.yml" 100
 
-cd ${MDA_DOCDIR} || die "Failed to 'cd ${MDA_DOCDIR}'. Run from the top level of the repository"
+cd ${MDA_DOCDIR} || die "Failed to 'cd ${MDA_DOCDIR}'. Run from the top level of the repository" $?
 
 git init
 git config user.name "${GIT_CI_USER}"

@@ -61,7 +61,7 @@ master_doc = 'index'
 # General information about the project.
 project = u'GridDataFormats'
 authors = (u'Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, '
-           u'Dominik Mierzejewski, Giacomo Fiorin', 'Lily Wang')
+           u'Dominik Mierzejewski, Giacomo Fiorin, Lily Wang')
 copyright = u'2007-2020, ' + authors
 
 # The version info for the project you're documenting, acts as replacement for
