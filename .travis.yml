@@ -11,7 +11,7 @@ env:
       - CONDA_DEPENDENCIES="numpy scipy pytest pytest-cov"
       - CONDA_DOC_DEPENDENCIES="sphinx"
       - PIP_DEPENDENCIES="codecov"
-      - PIP_DOC_DEPENDENCIES="sphinx-sitemap"
+      - PIP_DOC_DEPENDENCIES="sphinx-sitemap sphinx-rtd-theme"
       
 python:
   - "3.7"
