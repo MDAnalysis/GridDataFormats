@@ -1,45 +1,191 @@
 
-<!DOCTYPE html>
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4.2.1. OpenDX — routines to read and write simple OpenDX files &#8212; GridDataFormats 0.5.0+9.g85ad60e documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+9.g85ad60e documentation"
-          href="../../_static/opensearch.xml"/>
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 0.5.0+13.g5f344cd documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+
+  
+  
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats 0.5.0+13.g5f344cd documentation"
+          href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4.2.2. gOpenMol — the gOpenMol plt format" href="gOpenMol.html" />
-    <link rel="prev" title="4. Formats" href="../formats.html" />
+    <link rel="next" title="gOpenMol — the gOpenMol plt format" href="gOpenMol.html" />
+    <link rel="prev" title="Formats" href="../formats.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic.html">Basic use</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">Formats</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../formats.html#supported-file-formats">Supported file formats</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../formats.html#format-specific-modules">Format-specific modules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#reading-and-writing-opendx-files">Reading and writing OpenDX files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-a-dx-object-from-a-numpy-array-a">Building a dx object from a numpy array <code class="docutils literal notranslate"><span class="pre">A</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-a-dx-object-from-a-dx-file">Building a dx object from a dx file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes-and-functions">Classes and functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gOpenMol.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CCP4.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GridDataFormats</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../formats.html">Formats</a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/gridData/formats/OpenDX.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <span class="target" id="module-gridData.OpenDX"></span><div class="section" id="opendx-routines-to-read-and-write-simple-opendx-files">
-<h1><span class="section-number">4.2.1. </span><a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code></a> — routines to read and write simple OpenDX files<a class="headerlink" href="#opendx-routines-to-read-and-write-simple-opendx-files" title="Permalink to this headline">¶</a></h1>
+<h1><a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code></a> — routines to read and write simple OpenDX files<a class="headerlink" href="#opendx-routines-to-read-and-write-simple-opendx-files" title="Permalink to this headline">¶</a></h1>
 <p>The OpenDX format for multi-dimensional grid data. OpenDX is a free
 visualization software, see <a class="reference external" href="http://www.opendx.org">http://www.opendx.org</a>.</p>
 <div class="admonition note">
@@ -54,7 +200,7 @@ convenient <a class="reference internal" href="../core.html#gridData.core.Grid" 
 module (<code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.Grid</span></code>) or see the lower-level methods
 described below.</p>
 <div class="section" id="reading-and-writing-opendx-files">
-<span id="opendx-read-write"></span><h2><span class="section-number">4.2.1.1. </span>Reading and writing OpenDX files<a class="headerlink" href="#reading-and-writing-opendx-files" title="Permalink to this headline">¶</a></h2>
+<span id="opendx-read-write"></span><h2>Reading and writing OpenDX files<a class="headerlink" href="#reading-and-writing-opendx-files" title="Permalink to this headline">¶</a></h2>
 <p>If you have OpenDX files from other software and you just want to
 <strong>read</strong> it into a Python array then you do not really need to use the
 interface in <a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.OpenDX</span></code></a>: just use
@@ -80,7 +226,7 @@ formats. However, sometimes additional help is needed to write an
 OpenDX file that can be read by a specific software, as described
 below:</p>
 <div class="section" id="known-issues-for-writing-opendx-files">
-<h3><span class="section-number">4.2.1.1.1. </span>Known issues for writing OpenDX files<a class="headerlink" href="#known-issues-for-writing-opendx-files" title="Permalink to this headline">¶</a></h3>
+<h3>Known issues for writing OpenDX files<a class="headerlink" href="#known-issues-for-writing-opendx-files" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p><a class="reference external" href="http://www.pymol.org/">PyMOL</a> requires OpenDX files with the type specification “double” in
 the <cite>class array</cite> section (see issue <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/issues/35">#35</a>). By default (since
@@ -104,7 +250,7 @@ suggested to always export with <code class="docutils literal notranslate"><span
 </div>
 </div>
 <div class="section" id="building-a-dx-object-from-a-numpy-array-a">
-<h2><span class="section-number">4.2.1.2. </span>Building a dx object from a numpy array <code class="docutils literal notranslate"><span class="pre">A</span></code><a class="headerlink" href="#building-a-dx-object-from-a-numpy-array-a" title="Permalink to this headline">¶</a></h2>
+<h2>Building a dx object from a numpy array <code class="docutils literal notranslate"><span class="pre">A</span></code><a class="headerlink" href="#building-a-dx-object-from-a-numpy-array-a" title="Permalink to this headline">¶</a></h2>
 <p>If you have a numpy array <code class="docutils literal notranslate"><span class="pre">A</span></code> that represents a density in cartesian
 space then you can construct a dx object (named a <em>field</em> in OpenDX
 parlance) if you provide some additional information that fixes the
@@ -143,7 +289,7 @@ the <em>grid</em> (or with the <em>type</em> keyword argument to
 </div>
 </div>
 <div class="section" id="building-a-dx-object-from-a-dx-file">
-<h2><span class="section-number">4.2.1.3. </span>Building a dx object from a dx file<a class="headerlink" href="#building-a-dx-object-from-a-dx-file" title="Permalink to this headline">¶</a></h2>
+<h2>Building a dx object from a dx file<a class="headerlink" href="#building-a-dx-object-from-a-dx-file" title="Permalink to this headline">¶</a></h2>
 <p>One can also read data from an existing dx file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">dx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;file.dx&#39;</span><span class="p">)</span>
@@ -169,7 +315,7 @@ to an archived copy at the Internet Archive , <a class="reference external" href
 </dl>
 </div>
 <div class="section" id="classes-and-functions">
-<h2><span class="section-number">4.2.1.4. </span>Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
+<h2>Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="gridData.OpenDX.DXInitObject">
 <em class="property">class </em><code class="sig-prename descclassname">gridData.OpenDX.</code><code class="sig-name descname">DXInitObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">classtype</span></em>, <em class="sig-param"><span class="n">classid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject" title="Permalink to this definition">¶</a></dt>
@@ -473,86 +619,39 @@ delta     DxD array describing the deltas</p>
 </div>
 
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<p class="logo">
-  <a href="../../index.html">
-    <img class="logo" src="../../_static/logos/mdanalysis-griddataformats-logo.png" alt="Logo"/>
-    
-    <h1 class="logo logo-name">GridDataFormats</h1>
-    
-  </a>
-</p>
-
-
-
-<p class="blurb">data formats for gridded data</p>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../overview.html">2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic.html">3. Basic use</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">4. Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core.html">5. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../formats.html"><span class="section-number">4. </span>Formats</a><ul>
-      <li>Previous: <a href="../formats.html" title="previous chapter"><span class="section-number">4. </span>Formats</a></li>
-      <li>Next: <a href="gOpenMol.html" title="next chapter"><span class="section-number">4.2.2. </span><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-
-    <div class="footer">
-      &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+        <a href="gOpenMol.html" class="btn btn-neutral float-right" title="gOpenMol — the gOpenMol plt format" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      |
-      <a href="../../_sources/gridData/formats/OpenDX.rst.txt"
-          rel="nofollow">Page source</a>
+      
+        <a href="../formats.html" class="btn btn-neutral float-left" title="Formats" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
-    
-    <a href="https://github.com/MDAnalysis/GridDataFormats" class="github">
-        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
-    </a>
-    
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2007-2020, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang
+
+    </p>
+  </div>
     
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
 <div class="footer"><p>Please see
     our <a href="https://www.mdanalysis.org/pages/privacy/">Privacy Policy</a>
     to learn how <a href="https://www.mdanalysis.org">MDAnalysis</a> collects data.</p>
@@ -560,5 +659,27 @@ delta     DxD array describing the deltas</p>
         async src="//gc.zgo.at/count.js"></script>
 </div>
 
-  </body>
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
 </html>

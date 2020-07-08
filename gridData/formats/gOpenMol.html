@@ -1,45 +1,190 @@
 
-<!DOCTYPE html>
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4.2.2. gOpenMol — the gOpenMol plt format &#8212; GridDataFormats 0.5.0+9.g85ad60e documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+9.g85ad60e documentation"
-          href="../../_static/opensearch.xml"/>
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gOpenMol — the gOpenMol plt format &mdash; GridDataFormats 0.5.0+13.g5f344cd documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+
+  
+  
     <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats 0.5.0+13.g5f344cd documentation"
+          href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4.2.3. CCP4 — the CCP4 volumetric data format" href="CCP4.html" />
-    <link rel="prev" title="4.2.1. OpenDX — routines to read and write simple OpenDX files" href="OpenDX.html" />
+    <link rel="next" title="CCP4 — the CCP4 volumetric data format" href="CCP4.html" />
+    <link rel="prev" title="OpenDX — routines to read and write simple OpenDX files" href="OpenDX.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic.html">Basic use</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">Formats</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../formats.html#supported-file-formats">Supported file formats</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../formats.html#format-specific-modules">Format-specific modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="OpenDX.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#background">Background</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grid-data-plt-file-format">Grid data plt file format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CCP4.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GridDataFormats</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../formats.html">Formats</a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/gridData/formats/gOpenMol.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <span class="target" id="module-gridData.gOpenMol"></span><div class="section" id="gopenmol-the-gopenmol-plt-format">
-<h1><span class="section-number">4.2.2. </span><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format<a class="headerlink" href="#gopenmol-the-gopenmol-plt-format" title="Permalink to this headline">¶</a></h1>
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format<a class="headerlink" href="#gopenmol-the-gopenmol-plt-format" title="Permalink to this headline">¶</a></h1>
 <p>The module provides a simple implementation of a reader for <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a>
 <em>plt</em> files. Plt files are binary files. The <a class="reference internal" href="#gridData.gOpenMol.Plt" title="gridData.gOpenMol.Plt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plt</span></code></a> reader tries
 to guess the endianess of the file, but this can fail (with a
@@ -47,13 +192,13 @@ to guess the endianess of the file, but this can fail (with a
 <p>Only the reader is implemented. If you want to write gridded data use a format
 that is more standard, such as OpenDX (see <code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code>).</p>
 <div class="section" id="background">
-<h2><span class="section-number">4.2.2.1. </span>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
 <p>gOpenMol <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">http://www.csc.fi/english/pages/g0penMol</a> plt format.</p>
 <p>Used to be documented at <a class="reference external" href="http://www.csc.fi/gopenmol/developers/plt_format.phtml">http://www.csc.fi/gopenmol/developers/plt_format.phtml</a> but currently this is only accessible through the internet archive at
 <a class="reference external" href="http://web.archive.org/web/20061011125817/http://www.csc.fi/gopenmol/developers/plt_format.phtml">http://web.archive.org/web/20061011125817/http://www.csc.fi/gopenmol/developers/plt_format.phtml</a></p>
 </div>
 <div class="section" id="grid-data-plt-file-format">
-<h2><span class="section-number">4.2.2.2. </span>Grid data plt file format<a class="headerlink" href="#grid-data-plt-file-format" title="Permalink to this headline">¶</a></h2>
+<h2>Grid data plt file format<a class="headerlink" href="#grid-data-plt-file-format" title="Permalink to this headline">¶</a></h2>
 <p>Copyright CSC, 2005. Last modified: September 23, 2003 09:18:50</p>
 <p>Plot file (plt) format The plot files are regular 3D grid files for plotting of
 molecular orbitals, electron densities or other molecular properties. The plot
@@ -66,7 +211,7 @@ the format can be found elsewhere in this manual. gOpenMol can read binary plot
 files from different hardware platforms independent of the system type (little
 or big endian machines).</p>
 <div class="section" id="format-of-the-binary-plt-file">
-<h3><span class="section-number">4.2.2.2.1. </span>Format of the binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file<a class="headerlink" href="#format-of-the-binary-plt-file" title="Permalink to this headline">¶</a></h3>
+<h3>Format of the binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file<a class="headerlink" href="#format-of-the-binary-plt-file" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file binary and formatted file formats are very simple but please
 observe that unformatted files written with a FORTRAN program are not pure
 binary files because there are file records between the values while pure
@@ -75,7 +220,7 @@ able to figure out if the file is pure binary or FORTRAN unformatted but it is
 not very well tested.</p>
 </div>
 <div class="section" id="binary-plt-grid-file-format">
-<h3><span class="section-number">4.2.2.2.2. </span>Binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#binary-plt-grid-file-format" title="Permalink to this headline">¶</a></h3>
+<h3>Binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#binary-plt-grid-file-format" title="Permalink to this headline">¶</a></h3>
 <p>Record number and meaning:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#1: Integer, rank value must always be = 3
 #2: Integer, possible values are 1 ... 50. This value is not used but
@@ -130,7 +275,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 </div>
 </div>
 <div class="section" id="formatted-plt-grid-file-format">
-<h3><span class="section-number">4.2.2.2.3. </span>Formatted <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#formatted-plt-grid-file-format" title="Permalink to this headline">¶</a></h3>
+<h3>Formatted <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#formatted-plt-grid-file-format" title="Permalink to this headline">¶</a></h3>
 <p>Line numbers and variables on the line:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="c1">#1: Integer, Integer. Rank and type of surface (rank is always = 3)</span>
 <span class="n">line</span> <span class="c1">#2: Integer, Integer, Integer. Zdim, Ydim, Xdim (number of points in the z,y,x directions)</span>
@@ -145,7 +290,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 </div>
 </div>
 <div class="section" id="classes">
-<h2><span class="section-number">4.2.2.3. </span>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="gridData.gOpenMol.Plt">
 <em class="property">class </em><code class="sig-prename descclassname">gridData.gOpenMol.</code><code class="sig-name descname">Plt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridData.gOpenMol.Plt" title="Permalink to this definition">¶</a></dt>
@@ -196,86 +341,39 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
 </div>
 
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<p class="logo">
-  <a href="../../index.html">
-    <img class="logo" src="../../_static/logos/mdanalysis-griddataformats-logo.png" alt="Logo"/>
-    
-    <h1 class="logo logo-name">GridDataFormats</h1>
-    
-  </a>
-</p>
-
-
-
-<p class="blurb">data formats for gridded data</p>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../overview.html">2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic.html">3. Basic use</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">4. Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core.html">5. <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../formats.html"><span class="section-number">4. </span>Formats</a><ul>
-      <li>Previous: <a href="OpenDX.html" title="previous chapter"><span class="section-number">4.2.1. </span><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
-      <li>Next: <a href="CCP4.html" title="next chapter"><span class="section-number">4.2.3. </span><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-
-    <div class="footer">
-      &copy;2007-2019, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin.
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+        <a href="CCP4.html" class="btn btn-neutral float-right" title="CCP4 — the CCP4 volumetric data format" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      |
-      <a href="../../_sources/gridData/formats/gOpenMol.rst.txt"
-          rel="nofollow">Page source</a>
+      
+        <a href="OpenDX.html" class="btn btn-neutral float-left" title="OpenDX — routines to read and write simple OpenDX files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
-    
-    <a href="https://github.com/MDAnalysis/GridDataFormats" class="github">
-        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
-    </a>
-    
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2007-2020, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang
+
+    </p>
+  </div>
     
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
 <div class="footer"><p>Please see
     our <a href="https://www.mdanalysis.org/pages/privacy/">Privacy Policy</a>
     to learn how <a href="https://www.mdanalysis.org">MDAnalysis</a> collects data.</p>
@@ -283,5 +381,27 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
         async src="//gc.zgo.at/count.js"></script>
 </div>
 
-  </body>
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
 </html>

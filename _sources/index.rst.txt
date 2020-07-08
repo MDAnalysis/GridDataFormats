@@ -53,11 +53,11 @@ the `GridDataFormats repository on GitHub`_ and submit a pull request. Participa
     :target: https://zenodo.org/badge/latestdoi/13219/MDAnalysis/GridDataFormats
 
 
-.. rubric:: Contents
+.. Contents (sidebar)
 
 .. toctree::
-   :numbered:
-   :maxdepth: 1
+   :maxdepth: 4
+   :hidden:
 
    installation	      
    gridData/overview
