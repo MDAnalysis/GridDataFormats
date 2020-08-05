@@ -650,7 +650,7 @@ class Grid(object):
             return scipy.ndimage.map_coordinates(coeffs,
                                                  _coordinates,
                                                  prefilter=False,
-                                                 mode='nearest',
+                                                 mode='constant',
                                                  cval=cval)
         # mode='wrap' would be ideal but is broken: https://github.com/scipy/scipy/issues/1323
         return interpolatedF
