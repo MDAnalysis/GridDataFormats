@@ -27,7 +27,8 @@ The rules for this file:
   * fix initialization of mutable instance variable of Grid class (metadata dict) (#71)
   * fix multiple __init__ calls (#73)
   * interpolation behavior outside of the grid changed to default to a
-   constant rather than the nearest value (#84)
+    constant rather than the nearest value (#84)
+  * corrected resampling behavior to not draw on values outside of the grid
 
 
 05/16/2019 giacomofiorin, orbeckst
