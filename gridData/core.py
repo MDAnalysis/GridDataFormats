@@ -245,7 +245,8 @@ class Grid(object):
         factor : float
             The number of grid cells are scaled with `factor` in each
             dimension, i.e., ``factor * N_i`` cells along each
-            dimension i.
+            dimension i. Must be positive, and cannot result in fewer
+            than 2 cells along a dimension.
 
 
         Returns
@@ -257,12 +258,27 @@ class Grid(object):
         --------
         resample
 
+        .. versionchanged:: 0.6.0
+           Previous implementations would not alter the range of the grid edges being resampled on.
+           As a result, values at the grid edges would creep steadily inward. The new implementation
+           recalculates the extent of grid edges for every resampling.
+
         """
-        # new number of edges N' = (N-1)*f + 1
-        newlengths = [(N - 1) * float(factor) + 1 for N in self._len_edges()]
+        if float(factor) <= 0:
+            ValueError("Factor must be positive")
+        #Determine current spacing
+        spacing = (numpy.array(self._max_edges()) - numpy.array(self._min_edges())) / 
+                (-1 + numpy.array(self._len_edges()))
+        #First guess at the new spacing is inversely related to the magnification factor.
+        newspacing = spacing / float(factor) 
+        smidpoints = numpy.array(self._midpoints())
+        #We require that the new spacing result in an even subdivision of the existing midpoints
+        newspacing = (smidpoints[:,-1] - smidpoints[:,0]) / 
+                (numpy.maximum(1,numpy.floor((smidpoints[:,-1] - smidpoints[:,0]) / newspacing)))
+        #How many edge points should there be? It is the number of intervals between midpoints + 2
+        edgelength = 2+numpy.round((smidpoints[:,-1]-smidpoints[:,0]) / newspacing)
         edges = [numpy.linspace(start, stop, num=int(N), endpoint=True)
-                 for (start, stop, N) in
-                 zip(self._min_edges(), self._max_edges(), newlengths)]
+                for (start, stop, N) in zip(smidpoints[:,0]-0.5*newspacing, smidpoints[:,-1]+0.5*newspacing, edgelength)]
         return self.resample(edges)
 
     def _update(self):
@@ -320,6 +336,18 @@ class Grid(object):
         appear in the data. For example, a density is non-negative but
         a cubic spline interpolation can generate negative values,
         especially at the boundary between 0 and high values.
+
+        Internally, the function uses :func:`scipy.ndimage.map_coordinates`
+        with ``mode="constant"`` whereby interpolated values outside
+        the interpolated grid are determined by filling all values beyond 
+        the edge with the same constant value, defined by the
+        :attr:`interpolation_cval` parameter, which when not set defaults
+        to the minimum value in the interpolated grid.
+
+        .. versionchanged:: 0.6.0
+           Interpolation outside the grid is now performed with
+           ``mode="constant"`rather than ``mode="nearest"``, eliminating
+           extruded volumes when interpolating beyond the grid.
 
         """
         if self.__interpolated is None:
@@ -652,7 +680,6 @@ class Grid(object):
                                                  prefilter=False,
                                                  mode='constant',
                                                  cval=cval)
-        # mode='wrap' would be ideal but is broken: https://github.com/scipy/scipy/issues/1323
         return interpolatedF
 
     def __eq__(self, other):
