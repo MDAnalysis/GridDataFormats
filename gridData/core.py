@@ -267,8 +267,9 @@ class Grid(object):
         if float(factor) <= 0:
             raise ValueError("Factor must be positive")
         # Determine current spacing
-        spacing = (numpy.array(self._max_edges(
-        )) - numpy.array(self._min_edges())) / (-1 + numpy.array(self._len_edges()))
+        spacing = (numpy.array(self._max_edges()) \
+                   - numpy.array(self._min_edges())) / \
+                  (-1 + numpy.array(self._len_edges())
         # First guess at the new spacing is inversely related to the
         # magnification factor.
         newspacing = spacing / float(factor)
