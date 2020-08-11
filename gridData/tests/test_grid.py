@@ -166,7 +166,7 @@ class TestGrid(object):
 
         g = data['grid'].resample_factor(2)
         assert_array_equal(g.delta, np.ones(3) * .5)
-        # zooming in by a factor of 2. Each subinteral is
+        # zooming in by a factor of 2. Each subinterval is
         # split in half, so 3 gridpoints (2 subintervals)
         # becomes 5 gridpoints (4 subintervals)
         assert_array_equal(g.grid.shape, np.ones(3) * 5)
