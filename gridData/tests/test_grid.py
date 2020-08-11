@@ -161,6 +161,12 @@ class TestGrid(object):
         assert_array_equal(centers[-1] - g.origin,
                            (np.array(g.grid.shape) - 1) * data['delta'])
 
+    def test_resample_factor_failure(self, data):
+        pytest.importorskip('scipy')
+
+        with pytest.raises(ValueError):
+            g = data['grid'].resample_factor(0)
+
     def test_resample_factor(self, data):
         pytest.importorskip('scipy')
 
