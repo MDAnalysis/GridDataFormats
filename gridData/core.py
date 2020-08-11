@@ -265,7 +265,7 @@ class Grid(object):
 
         """
         if float(factor) <= 0:
-            ValueError("Factor must be positive")
+            raise ValueError("Factor must be positive")
         # Determine current spacing
         spacing = (numpy.array(self._max_edges(
         )) - numpy.array(self._min_edges())) / (-1 + numpy.array(self._len_edges()))
