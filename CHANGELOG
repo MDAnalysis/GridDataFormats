@@ -28,7 +28,7 @@ The rules for this file:
   * fix multiple __init__ calls (#73)
   * interpolation behavior outside of the grid changed to default to a
     constant rather than the nearest value (#84)
-  * corrected resampling behavior to not draw on values outside of the grid
+  * corrected resampling behavior to not draw on values outside of the grid (#84)
 
 
 05/16/2019 giacomofiorin, orbeckst
