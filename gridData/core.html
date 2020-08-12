@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>gridData.core — Core functionality for storing n-D grids &mdash; GridDataFormats 0.5.0+13.g5f344cd documentation</title>
+  <title>gridData.core — Core functionality for storing n-D grids &mdash; GridDataFormats 0.5.0+14.gbe6132a documentation</title>
   
 
   
@@ -39,7 +39,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+13.g5f344cd documentation"
+          title="Search within GridDataFormats 0.5.0+14.gbe6132a documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -284,9 +284,9 @@ is simpler than <code class="docutils literal notranslate"><span class="pre">exp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – name of the output file</p></li>
-<li><p><strong>file_format</strong> (<em>{'dx'</em><em>, </em><em>'pickle'</em><em>, </em><em>None}</em><em> (</em><em>optional</em><em>)</em>) – output file format, the default is “dx”</p></li>
-<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name of the output file</p></li>
+<li><p><strong>file_format</strong> (<code class="docutils literal notranslate"><span class="pre">{'dx',</span> <span class="pre">'pickle',</span> <span class="pre">None}</span></code> (optional)) – output file format, the default is “dx”</p></li>
+<li><p><strong>type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span> <span class="pre">(optional)</span></code>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
 By default (<code class="docutils literal notranslate"><span class="pre">None</span></code>), the DX type is determined from the numpy
 dtype of the array of the grid (and this will typically result in
 “double”).</p>
@@ -294,7 +294,7 @@ dtype of the array of the grid (and this will typically result in
 <p><span class="versionmodified added">New in version 0.4.0.</span></p>
 </div>
 </p></li>
-<li><p><strong>typequote</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>For DX, set the character used to quote the type string;
+<li><p><strong>typequote</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span> <span class="pre">(optional)</span></code>) – <p>For DX, set the character used to quote the type string;
 by default this is a double-quote character, ‘”’.
 Custom parsers like the one from NAMD-GridForces (backend for MDFF)
 expect no quotes, and typequote=’’ may be used to appease them.</p>
@@ -336,6 +336,17 @@ that the spline will generate values that would not normally
 appear in the data. For example, a density is non-negative but
 a cubic spline interpolation can generate negative values,
 especially at the boundary between 0 and high values.</p>
+<p>Internally, the function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.map_coordinates()</span></code></a>
+with <code class="docutils literal notranslate"><span class="pre">mode=&quot;constant&quot;</span></code> whereby interpolated values outside
+the interpolated grid are determined by filling all values beyond
+the edge with the same constant value, defined by the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">interpolation_cval</span></code> parameter, which when not set defaults
+to the minimum value in the interpolated grid.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.6.0: </span>Interpolation outside the grid is now performed with
+<code class="docutils literal notranslate"><span class="pre">mode=&quot;constant&quot;`rather</span> <span class="pre">than</span> <span class="pre">``mode=&quot;nearest&quot;</span></code>, eliminating
+extruded volumes when interpolating beyond the grid.</p>
+</div>
 </div>
 </dd></dl>
 
@@ -345,7 +356,7 @@ especially at the boundary between 0 and high values.</p>
 <dd><p>Order of the B-spline interpolation of the data.</p>
 <p>3 = cubic; 4 &amp; 5 are also supported</p>
 <p>Only choose values that are acceptable to
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.5.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#gridData.core.Grid.interpolated" title="gridData.core.Grid.interpolated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interpolated</span></code></a></p>
@@ -375,7 +386,7 @@ order of the interpolation is set by
 <em>before</em> calling <a class="reference internal" href="#gridData.core.Grid.resample" title="gridData.core.Grid.resample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resample()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>edges</strong> (<em>tuple of arrays</em><em> or </em><a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><em>Grid</em></a>) – edges of the new grid or a <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> instance that
+<dd class="field-odd"><p><strong>edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a> of <code class="xref py py-class docutils literal notranslate"><span class="pre">arrays</span></code> or <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>) – edges of the new grid or a <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> instance that
 provides <code class="xref py py-attr docutils literal notranslate"><span class="pre">Grid.edges</span></code></p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -406,9 +417,10 @@ the argument for this method</p>
 <dd><p>Resample to a new regular grid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The number of grid cells are scaled with <cite>factor</cite> in each
+<dd class="field-odd"><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – The number of grid cells are scaled with <cite>factor</cite> in each
 dimension, i.e., <code class="docutils literal notranslate"><span class="pre">factor</span> <span class="pre">*</span> <span class="pre">N_i</span></code> cells along each
-dimension i.</p>
+dimension i. Must be positive, and cannot result in fewer
+than 2 cells along a dimension.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
@@ -420,6 +432,10 @@ dimension i.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#gridData.core.Grid.resample" title="gridData.core.Grid.resample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resample()</span></code></a></p>
+<dl class="simple">
+<dt><code class="xref py py-meth docutils literal notranslate"><span class="pre">()</span></code></dt><dd><p>Previous implementations would not alter the range of the grid edges being resampled on. As a result, values at the grid edges would creep steadily inward. The new implementation recalculates the extent of grid edges for every resampling.</p>
+</dd>
+</dl>
 </div>
 </dd></dl>
 

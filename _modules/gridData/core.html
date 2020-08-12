@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>gridData.core &mdash; GridDataFormats 0.5.0+13.g5f344cd documentation</title>
+  <title>gridData.core &mdash; GridDataFormats 0.5.0+14.gbe6132a documentation</title>
   
 
   
@@ -39,7 +39,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+13.g5f344cd documentation"
+          title="Search within GridDataFormats 0.5.0+14.gbe6132a documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -353,7 +353,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__interpolation_spline_order</span> <span class="o">=</span> <span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
 
-
 <div class="viewcode-block" id="Grid.resample"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.resample">[docs]</a>    <span class="k">def</span> <span class="nf">resample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resample data to a new grid with edges *edges*.</span>
 
@@ -411,7 +410,8 @@
 <span class="sd">        factor : float</span>
 <span class="sd">            The number of grid cells are scaled with `factor` in each</span>
 <span class="sd">            dimension, i.e., ``factor * N_i`` cells along each</span>
-<span class="sd">            dimension i.</span>
+<span class="sd">            dimension i. Must be positive, and cannot result in fewer</span>
+<span class="sd">            than 2 cells along a dimension.</span>
 
 
 <span class="sd">        Returns</span>
@@ -423,12 +423,32 @@
 <span class="sd">        --------</span>
 <span class="sd">        resample</span>
 
+<span class="sd">        .. versionchanged:: 0.6.0</span>
+<span class="sd">           Previous implementations would not alter the range of the grid edges</span>
+<span class="sd">           being resampled on. As a result, values at the grid edges would creep</span>
+<span class="sd">           steadily inward. The new implementation recalculates the extent of</span>
+<span class="sd">           grid edges for every resampling.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># new number of edges N&#39; = (N-1)*f + 1</span>
-        <span class="n">newlengths</span> <span class="o">=</span> <span class="p">[(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">N</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_len_edges</span><span class="p">()]</span>
-        <span class="n">edges</span> <span class="o">=</span> <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                 <span class="k">for</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="ow">in</span>
-                 <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_min_edges</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_edges</span><span class="p">(),</span> <span class="n">newlengths</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Factor must be positive&quot;</span><span class="p">)</span>
+        <span class="c1"># Determine current spacing</span>
+        <span class="n">spacing</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_edges</span><span class="p">())</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_min_edges</span><span class="p">()))</span> <span class="o">/</span> <span class="p">(</span>
+                  <span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_len_edges</span><span class="p">()))</span>
+        <span class="c1"># First guess at the new spacing is inversely related to the</span>
+        <span class="c1"># magnification factor.</span>
+        <span class="n">newspacing</span> <span class="o">=</span> <span class="n">spacing</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
+        <span class="n">smidpoints</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_midpoints</span><span class="p">())</span>
+        <span class="c1"># We require that the new spacing result in an even subdivision of the</span>
+        <span class="c1"># existing midpoints</span>
+        <span class="n">newspacing</span> <span class="o">=</span> <span class="p">(</span><span class="n">smidpoints</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">smidpoints</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
+            <span class="mi">1</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">smidpoints</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">smidpoints</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">newspacing</span><span class="p">)))</span>
+        <span class="c1"># How many edge points should there be? It is the number of intervals</span>
+        <span class="c1"># between midpoints + 2</span>
+        <span class="n">edgelength</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> \
+            <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">smidpoints</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">smidpoints</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">newspacing</span><span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="n">smidpoints</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">newspacing</span><span class="p">,</span> <span class="n">smidpoints</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">newspacing</span><span class="p">,</span> <span class="n">edgelength</span><span class="p">)]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -487,6 +507,18 @@
 <span class="sd">        a cubic spline interpolation can generate negative values,</span>
 <span class="sd">        especially at the boundary between 0 and high values.</span>
 
+<span class="sd">        Internally, the function uses :func:`scipy.ndimage.map_coordinates`</span>
+<span class="sd">        with ``mode=&quot;constant&quot;`` whereby interpolated values outside</span>
+<span class="sd">        the interpolated grid are determined by filling all values beyond</span>
+<span class="sd">        the edge with the same constant value, defined by the</span>
+<span class="sd">        :attr:`interpolation_cval` parameter, which when not set defaults</span>
+<span class="sd">        to the minimum value in the interpolated grid.</span>
+
+<span class="sd">        .. versionchanged:: 0.6.0</span>
+<span class="sd">           Interpolation outside the grid is now performed with</span>
+<span class="sd">           ``mode=&quot;constant&quot;`rather than ``mode=&quot;nearest&quot;``, eliminating</span>
+<span class="sd">           extruded volumes when interpolating beyond the grid.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interpolated</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__interpolated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolationFunctionFactory</span><span class="p">()</span>
@@ -539,7 +571,13 @@
                                                 <span class="n">file_format</span><span class="o">=</span><span class="n">file_format</span><span class="p">,</span>
                                                 <span class="n">export</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_load</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">edges</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># set up from histogramdd-type data</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
@@ -562,16 +600,17 @@
                                 <span class="s2">&quot;len(grid.ndim)&quot;</span><span class="p">)</span>
             <span class="c1"># note that origin is CENTER so edges must be shifted by -0.5*delta</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="p">[</span><span class="n">origin</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">+</span>
-                            <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
-                            <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)]</span>
+                          <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
+                          <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong/missing data to set up Grid. Use Grid() or &quot;</span>
-                                <span class="s2">&quot;Grid(grid=&lt;array&gt;, edges=&lt;list&gt;) or &quot;</span>
-                                <span class="s2">&quot;Grid(grid=&lt;array&gt;, origin=(x0, y0, z0), delta=(dx, dy, dz)):</span><span class="se">\n</span><span class="s2">&quot;</span>
-                                <span class="s2">&quot;grid=</span><span class="si">{0}</span><span class="s2"> edges=</span><span class="si">{1}</span><span class="s2"> origin=</span><span class="si">{2}</span><span class="s2"> delta=</span><span class="si">{3}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                                    <span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Wrong/missing data to set up Grid. Use Grid() or &quot;</span>
+                <span class="s2">&quot;Grid(grid=&lt;array&gt;, edges=&lt;list&gt;) or &quot;</span>
+                <span class="s2">&quot;Grid(grid=&lt;array&gt;, origin=(x0, y0, z0), delta=(dx, dy, dz)):</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;grid=</span><span class="si">{0}</span><span class="s2"> edges=</span><span class="si">{1}</span><span class="s2"> origin=</span><span class="si">{2}</span><span class="s2"> delta=</span><span class="si">{3}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">))</span>
 
 <div class="viewcode-block" id="Grid.load"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load saved (pickled or dx) grid and edges from &lt;filename&gt;.pickle</span>
@@ -699,8 +738,7 @@
             <span class="s1">&#39;File format: http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF&#39;</span><span class="p">,</span>
             <span class="s1">&#39;Data are embedded in the header and tied to the grid positions.&#39;</span><span class="p">,</span>
             <span class="s1">&#39;Data is written in C array order: In grid[x,y,z] the axis z is fastest&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;varying, then y, then finally x, i.e. z is the innermost loop.&#39;</span>
-        <span class="p">]</span>
+            <span class="s1">&#39;varying, then y, then finally x, i.e. z is the innermost loop.&#39;</span><span class="p">]</span>
 
         <span class="c1"># write metadata in comments section</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
@@ -780,7 +818,8 @@
         <span class="kn">import</span> <span class="nn">scipy.ndimage</span>
 
         <span class="k">if</span> <span class="n">spline_order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># must be compatible with whatever :func:`scipy.ndimage.spline_filter` takes.</span>
+            <span class="c1"># must be compatible with whatever</span>
+            <span class="c1"># :func:`scipy.ndimage.spline_filter` takes.</span>
             <span class="n">spline_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpolation_spline_order</span>
         <span class="k">if</span> <span class="n">cval</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpolation_cval</span>
@@ -816,18 +855,21 @@
             <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">map_coordinates</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span>
                                                  <span class="n">_coordinates</span><span class="p">,</span>
                                                  <span class="n">prefilter</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                                 <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span>
+                                                 <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span>
                                                  <span class="n">cval</span><span class="o">=</span><span class="n">cval</span><span class="p">)</span>
-        <span class="c1"># mode=&#39;wrap&#39; would be ideal but is broken: https://github.com/scipy/scipy/issues/1323</span>
         <span class="k">return</span> <span class="n">interpolatedF</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Grid</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">grid</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span> <span class="ow">and</span> \
-            <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">origin</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span> <span class="ow">and</span> \
-            <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">other_edge</span> <span class="o">==</span> <span class="n">self_edge</span><span class="p">)</span> <span class="k">for</span> <span class="n">other_edge</span><span class="p">,</span> <span class="n">self_edge</span> <span class="ow">in</span>
-                      <span class="nb">zip</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">edges</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+            <span class="n">other</span><span class="o">.</span><span class="n">grid</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span> <span class="ow">and</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+            <span class="n">other</span><span class="o">.</span><span class="n">origin</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span> <span class="ow">and</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+                <span class="n">other_edge</span> <span class="o">==</span> <span class="n">self_edge</span><span class="p">)</span> <span class="k">for</span> <span class="n">other_edge</span><span class="p">,</span>
+            <span class="n">self_edge</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                <span class="n">other</span><span class="o">.</span><span class="n">edges</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
@@ -854,9 +896,13 @@
         <span class="c1"># in Python 2 only (without __future__.division): will do &quot;classic division&quot;</span>
         <span class="c1"># https://docs.python.org/2/reference/datamodel.html#object.__div__</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;__div__ is only available in Python 2, use __truediv__&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;__div__ is only available in Python 2, use __truediv__&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">__div__</span><span class="p">(</span><span class="n">_grid</span><span class="p">(</span><span class="n">other</span><span class="p">)),</span> <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">__div__</span><span class="p">(</span>
+                <span class="n">_grid</span><span class="p">(</span><span class="n">other</span><span class="p">)),</span>
+            <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__floordiv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
@@ -864,7 +910,11 @@
 
     <span class="k">def</span> <span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="n">_grid</span><span class="p">(</span><span class="n">other</span><span class="p">)),</span> <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">power</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span>
+                <span class="n">_grid</span><span class="p">(</span><span class="n">other</span><span class="p">)),</span>
+            <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
@@ -886,9 +936,13 @@
         <span class="c1"># in Python 2 only (without __future__.division): will do &quot;classic division&quot;</span>
         <span class="c1"># https://docs.python.org/2/reference/datamodel.html#object.__div__</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;__rdiv__ is only available in Python 2, use __rtruediv__&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;__rdiv__ is only available in Python 2, use __rtruediv__&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">__rdiv__</span><span class="p">(</span><span class="n">_grid</span><span class="p">(</span><span class="n">other</span><span class="p">)),</span> <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">__rdiv__</span><span class="p">(</span>
+                <span class="n">_grid</span><span class="p">(</span><span class="n">other</span><span class="p">)),</span>
+            <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__rfloordiv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
@@ -896,7 +950,11 @@
 
     <span class="k">def</span> <span class="fm">__rpow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">_grid</span><span class="p">(</span><span class="n">other</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">),</span> <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">power</span><span class="p">(</span>
+                <span class="n">_grid</span><span class="p">(</span><span class="n">other</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">),</span>
+            <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -919,7 +977,7 @@
 
 <span class="sd">    .. SeeAlso: :func:`numpy.meshgrid` for the 2D case.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1">#arrs = tuple(reversed(arrs)) &lt;-- wrong on stackoverflow.com</span>
+    <span class="c1"># arrs = tuple(reversed(arrs)) &lt;-- wrong on stackoverflow.com</span>
     <span class="n">arrs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">arrs</span><span class="p">)</span>
     <span class="n">lens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">arrs</span><span class="p">))</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrs</span><span class="p">)</span>

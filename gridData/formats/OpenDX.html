@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 0.5.0+13.g5f344cd documentation</title>
+  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 0.5.0+14.gbe6132a documentation</title>
   
 
   
@@ -39,7 +39,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+13.g5f344cd documentation"
+          title="Search within GridDataFormats 0.5.0+14.gbe6132a documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -438,9 +438,9 @@ has dimensions (derived from shape)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – </p></li>
-<li><p><strong>array</strong> (<em>array_like</em>) – </p></li>
-<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
+<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – </p></li>
+<li><p><strong>array</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">array_like</span></code>) – </p></li>
+<li><p><strong>type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span> <span class="pre">(optional)</span></code>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
 the closest numpy dtype.  <cite>type</cite> must be one of the
 allowed types in DX files as defined under <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440">Array
 Objects</a>.  The default <code class="docutils literal notranslate"><span class="pre">None</span></code> tries to set the type
@@ -478,7 +478,7 @@ types are supported (e.g., strings are missing)</p>
 <dd><p>Write the <em>class array</em> section.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stream</strong> (<em>stream</em>) – </p>
+<dd class="field-odd"><p><strong>stream</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">stream</span></code>) – </p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
@@ -501,8 +501,8 @@ OpenDX file. It contains a number of other objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – arbitrary string</p></li>
-<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – arbitrary string</p></li>
+<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – <p>dictionary of DXclass instances (no sanity check on the
 individual ids!) which correspond to</p>
 <ul>
 <li><p>positions</p></li>
@@ -510,7 +510,7 @@ individual ids!) which correspond to</p>
 <li><p>data</p></li>
 </ul>
 </p></li>
-<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – list of strings; each string becomes a comment line
+<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – list of strings; each string becomes a comment line
 prefixed with ‘#’. Avoid newlines.</p></li>
 </ul>
 </dd>
