@@ -187,7 +187,6 @@ class Grid(object):
         self.__interpolation_spline_order = x
         self._update()
 
-
     def resample(self, edges):
         """Resample data to a new grid with edges *edges*.
 
@@ -245,7 +244,8 @@ class Grid(object):
         factor : float
             The number of grid cells are scaled with `factor` in each
             dimension, i.e., ``factor * N_i`` cells along each
-            dimension i.
+            dimension i. Must be positive, and cannot result in fewer
+            than 2 cells along a dimension.
 
 
         Returns
@@ -257,12 +257,32 @@ class Grid(object):
         --------
         resample
 
+        .. versionchanged:: 0.6.0
+           Previous implementations would not alter the range of the grid edges
+           being resampled on. As a result, values at the grid edges would creep
+           steadily inward. The new implementation recalculates the extent of
+           grid edges for every resampling.
+
         """
-        # new number of edges N' = (N-1)*f + 1
-        newlengths = [(N - 1) * float(factor) + 1 for N in self._len_edges()]
-        edges = [numpy.linspace(start, stop, num=int(N), endpoint=True)
-                 for (start, stop, N) in
-                 zip(self._min_edges(), self._max_edges(), newlengths)]
+        if float(factor) <= 0:
+            raise ValueError("Factor must be positive")
+        # Determine current spacing
+        spacing = (numpy.array(self._max_edges()) - numpy.array(self._min_edges())) / (
+                  -1 + numpy.array(self._len_edges()))
+        # First guess at the new spacing is inversely related to the
+        # magnification factor.
+        newspacing = spacing / float(factor)
+        smidpoints = numpy.array(self._midpoints())
+        # We require that the new spacing result in an even subdivision of the
+        # existing midpoints
+        newspacing = (smidpoints[:, -1] - smidpoints[:, 0]) / (numpy.maximum(
+            1, numpy.floor((smidpoints[:, -1] - smidpoints[:, 0]) / newspacing)))
+        # How many edge points should there be? It is the number of intervals
+        # between midpoints + 2
+        edgelength = 2 + \
+            numpy.round((smidpoints[:, -1] - smidpoints[:, 0]) / newspacing)
+        edges = [numpy.linspace(start, stop, num=int(N), endpoint=True) for (start, stop, N) in zip(
+            smidpoints[:, 0] - 0.5 * newspacing, smidpoints[:, -1] + 0.5 * newspacing, edgelength)]
         return self.resample(edges)
 
     def _update(self):
@@ -321,6 +341,18 @@ class Grid(object):
         a cubic spline interpolation can generate negative values,
         especially at the boundary between 0 and high values.
 
+        Internally, the function uses :func:`scipy.ndimage.map_coordinates`
+        with ``mode="constant"`` whereby interpolated values outside
+        the interpolated grid are determined by filling all values beyond
+        the edge with the same constant value, defined by the
+        :attr:`interpolation_cval` parameter, which when not set defaults
+        to the minimum value in the interpolated grid.
+
+        .. versionchanged:: 0.6.0
+           Interpolation outside the grid is now performed with
+           ``mode="constant"`rather than ``mode="nearest"``, eliminating
+           extruded volumes when interpolating beyond the grid.
+
         """
         if self.__interpolated is None:
             self.__interpolated = self._interpolationFunctionFactory()
@@ -373,7 +405,13 @@ class Grid(object):
                                                 file_format=file_format,
                                                 export=False)]
 
-    def _load(self, grid=None, edges=None, metadata=None, origin=None, delta=None):
+    def _load(
+            self,
+            grid=None,
+            edges=None,
+            metadata=None,
+            origin=None,
+            delta=None):
         if edges is not None:
             # set up from histogramdd-type data
             self.grid = numpy.asanyarray(grid)
@@ -396,16 +434,17 @@ class Grid(object):
                                 "len(grid.ndim)")
             # note that origin is CENTER so edges must be shifted by -0.5*delta
             self.edges = [origin[dim] +
-                            (numpy.arange(m + 1) - 0.5) * delta[dim]
-                            for dim, m in enumerate(grid.shape)]
+                          (numpy.arange(m + 1) - 0.5) * delta[dim]
+                          for dim, m in enumerate(grid.shape)]
             self.grid = numpy.asanyarray(grid)
             self._update()
         else:
-            raise ValueError("Wrong/missing data to set up Grid. Use Grid() or "
-                                "Grid(grid=<array>, edges=<list>) or "
-                                "Grid(grid=<array>, origin=(x0, y0, z0), delta=(dx, dy, dz)):\n"
-                                "grid={0} edges={1} origin={2} delta={3}".format(
-                                    grid, edges, origin, delta))
+            raise ValueError(
+                "Wrong/missing data to set up Grid. Use Grid() or "
+                "Grid(grid=<array>, edges=<list>) or "
+                "Grid(grid=<array>, origin=(x0, y0, z0), delta=(dx, dy, dz)):\n"
+                "grid={0} edges={1} origin={2} delta={3}".format(
+                    grid, edges, origin, delta))
 
     def load(self, filename, file_format=None):
         """Load saved (pickled or dx) grid and edges from <filename>.pickle
@@ -533,8 +572,7 @@ class Grid(object):
             'File format: http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF',
             'Data are embedded in the header and tied to the grid positions.',
             'Data is written in C array order: In grid[x,y,z] the axis z is fastest',
-            'varying, then y, then finally x, i.e. z is the innermost loop.'
-        ]
+            'varying, then y, then finally x, i.e. z is the innermost loop.']
 
         # write metadata in comments section
         if self.metadata:
@@ -614,7 +652,8 @@ class Grid(object):
         import scipy.ndimage
 
         if spline_order is None:
-            # must be compatible with whatever :func:`scipy.ndimage.spline_filter` takes.
+            # must be compatible with whatever
+            # :func:`scipy.ndimage.spline_filter` takes.
             spline_order = self.interpolation_spline_order
         if cval is None:
             cval = self.interpolation_cval
@@ -650,18 +689,21 @@ class Grid(object):
             return scipy.ndimage.map_coordinates(coeffs,
                                                  _coordinates,
                                                  prefilter=False,
-                                                 mode='nearest',
+                                                 mode='constant',
                                                  cval=cval)
-        # mode='wrap' would be ideal but is broken: https://github.com/scipy/scipy/issues/1323
         return interpolatedF
 
     def __eq__(self, other):
         if not isinstance(other, Grid):
             return False
-        return numpy.all(other.grid == self.grid) and \
-            numpy.all(other.origin == self.origin) and \
-            numpy.all(numpy.all(other_edge == self_edge) for other_edge, self_edge in
-                      zip(other.edges, self.edges))
+        return numpy.all(
+            other.grid == self.grid) and numpy.all(
+            other.origin == self.origin) and numpy.all(
+            numpy.all(
+                other_edge == self_edge) for other_edge,
+            self_edge in zip(
+                other.edges,
+                self.edges))
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -688,9 +730,13 @@ class Grid(object):
         # in Python 2 only (without __future__.division): will do "classic division"
         # https://docs.python.org/2/reference/datamodel.html#object.__div__
         if not six.PY2:
-            raise NotImplementedError("__div__ is only available in Python 2, use __truediv__")
+            raise NotImplementedError(
+                "__div__ is only available in Python 2, use __truediv__")
         self.check_compatible(other)
-        return self.__class__(self.grid.__div__(_grid(other)), edges=self.edges)
+        return self.__class__(
+            self.grid.__div__(
+                _grid(other)),
+            edges=self.edges)
 
     def __floordiv__(self, other):
         self.check_compatible(other)
@@ -698,7 +744,11 @@ class Grid(object):
 
     def __pow__(self, other):
         self.check_compatible(other)
-        return self.__class__(numpy.power(self.grid, _grid(other)), edges=self.edges)
+        return self.__class__(
+            numpy.power(
+                self.grid,
+                _grid(other)),
+            edges=self.edges)
 
     def __radd__(self, other):
         self.check_compatible(other)
@@ -720,9 +770,13 @@ class Grid(object):
         # in Python 2 only (without __future__.division): will do "classic division"
         # https://docs.python.org/2/reference/datamodel.html#object.__div__
         if not six.PY2:
-            raise NotImplementedError("__rdiv__ is only available in Python 2, use __rtruediv__")
+            raise NotImplementedError(
+                "__rdiv__ is only available in Python 2, use __rtruediv__")
         self.check_compatible(other)
-        return self.__class__(self.grid.__rdiv__(_grid(other)), edges=self.edges)
+        return self.__class__(
+            self.grid.__rdiv__(
+                _grid(other)),
+            edges=self.edges)
 
     def __rfloordiv__(self, other):
         self.check_compatible(other)
@@ -730,7 +784,11 @@ class Grid(object):
 
     def __rpow__(self, other):
         self.check_compatible(other)
-        return self.__class__(numpy.power(_grid(other), self.grid), edges=self.edges)
+        return self.__class__(
+            numpy.power(
+                _grid(other),
+                self.grid),
+            edges=self.edges)
 
     def __repr__(self):
         try:
@@ -753,7 +811,7 @@ def ndmeshgrid(*arrs):
 
     .. SeeAlso: :func:`numpy.meshgrid` for the 2D case.
     """
-    #arrs = tuple(reversed(arrs)) <-- wrong on stackoverflow.com
+    # arrs = tuple(reversed(arrs)) <-- wrong on stackoverflow.com
     arrs = tuple(arrs)
     lens = list(map(len, arrs))
     dim = len(arrs)

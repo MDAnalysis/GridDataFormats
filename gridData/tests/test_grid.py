@@ -161,15 +161,25 @@ class TestGrid(object):
         assert_array_equal(centers[-1] - g.origin,
                            (np.array(g.grid.shape) - 1) * data['delta'])
 
+    def test_resample_factor_failure(self, data):
+        pytest.importorskip('scipy')
+
+        with pytest.raises(ValueError):
+            g = data['grid'].resample_factor(0)
+
     def test_resample_factor(self, data):
         pytest.importorskip('scipy')
 
         g = data['grid'].resample_factor(2)
         assert_array_equal(g.delta, np.ones(3) * .5)
-        assert_array_equal(g.grid.shape, np.ones(3) * 6)
-        # check that the edges are the same
-        assert_array_almost_equal(g.grid[::5, ::5, ::5],
-                                  data['grid'].grid[::2, ::2, ::2])
+        # zooming in by a factor of 2. Each subinterval is
+        # split in half, so 3 gridpoints (2 subintervals)
+        # becomes 5 gridpoints (4 subintervals)
+        assert_array_equal(g.grid.shape, np.ones(3) * 5)
+        # check that the values are identical with the
+        # correct stride.
+        assert_array_almost_equal(g.grid[::2, ::2, ::2],
+                                  data['grid'].grid)
 
     def test_load_pickle(self, data, tmpdir):
         g = data['grid']
