@@ -241,8 +241,8 @@ class gridpositions(DXclass):
         self._write_line(stream, 'origin %f %f %f\n' % tuple(self.origin))
         for delta in self.delta:
             self._write_line(
-                stream, ('delta ' + 
-                         self.ndformat(' {0:.7g}').format(*delta) + 
+                stream, ('delta ' +
+                         self.ndformat(' {0:.7g}').format(*delta) +
                          '\n'))
 
     def edges(self):
