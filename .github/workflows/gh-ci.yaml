@@ -39,7 +39,7 @@ jobs:
 
     - name: install package deps
       run: |
-        mamba install "numpy scipy pytest pytest-cov codecov six"
+        mamba install numpy scipy pytest pytest-cov codecov six
 
     - name: check install
       run: |
