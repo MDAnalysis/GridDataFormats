@@ -54,7 +54,7 @@ jobs:
 
     - name: run unit tests
       run: |
-        pytest --cov=gridData --cov-report=xml ./gridData/tests
+        pytest -v --cov=gridData --cov-report=xml ./gridData/tests
 
     - name: codecov
       uses: codecov/codecov-action@v2
