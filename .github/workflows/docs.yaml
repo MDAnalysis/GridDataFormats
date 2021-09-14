@@ -54,32 +54,7 @@ jobs:
         python setup.py build_sphinx
 
     - name: deploy docs
-      env:
-        GIT_CI_USER: github-actions
-        GIT_CI_EMAIL: "github-action@users.noreply.github.com"
-        MDA_DOCDIR: build/sphinx/html
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_REPOSITORY: github.com/MDAnalysis/GridDataFormats.git
-        GH_DOC_BRANCH: master
-
-      run: |
-        cd ${MDA_DOCDIR}
-
-        rev=$(git rev-parse --short HEAD)
-
-        # set up git
-        git config --global init.defaultBranch ${GH_DOC_BRANCH}
-        git init
-        git config user.name ${GIT_CI_USER}
-        git config user.email ${GIT_CI_EMAIL}
-        git remote add upstream "https://${GH_CI_USER}:${GH_TOKEN}@${GH_REPOSITORY}"
-        git fetch --depth 50 upstream ${GH_DOC_BRANCH} gh-pages
-        git reset upstream/gh-pages
-
-        touch .
-        touch .nojekyll
-
-        # comit and push
-        git add -A .
-        git commit -m "rebuilt html docs from branch ${GH_DOC_BRANCH} with sphinx at ${rev}"
-        git push -q upstream HEAD:gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/sphinx/html
