@@ -17,7 +17,7 @@ defaults:
 
 jobs:
   unittests:
-    if: "github.repository == 'GridDataFormats'"
+    if: "github.repository == 'MDAnalysis/GridDataFormats'"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
