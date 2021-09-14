@@ -84,9 +84,13 @@ welcome. Please fork the repository and submit a `pull request`_.
 .. _pull request:
    https://github.com/MDAnalysis/GridDataFormats/pulls
 
-.. |build| image:: https://travis-ci.org/MDAnalysis/GridDataFormats.svg?branch=master
-    :alt: Build Status
-    :target: https://travis-ci.org/MDAnalysis/GridDataFormats
+.. |numfocus| image:: https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A
+    :alt: Powered by NumFOCUS
+    :target: https://www.numfocus.org/
+
+.. |build| image:: https://github.com/MDAnalysis/GridDataFormats/actions/workflows/gh-ci.yaml/badge.svg
+    :alt: Github Actions Build Status
+    :target: https://github.com/MDAnalysis/GridDataFormats/actions/workflows/gh-ci.yaml
 
 .. |cov| image:: https://codecov.io/gh/MDAnalysis/GridDataFormats/branch/master/graph/badge.svg
      :alt: Coverage Status
