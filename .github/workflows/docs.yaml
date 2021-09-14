@@ -1,0 +1,81 @@
+name: docs deployment
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: "${{ github.ref }}-${{ github.head_ref }}"
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  docs:
+    if: "github.repository == 'MDAnalysis/GridDataFormats'"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: setup_miniconda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        python-version: 3.7
+        auto-update-conda: true
+        channel-priority: flexible
+        channels: conda-forge
+        add-pip-as-python-dependency: true
+        mamba-version: "*"
+
+    - name: install package deps
+      run: |
+        mamba install numpy scipy pytest pytest-cov codecov six sphinx
+        pip install sphinx-sitemap sphinx-rtd-theme
+
+    - name: check install
+      run: |
+        which python
+        which pip
+        conda info
+        conda list
+
+    - name: install package
+      run: |
+        pip install -v .
+
+    - name: build docs
+      run: |
+        python setup.py build_sphinx
+
+    - name: deploy docs
+      env:
+        GIT_CI_USER: github-actions
+        GIT_CI_EMAIL: "github-action@users.noreply.github.com"
+        MDA_DOCDIR: build/sphinx/html
+        GH_TOKEN: ${{ secretes.GITHUB_TOKEN }}
+        GH_REPOSITORY: github.com/MDAnalysis/GridDataFormats.git
+        GH_DOC_BRANCH: master
+
+      run: |
+        cd ${MDA_DOCDIR}
+
+        rev=$(git rev-parse --short HEAD)
+
+        # set up git
+        git init
+        git config user.name ${GIT_CI_USER}
+        git config user.email ${GIT_CI_EMAIL}
+        git remote add upstream "https://${GH_TOKEN}@${GH_REPOSITORY}"
+        git fetch --depth 50 upstream ${GH_DOC_BRANCH} gh-pages
+        git reset upstream/gh-pages
+
+        touch .
+        touch .nojekyll
+
+        # comit and push
+        git add -A .
+        git commit -m "rebuilt html docs from branch ${GH_DOC_BRANCH} with sphinx at ${rev}"
+        git push -q upstream HEAD:gh-pages
