@@ -80,6 +80,7 @@ def test_write_dx_ValueError(tmpdir, nptype, outfile, counts=100, ndim=3):
         with tmpdir.as_cwd():
             g.export(outfile)
 
+
 def test_delta_precision(tmpdir):
     '''Test if the delta has been written to the 7th significant figure.'''
     g = Grid(datafiles.DX)
