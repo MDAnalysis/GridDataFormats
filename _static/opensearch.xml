@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>GridDataFormats</ShortName>
-  <Description>Search GridDataFormats 0+untagged.1.g6b20e34 documentation</Description>
+  <Description>Search GridDataFormats 0+untagged.1.g729d04c documentation</Description>
   <InputEncoding>utf-8</InputEncoding>
   <Url type="text/html" method="get"
        template="https://www.mdanalysis.org/GridDataFormats/search.html?q={searchTerms}"/>
-  <LongName>GridDataFormats 0+untagged.1.g6b20e34 documentation</LongName>
+  <LongName>GridDataFormats 0+untagged.1.g729d04c documentation</LongName>
   <Image height="16" width="16" type="image/x-icon">https://www.mdanalysis.org/GridDataFormats/_static/mdanalysis-logo.ico</Image>
   
 </OpenSearchDescription>
