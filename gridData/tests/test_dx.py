@@ -80,3 +80,14 @@ def test_write_dx_ValueError(tmpdir, nptype, outfile, counts=100, ndim=3):
         with tmpdir.as_cwd():
             g.export(outfile)
 
+def test_delta_precision(tmpdir):
+    '''Test if the delta has been written to the seventh significant figure.'''
+    g = Grid(datafiles.DX)
+    g.delta = np.array([90, 90, 150]) / 257
+    with tmpdir.as_cwd():
+        g.export("grid.dx")
+        g2 = Grid("grid.dx")
+    assert_almost_equal(
+        g.delta, g2.delta,
+        decimal=7,
+        err_msg="deltas of written grid do not match original")

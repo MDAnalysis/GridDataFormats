@@ -55,6 +55,11 @@ below:
 Known issues for writing OpenDX files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* APBS require the delta to be written to the seventh significant figure.
+  The delta is now written to reflect this increase in precision.
+
+  .. versionchanged:: 0.6.0
+
 * PyMOL_ requires OpenDX files with the type specification "double" in
   the `class array` section (see issue `#35`_). By default (since
   release 0.4.0), the type is set to the one that most closely

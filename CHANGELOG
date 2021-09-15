@@ -21,6 +21,7 @@ The rules for this file:
 
   * Allow parsing/writing gzipped DX files
   * Update doc theme to use sphinx-rtd-theme (#80)
+  * Delta of OpenDX writes 7 significant figures (#89)
 
   Fixes
 
