@@ -55,6 +55,11 @@ below:
 Known issues for writing OpenDX files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* APBS require the delta to be written to the seventh significant figure.
+  The delta is now written to reflect this increase in precision.
+
+  .. versionchanged:: 0.6.0
+
 * PyMOL_ requires OpenDX files with the type specification "double" in
   the `class array` section (see issue `#35`_). By default (since
   release 0.4.0), the type is set to the one that most closely
@@ -241,7 +246,9 @@ class gridpositions(DXclass):
         self._write_line(stream, 'origin %f %f %f\n' % tuple(self.origin))
         for delta in self.delta:
             self._write_line(
-                stream, ('delta '+self.ndformat(' %f')+'\n') % tuple(delta))
+                stream, ('delta ' +
+                         self.ndformat(' {:.7g}').format(*delta) +
+                         '\n'))
 
     def edges(self):
         """Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.
