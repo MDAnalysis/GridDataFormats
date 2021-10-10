@@ -13,15 +13,20 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/2019 eloyfelix, renehamburger1993, lilyminium, jvermaas
+10/10/2021 eloyfelix, renehamburger1993, lilyminium, jvermaas, xiki-tempula,
+           IAlibay, orbeckst
 
   * 0.6.0
 
+  Changes
+  * macOS and Windows are also tested (min and max supported Python, #97)
+  * switched CI to using GitHub actions (#86)
+
   Enhancements
 
-  * Allow parsing/writing gzipped DX files
+  * Allow parsing/writing gzipped DX files (PR #70, #99)
   * Update doc theme to use sphinx-rtd-theme (#80)
-  * Delta of OpenDX writes 7 significant figures (#89)
+  * Delta of OpenDX writes 7 significant figures (#88)
 
   Fixes
 
