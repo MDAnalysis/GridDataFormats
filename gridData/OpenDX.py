@@ -174,6 +174,17 @@ import gzip
 
 import warnings
 
+# Python 2/3 compatibility (see issue #99)
+# and https://bugs.python.org/issue30012
+import sys
+if sys.version_info >= (3, ):
+    def _gzip_open(filename, mode="rt"):
+        return gzip.open(filename, mode)
+else:
+    def _gzip_open(filename, mode="rt"):
+        return gzip.open(filename)
+del sys
+
 class DXclass(object):
     """'class' object as defined by OpenDX"""
     def __init__(self,classid):
@@ -707,7 +718,7 @@ class DXParser(object):
         self.tokens = []                    # token buffer
 
         if self.filename.endswith('.gz'):
-            with gzip.open(self.filename, 'rt') as self.dxfile:
+            with _gzip_open(self.filename, 'rt') as self.dxfile:
                 self.use_parser('general')
         else:
             with open(self.filename, 'r') as self.dxfile:
