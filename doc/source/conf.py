@@ -42,6 +42,7 @@ mathjax_path = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?
 
 # for sitemap with https://github.com/jdillard/sphinx-sitemap
 site_url = "https://www.mdanalysis.org/GridDataFormats/"
+sitemap_url_scheme = "{link}"
 
 # https://stackoverflow.com/questions/5599254/how-to-use-sphinxs-autodoc-to-document-a-classs-init-self-method
 autoclass_content = 'both'
