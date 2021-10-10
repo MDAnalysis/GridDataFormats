@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.core — Core functionality for storing n-D grids &mdash; GridDataFormats 0+untagged.1.g729d04c documentation</title>
+  <title>gridData.core — Core functionality for storing n-D grids &mdash; GridDataFormats 0+untagged.1.g401a5e6 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -19,7 +19,7 @@
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0+untagged.1.g729d04c documentation"
+          title="Search within GridDataFormats 0+untagged.1.g401a5e6 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -171,7 +171,7 @@ iterator.</p>
 </ol>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> if not compatible.</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> if not compatible.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -195,9 +195,9 @@ is simpler than <code class="docutils literal notranslate"><span class="pre">exp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name of the output file</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – name of the output file</p></li>
 <li><p><strong>file_format</strong> (<em>{'dx'</em><em>, </em><em>'pickle'</em><em>, </em><em>None}</em><em> (</em><em>optional</em><em>)</em>) – output file format, the default is “dx”</p></li>
-<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
 By default (<code class="docutils literal notranslate"><span class="pre">None</span></code>), the DX type is determined from the numpy
 dtype of the array of the grid (and this will typically result in
 “double”).</p>
@@ -205,7 +205,7 @@ dtype of the array of the grid (and this will typically result in
 <p><span class="versionmodified added">New in version 0.4.0.</span></p>
 </div>
 </p></li>
-<li><p><strong>typequote</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>For DX, set the character used to quote the type string;
+<li><p><strong>typequote</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>For DX, set the character used to quote the type string;
 by default this is a double-quote character, ‘”’.
 Custom parsers like the one from NAMD-GridForces (backend for MDFF)
 expect no quotes, and typequote=’’ may be used to appease them.</p>
@@ -328,7 +328,7 @@ the argument for this method</p>
 <dd><p>Resample to a new regular grid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The number of grid cells are scaled with <cite>factor</cite> in each
+<dd class="field-odd"><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The number of grid cells are scaled with <cite>factor</cite> in each
 dimension, i.e., <code class="docutils literal notranslate"><span class="pre">factor</span> <span class="pre">*</span> <span class="pre">N_i</span></code> cells along each
 dimension i. Must be positive, and cannot result in fewer
 than 2 cells along a dimension.</p>
@@ -396,7 +396,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay.</p>
+    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

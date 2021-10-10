@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.OpenDX &mdash; GridDataFormats 0+untagged.1.g729d04c documentation</title>
+  <title>gridData.OpenDX &mdash; GridDataFormats 0+untagged.1.g401a5e6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -18,7 +18,7 @@
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0+untagged.1.g729d04c documentation"
+          title="Search within GridDataFormats 0+untagged.1.g401a5e6 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -132,6 +132,11 @@
 
 <span class="sd">Known issues for writing OpenDX files</span>
 <span class="sd">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">* APBS require the delta to be written to the seventh significant figure.</span>
+<span class="sd">  The delta is now written to reflect this increase in precision.</span>
+
+<span class="sd">  .. versionchanged:: 0.6.0</span>
 
 <span class="sd">* PyMOL_ requires OpenDX files with the type specification &quot;double&quot; in</span>
 <span class="sd">  the `class array` section (see issue `#35`_). By default (since</span>
@@ -319,7 +324,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;origin </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">delta</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span>
-                <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;delta &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span></div>
+                <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;delta &#39;</span> <span class="o">+</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">{:.7g}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">delta</span><span class="p">)</span> <span class="o">+</span>
+                         <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="gridpositions.edges"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.edges">[docs]</a>    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
@@ -1126,7 +1133,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay.</p>
+    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

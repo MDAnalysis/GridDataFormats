@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 0+untagged.1.g729d04c documentation</title>
+  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 0+untagged.1.g401a5e6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -20,7 +20,7 @@
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0+untagged.1.g729d04c documentation"
+          title="Search within GridDataFormats 0+untagged.1.g401a5e6 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -139,6 +139,12 @@ below:</p>
 <section id="known-issues-for-writing-opendx-files">
 <h3>Known issues for writing OpenDX files<a class="headerlink" href="#known-issues-for-writing-opendx-files" title="Permalink to this headline">¶</a></h3>
 <ul>
+<li><p>APBS require the delta to be written to the seventh significant figure.
+The delta is now written to reflect this increase in precision.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.6.0.</span></p>
+</div>
+</li>
 <li><p><a class="reference external" href="http://www.pymol.org/">PyMOL</a> requires OpenDX files with the type specification “double” in
 the <cite>class array</cite> section (see issue <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/issues/35">#35</a>). By default (since
 release 0.4.0), the type is set to the one that most closely
@@ -349,9 +355,9 @@ has dimensions (derived from shape)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – </p></li>
+<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
 <li><p><strong>array</strong> (<em>array_like</em>) – </p></li>
-<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
 the closest numpy dtype.  <cite>type</cite> must be one of the
 allowed types in DX files as defined under <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440">Array
 Objects</a>.  The default <code class="docutils literal notranslate"><span class="pre">None</span></code> tries to set the type
@@ -363,7 +369,7 @@ from the <a class="reference external" href="https://numpy.org/doc/stable/refere
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <cite>array</cite> is not provided; or if <cite>type</cite> is not of the correct
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – if <cite>array</cite> is not provided; or if <cite>type</cite> is not of the correct
     DX type</p>
 </dd>
 </dl>
@@ -392,7 +398,7 @@ types are supported (e.g., strings are missing)</p>
 <dd class="field-odd"><p><strong>stream</strong> (<em>stream</em>) – </p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
     raised.</p>
 </dd>
 </dl>
@@ -412,8 +418,8 @@ OpenDX file. It contains a number of other objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – arbitrary string</p></li>
-<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – arbitrary string</p></li>
+<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
 individual ids!) which correspond to</p>
 <ul>
 <li><p>positions</p></li>
@@ -421,7 +427,7 @@ individual ids!) which correspond to</p>
 <li><p>data</p></li>
 </ul>
 </p></li>
-<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – list of strings; each string becomes a comment line
+<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – list of strings; each string becomes a comment line
 prefixed with ‘#’. Avoid newlines.</p></li>
 </ul>
 </dd>
@@ -540,7 +546,7 @@ delta     DxD array describing the deltas</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay.</p>
+    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
