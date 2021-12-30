@@ -12,7 +12,10 @@ from . import datafiles
 
 @pytest.fixture(scope="module")
 def g():
-    return Grid(datafiles.CCP4)
+    ccp4 = CCP4.CCP4()
+    ccp4.read(datafiles.CCP4)
+    grid, edges = ccp4.histogramdd()
+    return Grid(grid=grid, edges=edges)
 
 def test_ccp4(g):
     POINTS = 192

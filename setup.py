@@ -43,7 +43,7 @@ setup(name="GridDataFormats",
       packages=find_packages(exclude=[]),
       package_data={'gridData': ['tests/datafiles/*.dx', 'tests/datafiles/*.dx.gz',
                                  'tests/datafiles/*.ccp4', 'tests/datafiles/*.plt']},
-      install_requires=['numpy>=1.0.3', 'six', 'scipy'],
+      install_requires=['numpy>=1.0.3', 'six', 'scipy', 'mrcfile'],
       tests_require=['pytest', 'numpy'],
       zip_safe=True,
       )
