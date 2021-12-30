@@ -22,10 +22,11 @@ References
 
 .. [Burnley2017] Burnley T, Palmer C and Winn M (2017) Recent
                  developments in the CCP-EM software suite. *Acta
-                 Cryst.* D73:469–477. doi: `10.1107/S2059798317007859`_
+                 Cryst.* D73:469-477. doi: `10.1107/S2059798317007859`_
 
 
 .. _`10.1107/S2059798317007859`: https://doi.org/10.1107/S2059798317007859
+
 Classes
 -------
 

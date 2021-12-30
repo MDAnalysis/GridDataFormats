@@ -24,8 +24,7 @@ The rules for this file:
 
   Deprecations
 
-  * The CCP4 module will be removed in 0.8.0 and files will only be
-    read with mrc.
+  * The CCP4 module (replaced by mrc) will be removed in 0.8.0.
 
 
 10/10/2021 eloyfelix, renehamburger1993, lilyminium, jvermaas, xiki-tempula,

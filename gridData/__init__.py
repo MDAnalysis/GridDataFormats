@@ -93,16 +93,8 @@ See the doc string for :class:`~gridData.core.Grid` for details.
 Formats
 -------
 
-The following formats are available (:ref:`supported-file-formats`):
+For the available file formats see :ref:`supported-file-formats`.
 
-   :mod:`~gridData.OpenDX`
-        IBM's Data Explorer, http://www.opendx.org/
-   :mod:`~gridData.gOpenMol`
-        http://www.csc.fi/gopenmol/
-   :mod:`~gridData.CCP4`
-        CCP4 format http://www.ccp4.ac.uk/html/maplib.html#description
-   pickle
-        python pickle file (:mod:`pickle`)
 
 
 """
