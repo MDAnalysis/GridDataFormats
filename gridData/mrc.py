@@ -107,9 +107,24 @@ class MRC(object):
                                  "alpha={0}, beta={1}, gamma={2}".format(
                                      h.cellb.alpha, h.cellb.beta, h.cellb.gamma))
             # mrc.data[z, y, x] indexed: convert to x,y,z as used in GridDataFormats
-            self.array = np.transpose(mrc.data)
-            self.delta = np.diag([mrc.voxel_size.x, mrc.voxel_size.y, mrc.voxel_size.z])
-            self.origin = np.array([h.origin.x, h.origin.y, h.origin.z])
+            # together with the axes orientation information in mapc/mapr/maps.
+            # mapc, mapr, maps = 1, 2, 3 for Fortran-ordering and 3, 2, 1 for C-ordering.
+            # Other combinations are possible. We reorder the data for the general case
+            # by sorting mapc, mapr, maps in ascending order, i.e., to obtain x,y,z.
+            # mrcfile provides the data in zyx shape (without regard to map*) so we first
+            # transpose it to xyz and then reorient with axes_c_order.
+            #
+            # All other "xyz" quantitities are also reordered.
+            axes_order = np.hstack([h.mapc, h.mapr, h.maps])
+            axes_c_order = np.argsort(axes_order)
+            transpose_order = np.argsort(axes_order[::-1])
+            self.array = np.transpose(mrc.data, axes=transpose_order)
+            self.delta = np.diag(np.array([mrc.voxel_size.x, mrc.voxel_size.y, mrc.voxel_size.z]))
+            # the grid is shifted to the MRC origin by offset
+            # (assume orthorhombic)
+            offsets = np.hstack([h.nxstart, h.nystart, h.nzstart])[axes_c_order] * np.diag(self.delta)
+            # GridData origin is centre of cell at x=col=0, y=row=0 z=seg=0
+            self.origin = np.hstack([h.origin.x, h.origin.y, h.origin.z]) + offsets
             self.rank = 3
 
     @property
@@ -119,7 +134,7 @@ class MRC(object):
 
     @property
     def edges(self):
-        """Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.
+        """Edges of the grid cells, origin at centre of 0,0,0 grid cell.
 
         Only works for regular, orthonormal grids.
         """

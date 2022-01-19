@@ -13,15 +13,20 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/2022 orbeckst
+??/??/2022 orbeckst, tluchko
 
-  * 0.7.0        
+  * 0.7.0
 
   Enhancements
 
   * use mrcfile library to parse MRC files (including CCP4) using the
     new mrc.MRC class (issue #83)
 
+  Fixes
+  
+  * The new mrc module correctly reorients the coordinate system based
+    on mapc, mapr, maps and correctly calculates the origin (issue #76)
+        
   Deprecations
 
   * The CCP4 module (replaced by mrc) will be removed in 0.8.0.

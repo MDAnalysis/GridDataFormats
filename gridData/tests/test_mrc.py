@@ -90,8 +90,28 @@ def test_ccp4_read_header(ccp4data, name, value):
     else:
         assert_equal(ccp4data.header[name], value)
 
+def test_axes_orientation(ccp4data):
+    # correctly interpret mapc, mapr, maps = 2, 1, 3
+    # for nx, ny, nz = 96, 76, 70.
+    # see also #76
+    assert_equal(ccp4data.shape, (76, 96, 70))
+
+def test_delta(ccp4data):
+    assert_almost_equal(ccp4data.delta, np.array(
+        [[0.5452381, 0.       , 0.       ],
+         [0.       , 0.5452381, 0.       ],
+         [0.       , 0.       , 0.5603125]], dtype=np.float32))
+
+def test_origin(ccp4data):
+    # shift with nxstart, nystart, nzstart and delta
+    #
+    # (visual comparison of CCP4 and DX file in ChimeraX at same
+    # level shows full agreement)
+    assert_almost_equal(ccp4data.origin, [-12.5404758,  -2.1809523,  57.151876 ])
+
 def test_triclinic_ValueError():
     with pytest.raises(ValueError,
                        match="Only orthorhombic unitcells are currently "
                        "supported, not"):
         Grid(datafiles.MRC_EMD3001, file_format="MRC")
+
