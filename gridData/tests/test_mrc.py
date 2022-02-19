@@ -115,3 +115,23 @@ def test_triclinic_ValueError():
                        "supported, not"):
         Grid(datafiles.MRC_EMD3001, file_format="MRC")
 
+class TestGridMRC():
+    @pytest.fixture(scope="class")
+    def grid(self):
+        return Grid(datafiles.CCP4_1JZV)
+
+    def test_shape(self, grid, ccp4data):
+        assert_equal(grid.grid.shape, ccp4data.shape)
+
+    def test_mrc_header(self, grid, ccp4data):
+        # undocumented MRC header in Grid
+        assert grid._mrc_header == ccp4data.header
+
+    def test_delta(self, grid, ccp4data):
+        assert_almost_equal(grid.delta, np.diag(ccp4data.delta))
+
+    def test_origin(self, grid, ccp4data):
+        assert_almost_equal(grid.origin, ccp4data.origin)
+
+    def test_data(self, grid, ccp4data):
+        assert_almost_equal(grid.grid, ccp4data.array)

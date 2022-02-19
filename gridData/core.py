@@ -114,6 +114,10 @@ class Grid(object):
         .. versionchanged:: 0.5.0
            New *file_format* keyword argument.
 
+        .. versionchanged:: 0.7.0
+           CCP4 files are now read with :class:`gridData.mrc.MRC` and not anymore
+           with the deprecated/buggy `ccp4.CCP4`
+
         """
         # file formats are guess from extension == lower case key
         self._exporters = {
@@ -477,6 +481,9 @@ class Grid(object):
         mrcfile = mrc.MRC(filename)
         grid, edges = mrcfile.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
+        # Store header for access from Grid object (undocumented)
+        # https://github.com/MDAnalysis/GridDataFormats/pull/100#discussion_r782604833
+        self._mrc_header = mrcfile.header.copy()
 
     def _load_dx(self, filename):
         """Initializes Grid from a OpenDX file."""

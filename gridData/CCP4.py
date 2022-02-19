@@ -164,6 +164,7 @@ class CCP4(object):
        * index ordering besides standard column-major and row-major
        * non-standard fields, such any in filed in future use block
 
+
     .. deprecated:: 0.7.0
        Use :class:`gridData.mrc.MRC` instead. This class will be removed in 0.8.0.
     """
