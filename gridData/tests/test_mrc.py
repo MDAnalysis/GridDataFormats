@@ -3,7 +3,7 @@ from __future__ import absolute_import, division
 import pytest
 
 import numpy as np
-from numpy.testing import (assert_almost_equal,
+from numpy.testing import (assert_allclose,
                            assert_equal)
 
 from gridData import Grid, mrc
@@ -31,7 +31,7 @@ def _test_ccp4(g):
     POINTS = 192
     assert_equal(g.grid.flat, np.arange(1, POINTS+1))
     assert_equal(g.grid.size, POINTS)
-    assert_almost_equal(g.delta, [3./4, .5, 2./3])
+    assert_allclose(g.delta, [3./4, .5, 2./3])
     assert_equal(g.origin, np.zeros(3))
 
 
@@ -86,7 +86,7 @@ def ccp4data():
 ])
 def test_ccp4_read_header(ccp4data, name, value):
     if type(value) is float:
-        assert_almost_equal(ccp4data.header[name], value, decimal=6)
+        assert_allclose(ccp4data.header[name], value, rtol=1e-06)
     else:
         assert_equal(ccp4data.header[name], value)
 
@@ -97,7 +97,7 @@ def test_axes_orientation(ccp4data):
     assert_equal(ccp4data.shape, (76, 96, 70))
 
 def test_delta(ccp4data):
-    assert_almost_equal(ccp4data.delta, np.array(
+    assert_allclose(ccp4data.delta, np.array(
         [[0.5452381, 0.       , 0.       ],
          [0.       , 0.5452381, 0.       ],
          [0.       , 0.       , 0.5603125]], dtype=np.float32))
@@ -107,7 +107,7 @@ def test_origin(ccp4data):
     #
     # (visual comparison of CCP4 and DX file in ChimeraX at same
     # level shows full agreement)
-    assert_almost_equal(ccp4data.origin, [-12.5404758,  -2.1809523,  57.151876 ])
+    assert_allclose(ccp4data.origin, [-12.5404758,  -2.1809523,  57.151876 ])
 
 def test_triclinic_ValueError():
     with pytest.raises(ValueError,
@@ -128,10 +128,10 @@ class TestGridMRC():
         assert grid._mrc_header == ccp4data.header
 
     def test_delta(self, grid, ccp4data):
-        assert_almost_equal(grid.delta, np.diag(ccp4data.delta))
+        assert_allclose(grid.delta, np.diag(ccp4data.delta))
 
     def test_origin(self, grid, ccp4data):
-        assert_almost_equal(grid.origin, ccp4data.origin)
+        assert_allclose(grid.origin, ccp4data.origin)
 
     def test_data(self, grid, ccp4data):
-        assert_almost_equal(grid.grid, ccp4data.array)
+        assert_allclose(grid.grid, ccp4data.array)
