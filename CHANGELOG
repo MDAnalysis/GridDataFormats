@@ -17,16 +17,19 @@ The rules for this file:
 
   * 0.7.0
 
+  Changes
+  * Python 3.10 is supported
+
   Enhancements
 
   * use mrcfile library to parse MRC files (including CCP4) using the
     new mrc.MRC class (issue #83)
 
   Fixes
-  
+
   * The new mrc module correctly reorients the coordinate system based
     on mapc, mapr, maps and correctly calculates the origin (issue #76)
-        
+
   Deprecations
 
   * The CCP4 module (replaced by mrc) will be removed in 0.8.0.
@@ -38,6 +41,7 @@ The rules for this file:
   * 0.6.0
 
   Changes
+
   * macOS and Windows are also tested (min and max supported Python, #97)
   * switched CI to using GitHub actions (#86)
 
