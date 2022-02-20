@@ -40,7 +40,7 @@ import numpy
 
 from . import OpenDX
 from . import gOpenMol
-from . import CCP4
+from . import mrc
 
 
 def _grid(x):
@@ -114,6 +114,10 @@ class Grid(object):
         .. versionchanged:: 0.5.0
            New *file_format* keyword argument.
 
+        .. versionchanged:: 0.7.0
+           CCP4 files are now read with :class:`gridData.mrc.MRC` and not anymore
+           with the deprecated/buggy `ccp4.CCP4`
+
         """
         # file formats are guess from extension == lower case key
         self._exporters = {
@@ -123,7 +127,8 @@ class Grid(object):
             'PYTHON': self._export_python,  # compatibility
         }
         self._loaders = {
-            'CCP4': self._load_cpp4,
+            'CCP4': self._load_mrc,
+            'MRC':  self._load_mrc,
             'DX': self._load_dx,
             'PLT': self._load_plt,
             'PKL': self._load_python,
@@ -471,12 +476,14 @@ class Grid(object):
                    edges=saved['edges'],
                    metadata=saved['metadata'])
 
-    def _load_cpp4(self, filename):
-        """Initializes Grid from a CCP4 file."""
-        ccp4 = CCP4.CCP4()
-        ccp4.read(filename)
-        grid, edges = ccp4.histogramdd()
+    def _load_mrc(self, filename):
+        """Initializes Grid from a MRC/CCP4 file."""
+        mrcfile = mrc.MRC(filename)
+        grid, edges = mrcfile.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
+        # Store header for access from Grid object (undocumented)
+        # https://github.com/MDAnalysis/GridDataFormats/pull/100#discussion_r782604833
+        self._mrc_header = mrcfile.header.copy()
 
     def _load_dx(self, filename):
         """Initializes Grid from a OpenDX file."""

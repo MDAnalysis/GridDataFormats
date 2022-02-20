@@ -12,7 +12,12 @@ from . import datafiles
 
 @pytest.fixture(scope="module")
 def g():
-    return Grid(datafiles.CCP4)
+    with pytest.warns(DeprecationWarning,
+                      match="CCP4.CCP4 is being replaced by mrc.MRC and will be removed"):
+        ccp4 = CCP4.CCP4()
+    ccp4.read(datafiles.CCP4)
+    grid, edges = ccp4.histogramdd()
+    return Grid(grid=grid, edges=edges)
 
 def test_ccp4(g):
     POINTS = 192
@@ -24,7 +29,10 @@ def test_ccp4(g):
 
 @pytest.fixture(scope="module")
 def ccp4data():
-    return CCP4.CCP4(datafiles.CCP4_1JZV)
+    with pytest.warns(DeprecationWarning,
+                      match="CCP4.CCP4 is being replaced by mrc.MRC and will be removed"):
+        ccp4 = CCP4.CCP4(datafiles.CCP4_1JZV)
+    return ccp4
 
 @pytest.mark.parametrize('name,value', [
     ('nc', 96),
