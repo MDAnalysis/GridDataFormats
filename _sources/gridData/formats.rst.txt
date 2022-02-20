@@ -27,7 +27,7 @@ small number of file formats is directly supported.
    ============================ ==========  =========  =====  =====  =========================================
    :mod:`~gridData.OpenDX`      OpenDX_     dx         x      x      subset of OpenDX implemented
    :mod:`~gridData.gOpenMol`    gOpenMol_   plt        x
-   :mod:`~gridData.CCP4`        CCP4_       ccp4       x             subset implemented
+   :mod:`~gridData.mrc`         CCP4_       ccp4,mrc   x             subset implemented
    :class:`~gridData.core.Grid` pickle      pickle     x      x      standard Python pickle of the Grid class
    ============================ ==========  =========  =====  =====  =========================================
 
@@ -38,7 +38,7 @@ small number of file formats is directly supported.
 .. _Chimera: https://www.cgl.ucsf.edu/chimera/
 .. _OpenDX: http://www.opendx.org/
 .. _gOpenMol: http://www.csc.fi/gopenmol/
-.. _CCP4: http://www.ccp4.ac.uk/html/maplib.html#description
+.. _CCP4: http://www.ccpem.ac.uk/mrc_format/mrc2014.php
 
 
 Format-specific modules
@@ -49,4 +49,5 @@ Format-specific modules
 
    formats/OpenDX
    formats/gOpenMol
+   formats/mrc
    formats/CCP4

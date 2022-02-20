@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gridData.mrc &mdash; GridDataFormats 0.6.0+10.g07b4083 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats 0.6.0+10.g07b4083 documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="../../index.html">
+            <img src="../../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/basic.html">Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/formats.html">Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GridDataFormats</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>gridData.mrc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gridData.mrc</h1><div class="highlight"><pre>
+<span></span><span class="c1"># gridDataFormats --- python modules to read and write gridded data</span>
+<span class="c1"># Copyright (c) 2009-2021 Oliver Beckstein &lt;orbeckst@gmail.com&gt;</span>
+<span class="c1"># Released under the GNU Lesser General Public License, version 3 or later.</span>
+<span class="c1">#</span>
+
+<span class="sd">&quot;&quot;&quot;:mod:`mrc` --- the mrc/CCP4 volumetric data format</span>
+<span class="sd">===================================================</span>
+
+<span class="sd">.. versionadded:: 0.7.0</span>
+
+<span class="sd">Reading of MRC/CCP4 volumetric files (`MRC2014 file format`_) using</span>
+<span class="sd">the mrcfile_ library [Burnley2017]_.</span>
+
+<span class="sd">This implementation replaces the :mod:`CCP4` module.</span>
+
+<span class="sd">.. _mrcfile: https://mrcfile.readthedocs.io/</span>
+<span class="sd">.. _`MRC2014 file format`: http://www.ccpem.ac.uk/mrc_format/mrc2014.php</span>
+
+
+<span class="sd">References</span>
+<span class="sd">----------</span>
+
+<span class="sd">.. [Burnley2017] Burnley T, Palmer C and Winn M (2017) Recent</span>
+<span class="sd">                 developments in the CCP-EM software suite. *Acta</span>
+<span class="sd">                 Cryst.* D73:469-477. doi: `10.1107/S2059798317007859`_</span>
+
+
+<span class="sd">.. _`10.1107/S2059798317007859`: https://doi.org/10.1107/S2059798317007859</span>
+
+<span class="sd">Classes</span>
+<span class="sd">-------</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">mrcfile</span>
+
+
+<div class="viewcode-block" id="MRC"><a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC">[docs]</a><span class="k">class</span> <span class="nc">MRC</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Represent a MRC/CCP4 file.</span>
+
+<span class="sd">    Load `MRC/CCP4 2014 &lt;MRC2014 file format&gt;`_ 3D volumetric data with</span>
+<span class="sd">    the mrcfile_ library.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str (optional)</span>
+<span class="sd">       input file (or stream), can be compressed</span>
+
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    header : numpy.recarray</span>
+<span class="sd">       Header data from the MRC file as a numpy record array.</span>
+
+<span class="sd">    array : numpy.ndarray</span>
+<span class="sd">       Data as a 3-dimensional array where axis 0 corresponds to X,</span>
+<span class="sd">       axis 1 to Y, and axis 2 to Z. This order is always enforced,</span>
+<span class="sd">       regardless of the order in the mrc file.</span>
+
+<span class="sd">    delta : numpy.ndarray</span>
+<span class="sd">       Diagonal matrix with the voxel size in X, Y, and Z direction</span>
+<span class="sd">       (taken from the :attr:`mrcfile.mrcfile.voxel_size` attribute)</span>
+
+<span class="sd">    origin : numpy.ndarray</span>
+<span class="sd">       numpy array with coordinates of the coordinate system origin</span>
+<span class="sd">       (taken from :attr:`header.origin`)</span>
+
+<span class="sd">    rank : int</span>
+<span class="sd">       The integer 3, denoting that only 3D maps are read.</span>
+
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    * Only volumetric (3D) densities are read.</span>
+<span class="sd">    * Only orthorhombic unitcells supported (other raise :exc:`ValueError`)</span>
+<span class="sd">    * Only reading is currently supported.</span>
+
+
+<span class="sd">    .. versionadded:: 0.7.0</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MRC.read"><a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Populate the instance from the MRC/CCP4 file *filename*.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="k">with</span> <span class="n">mrcfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">mrc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">mrc</span><span class="o">.</span><span class="n">is_volume</span><span class="p">():</span>                           <span class="c1">#pragma: no cover</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;MRC file </span><span class="si">{}</span><span class="s2"> is not a volumetric density.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">h</span> <span class="o">=</span> <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="c1"># check for being orthorhombic</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">gamma</span><span class="p">],</span>
+                               <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only orthorhombic unitcells are currently &quot;</span>
+                                 <span class="s2">&quot;supported, not &quot;</span>
+                                 <span class="s2">&quot;alpha=</span><span class="si">{0}</span><span class="s2">, beta=</span><span class="si">{1}</span><span class="s2">, gamma=</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                     <span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">gamma</span><span class="p">))</span>
+            <span class="c1"># mrc.data[z, y, x] indexed: convert to x,y,z as used in GridDataFormats</span>
+            <span class="c1"># together with the axes orientation information in mapc/mapr/maps.</span>
+            <span class="c1"># mapc, mapr, maps = 1, 2, 3 for Fortran-ordering and 3, 2, 1 for C-ordering.</span>
+            <span class="c1"># Other combinations are possible. We reorder the data for the general case</span>
+            <span class="c1"># by sorting mapc, mapr, maps in ascending order, i.e., to obtain x,y,z.</span>
+            <span class="c1"># mrcfile provides the data in zyx shape (without regard to map*) so we first</span>
+            <span class="c1"># transpose it to xyz and then reorient with axes_c_order.</span>
+            <span class="c1">#</span>
+            <span class="c1"># All other &quot;xyz&quot; quantitities are also reordered.</span>
+            <span class="n">axes_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">mapc</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">mapr</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">maps</span><span class="p">])</span>
+            <span class="n">axes_c_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axes_order</span><span class="p">)</span>
+            <span class="n">transpose_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axes_order</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">mrc</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">transpose_order</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">mrc</span><span class="o">.</span><span class="n">voxel_size</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">mrc</span><span class="o">.</span><span class="n">voxel_size</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">mrc</span><span class="o">.</span><span class="n">voxel_size</span><span class="o">.</span><span class="n">z</span><span class="p">]))</span>
+            <span class="c1"># the grid is shifted to the MRC origin by offset</span>
+            <span class="c1"># (assume orthorhombic)</span>
+            <span class="n">offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">nxstart</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">nystart</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">nzstart</span><span class="p">])[</span><span class="n">axes_c_order</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span>
+            <span class="c1"># GridData origin is centre of cell at x=col=0, y=row=0 z=seg=0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">z</span><span class="p">])</span> <span class="o">+</span> <span class="n">offsets</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shape of the :attr:`array`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,0 grid cell.</span>
+
+<span class="sd">        Only works for regular, orthonormal grids.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Add triclinic cell support.</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="MRC.histogramdd"><a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC.histogramdd">[docs]</a>    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return array data as (edges,grid), i.e. a numpy nD histogram.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span></div></div>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+ 
+<div class="footer"><p>Please see
+    our <a href="https://www.mdanalysis.org/pages/privacy/">Privacy Policy</a>
+    to learn how <a href="https://www.mdanalysis.org">MDAnalysis</a> collects data.</p>
+    <script data-goatcounter="https://mdanalysis.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</div>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

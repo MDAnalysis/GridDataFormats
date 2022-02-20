@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mrc — the mrc/CCP4 volumetric data format &mdash; GridDataFormats 0.6.0+10.g07b4083 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/mdanalysis-logo.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats 0.6.0+10.g07b4083 documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CCP4 — the CCP4 volumetric data format (DEPRECATED)" href="CCP4.html" />
+    <link rel="prev" title="gOpenMol — the gOpenMol plt format" href="gOpenMol.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="../../index.html">
+            <img src="../../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic.html">Basic use</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../formats.html">Formats</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../formats.html#supported-file-formats">Supported file formats</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../formats.html#format-specific-modules">Format-specific modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="OpenDX.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gOpenMol.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> — the mrc/CCP4 volumetric data format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CCP4.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format (DEPRECATED)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GridDataFormats</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../formats.html">Formats</a> &raquo;</li>
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> — the mrc/CCP4 volumetric data format</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/gridData/formats/mrc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <span class="target" id="module-gridData.mrc"></span><section id="mrc-the-mrc-ccp4-volumetric-data-format">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> — the mrc/CCP4 volumetric data format<a class="headerlink" href="#mrc-the-mrc-ccp4-volumetric-data-format" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.7.0.</span></p>
+</div>
+<p>Reading of MRC/CCP4 volumetric files (<a class="reference external" href="http://www.ccpem.ac.uk/mrc_format/mrc2014.php">MRC2014 file format</a>) using
+the <a class="reference external" href="https://mrcfile.readthedocs.io/">mrcfile</a> library <a class="reference internal" href="#burnley2017" id="id1"><span>[Burnley2017]</span></a>.</p>
+<p>This implementation replaces the <code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> module.</p>
+<p class="rubric">References</p>
+<dl class="citation">
+<dt class="label" id="burnley2017"><span class="brackets"><a class="fn-backref" href="#id1">Burnley2017</a></span></dt>
+<dd><p>Burnley T, Palmer C and Winn M (2017) Recent
+developments in the CCP-EM software suite. <em>Acta
+Cryst.</em> D73:469-477. doi: <a class="reference external" href="https://doi.org/10.1107/S2059798317007859">10.1107/S2059798317007859</a></p>
+</dd>
+</dl>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gridData.mrc.MRC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.mrc.</span></span><span class="sig-name descname"><span class="pre">MRC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represent a MRC/CCP4 file.</p>
+<p>Load <a class="reference external" href="MRC2014fileformat">MRC/CCP4 2014</a> 3D volumetric data with
+the <a class="reference external" href="https://mrcfile.readthedocs.io/">mrcfile</a> library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – input file (or stream), can be compressed</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.header">
+<span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#gridData.mrc.MRC.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Header data from the MRC file as a numpy record array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.recarray.html#numpy.recarray" title="(in NumPy v1.22)">numpy.recarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.array">
+<span class="sig-name descname"><span class="pre">array</span></span><a class="headerlink" href="#gridData.mrc.MRC.array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data as a 3-dimensional array where axis 0 corresponds to X,
+axis 1 to Y, and axis 2 to Z. This order is always enforced,
+regardless of the order in the mrc file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.delta">
+<span class="sig-name descname"><span class="pre">delta</span></span><a class="headerlink" href="#gridData.mrc.MRC.delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Diagonal matrix with the voxel size in X, Y, and Z direction
+(taken from the <code class="xref py py-attr docutils literal notranslate"><span class="pre">mrcfile.mrcfile.voxel_size</span></code> attribute)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.origin">
+<span class="sig-name descname"><span class="pre">origin</span></span><a class="headerlink" href="#gridData.mrc.MRC.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>numpy array with coordinates of the coordinate system origin
+(taken from <code class="xref py py-attr docutils literal notranslate"><span class="pre">header.origin</span></code>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.rank">
+<span class="sig-name descname"><span class="pre">rank</span></span><a class="headerlink" href="#gridData.mrc.MRC.rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>The integer 3, denoting that only 3D maps are read.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Only volumetric (3D) densities are read.</p></li>
+<li><p>Only orthorhombic unitcells supported (other raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>)</p></li>
+<li><p>Only reading is currently supported.</p></li>
+</ul>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.7.0.</span></p>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.edges">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.mrc.MRC.edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edges of the grid cells, origin at centre of 0,0,0 grid cell.</p>
+<p>Only works for regular, orthonormal grids.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.histogramdd">
+<span class="sig-name descname"><span class="pre">histogramdd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC.histogramdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC.histogramdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return array data as (edges,grid), i.e. a numpy nD histogram.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populate the instance from the MRC/CCP4 file <em>filename</em>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gridData.mrc.MRC.shape">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#gridData.mrc.MRC.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shape of the <a class="reference internal" href="#gridData.mrc.MRC.array" title="gridData.mrc.MRC.array"><code class="xref py py-attr docutils literal notranslate"><span class="pre">array</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gOpenMol.html" class="btn btn-neutral float-left" title="gOpenMol — the gOpenMol plt format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CCP4.html" class="btn btn-neutral float-right" title="CCP4 — the CCP4 volumetric data format (DEPRECATED)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+ 
+<div class="footer"><p>Please see
+    our <a href="https://www.mdanalysis.org/pages/privacy/">Privacy Policy</a>
+    to learn how <a href="https://www.mdanalysis.org">MDAnalysis</a> collects data.</p>
+    <script data-goatcounter="https://mdanalysis.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</div>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

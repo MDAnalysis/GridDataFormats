@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CCP4 — the CCP4 volumetric data format &mdash; GridDataFormats 0.5.0+23.g899bc74 documentation</title>
+  <title>CCP4 — the CCP4 volumetric data format (DEPRECATED) &mdash; GridDataFormats 0.6.0+10.g07b4083 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -19,12 +19,12 @@
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+23.g899bc74 documentation"
+          title="Search within GridDataFormats 0.6.0+10.g07b4083 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="gridData.core — Core functionality for storing n-D grids" href="../core.html" />
-    <link rel="prev" title="gOpenMol — the gOpenMol plt format" href="gOpenMol.html" /> 
+    <link rel="prev" title="mrc — the mrc/CCP4 volumetric data format" href="mrc.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,7 +36,7 @@
             <img src="../../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5
+                0.6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -55,7 +55,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../formats.html#format-specific-modules">Format-specific modules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="OpenDX.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gOpenMol.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> — the mrc/CCP4 volumetric data format</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format (DEPRECATED)</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#background">Background</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#grid-data-ccp4-file-format">Grid data CCP4 file format</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
@@ -83,7 +84,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../formats.html">Formats</a> &raquo;</li>
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format</li>
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format (DEPRECATED)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/gridData/formats/CCP4.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -93,10 +94,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <span class="target" id="module-gridData.CCP4"></span><section id="ccp4-the-ccp4-volumetric-data-format">
-<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format<a class="headerlink" href="#ccp4-the-ccp4-volumetric-data-format" title="Permalink to this headline">¶</a></h1>
+  <span class="target" id="module-gridData.CCP4"></span><section id="ccp4-the-ccp4-volumetric-data-format-deprecated">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code> — the CCP4 volumetric data format (DEPRECATED)<a class="headerlink" href="#ccp4-the-ccp4-volumetric-data-format-deprecated" title="Permalink to this headline">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.3.0.</span></p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 0.7.0: </span>The CCP4 module is replaced by <a class="reference internal" href="mrc.html#module-gridData.mrc" title="gridData.mrc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.mrc</span></code></a> and
+will be removed in 0.8.0.</p>
 </div>
 <p>The module provides a simple implementation of a reader for <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">CCP4</a>
 <em>ccp4</em> files. CCP4 files are binary files. The <a class="reference internal" href="#gridData.CCP4.CCP4" title="gridData.CCP4.CCP4"><code class="xref py py-class docutils literal notranslate"><span class="pre">CCP4</span></code></a> reader tries
@@ -200,7 +205,7 @@ the big endian stamp is 0x11, 0x11, 0x00, 0x00.</p>
 <h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.CCP4.CCP4">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">gridData.CCP4.</span></span><span class="sig-name descname"><span class="pre">CCP4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.CCP4.CCP4" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.CCP4.</span></span><span class="sig-name descname"><span class="pre">CCP4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/CCP4.html#CCP4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.CCP4.CCP4" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class to represent a <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">CCP4</a> file.</p>
 <dl>
 <dt>Only reading is implemented; either supply a filename to the constructor</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">CCP4</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -231,9 +236,12 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
 * index ordering besides standard column-major and row-major
 * non-standard fields, such any in filed in future use block</p>
 </div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 0.7.0: </span>Use <a class="reference internal" href="mrc.html#gridData.mrc.MRC" title="gridData.mrc.MRC"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.mrc.MRC</span></code></a> instead. This class will be removed in 0.8.0.</p>
+</div>
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.CCP4.CCP4.edges">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.CCP4.CCP4.edges" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.CCP4.CCP4.edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</p>
 <p>Only works for regular, orthonormal grids.</p>
 </dd></dl>
@@ -259,7 +267,7 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="gOpenMol.html" class="btn btn-neutral float-left" title="gOpenMol — the gOpenMol plt format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mrc.html" class="btn btn-neutral float-left" title="mrc — the mrc/CCP4 volumetric data format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../core.html" class="btn btn-neutral float-right" title="gridData.core — Core functionality for storing n-D grids" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

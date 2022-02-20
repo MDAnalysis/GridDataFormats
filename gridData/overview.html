@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData – Handling grids of data &mdash; GridDataFormats 0.5.0+23.g899bc74 documentation</title>
+  <title>gridData – Handling grids of data &mdash; GridDataFormats 0.6.0+10.g07b4083 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -19,7 +19,7 @@
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.5.0+23.g899bc74 documentation"
+          title="Search within GridDataFormats 0.6.0+10.g07b4083 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +36,7 @@
             <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5
+                0.6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -98,7 +98,7 @@ coordinates of the intersections of the grid (mesh) lines on the
 axes. In this way the grid is anchored in space.</p>
 <p>The <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can be resampled at arbitrary resolution (by
 interpolating the data). Standard algebraic operations are defined for
-grids on a point-wise basis (same as for <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
+grids on a point-wise basis (same as for <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
 </section>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -119,16 +119,16 @@ corresponds to (0,0,…,0)</p></li>
 </ol>
 <p><a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> objects have some convenient properties:</p>
 <ul class="simple">
-<li><p>The data is represented as a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> and thus shares
+<li><p>The data is represented as a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> and thus shares
 all the advantages coming with this sophisticated and powerful
 library.</p></li>
 <li><p>They can be manipulated arithmetically, e.g. one can simply add or
 subtract two of them and get another one, or multiply by a
 constant. Note that all operations are defined point-wise (see the
-<a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.21)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> documentation for details) and that only grids defined
+<a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.22)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> documentation for details) and that only grids defined
 on the same cell edges can be combined.</p></li>
 <li><p>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can also be created from within python code
-e.g. from the output of the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.21)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function.</p></li>
+e.g. from the output of the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function.</p></li>
 <li><p>The representation of the data is abstracted from the format that
 the files are saved in. This makes it straightforward to add
 additional readers for new formats.</p></li>
@@ -159,19 +159,7 @@ for convenient handling (especially export to other formats).  The
 </section>
 <section id="formats">
 <h2>Formats<a class="headerlink" href="#formats" title="Permalink to this headline">¶</a></h2>
-<p>The following formats are available (<a class="reference internal" href="formats.html#supported-file-formats"><span class="std std-ref">Supported file formats</span></a>):</p>
-<blockquote>
-<div><dl class="simple">
-<dt><a class="reference internal" href="formats/OpenDX.html#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code></a></dt><dd><p>IBM’s Data Explorer, <a class="reference external" href="http://www.opendx.org/">http://www.opendx.org/</a></p>
-</dd>
-<dt><a class="reference internal" href="formats/gOpenMol.html#module-gridData.gOpenMol" title="gridData.gOpenMol"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code></a></dt><dd><p><a class="reference external" href="http://www.csc.fi/gopenmol/">http://www.csc.fi/gopenmol/</a></p>
-</dd>
-<dt><a class="reference internal" href="formats/CCP4.html#module-gridData.CCP4" title="gridData.CCP4"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CCP4</span></code></a></dt><dd><p>CCP4 format <a class="reference external" href="http://www.ccp4.ac.uk/html/maplib.html#description">http://www.ccp4.ac.uk/html/maplib.html#description</a></p>
-</dd>
-<dt>pickle</dt><dd><p>python pickle file (<a class="reference external" href="https://docs.python.org/3/library/pickle.html#module-pickle" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a>)</p>
-</dd>
-</dl>
-</div></blockquote>
+<p>For the available file formats see <a class="reference internal" href="formats.html#supported-file-formats"><span class="std std-ref">Supported file formats</span></a>.</p>
 </section>
 </section>
 
