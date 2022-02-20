@@ -3,8 +3,7 @@
 # Released under the GNU Lesser General Public License, version 3 or later.
 # See the files COPYING and COPYING.LESSER for details.
 
-"""
-:mod:`gridData` -- Handling grids of data
+""":mod:`gridData` -- Handling grids of data
 =========================================
 
 Overview
@@ -44,25 +43,26 @@ This is equivalent to knowing
 
 :class:`~gridData.core.Grid` objects have some convenient properties:
 
-* The data is represented as a :class:`numpy.ndarray` and thus shares
-  all the advantages coming with this sophisticated and powerful
-  library.
+* The data is represented as a :class:`numpy.ndarray` in
+  :attr:`Grid.grid<~gridData.core.Grid.grid>` and thus can be directly
+  manipulated with all the tools available in NumPy.
 
-* They can be manipulated arithmetically, e.g. one can simply add or
-  subtract two of them and get another one, or multiply by a
-  constant. Note that all operations are defined point-wise (see the
-  :mod:`numpy` documentation for details) and that only grids defined
-  on the same cell edges can be combined.
+* :class:`Grid` instances can be manipulated arithmetically, e.g. one
+  can simply add or subtract two of them and get another one, or
+  multiply by a constant. Note that all operations are defined
+  point-wise (see the :mod:`numpy` documentation for details) and that
+  only grids defined on the same cell edges can be combined.
 
-* A :class:`~gridData.core.Grid` object can also be created from within python code
-  e.g. from the output of the :func:`numpy.histogramdd` function.
+* A :class:`~gridData.core.Grid` object can also be created from
+  within python code e.g. from the output of the
+  :func:`numpy.histogramdd` function.
 
 * The representation of the data is abstracted from the format that
   the files are saved in. This makes it straightforward to add
   additional readers for new formats.
 
 * The data can be written out again in formats that are understood by
-  other programs such as VMD or PyMOL.
+  other programs such as VMD_, ChimeraX_ or PyMOL_.
 
 
 Reading grid data files
@@ -96,15 +96,21 @@ Formats
 For the available file formats see :ref:`supported-file-formats`.
 
 
+.. _VMD: https://www.ks.uiuc.edu/Research/vmd/
+
+.. _PyMOL: https://pymol.org/
+
+.. _ChimeraX: https://www.cgl.ucsf.edu/chimerax/
 
 """
 
 from .core import Grid
 from . import OpenDX
 from . import gOpenMol
-from . import CCP4
+from . import mrc
+from . import CCP4  # remove in 0.8.0
 
-__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'CCP4']
+__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'mrc', 'CCP4']
 
 from ._version import get_versions
 __version__ = get_versions()['version']
