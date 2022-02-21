@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; GridDataFormats 0.6.0+11.gf645063 documentation</title>
+  <title>Index &mdash; GridDataFormats 0.6.0+12.geba0d8e documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -18,7 +18,7 @@
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.6.0+11.gf645063 documentation"
+          title="Search within GridDataFormats 0.6.0+12.geba0d8e documentation"
           href="_static/opensearch.xml"/>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -45,10 +45,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gridData/overview.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gridData/overview.html">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="gridData/basic.html">Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gridData/core.html">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="gridData/formats.html">Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gridData/core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
         </div>
@@ -134,14 +134,20 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="gridData/formats/mrc.html#gridData.mrc.MRC.delta">delta (gridData.mrc.MRC attribute)</a>
+      <li><a href="gridData/core.html#gridData.core.Grid.default_format">default_format (gridData.core.Grid attribute)</a>
 </li>
+      <li><a href="gridData/core.html#gridData.core.Grid.delta">delta (gridData.core.Grid attribute)</a>
+
+      <ul>
+        <li><a href="gridData/formats/mrc.html#gridData.mrc.MRC.delta">(gridData.mrc.MRC attribute)</a>
+</li>
+      </ul></li>
       <li><a href="gridData/formats/OpenDX.html#gridData.OpenDX.array.dx_types">dx_types (gridData.OpenDX.array attribute)</a>
-</li>
-      <li><a href="gridData/formats/OpenDX.html#gridData.OpenDX.DXclass">DXclass (class in gridData.OpenDX)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gridData/formats/OpenDX.html#gridData.OpenDX.DXclass">DXclass (class in gridData.OpenDX)</a>
+</li>
       <li><a href="gridData/formats/OpenDX.html#gridData.OpenDX.DXInitObject">DXInitObject (class in gridData.OpenDX)</a>
 </li>
       <li><a href="gridData/formats/OpenDX.html#gridData.OpenDX.DXParseError">DXParseError</a>
@@ -159,6 +165,8 @@
       <li><a href="gridData/formats/CCP4.html#gridData.CCP4.CCP4.edges">edges (gridData.CCP4.CCP4 property)</a>
 
       <ul>
+        <li><a href="gridData/core.html#gridData.core.Grid.edges">(gridData.core.Grid attribute)</a>
+</li>
         <li><a href="gridData/formats/gOpenMol.html#gridData.gOpenMol.Plt.edges">(gridData.gOpenMol.Plt property)</a>
 </li>
         <li><a href="gridData/formats/mrc.html#gridData.mrc.MRC.edges">(gridData.mrc.MRC property)</a>
@@ -185,6 +193,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="gridData/core.html#gridData.core.Grid">Grid (class in gridData.core)</a>
+</li>
+      <li><a href="gridData/core.html#gridData.core.Grid.grid">grid (gridData.core.Grid attribute)</a>
 </li>
       <li><a href="gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections">gridconnections (class in gridData.OpenDX)</a>
 </li>
@@ -280,6 +290,10 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gridData/core.html#gridData.core.Grid.metadata">metadata (gridData.core.Grid attribute)</a>
+</li>
+      <li><a href="gridData/core.html#gridData.core.Grid.midpoints">midpoints (gridData.core.Grid attribute)</a>
+</li>
       <li>
     module
 
@@ -321,8 +335,12 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="gridData/formats/mrc.html#gridData.mrc.MRC.origin">origin (gridData.mrc.MRC attribute)</a>
+      <li><a href="gridData/core.html#gridData.core.Grid.origin">origin (gridData.core.Grid attribute)</a>
+
+      <ul>
+        <li><a href="gridData/formats/mrc.html#gridData.mrc.MRC.origin">(gridData.mrc.MRC attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 

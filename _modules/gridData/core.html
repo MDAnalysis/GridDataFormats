@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.core &mdash; GridDataFormats 0.6.0+11.gf645063 documentation</title>
+  <title>gridData.core &mdash; GridDataFormats 0.6.0+12.geba0d8e documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -18,7 +18,7 @@
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.6.0+11.gf645063 documentation"
+          title="Search within GridDataFormats 0.6.0+12.geba0d8e documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -45,10 +45,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/basic.html">Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/formats.html">Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
         </div>
@@ -79,8 +79,8 @@
 <span></span><span class="c1"># gridDataFormats --- python modules to read and write gridded data</span>
 <span class="c1"># Copyright (c) 2009-2014 Oliver Beckstein &lt;orbeckst@gmail.com&gt;</span>
 <span class="c1"># Released under the GNU Lesser General Public License, version 3 or later.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">:mod:`gridData.core` --- Core functionality for storing n-D grids</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core functionality for storing n-D grids --- :mod:`gridData.core`</span>
 <span class="sd">=================================================================</span>
 
 <span class="sd">The :mod:`core` module contains classes and functions that are</span>
@@ -130,74 +130,158 @@
 
 
 <div class="viewcode-block" id="Grid"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid">[docs]</a><span class="k">class</span> <span class="nc">Grid</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class to manage a multidimensional grid object.</span>
+    <span class="sd">&quot;&quot;&quot;A multidimensional grid object with origin and grid spacings.</span>
 
-<span class="sd">    The export(format=&#39;dx&#39;) method always exports a 3D object, the</span>
-<span class="sd">    rest should work for an array of any dimension.</span>
+<span class="sd">    :class:`Grid` objects can be used in arithmetical calculations</span>
+<span class="sd">    just like numpy arrays *if* they are compatible, i.e., they have</span>
+<span class="sd">    the same shapes and lengths. In order to make arrays compatible,</span>
+<span class="sd">    they an be resampled (:meth:`resample`) on a common grid.</span>
 
-<span class="sd">    The grid (Grid.grid) can be manipulated as a standard numpy</span>
-<span class="sd">    array.</span>
+<span class="sd">    The attribute :attr:`grid` that holds the data is a standard numpy</span>
+<span class="sd">    array and so the data can be directly manipulated.</span>
 
-<span class="sd">    The attribute Grid.metadata holds a user-defined dictionary that</span>
-<span class="sd">    can be used to annotate the data. It is saved with save().</span>
+<span class="sd">    Data can be read from a number of molecular volume/density formats</span>
+<span class="sd">    and written out in different formats with :meth:`export`.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid : numpy.ndarray or str (optional)</span>
+<span class="sd">      Build the grid either from a histogram or density (a numpy nD</span>
+<span class="sd">      array) or read data from a filename.</span>
+
+<span class="sd">    edges : list (optional)</span>
+<span class="sd">      List of arrays, the lower and upper bin edges along the axes</span>
+<span class="sd">      (same as the output by :func:`numpy.histogramdd`)</span>
+
+<span class="sd">    origin : :class:`numpy.ndarray` (optional)</span>
+<span class="sd">      Cartesian coordinates of the center of grid position at index</span>
+<span class="sd">      ``[0, 0, ..., 0]``.</span>
+
+<span class="sd">    delta : :class:`numpy.ndarray` (optional)</span>
+<span class="sd">      Either ``n x n`` array containing the cell lengths in each dimension,</span>
+<span class="sd">      or ``n x 1`` array for rectangular arrays.</span>
+
+<span class="sd">    metadata : dict (optional)</span>
+<span class="sd">      A user defined dictionary of arbitrary key/value pairs</span>
+<span class="sd">      associated with the density; the class does not touch</span>
+<span class="sd">      :attr:`metadata` but stores it with :meth:`save`</span>
+
+<span class="sd">    interpolation_spline_order : int (optional)</span>
+<span class="sd">      Order of interpolation function for resampling with</span>
+<span class="sd">      :func:`resample`; cubic splines = 3 and the default is 3</span>
+
+<span class="sd">    file_format : str (optional)</span>
+<span class="sd">      Name of the file format; only necessary when `grid` is a</span>
+<span class="sd">      filename (see :meth:`load`) and autodetection of the file</span>
+<span class="sd">      format fails. The default is ``None`` and normally the file</span>
+<span class="sd">      format is guessed from the file extension.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    TypeError</span>
+<span class="sd">      If the dimensions of the various input data do not agree with</span>
+<span class="sd">      each other.</span>
+<span class="sd">    ValueError</span>
+<span class="sd">      If some of the required data are not provided in the keyword</span>
+<span class="sd">      arguments, e.g., if only the `grid` is supplied as an array but</span>
+<span class="sd">      not the `edges` or only `grid` and one of `origin` and `delta`.</span>
+<span class="sd">    NotImplementedError</span>
+<span class="sd">      If triclinic (non-orthorhombic) boxes are supplied in `delta`</span>
+
+<span class="sd">      .. Note:: `delta` can only be a 1D array of length :attr:`grid.ndim`</span>
+
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid : :class:`numpy.ndarray`</span>
+<span class="sd">      This array can be any number of dimensions supported by NumPy</span>
+<span class="sd">      in order to represent high-dimensional data. When used with</span>
+<span class="sd">      data that represents real space densities then the **axis</span>
+<span class="sd">      convention in GridDataFormats** is that axis 0 corresponds to</span>
+<span class="sd">      the Cartesian :math:`x` component, axis 1 corresponds to the</span>
+<span class="sd">      :math:`y` component, and axis 2 to the :math:`z` component.</span>
+
+<span class="sd">    delta : :class:`numpy.ndarray`</span>
+<span class="sd">      Length of a grid cell (spacing or voxelsize) in :math:`x`,</span>
+<span class="sd">      :math:`y`, :math:`z` dimensions. This is a *1D array* with</span>
+<span class="sd">      length :attr:`Grid.grid.ndim`.</span>
+
+<span class="sd">    origin : :class:`numpy.ndarray`</span>
+<span class="sd">      Array with the Cartesian coordinates of the coordinate system</span>
+<span class="sd">      origin, the *center* of cell ``Grid.grid[0, 0, .., 0]``.</span>
+
+<span class="sd">    edges : list</span>
+<span class="sd">      List of arrays, one for each axis in :attr:`grid`.  Each 1D edge</span>
+<span class="sd">      array describes the *edges* of the grid cells along the</span>
+<span class="sd">      corresponding axis. The length of an edge array for axis ``i``</span>
+<span class="sd">      is ``grid.shape[i] + 1`` because it contains the lower boundary</span>
+<span class="sd">      for the first cell, the boundaries between all grid cells, and</span>
+<span class="sd">      the upper boundary for the last cell. The edges are assumed to</span>
+<span class="sd">      be regular with spacing indicated in :attr:`delta`, namely</span>
+<span class="sd">      ``Grid.delta[i]`` for axis ``i``.</span>
+
+<span class="sd">    midpoints : list</span>
+<span class="sd">      List of arrays, one for each axis in :attr:`grid`.  Each 1D</span>
+<span class="sd">      midpoints array contains the *midpoints* of the grid cells along</span>
+<span class="sd">      the corresponding axis.</span>
+
+<span class="sd">    metadata : dict</span>
+<span class="sd">      A user-defined dictionary that can be used to annotate the</span>
+<span class="sd">      data. The content is not touched by :class:`Grid`. It is saved</span>
+<span class="sd">      together with the other data with :meth:`save`.</span>
+
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    Create a Grid object from data.</span>
+
+<span class="sd">    From :func:`numpy.histogramdd`::</span>
+
+<span class="sd">      grid, edges = numpy.histogramdd(...)</span>
+<span class="sd">      g = Grid(grid, edges=edges)</span>
+
+<span class="sd">    From an arbitrary grid::</span>
+
+<span class="sd">      g = Grid(grid, origin=origin, delta=delta)</span>
+
+<span class="sd">    From a saved file::</span>
+
+<span class="sd">      g = Grid(filename)</span>
+
+<span class="sd">    or ::</span>
+
+<span class="sd">      g = Grid()</span>
+<span class="sd">      g.load(filename)</span>
+
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    In principle, the dimension (number of axes) is arbitrary but in</span>
+<span class="sd">    practice many formats only support three and almost all</span>
+<span class="sd">    functionality is only tested for this special case.</span>
+
+<span class="sd">    The :meth:`export` method with ``format=&#39;dx&#39;`` always exports a 3D</span>
+<span class="sd">    object. Other methods might work for an array of any dimension (in</span>
+<span class="sd">    particular the Python pickle output).</span>
+
+
+<span class="sd">    .. versionchanged:: 0.5.0</span>
+<span class="sd">       New *file_format* keyword argument.</span>
+
+<span class="sd">    .. versionchanged:: 0.7.0</span>
+<span class="sd">       CCP4 files are now read with :class:`gridData.mrc.MRC` and not anymore</span>
+<span class="sd">       with the deprecated/buggy `ccp4.CCP4`</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: Default format for exporting with :meth:`export`.</span>
     <span class="n">default_format</span> <span class="o">=</span> <span class="s1">&#39;DX&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interpolation_spline_order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                  <span class="n">file_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a Grid object from data.</span>
-
-<span class="sd">        From a numpy.histogramdd()::</span>
-
-<span class="sd">          grid,edges = numpy.histogramdd(...)</span>
-<span class="sd">          g = Grid(grid,edges=edges)</span>
-
-<span class="sd">        From an arbitrary grid::</span>
-
-<span class="sd">          g = Grid(grid,origin=origin,delta=delta)</span>
-
-<span class="sd">        From a saved file::</span>
-
-<span class="sd">          g = Grid(filename)</span>
-
-<span class="sd">        or ::</span>
-
-<span class="sd">          g = Grid()</span>
-<span class="sd">          g.load(filename)</span>
-
-<span class="sd">        :Arguments:</span>
-<span class="sd">          grid</span>
-<span class="sd">            histogram or density, defined on numpy nD array, or filename</span>
-<span class="sd">          edges</span>
-<span class="sd">            list of arrays, the lower and upper bin edges along the axes</span>
-<span class="sd">            (both are output by numpy.histogramdd())</span>
-<span class="sd">          origin</span>
-<span class="sd">            cartesian coordinates of the center of grid[0,0,...,0]</span>
-<span class="sd">          delta</span>
-<span class="sd">            Either n x n array containing the cell lengths in each dimension,</span>
-<span class="sd">            or n x 1 array for rectangular arrays.</span>
-<span class="sd">          metadata</span>
-<span class="sd">            a user defined dictionary of arbitrary values</span>
-<span class="sd">            associated with the density; the class does not touch</span>
-<span class="sd">            metadata[] but stores it with save()</span>
-<span class="sd">          interpolation_spline_order</span>
-<span class="sd">            order of interpolation function for resampling; cubic splines = 3 [3]</span>
-<span class="sd">          file_format</span>
-<span class="sd">             file format; only necessary when ``grid`` is a filename (see :meth:`Grid.load`);</span>
-<span class="sd">             default is ``None`` and the file format is autodetected.</span>
-
-
-<span class="sd">        .. versionchanged:: 0.5.0</span>
-<span class="sd">           New *file_format* keyword argument.</span>
-
-<span class="sd">        .. versionchanged:: 0.7.0</span>
-<span class="sd">           CCP4 files are now read with :class:`gridData.mrc.MRC` and not anymore</span>
-<span class="sd">           with the deprecated/buggy `ccp4.CCP4`</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># file formats are guess from extension == lower case key</span>
+        <span class="c1"># file formats are guessed from extension == lower case key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_exporters</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;DX&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_dx</span><span class="p">,</span>
             <span class="s1">&#39;PKL&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_python</span><span class="p">,</span>
@@ -274,7 +358,7 @@
         <span class="sd">&quot;&quot;&quot;Resample data to a new grid with edges *edges*.</span>
 
 <span class="sd">        This method creates a new grid with the data from the current</span>
-<span class="sd">        grid resampled to a regular grid specified by *edges*.  The</span>
+<span class="sd">        grid resampled to a regular grid specified by `edges`.  The</span>
 <span class="sd">        order of the interpolation is set by</span>
 <span class="sd">        :attr:`Grid.interpolation_spline_order`: change the value</span>
 <span class="sd">        *before* calling :meth:`resample`.</span>
@@ -295,7 +379,7 @@
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 
-<span class="sd">        Providing *edges* (a tuple of three arrays, indicating the</span>
+<span class="sd">        Providing `edges` (a tuple of three arrays, indicating the</span>
 <span class="sd">        boundaries of each grid cell)::</span>
 
 <span class="sd">          g = grid.resample(edges)</span>
@@ -333,12 +417,14 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        Grid</span>
-
+<span class="sd">        interpolated grid : Grid</span>
+<span class="sd">            The resampled data are represented on a :class:`Grid` with the new</span>
+<span class="sd">            grid cell sizes.</span>
 
 <span class="sd">        See Also</span>
 <span class="sd">        --------</span>
 <span class="sd">        resample</span>
+
 
 <span class="sd">        .. versionchanged:: 0.6.0</span>
 <span class="sd">           Previous implementations would not alter the range of the grid edges</span>
@@ -431,9 +517,10 @@
 <span class="sd">        :attr:`interpolation_cval` parameter, which when not set defaults</span>
 <span class="sd">        to the minimum value in the interpolated grid.</span>
 
+
 <span class="sd">        .. versionchanged:: 0.6.0</span>
 <span class="sd">           Interpolation outside the grid is now performed with</span>
-<span class="sd">           ``mode=&quot;constant&quot;`rather than ``mode=&quot;nearest&quot;``, eliminating</span>
+<span class="sd">           ``mode=&quot;constant&quot;`` rather than ``mode=&quot;nearest&quot;``, eliminating</span>
 <span class="sd">           extruded volumes when interpolating beyond the grid.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -530,12 +617,9 @@
                     <span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">))</span>
 
 <div class="viewcode-block" id="Grid.load"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Load saved (pickled or dx) grid and edges from &lt;filename&gt;.pickle</span>
+        <span class="sd">&quot;&quot;&quot;Load saved grid and edges from `filename`</span>
 
-<span class="sd">           Grid.load(&lt;filename&gt;.pickle)</span>
-<span class="sd">           Grid.load(&lt;filename&gt;.dx)</span>
-
-<span class="sd">        The load() method calls the class&#39;s constructor method and</span>
+<span class="sd">        The :meth:`load` method calls the class&#39;s constructor method and</span>
 <span class="sd">        completely resets all values, based on the loaded data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -581,9 +665,9 @@
         <span class="sd">&quot;&quot;&quot;export density to file using the given format.</span>
 
 <span class="sd">        The format can also be deduced from the suffix of the filename</span>
-<span class="sd">        though the *format* keyword takes precedence.</span>
+<span class="sd">        although the `file_format` keyword takes precedence.</span>
 
-<span class="sd">        The default format for export() is &#39;dx&#39;.  Use &#39;dx&#39; for</span>
+<span class="sd">        The default format for :meth:`export` is &#39;dx&#39;.  Use &#39;dx&#39; for</span>
 <span class="sd">        visualization.</span>
 
 <span class="sd">        Implemented formats:</span>
@@ -596,7 +680,6 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-
 <span class="sd">        filename : str</span>
 <span class="sd">            name of the output file</span>
 
@@ -632,7 +715,7 @@
         <span class="sd">&quot;&quot;&quot;Pickle the Grid object</span>
 
 <span class="sd">        The object is dumped as a dictionary with grid and edges: This</span>
-<span class="sd">        is sufficient to recreate the grid object with __init__().</span>
+<span class="sd">        is sufficient to recreate the grid object with ``__init__()``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -679,7 +762,7 @@
         <span class="n">dx</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Grid.save"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Save a grid object to &lt;filename&gt;.pickle</span>
+        <span class="sd">&quot;&quot;&quot;Save a grid object to `filename` and add &quot;.pickle&quot; extension.</span>
 
 <span class="sd">        Internally, this calls</span>
 <span class="sd">        ``Grid.export(filename, format=&quot;python&quot;)``. A grid can be</span>
@@ -697,22 +780,46 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">&quot;pickle&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Grid.centers"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.centers">[docs]</a>    <span class="k">def</span> <span class="nf">centers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the coordinates of the centers of all grid cells as an</span>
-<span class="sd">        iterator.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns the coordinates of the centers of all grid cells as an iterator.</span>
+
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        :func:`numpy.ndindex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span></div>
 
 <div class="viewcode-block" id="Grid.check_compatible"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.check_compatible">[docs]</a>    <span class="k">def</span> <span class="nf">check_compatible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Check if *other* can be used in an arithmetic operation.</span>
+        <span class="sd">&quot;&quot;&quot;Check if `other` can be used in an arithmetic operation.</span>
 
-<span class="sd">        1) *other* is a scalar</span>
-<span class="sd">        2) *other* is a grid defined on the same edges</span>
+<span class="sd">        `other` is compatible if</span>
 
-<span class="sd">        :Raises: :exc:`TypeError` if not compatible.</span>
+<span class="sd">        1) `other` is a scalar</span>
+<span class="sd">        2) `other` is a grid defined on the same edges</span>
+
+<span class="sd">        In order to make `other` compatible, resample it on the same</span>
+<span class="sd">        grid as this one using :meth:`resample`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other : Grid or float or int</span>
+<span class="sd">           Another object to be used for standard arithmetic</span>
+<span class="sd">           operations with this :class:`Grid`</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">              if not compatible</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        :meth:`resample`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isreal</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s2">&quot;The argument can not be arithmetically combined with the grid. &quot;</span>
+                <span class="s2">&quot;The argument cannot be arithmetically combined with the grid. &quot;</span>
                 <span class="s2">&quot;It must be a scalar or a grid with identical edges. &quot;</span>
                 <span class="s2">&quot;Use Grid.resample(other.edges) to make a new grid that is &quot;</span>
                 <span class="s2">&quot;compatible with other.&quot;</span><span class="p">)</span>

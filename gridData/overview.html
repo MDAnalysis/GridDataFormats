@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData – Handling grids of data &mdash; GridDataFormats 0.6.0+11.gf645063 documentation</title>
+  <title>Handling grids of data — gridData &mdash; GridDataFormats 0.6.0+12.geba0d8e documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -19,7 +19,7 @@
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.6.0+11.gf645063 documentation"
+          title="Search within GridDataFormats 0.6.0+12.geba0d8e documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -48,7 +48,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reading-grid-data-files">Reading grid data files</a></li>
@@ -57,8 +57,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="formats.html">Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
         </div>
@@ -75,7 +75,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</li>
+      <li>Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/gridData/overview.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -85,8 +85,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <span class="target" id="module-gridData"></span><section id="griddata-handling-grids-of-data">
-<h1><a class="reference internal" href="#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a> – Handling grids of data<a class="headerlink" href="#griddata-handling-grids-of-data" title="Permalink to this headline">¶</a></h1>
+  <span class="target" id="module-gridData"></span><section id="handling-grids-of-data-griddata">
+<h1>Handling grids of data — <a class="reference internal" href="#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a><a class="headerlink" href="#handling-grids-of-data-griddata" title="Permalink to this headline">¶</a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>This module contains classes that allow importing and exporting of
@@ -96,9 +96,10 @@ parallel to the cartesian axes of this space. Together with this array
 we also store the edges, which are are (essentially) the cartesian
 coordinates of the intersections of the grid (mesh) lines on the
 axes. In this way the grid is anchored in space.</p>
-<p>The <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can be resampled at arbitrary resolution (by
-interpolating the data). Standard algebraic operations are defined for
-grids on a point-wise basis (same as for <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
+<p>The <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can be resampled at arbitrary
+resolution (by interpolating the data). Standard algebraic operations
+are defined for grids on a point-wise basis (same as for
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
 </section>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -119,21 +120,22 @@ corresponds to (0,0,…,0)</p></li>
 </ol>
 <p><a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> objects have some convenient properties:</p>
 <ul class="simple">
-<li><p>The data is represented as a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> and thus shares
-all the advantages coming with this sophisticated and powerful
-library.</p></li>
-<li><p>They can be manipulated arithmetically, e.g. one can simply add or
-subtract two of them and get another one, or multiply by a
-constant. Note that all operations are defined point-wise (see the
-<a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.22)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> documentation for details) and that only grids defined
-on the same cell edges can be combined.</p></li>
-<li><p>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can also be created from within python code
-e.g. from the output of the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function.</p></li>
+<li><p>The data is represented as a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">Grid.grid</span></code> and thus can be directly
+manipulated with all the tools available in NumPy.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code> instances can be manipulated arithmetically, e.g. one
+can simply add or subtract two of them and get another one, or
+multiply by a constant. Note that all operations are defined
+point-wise (see the <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.22)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> documentation for details) and that
+only grids defined on the same cell edges can be combined.</p></li>
+<li><p>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can also be created from
+within python code e.g. from the output of the
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function.</p></li>
 <li><p>The representation of the data is abstracted from the format that
 the files are saved in. This makes it straightforward to add
 additional readers for new formats.</p></li>
 <li><p>The data can be written out again in formats that are understood by
-other programs such as VMD or PyMOL.</p></li>
+other programs such as <a class="reference external" href="https://www.ks.uiuc.edu/Research/vmd/">VMD</a>, <a class="reference external" href="https://www.cgl.ucsf.edu/chimerax/">ChimeraX</a> or <a class="reference external" href="https://pymol.org/">PyMOL</a>.</p></li>
 </ul>
 </section>
 <section id="reading-grid-data-files">

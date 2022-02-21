@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.mrc &mdash; GridDataFormats 0.6.0+11.gf645063 documentation</title>
+  <title>gridData.mrc &mdash; GridDataFormats 0.6.0+12.geba0d8e documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -18,7 +18,7 @@
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.6.0+11.gf645063 documentation"
+          title="Search within GridDataFormats 0.6.0+12.geba0d8e documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -45,10 +45,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code> – Handling grids of data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/basic.html">Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/formats.html">Formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code> — Core functionality for storing n-D grids</a></li>
 </ul>
 
         </div>
@@ -81,7 +81,7 @@
 <span class="c1"># Released under the GNU Lesser General Public License, version 3 or later.</span>
 <span class="c1">#</span>
 
-<span class="sd">&quot;&quot;&quot;:mod:`mrc` --- the mrc/CCP4 volumetric data format</span>
+<span class="sd">&quot;&quot;&quot;:mod:`mrc` --- the MRC/CCP4 volumetric data format</span>
 <span class="sd">===================================================</span>
 
 <span class="sd">.. versionadded:: 0.7.0</span>
@@ -127,6 +127,12 @@
 <span class="sd">    filename : str (optional)</span>
 <span class="sd">       input file (or stream), can be compressed</span>
 
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">       If the unit cell is not orthorhombic or if the data</span>
+<span class="sd">       are not volumetric.</span>
+
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -144,7 +150,9 @@
 
 <span class="sd">    origin : numpy.ndarray</span>
 <span class="sd">       numpy array with coordinates of the coordinate system origin</span>
-<span class="sd">       (taken from :attr:`header.origin`)</span>
+<span class="sd">       (computed from :attr:`header.origin`, the offsets</span>
+<span class="sd">       :attr:`header.origin.nxstart`, :attr:`header.origin.nystart`,</span>
+<span class="sd">       :attr:`header.origin.nzstart` and the spacing :attr:`delta`)</span>
 
 <span class="sd">    rank : int</span>
 <span class="sd">       The integer 3, denoting that only 3D maps are read.</span>
