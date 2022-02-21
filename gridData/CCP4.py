@@ -12,7 +12,7 @@
 .. versionadded:: 0.3.0
 
 .. deprecated:: 0.7.0 The CCP4 module is replaced by :mod:`gridData.mrc` and
-   will be removed in 0.8.0.
+   will be removed in 1.0.0.
 
 .. _CCP4: http://www.ccp4.ac.uk/html/maplib.html#description
 
@@ -166,7 +166,7 @@ class CCP4(object):
 
 
     .. deprecated:: 0.7.0
-       Use :class:`gridData.mrc.MRC` instead. This class will be removed in 0.8.0.
+       Use :class:`gridData.mrc.MRC` instead. This class will be removed in 1.0.0.
     """
 
     _axis_map = {1: 'x', 2: 'y', 3: 'z'}
@@ -204,7 +204,7 @@ class CCP4(object):
             self.read(filename)
 
         warnings.warn("CCP4.CCP4 is being replaced by mrc.MRC and will be removed "
-                      "in release 0.8.0",
+                      "in release 1.0.0",
                       category=DeprecationWarning)
 
     def read(self, filename):

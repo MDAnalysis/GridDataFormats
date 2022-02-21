@@ -13,12 +13,13 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/2022 orbeckst, tluchko, IAlibay
+02/20/2022 orbeckst, tluchko, IAlibay
 
   * 0.7.0
 
   Changes
-  * Python 3.10 is supported
+
+  * Python 3.10 is supported (issue #101)
 
   Enhancements
 
@@ -33,7 +34,7 @@ The rules for this file:
 
   Deprecations
 
-  * The CCP4 module (replaced by mrc) will be removed in 0.8.0.
+  * The CCP4 module (replaced by mrc) will be removed in 1.0.0
 
 
 10/10/2021 eloyfelix, renehamburger1993, lilyminium, jvermaas, xiki-tempula,

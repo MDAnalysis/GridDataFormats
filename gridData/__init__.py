@@ -110,7 +110,7 @@ from .core import Grid
 from . import OpenDX
 from . import gOpenMol
 from . import mrc
-from . import CCP4  # remove in 0.8.0
+from . import CCP4  # remove in 1.0.0
 
 __all__ = ['Grid', 'OpenDX', 'gOpenMol', 'mrc', 'CCP4']
 
