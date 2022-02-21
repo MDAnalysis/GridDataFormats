@@ -1,8 +1,8 @@
 # gridDataFormats --- python modules to read and write gridded data
 # Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser General Public License, version 3 or later.
-"""
-:mod:`gridData.core` --- Core functionality for storing n-D grids
+r"""
+Core functionality for storing n-D grids --- :mod:`gridData.core`
 =================================================================
 
 The :mod:`core` module contains classes and functions that are
@@ -73,8 +73,8 @@ class Grid(object):
       array) or read data from a filename.
 
     edges : list (optional)
-      list of arrays, the lower and upper bin edges along the axes
-      (such as the output by :func:`numpy.histogramdd`)
+      List of arrays, the lower and upper bin edges along the axes
+      (same as the output by :func:`numpy.histogramdd`)
 
     origin : :class:`numpy.ndarray` (optional)
       Cartesian coordinates of the center of grid position at index
@@ -85,55 +85,73 @@ class Grid(object):
       or ``n x 1`` array for rectangular arrays.
 
     metadata : dict (optional)
-      a user defined dictionary of arbitrary key/value pairs
+      A user defined dictionary of arbitrary key/value pairs
       associated with the density; the class does not touch
       :attr:`metadata` but stores it with :meth:`save`
 
     interpolation_spline_order : int (optional)
-      order of interpolation function for resampling with
+      Order of interpolation function for resampling with
       :func:`resample`; cubic splines = 3 and the default is 3
 
     file_format : str (optional)
-       name of the file format; only necessary when `grid` is a
-       filename (see :meth:`load`) and autodetection of the file
-       format fails. The default is ``None`` and normally the file
-       format is guessed from the file extension.
+      Name of the file format; only necessary when `grid` is a
+      filename (see :meth:`load`) and autodetection of the file
+      format fails. The default is ``None`` and normally the file
+      format is guessed from the file extension.
 
+    Raises
+    ------
+    TypeError
+      If the dimensions of the various input data do not agree with
+      each other.
+    ValueError
+      If some of the required data are not provided in the keyword
+      arguments, e.g., if only the `grid` is supplied as an array but
+      not the `edges` or only `grid` and one of `origin` and `delta`.
+    NotImplementedError
+      If triclinic (non-orthorhombic) boxes are supplied in `delta`
+
+      .. Note:: `delta` can only be a 1D array of length :attr:`grid.ndim`
 
 
     Attributes
     ----------
     grid : :class:`numpy.ndarray`
-       This array can be any number of dimensions supported by NumPy
-       in order to represent high-dimensional data. When used with
-       data that represents real space densities then the **axis
-       convention in GridDataFormats** is that axis 0 corresponds to
-       the Cartesian :math:`x` component, axis 1 corresponds to the
-       :math:`y` component, and axis 2 to the :math:`z` component.
+      This array can be any number of dimensions supported by NumPy
+      in order to represent high-dimensional data. When used with
+      data that represents real space densities then the **axis
+      convention in GridDataFormats** is that axis 0 corresponds to
+      the Cartesian :math:`x` component, axis 1 corresponds to the
+      :math:`y` component, and axis 2 to the :math:`z` component.
 
     delta : :class:`numpy.ndarray`
-       Length of a grid cell (spacing or voxelsize) in x, y, z
-       dimensions. This is a *1D array* with length
-       :attr:`Grid.grid.ndim`.
+      Length of a grid cell (spacing or voxelsize) in :math:`x`,
+      :math:`y`, :math:`z` dimensions. This is a *1D array* with
+      length :attr:`Grid.grid.ndim`.
 
     origin : :class:`numpy.ndarray`
-       array with the Cartesian coordinates of the coordinate system
-       origin, the *center* of cell ``Grid.grid[0, 0, .., 0]``.
+      Array with the Cartesian coordinates of the coordinate system
+      origin, the *center* of cell ``Grid.grid[0, 0, .., 0]``.
 
     edges : list
-       list of arrays, one for each axis in :attr:`grid`.  Each 1D
-       edge array describes the *edges* of the grid cells along the
-       corresponding axis. The length of an edge array for axis ``i``
-       is ``grid.shape[i] + 1`` because it contains the lower boundary
-       for the first cell, the boundaries between all grid cells, and
-       the upper boundary for the last cell. The edges are assumed to
-       be regular with spacing indicated in :attr:`delta`, namely
-       ``Grid.delta[i]`` for axis ``i``.
+      List of arrays, one for each axis in :attr:`grid`.  Each 1D edge
+      array describes the *edges* of the grid cells along the
+      corresponding axis. The length of an edge array for axis ``i``
+      is ``grid.shape[i] + 1`` because it contains the lower boundary
+      for the first cell, the boundaries between all grid cells, and
+      the upper boundary for the last cell. The edges are assumed to
+      be regular with spacing indicated in :attr:`delta`, namely
+      ``Grid.delta[i]`` for axis ``i``.
+
+    midpoints : list
+      List of arrays, one for each axis in :attr:`grid`.  Each 1D
+      midpoints array contains the *midpoints* of the grid cells along
+      the corresponding axis.
 
     metadata : dict
-       A user-defined dictionary that can be used to annotate the
-       data. The content is not touched by :class:`Grid`. It is saved
-       together with the other data with :meth:`save`.
+      A user-defined dictionary that can be used to annotate the
+      data. The content is not touched by :class:`Grid`. It is saved
+      together with the other data with :meth:`save`.
 
 
     Example
@@ -262,7 +280,7 @@ class Grid(object):
         """Resample data to a new grid with edges *edges*.
 
         This method creates a new grid with the data from the current
-        grid resampled to a regular grid specified by *edges*.  The
+        grid resampled to a regular grid specified by `edges`.  The
         order of the interpolation is set by
         :attr:`Grid.interpolation_spline_order`: change the value
         *before* calling :meth:`resample`.
@@ -283,7 +301,7 @@ class Grid(object):
         Examples
         --------
 
-        Providing *edges* (a tuple of three arrays, indicating the
+        Providing `edges` (a tuple of three arrays, indicating the
         boundaries of each grid cell)::
 
           g = grid.resample(edges)
@@ -569,9 +587,9 @@ class Grid(object):
         """export density to file using the given format.
 
         The format can also be deduced from the suffix of the filename
-        though the *format* keyword takes precedence.
+        although the `file_format` keyword takes precedence.
 
-        The default format for export() is 'dx'.  Use 'dx' for
+        The default format for :meth:`export` is 'dx'.  Use 'dx' for
         visualization.
 
         Implemented formats:
@@ -619,7 +637,7 @@ class Grid(object):
         """Pickle the Grid object
 
         The object is dumped as a dictionary with grid and edges: This
-        is sufficient to recreate the grid object with __init__().
+        is sufficient to recreate the grid object with ``__init__()``.
         """
         data = dict(grid=self.grid, edges=self.edges, metadata=self.metadata)
         with open(filename, 'wb') as f:

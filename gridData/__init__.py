@@ -3,8 +3,9 @@
 # Released under the GNU Lesser General Public License, version 3 or later.
 # See the files COPYING and COPYING.LESSER for details.
 
-""":mod:`gridData` -- Handling grids of data
-=========================================
+r"""
+Handling grids of data --- :mod:`gridData`
+==========================================
 
 Overview
 --------
@@ -17,9 +18,10 @@ we also store the edges, which are are (essentially) the cartesian
 coordinates of the intersections of the grid (mesh) lines on the
 axes. In this way the grid is anchored in space.
 
-The :class:`~gridData.core.Grid` object can be resampled at arbitrary resolution (by
-interpolating the data). Standard algebraic operations are defined for
-grids on a point-wise basis (same as for :class:`numpy.ndarray`).
+The :class:`~gridData.core.Grid` object can be resampled at arbitrary
+resolution (by interpolating the data). Standard algebraic operations
+are defined for grids on a point-wise basis (same as for
+:class:`numpy.ndarray`).
 
 
 Description

@@ -62,8 +62,5 @@ the `GridDataFormats repository on GitHub`_ and submit a pull request. Participa
    installation	      
    gridData/overview
    gridData/basic
-   gridData/formats
    gridData/core
-
-
-
+   gridData/formats
