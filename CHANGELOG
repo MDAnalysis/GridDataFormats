@@ -29,6 +29,7 @@ The rules for this file:
 
   * The new mrc module correctly reorients the coordinate system based
     on mapc, mapr, maps and correctly calculates the origin (issue #76)
+  * documented Grid attributes, including axis convention (issue #69)
 
   Deprecations
 

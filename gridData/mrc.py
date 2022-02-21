@@ -3,7 +3,7 @@
 # Released under the GNU Lesser General Public License, version 3 or later.
 #
 
-""":mod:`mrc` --- the mrc/CCP4 volumetric data format
+""":mod:`mrc` --- the MRC/CCP4 volumetric data format
 ===================================================
 
 .. versionadded:: 0.7.0
@@ -49,6 +49,12 @@ class MRC(object):
     filename : str (optional)
        input file (or stream), can be compressed
 
+    Raises
+    ------
+    ValueError
+       If the unit cell is not orthorhombic or if the data
+       are not volumetric.
+
 
     Attributes
     ----------
@@ -66,7 +72,9 @@ class MRC(object):
 
     origin : numpy.ndarray
        numpy array with coordinates of the coordinate system origin
-       (taken from :attr:`header.origin`)
+       (computed from :attr:`header.origin`, the offsets
+       :attr:`header.origin.nxstart`, :attr:`header.origin.nystart`,
+       :attr:`header.origin.nzstart` and the spacing :attr:`delta`)
 
     rank : int
        The integer 3, denoting that only 3D maps are read.

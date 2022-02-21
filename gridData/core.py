@@ -1,8 +1,8 @@
 # gridDataFormats --- python modules to read and write gridded data
 # Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser General Public License, version 3 or later.
-"""
-:mod:`gridData.core` --- Core functionality for storing n-D grids
+r"""
+Core functionality for storing n-D grids --- :mod:`gridData.core`
 =================================================================
 
 The :mod:`core` module contains classes and functions that are
@@ -52,74 +52,158 @@ def _grid(x):
 
 
 class Grid(object):
-    """Class to manage a multidimensional grid object.
+    """A multidimensional grid object with origin and grid spacings.
 
-    The export(format='dx') method always exports a 3D object, the
-    rest should work for an array of any dimension.
+    :class:`Grid` objects can be used in arithmetical calculations
+    just like numpy arrays *if* they are compatible, i.e., they have
+    the same shapes and lengths. In order to make arrays compatible,
+    they an be resampled (:meth:`resample`) on a common grid.
 
-    The grid (Grid.grid) can be manipulated as a standard numpy
-    array.
+    The attribute :attr:`grid` that holds the data is a standard numpy
+    array and so the data can be directly manipulated.
 
-    The attribute Grid.metadata holds a user-defined dictionary that
-    can be used to annotate the data. It is saved with save().
+    Data can be read from a number of molecular volume/density formats
+    and written out in different formats with :meth:`export`.
+
+
+    Parameters
+    ----------
+    grid : numpy.ndarray or str (optional)
+      Build the grid either from a histogram or density (a numpy nD
+      array) or read data from a filename.
+
+    edges : list (optional)
+      List of arrays, the lower and upper bin edges along the axes
+      (same as the output by :func:`numpy.histogramdd`)
+
+    origin : :class:`numpy.ndarray` (optional)
+      Cartesian coordinates of the center of grid position at index
+      ``[0, 0, ..., 0]``.
+
+    delta : :class:`numpy.ndarray` (optional)
+      Either ``n x n`` array containing the cell lengths in each dimension,
+      or ``n x 1`` array for rectangular arrays.
+
+    metadata : dict (optional)
+      A user defined dictionary of arbitrary key/value pairs
+      associated with the density; the class does not touch
+      :attr:`metadata` but stores it with :meth:`save`
+
+    interpolation_spline_order : int (optional)
+      Order of interpolation function for resampling with
+      :func:`resample`; cubic splines = 3 and the default is 3
+
+    file_format : str (optional)
+      Name of the file format; only necessary when `grid` is a
+      filename (see :meth:`load`) and autodetection of the file
+      format fails. The default is ``None`` and normally the file
+      format is guessed from the file extension.
+
+    Raises
+    ------
+    TypeError
+      If the dimensions of the various input data do not agree with
+      each other.
+    ValueError
+      If some of the required data are not provided in the keyword
+      arguments, e.g., if only the `grid` is supplied as an array but
+      not the `edges` or only `grid` and one of `origin` and `delta`.
+    NotImplementedError
+      If triclinic (non-orthorhombic) boxes are supplied in `delta`
+
+      .. Note:: `delta` can only be a 1D array of length :attr:`grid.ndim`
+
+
+    Attributes
+    ----------
+    grid : :class:`numpy.ndarray`
+      This array can be any number of dimensions supported by NumPy
+      in order to represent high-dimensional data. When used with
+      data that represents real space densities then the **axis
+      convention in GridDataFormats** is that axis 0 corresponds to
+      the Cartesian :math:`x` component, axis 1 corresponds to the
+      :math:`y` component, and axis 2 to the :math:`z` component.
+
+    delta : :class:`numpy.ndarray`
+      Length of a grid cell (spacing or voxelsize) in :math:`x`,
+      :math:`y`, :math:`z` dimensions. This is a *1D array* with
+      length :attr:`Grid.grid.ndim`.
+
+    origin : :class:`numpy.ndarray`
+      Array with the Cartesian coordinates of the coordinate system
+      origin, the *center* of cell ``Grid.grid[0, 0, .., 0]``.
+
+    edges : list
+      List of arrays, one for each axis in :attr:`grid`.  Each 1D edge
+      array describes the *edges* of the grid cells along the
+      corresponding axis. The length of an edge array for axis ``i``
+      is ``grid.shape[i] + 1`` because it contains the lower boundary
+      for the first cell, the boundaries between all grid cells, and
+      the upper boundary for the last cell. The edges are assumed to
+      be regular with spacing indicated in :attr:`delta`, namely
+      ``Grid.delta[i]`` for axis ``i``.
+
+    midpoints : list
+      List of arrays, one for each axis in :attr:`grid`.  Each 1D
+      midpoints array contains the *midpoints* of the grid cells along
+      the corresponding axis.
+
+    metadata : dict
+      A user-defined dictionary that can be used to annotate the
+      data. The content is not touched by :class:`Grid`. It is saved
+      together with the other data with :meth:`save`.
+
+
+    Example
+    -------
+    Create a Grid object from data.
+
+    From :func:`numpy.histogramdd`::
+
+      grid, edges = numpy.histogramdd(...)
+      g = Grid(grid, edges=edges)
+
+    From an arbitrary grid::
+
+      g = Grid(grid, origin=origin, delta=delta)
+
+    From a saved file::
+
+      g = Grid(filename)
+
+    or ::
+
+      g = Grid()
+      g.load(filename)
+
+
+    Notes
+    -----
+    In principle, the dimension (number of axes) is arbitrary but in
+    practice many formats only support three and almost all
+    functionality is only tested for this special case.
+
+    The :meth:`export` method with ``format='dx'`` always exports a 3D
+    object. Other methods might work for an array of any dimension (in
+    particular the Python pickle output).
+
+
+    .. versionchanged:: 0.5.0
+       New *file_format* keyword argument.
+
+    .. versionchanged:: 0.7.0
+       CCP4 files are now read with :class:`gridData.mrc.MRC` and not anymore
+       with the deprecated/buggy `ccp4.CCP4`
+
     """
+
+    #: Default format for exporting with :meth:`export`.
     default_format = 'DX'
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
                  metadata=None, interpolation_spline_order=3,
                  file_format=None):
-        """
-        Create a Grid object from data.
-
-        From a numpy.histogramdd()::
-
-          grid,edges = numpy.histogramdd(...)
-          g = Grid(grid,edges=edges)
-
-        From an arbitrary grid::
-
-          g = Grid(grid,origin=origin,delta=delta)
-
-        From a saved file::
-
-          g = Grid(filename)
-
-        or ::
-
-          g = Grid()
-          g.load(filename)
-
-        :Arguments:
-          grid
-            histogram or density, defined on numpy nD array, or filename
-          edges
-            list of arrays, the lower and upper bin edges along the axes
-            (both are output by numpy.histogramdd())
-          origin
-            cartesian coordinates of the center of grid[0,0,...,0]
-          delta
-            Either n x n array containing the cell lengths in each dimension,
-            or n x 1 array for rectangular arrays.
-          metadata
-            a user defined dictionary of arbitrary values
-            associated with the density; the class does not touch
-            metadata[] but stores it with save()
-          interpolation_spline_order
-            order of interpolation function for resampling; cubic splines = 3 [3]
-          file_format
-             file format; only necessary when ``grid`` is a filename (see :meth:`Grid.load`);
-             default is ``None`` and the file format is autodetected.
-
-
-        .. versionchanged:: 0.5.0
-           New *file_format* keyword argument.
-
-        .. versionchanged:: 0.7.0
-           CCP4 files are now read with :class:`gridData.mrc.MRC` and not anymore
-           with the deprecated/buggy `ccp4.CCP4`
-
-        """
-        # file formats are guess from extension == lower case key
+        # file formats are guessed from extension == lower case key
         self._exporters = {
             'DX': self._export_dx,
             'PKL': self._export_python,
@@ -196,7 +280,7 @@ class Grid(object):
         """Resample data to a new grid with edges *edges*.
 
         This method creates a new grid with the data from the current
-        grid resampled to a regular grid specified by *edges*.  The
+        grid resampled to a regular grid specified by `edges`.  The
         order of the interpolation is set by
         :attr:`Grid.interpolation_spline_order`: change the value
         *before* calling :meth:`resample`.
@@ -217,7 +301,7 @@ class Grid(object):
         Examples
         --------
 
-        Providing *edges* (a tuple of three arrays, indicating the
+        Providing `edges` (a tuple of three arrays, indicating the
         boundaries of each grid cell)::
 
           g = grid.resample(edges)
@@ -255,12 +339,14 @@ class Grid(object):
 
         Returns
         -------
-        Grid
-
+        interpolated grid : Grid
+            The resampled data are represented on a :class:`Grid` with the new
+            grid cell sizes.
 
         See Also
         --------
         resample
+
 
         .. versionchanged:: 0.6.0
            Previous implementations would not alter the range of the grid edges
@@ -353,9 +439,10 @@ class Grid(object):
         :attr:`interpolation_cval` parameter, which when not set defaults
         to the minimum value in the interpolated grid.
 
+
         .. versionchanged:: 0.6.0
            Interpolation outside the grid is now performed with
-           ``mode="constant"`rather than ``mode="nearest"``, eliminating
+           ``mode="constant"`` rather than ``mode="nearest"``, eliminating
            extruded volumes when interpolating beyond the grid.
 
         """
@@ -452,12 +539,9 @@ class Grid(object):
                     grid, edges, origin, delta))
 
     def load(self, filename, file_format=None):
-        """Load saved (pickled or dx) grid and edges from <filename>.pickle
+        """Load saved grid and edges from `filename`
 
-           Grid.load(<filename>.pickle)
-           Grid.load(<filename>.dx)
-
-        The load() method calls the class's constructor method and
+        The :meth:`load` method calls the class's constructor method and
         completely resets all values, based on the loaded data.
         """
         filename = str(filename)
@@ -503,9 +587,9 @@ class Grid(object):
         """export density to file using the given format.
 
         The format can also be deduced from the suffix of the filename
-        though the *format* keyword takes precedence.
+        although the `file_format` keyword takes precedence.
 
-        The default format for export() is 'dx'.  Use 'dx' for
+        The default format for :meth:`export` is 'dx'.  Use 'dx' for
         visualization.
 
         Implemented formats:
@@ -518,7 +602,6 @@ class Grid(object):
 
         Parameters
         ----------
-
         filename : str
             name of the output file
 
@@ -554,7 +637,7 @@ class Grid(object):
         """Pickle the Grid object
 
         The object is dumped as a dictionary with grid and edges: This
-        is sufficient to recreate the grid object with __init__().
+        is sufficient to recreate the grid object with ``__init__()``.
         """
         data = dict(grid=self.grid, edges=self.edges, metadata=self.metadata)
         with open(filename, 'wb') as f:
@@ -601,7 +684,7 @@ class Grid(object):
         dx.write(filename)
 
     def save(self, filename):
-        """Save a grid object to <filename>.pickle
+        """Save a grid object to `filename` and add ".pickle" extension.
 
         Internally, this calls
         ``Grid.export(filename, format="python")``. A grid can be
@@ -619,22 +702,46 @@ class Grid(object):
         self.export(filename, file_format="pickle")
 
     def centers(self):
-        """Returns the coordinates of the centers of all grid cells as an
-        iterator."""
+        """Returns the coordinates of the centers of all grid cells as an iterator.
+
+
+        See Also
+        --------
+        :func:`numpy.ndindex`
+        """
         for idx in numpy.ndindex(self.grid.shape):
             yield self.delta * numpy.array(idx) + self.origin
 
     def check_compatible(self, other):
-        """Check if *other* can be used in an arithmetic operation.
+        """Check if `other` can be used in an arithmetic operation.
 
-        1) *other* is a scalar
-        2) *other* is a grid defined on the same edges
+        `other` is compatible if
 
-        :Raises: :exc:`TypeError` if not compatible.
+        1) `other` is a scalar
+        2) `other` is a grid defined on the same edges
+
+        In order to make `other` compatible, resample it on the same
+        grid as this one using :meth:`resample`.
+
+        Parameters
+        ----------
+        other : Grid or float or int
+           Another object to be used for standard arithmetic
+           operations with this :class:`Grid`
+
+        Raises
+        ------
+        TypeError
+              if not compatible
+
+        See Also
+        --------
+        :meth:`resample`
         """
+
         if not (numpy.isreal(other) or self == other):
             raise TypeError(
-                "The argument can not be arithmetically combined with the grid. "
+                "The argument cannot be arithmetically combined with the grid. "
                 "It must be a scalar or a grid with identical edges. "
                 "Use Grid.resample(other.edges) to make a new grid that is "
                 "compatible with other.")
