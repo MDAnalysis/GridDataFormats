@@ -11,8 +11,6 @@
 Reading of MRC/CCP4 volumetric files (`MRC2014 file format`_) using
 the mrcfile_ library [Burnley2017]_.
 
-This implementation replaces the :mod:`CCP4` module.
-
 .. _mrcfile: https://mrcfile.readthedocs.io/
 .. _`MRC2014 file format`: http://www.ccpem.ac.uk/mrc_format/mrc2014.php
 

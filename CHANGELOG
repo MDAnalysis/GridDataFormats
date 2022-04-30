@@ -13,6 +13,15 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+04/30/2022 orbeckst
+
+  * 1.0.0
+
+  Changes
+
+  * deprecated and buggy CCP4 module was removed (#107, #50)
+
+
 02/20/2022 orbeckst, tluchko, IAlibay
 
   * 0.7.0

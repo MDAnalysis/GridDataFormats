@@ -50,4 +50,3 @@ Format-specific modules
    formats/OpenDX
    formats/gOpenMol
    formats/mrc
-   formats/CCP4

@@ -110,9 +110,8 @@ from .core import Grid
 from . import OpenDX
 from . import gOpenMol
 from . import mrc
-from . import CCP4  # remove in 1.0.0
 
-__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'mrc', 'CCP4']
+__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'mrc']
 
 from ._version import get_versions
 __version__ = get_versions()['version']
