@@ -164,12 +164,8 @@ Classes and functions
 ---------------------
 
 """
-from __future__ import absolute_import, division, with_statement
-
 import numpy
 import re
-from six import next
-from six.moves import range
 import gzip
 
 import warnings
