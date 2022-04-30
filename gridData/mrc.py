@@ -29,9 +29,6 @@ Classes
 -------
 
 """
-from __future__ import absolute_import
-from six.moves import range
-
 import numpy as np
 import mrcfile
 

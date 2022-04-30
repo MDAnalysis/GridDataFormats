@@ -127,13 +127,9 @@ Classes
 -------
 
 """
-
-from __future__ import absolute_import, division, with_statement
-
 import warnings
 import struct
 import numpy
-from six.moves import range
 
 class Record(object):
     def __init__(self, key, bintype, values=None):
