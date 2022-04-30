@@ -13,14 +13,14 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-04/30/2022 orbeckst
+04/30/2022 orbeckst, IAlibay
 
   * 1.0.0
 
   Changes
 
   * gridDataFormats now follows NEP29 (#102)
-  * removed support for Python 2.7 and Python <3.7 (#102)
+  * removed support for Python 2.7 and Python <3.8 (#102)
 
 
 02/20/2022 orbeckst, tluchko, IAlibay
