@@ -1,6 +1,3 @@
-from __future__ import absolute_import, division
-import six
-
 import numpy as np
 from numpy.testing import (assert_array_equal, assert_array_almost_equal,
                            assert_almost_equal)
@@ -90,39 +87,10 @@ class TestGrid(object):
         assert_array_equal(g.grid.flat, (2 * data['griddata']).flat)
 
     def test_division(self, data):
-        # __truediv__ is used in py3 by default and py2 if division
-        # is imported from __future__; to make testing easier lets call
-        # them explicitely
-        #
-        g = data['grid'].__truediv__(data['grid'])
+        g = data['grid'] / data['grid']
         assert_array_equal(g.grid.flat, np.ones(27))
-        g = data['grid'].__rtruediv__(2)
+        g = 2 / data['grid']
         assert_array_equal(g.grid.flat, (2 / data['griddata']).flat)
-
-    @pytest.mark.skipif(not six.PY2, reason="classic division only in Python 2")
-    def test_classic_division(self, data):
-        # this is normally ONLY invoked in python 2 and will ONLY
-        # work in Python 2; we test the operator methods directly
-        # because '/' always performs truedivision in GridDataFormats
-        # (we use __future__.division everywhere, also in this test)
-        g = data['grid'].__div__(data['grid'])
-        assert_array_equal(g.grid.flat, np.ones(27, dtype=np.int64))
-
-        # performs floordivision
-        g = data['grid'].__rdiv__(2)
-        assert_array_equal(g.grid.flat, (2 // data['griddata']).flat)
-
-        # performs truedivision
-        # (note: '/' performs truedivision because of __future__.division!)
-        g = data['grid'].__rdiv__(2.0)
-        assert_array_equal(g.grid.flat, (2.0 / data['griddata']).flat)
-
-    @pytest.mark.skipif(six.PY2, reason="classic division present in Python 2")
-    def test_classic_division_NotImplementedError(self, data):
-        with pytest.raises(NotImplementedError):
-            data['grid'].__div__(2)
-        with pytest.raises(NotImplementedError):
-            data['grid'].__rdiv__(2)
 
     def test_floordivision(self, data):
         g = data['grid'].__floordiv__(data['grid'])

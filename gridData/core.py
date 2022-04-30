@@ -23,15 +23,9 @@ Classes and functions
 ---------------------
 
 """
-# Having consistent truedivision in this module is essential so that
-# its behavior is fully consistent in Python 2 and Python 3.
-from __future__ import absolute_import, division
-
-import six
-from six.moves import cPickle, range, zip
-
 import os
 import errno
+import pickle
 
 import numpy
 
@@ -226,7 +220,7 @@ class Grid(object):
         self.interpolation_cval = None  # default to using min(grid)
 
         if grid is not None:
-            if isinstance(grid, six.string_types):
+            if isinstance(grid, str):
                 # can probably safely try to load() it...
                 filename = grid
             else:
@@ -555,7 +549,7 @@ class Grid(object):
 
     def _load_python(self, filename):
         with open(filename, 'rb') as f:
-            saved = cPickle.load(f)
+            saved = pickle.load(f)
         self._load(grid=saved['grid'],
                    edges=saved['edges'],
                    metadata=saved['metadata'])
@@ -641,7 +635,7 @@ class Grid(object):
         """
         data = dict(grid=self.grid, edges=self.edges, metadata=self.metadata)
         with open(filename, 'wb') as f:
-            cPickle.dump(data, f, cPickle.HIGHEST_PROTOCOL)
+            pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
     def _export_dx(self, filename, type=None, typequote='"', **kwargs):
         """Export the density grid to an OpenDX file.
@@ -835,22 +829,8 @@ class Grid(object):
         return self.__class__(self.grid * _grid(other), edges=self.edges)
 
     def __truediv__(self, other):
-        # truediv will always do true division (in Python 2 and Python 3);
-        # we use from __future__ include division everywhere
         self.check_compatible(other)
         return self.__class__(self.grid / _grid(other), edges=self.edges)
-
-    def __div__(self, other):
-        # in Python 2 only (without __future__.division): will do "classic division"
-        # https://docs.python.org/2/reference/datamodel.html#object.__div__
-        if not six.PY2:
-            raise NotImplementedError(
-                "__div__ is only available in Python 2, use __truediv__")
-        self.check_compatible(other)
-        return self.__class__(
-            self.grid.__div__(
-                _grid(other)),
-            edges=self.edges)
 
     def __floordiv__(self, other):
         self.check_compatible(other)
@@ -879,18 +859,6 @@ class Grid(object):
     def __rtruediv__(self, other):
         self.check_compatible(other)
         return self.__class__(_grid(other) / self.grid, edges=self.edges)
-
-    def __rdiv__(self, other):
-        # in Python 2 only (without __future__.division): will do "classic division"
-        # https://docs.python.org/2/reference/datamodel.html#object.__div__
-        if not six.PY2:
-            raise NotImplementedError(
-                "__rdiv__ is only available in Python 2, use __rtruediv__")
-        self.check_compatible(other)
-        return self.__class__(
-            self.grid.__rdiv__(
-                _grid(other)),
-            edges=self.edges)
 
     def __rfloordiv__(self, other):
         self.check_compatible(other)

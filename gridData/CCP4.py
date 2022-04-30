@@ -132,7 +132,6 @@ from __future__ import absolute_import, division
 import warnings
 import struct
 import numpy as np
-from six.moves import range
 
 from .gOpenMol import Record
 
