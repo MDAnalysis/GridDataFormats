@@ -19,9 +19,9 @@ The rules for this file:
 
   Changes
 
+  * deprecated and buggy CCP4 module was removed (#107, #50)
   * gridDataFormats now follows NEP29 (#102)
   * removed support for Python 2.7 and Python <3.8 (#102)
-  * deprecated and buggy CCP4 module was removed (#107, #50)
 
 
 02/20/2022 orbeckst, tluchko, IAlibay
