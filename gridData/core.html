@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 0.7.0+1.g2c72933 documentation</title>
+  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -20,7 +20,7 @@
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 0.7.0+1.g2c72933 documentation"
+          title="Search within GridDataFormats 1.0.0 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,7 +37,7 @@
             <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.7
+                1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -378,7 +378,7 @@ that the spline will generate values that would not normally
 appear in the data. For example, a density is non-negative but
 a cubic spline interpolation can generate negative values,
 especially at the boundary between 0 and high values.</p>
-<p>Internally, the function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.map_coordinates()</span></code></a>
+<p>Internally, the function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates" title="(in SciPy v1.8.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.map_coordinates()</span></code></a>
 with <code class="docutils literal notranslate"><span class="pre">mode=&quot;constant&quot;</span></code> whereby interpolated values outside
 the interpolated grid are determined by filling all values beyond
 the edge with the same constant value, defined by the
@@ -398,7 +398,7 @@ extruded volumes when interpolating beyond the grid.</p>
 <dd><p>Order of the B-spline interpolation of the data.</p>
 <p>3 = cubic; 4 &amp; 5 are also supported</p>
 <p>Only choose values that are acceptable to
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.8.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.8.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#gridData.core.Grid.interpolated" title="gridData.core.Grid.interpolated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interpolated</span></code></a></p>
