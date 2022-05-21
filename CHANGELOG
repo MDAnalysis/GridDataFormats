@@ -13,12 +13,13 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-04/30/2022 orbeckst, IAlibay
+05/21/2022 orbeckst, IAlibay
 
   * 1.0.0
 
   Changes
 
+  * API-stable release
   * deprecated and buggy CCP4 module was removed (#107, #50)
   * gridDataFormats now follows NEP29 (#102)
   * removed support for Python 2.7 and Python <3.8 (#102)
