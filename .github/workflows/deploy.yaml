@@ -32,6 +32,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        fetch-depth: 0
 
       - name: setup_miniconda
         uses: conda-incubator/setup-miniconda@v2
