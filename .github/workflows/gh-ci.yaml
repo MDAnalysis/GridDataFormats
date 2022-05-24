@@ -8,7 +8,7 @@ on:
       - master
 
 concurrency:
-  group: "${{ github.ref }}-${{ github.head_ref }}"
+  group: "${{ github.ref }}-${{ github.head_ref }}-${{ github.workflow }}"
   cancel-in-progress: true
 
 defaults:

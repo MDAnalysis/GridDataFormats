@@ -13,6 +13,21 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+05/24/2022 IAlibay
+
+  * 1.0.1
+
+  Changes
+
+  * Deployment is now automatically done using github actions.
+
+  Fixes
+
+  * Version 1.0.0 would allow for installations to be made with python versions
+    < 3.8, resulting in incorrect builds. The setup configuration has now been
+    altered to avoid this (Issue #112)
+
+
 05/21/2022 orbeckst, IAlibay
 
   * 1.0.0
