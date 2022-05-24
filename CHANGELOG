@@ -19,8 +19,13 @@ The rules for this file:
 
   Changes
 
-  * Setup is now solely possible using python 3.8 and above.
   * Deployment is now automatically done using github actions.
+
+  Fixes
+
+  * Version 1.0.0 would allow for installations to be made with python versions
+    < 3.8, resulting in incorrect builds. The setup configuration has now been
+    altered to avoid this (Issue #112)
 
 
 05/21/2022 orbeckst, IAlibay
