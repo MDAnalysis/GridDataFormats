@@ -27,22 +27,42 @@ for new releases.
     1. `git tag <major>.<minor>.<patch>`
     1. `git push --tags`
 
+* This will automatically trigger a github action (named 'deploy') to using pypa's `build` tool to create a tarball & pure Python wheel and upload it to https://test.pypi.org/project/GridDataFormats
+
+* Once uploaded to testpypi, please check locally that the testpypi build is working as intended. In a clean environment do:
+
+    1. `pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple GridDataFormats=="version number"`
+    2. `pip install pytest`
+    3. `pytest --pyargs gridData`
+  
 * Create a
   [GitHub release](https://github.com/MDAnalysis/GridDataFormats/releases)
-  from the tag and name it `v<major>.<minor>.<patch>` and add a short description.
+  from the tag and name it `<major>.<minor>.<patch>` and add a short description.
+  
+* The GitHub release triggers the `deploy` action to deploy the tarball and wheel to the standard PyPI repository.
+
 
 ## PyPi release
 
-Upload to PyPi can be done by PyPi maintainers and requires `twine`:
-
- 
-1. `python setup.py sdist bdist_wheel`
-2. `twine upload dist/*`
+A GitHub release is automatically deployed to PyPI.
 
 ## Update Conda-forge package
 
-*After* a PyPi release update the conda-forge package. For this do the following
-on a local checkout of the package
+*After* a PyPI release update the conda-forge package [feedstock](https://github.com/conda-forge/griddataformats-feedstock).
+
+### Automatic
+
+1. Wait for the *regro-cf-autotick-bot* to create a PR, based on the PyPI release (can take a few hours).
+2. review the PR
+3. merge the PR
+4. conda packages will be built
+
+
+### Manual
+
+Manual updates are rarely necessary. 
+
+If necessary do the following on a local checkout of the package
 [feedstock](https://github.com/conda-forge/griddataformats-feedstock)
 
 1. create a new branch
@@ -57,17 +77,10 @@ generate a PR. Once all tests pass merge the PR and the package will be
 published.
 
 
-### Update package on MDAnalysis channel
-
-
-Don't. We don't have the man power to update all the dependencies we need in the
-channel ourselves. Relying on conda-forge is more reliant.
-
-
 
 ## Documentation
 
-Documentation is automatically generated on Travis CI and pushed to
+Documentation is automatically generated in CI and pushed to
 the gh-pages branch and appears at https://www.mdanalysis.org/GridDataFormats/.
 
 
