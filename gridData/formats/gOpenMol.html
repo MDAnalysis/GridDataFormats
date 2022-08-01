@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gOpenMol — the gOpenMol plt format &mdash; GridDataFormats 1.0.1+1.g30ab719 documentation</title>
+  <title>gOpenMol — the gOpenMol plt format &mdash; GridDataFormats 1.0.1+2.g069e535 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -16,10 +16,11 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.1+1.g30ab719 documentation"
+          title="Search within GridDataFormats 1.0.1+2.g069e535 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -94,7 +95,7 @@
            <div itemprop="articleBody">
              
   <span class="target" id="module-gridData.gOpenMol"></span><section id="gopenmol-the-gopenmol-plt-format">
-<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format<a class="headerlink" href="#gopenmol-the-gopenmol-plt-format" title="Permalink to this headline">¶</a></h1>
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format<a class="headerlink" href="#gopenmol-the-gopenmol-plt-format" title="Permalink to this heading">¶</a></h1>
 <p>The module provides a simple implementation of a reader for <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a>
 <em>plt</em> files. Plt files are binary files. The <a class="reference internal" href="#gridData.gOpenMol.Plt" title="gridData.gOpenMol.Plt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plt</span></code></a> reader tries
 to guess the endianess of the file, but this can fail (with a
@@ -102,13 +103,13 @@ to guess the endianess of the file, but this can fail (with a
 <p>Only the reader is implemented. If you want to write gridded data use a format
 that is more standard, such as OpenDX (see <code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code>).</p>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">¶</a></h2>
 <p>gOpenMol <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">http://www.csc.fi/english/pages/g0penMol</a> plt format.</p>
 <p>Used to be documented at <a class="reference external" href="http://www.csc.fi/gopenmol/developers/plt_format.phtml">http://www.csc.fi/gopenmol/developers/plt_format.phtml</a> but currently this is only accessible through the internet archive at
 <a class="reference external" href="http://web.archive.org/web/20061011125817/http://www.csc.fi/gopenmol/developers/plt_format.phtml">http://web.archive.org/web/20061011125817/http://www.csc.fi/gopenmol/developers/plt_format.phtml</a></p>
 </section>
 <section id="grid-data-plt-file-format">
-<h2>Grid data plt file format<a class="headerlink" href="#grid-data-plt-file-format" title="Permalink to this headline">¶</a></h2>
+<h2>Grid data plt file format<a class="headerlink" href="#grid-data-plt-file-format" title="Permalink to this heading">¶</a></h2>
 <p>Copyright CSC, 2005. Last modified: September 23, 2003 09:18:50</p>
 <p>Plot file (plt) format The plot files are regular 3D grid files for plotting of
 molecular orbitals, electron densities or other molecular properties. The plot
@@ -121,7 +122,7 @@ the format can be found elsewhere in this manual. gOpenMol can read binary plot
 files from different hardware platforms independent of the system type (little
 or big endian machines).</p>
 <section id="format-of-the-binary-plt-file">
-<h3>Format of the binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file<a class="headerlink" href="#format-of-the-binary-plt-file" title="Permalink to this headline">¶</a></h3>
+<h3>Format of the binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file<a class="headerlink" href="#format-of-the-binary-plt-file" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file binary and formatted file formats are very simple but please
 observe that unformatted files written with a FORTRAN program are not pure
 binary files because there are file records between the values while pure
@@ -130,7 +131,7 @@ able to figure out if the file is pure binary or FORTRAN unformatted but it is
 not very well tested.</p>
 </section>
 <section id="binary-plt-grid-file-format">
-<h3>Binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#binary-plt-grid-file-format" title="Permalink to this headline">¶</a></h3>
+<h3>Binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#binary-plt-grid-file-format" title="Permalink to this heading">¶</a></h3>
 <p>Record number and meaning:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#1: Integer, rank value must always be = 3
 #2: Integer, possible values are 1 ... 50. This value is not used but
@@ -185,7 +186,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 </div>
 </section>
 <section id="formatted-plt-grid-file-format">
-<h3>Formatted <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#formatted-plt-grid-file-format" title="Permalink to this headline">¶</a></h3>
+<h3>Formatted <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#formatted-plt-grid-file-format" title="Permalink to this heading">¶</a></h3>
 <p>Line numbers and variables on the line:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="c1">#1: Integer, Integer. Rank and type of surface (rank is always = 3)</span>
 <span class="n">line</span> <span class="c1">#2: Integer, Integer, Integer. Zdim, Ydim, Xdim (number of points in the z,y,x directions)</span>
@@ -200,7 +201,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 </section>
 </section>
 <section id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.gOpenMol.Plt">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.gOpenMol.</span></span><span class="sig-name descname"><span class="pre">Plt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.gOpenMol.Plt" title="Permalink to this definition">¶</a></dt>

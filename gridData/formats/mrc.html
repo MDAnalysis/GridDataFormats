@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mrc — the MRC/CCP4 volumetric data format &mdash; GridDataFormats 1.0.1+1.g30ab719 documentation</title>
+  <title>mrc — the MRC/CCP4 volumetric data format &mdash; GridDataFormats 1.0.1+2.g069e535 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -16,10 +16,11 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.1+1.g30ab719 documentation"
+          title="Search within GridDataFormats 1.0.1+2.g069e535 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -91,7 +92,7 @@
            <div itemprop="articleBody">
              
   <span class="target" id="module-gridData.mrc"></span><section id="mrc-the-mrc-ccp4-volumetric-data-format">
-<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> — the MRC/CCP4 volumetric data format<a class="headerlink" href="#mrc-the-mrc-ccp4-volumetric-data-format" title="Permalink to this headline">¶</a></h1>
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> — the MRC/CCP4 volumetric data format<a class="headerlink" href="#mrc-the-mrc-ccp4-volumetric-data-format" title="Permalink to this heading">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.7.0.</span></p>
 </div>
@@ -106,7 +107,7 @@ Cryst.</em> D73:469-477. doi: <a class="reference external" href="https://doi.or
 </dd>
 </dl>
 <section id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.mrc.MRC">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.mrc.</span></span><span class="sig-name descname"><span class="pre">MRC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC" title="Permalink to this definition">¶</a></dt>
@@ -128,7 +129,7 @@ the <a class="reference external" href="https://mrcfile.readthedocs.io/">mrcfile
 <dd><p>Header data from the MRC file as a numpy record array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.recarray.html#numpy.recarray" title="(in NumPy v1.22)">numpy.recarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.recarray.html#numpy.recarray" title="(in NumPy v1.23)">numpy.recarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -141,7 +142,7 @@ axis 1 to Y, and axis 2 to Z. This order is always enforced,
 regardless of the order in the mrc file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -153,7 +154,7 @@ regardless of the order in the mrc file.</p>
 (taken from the <code class="xref py py-attr docutils literal notranslate"><span class="pre">mrcfile.mrcfile.voxel_size</span></code> attribute)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -167,7 +168,7 @@ regardless of the order in the mrc file.</p>
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">header.origin.nzstart</span></code> and the spacing <a class="reference internal" href="#gridData.mrc.MRC.delta" title="gridData.mrc.MRC.delta"><code class="xref py py-attr docutils literal notranslate"><span class="pre">delta</span></code></a>)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>

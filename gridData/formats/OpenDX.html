@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 1.0.1+1.g30ab719 documentation</title>
+  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 1.0.1+2.g069e535 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -16,11 +16,12 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.1+1.g30ab719 documentation"
+          title="Search within GridDataFormats 1.0.1+2.g069e535 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -96,7 +97,7 @@
            <div itemprop="articleBody">
              
   <span class="target" id="module-gridData.OpenDX"></span><section id="opendx-routines-to-read-and-write-simple-opendx-files">
-<h1><a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code></a> — routines to read and write simple OpenDX files<a class="headerlink" href="#opendx-routines-to-read-and-write-simple-opendx-files" title="Permalink to this headline">¶</a></h1>
+<h1><a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code></a> — routines to read and write simple OpenDX files<a class="headerlink" href="#opendx-routines-to-read-and-write-simple-opendx-files" title="Permalink to this heading">¶</a></h1>
 <p>The OpenDX format for multi-dimensional grid data. OpenDX is a free
 visualization software, see <a class="reference external" href="http://www.opendx.org">http://www.opendx.org</a>.</p>
 <div class="admonition note">
@@ -111,7 +112,7 @@ convenient <a class="reference internal" href="../core.html#gridData.core.Grid" 
 module (<code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.Grid</span></code>) or see the lower-level methods
 described below.</p>
 <section id="reading-and-writing-opendx-files">
-<span id="opendx-read-write"></span><h2>Reading and writing OpenDX files<a class="headerlink" href="#reading-and-writing-opendx-files" title="Permalink to this headline">¶</a></h2>
+<span id="opendx-read-write"></span><h2>Reading and writing OpenDX files<a class="headerlink" href="#reading-and-writing-opendx-files" title="Permalink to this heading">¶</a></h2>
 <p>If you have OpenDX files from other software and you just want to
 <strong>read</strong> it into a Python array then you do not really need to use the
 interface in <a class="reference internal" href="#module-gridData.OpenDX" title="gridData.OpenDX"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.OpenDX</span></code></a>: just use
@@ -137,7 +138,7 @@ formats. However, sometimes additional help is needed to write an
 OpenDX file that can be read by a specific software, as described
 below:</p>
 <section id="known-issues-for-writing-opendx-files">
-<h3>Known issues for writing OpenDX files<a class="headerlink" href="#known-issues-for-writing-opendx-files" title="Permalink to this headline">¶</a></h3>
+<h3>Known issues for writing OpenDX files<a class="headerlink" href="#known-issues-for-writing-opendx-files" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p>APBS require the delta to be written to the seventh significant figure.
 The delta is now written to reflect this increase in precision.</p>
@@ -167,7 +168,7 @@ suggested to always export with <code class="docutils literal notranslate"><span
 </section>
 </section>
 <section id="building-a-dx-object-from-a-numpy-array-a">
-<h2>Building a dx object from a numpy array <code class="docutils literal notranslate"><span class="pre">A</span></code><a class="headerlink" href="#building-a-dx-object-from-a-numpy-array-a" title="Permalink to this headline">¶</a></h2>
+<h2>Building a dx object from a numpy array <code class="docutils literal notranslate"><span class="pre">A</span></code><a class="headerlink" href="#building-a-dx-object-from-a-numpy-array-a" title="Permalink to this heading">¶</a></h2>
 <p>If you have a numpy array <code class="docutils literal notranslate"><span class="pre">A</span></code> that represents a density in cartesian
 space then you can construct a dx object (named a <em>field</em> in OpenDX
 parlance) if you provide some additional information that fixes the
@@ -187,7 +188,7 @@ elements are 0 and the diagonal ones correspond to the
 </dd>
 </dl>
 <p>The DX data type (“type” in the DX file) is determined from the
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> that is provided as
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> that is provided as
 the <em>grid</em> (or with the <em>type</em> keyword argument to
 <a class="reference internal" href="#gridData.OpenDX.array" title="gridData.OpenDX.array"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenDX.array</span></code></a>).</p>
 <p>For example, to build a <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">field</span></code></a>:</p>
@@ -206,18 +207,18 @@ the <em>grid</em> (or with the <em>type</em> keyword argument to
 </div>
 </section>
 <section id="building-a-dx-object-from-a-dx-file">
-<h2>Building a dx object from a dx file<a class="headerlink" href="#building-a-dx-object-from-a-dx-file" title="Permalink to this headline">¶</a></h2>
+<h2>Building a dx object from a dx file<a class="headerlink" href="#building-a-dx-object-from-a-dx-file" title="Permalink to this heading">¶</a></h2>
 <p>One can also read data from an existing dx file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">dx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;file.dx&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Only simple arrays are read and initially stored as a 1-d
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in the <cite>dx.components[‘data’].array</cite> with the
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> determined by the DX type in the file.</p>
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in the <cite>dx.components[‘data’].array</cite> with the
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> determined by the DX type in the file.</p>
 <p>The dx <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">field</span></code></a> object has a method
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">histogramdd()</span></code> that produces output identical to
-the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.22)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function by taking the stored dimension
+the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.23)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function by taking the stored dimension
 and deltas into account. In this way, one can store nD histograms in a
 portable and universal manner:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">()</span>
@@ -232,7 +233,7 @@ to an archived copy at the Internet Archive , <a class="reference external" href
 </dl>
 </section>
 <section id="classes-and-functions">
-<h2>Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
+<h2>Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.OpenDX.DXInitObject">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.OpenDX.</span></span><span class="sig-name descname"><span class="pre">DXInitObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classtype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#DXInitObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenDX.DXInitObject" title="Permalink to this definition">¶</a></dt>
@@ -361,7 +362,7 @@ has dimensions (derived from shape)</p>
 the closest numpy dtype.  <cite>type</cite> must be one of the
 allowed types in DX files as defined under <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440">Array
 Objects</a>.  The default <code class="docutils literal notranslate"><span class="pre">None</span></code> tries to set the type
-from the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of <cite>array</cite>.</p>
+from the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of <cite>array</cite>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.4.0.</span></p>
 </div>
@@ -376,7 +377,7 @@ from the <a class="reference external" href="https://numpy.org/doc/stable/refere
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gridData.OpenDX.array.dx_types">
 <span class="sig-name descname"><span class="pre">dx_types</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'byte':</span> <span class="pre">'uint8',</span> <span class="pre">'double':</span> <span class="pre">'float64',</span> <span class="pre">'float':</span> <span class="pre">'float32',</span> <span class="pre">'int':</span> <span class="pre">'int32',</span> <span class="pre">'short':</span> <span class="pre">'int16',</span> <span class="pre">'signed</span> <span class="pre">byte':</span> <span class="pre">'int8',</span> <span class="pre">'signed</span> <span class="pre">int':</span> <span class="pre">'int32',</span> <span class="pre">'signed</span> <span class="pre">short':</span> <span class="pre">'int16',</span> <span class="pre">'unsigned</span> <span class="pre">byte':</span> <span class="pre">'uint8',</span> <span class="pre">'unsigned</span> <span class="pre">int':</span> <span class="pre">'uint32',</span> <span class="pre">'unsigned</span> <span class="pre">short':</span> <span class="pre">'uint16'}</span></em><a class="headerlink" href="#gridData.OpenDX.array.dx_types" title="Permalink to this definition">¶</a></dt>
-<dd><p>conversion from OpenDX type to closest <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a>
+<dd><p>conversion from OpenDX type to closest <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a>
 (round-tripping is not guaranteed to produce identical types); not all
 types are supported (e.g., strings and conversion to int64 are missing)</p>
 </dd></dl>
@@ -384,7 +385,7 @@ types are supported (e.g., strings and conversion to int64 are missing)</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gridData.OpenDX.array.np_types">
 <span class="sig-name descname"><span class="pre">np_types</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'float16':</span> <span class="pre">'float',</span> <span class="pre">'float32':</span> <span class="pre">'float',</span> <span class="pre">'float64':</span> <span class="pre">'double',</span> <span class="pre">'int16':</span> <span class="pre">'short',</span> <span class="pre">'int32':</span> <span class="pre">'int',</span> <span class="pre">'int64':</span> <span class="pre">'int',</span> <span class="pre">'int8':</span> <span class="pre">'signed</span> <span class="pre">byte',</span> <span class="pre">'uint16':</span> <span class="pre">'unsigned</span> <span class="pre">short',</span> <span class="pre">'uint32':</span> <span class="pre">'unsigned</span> <span class="pre">int',</span> <span class="pre">'uint64':</span> <span class="pre">'unsigned</span> <span class="pre">int',</span> <span class="pre">'uint8':</span> <span class="pre">'byte'}</span></em><a class="headerlink" href="#gridData.OpenDX.array.np_types" title="Permalink to this definition">¶</a></dt>
-<dd><p>conversion from <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.name.html#numpy.dtype.name" title="(in NumPy v1.22)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">numpy.dtype.name</span></code></a> to closest OpenDX array type
+<dd><p>conversion from <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.name.html#numpy.dtype.name" title="(in NumPy v1.23)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">numpy.dtype.name</span></code></a> to closest OpenDX array type
 (round-tripping is not guaranteed to produce identical types); not all
 types are supported (e.g., strings are missing)</p>
 </dd></dl>
