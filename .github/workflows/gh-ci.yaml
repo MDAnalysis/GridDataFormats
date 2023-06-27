@@ -26,12 +26,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, ]
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.9", "3.10", "3.11"]
         include:
           - os: windows-latest
-            python-version: "3.9"
+            python-version: "3.11"
           - os: macos-latest
-            python-version: "3.9"
+            python-version: "3.11"
 
     steps:
     - uses: actions/checkout@v2
@@ -67,7 +67,8 @@ jobs:
         pytest -v --cov=gridData --cov-report=xml --color=yes ./gridData/tests
 
     - name: codecov
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v3
+      if: github.event_name != 'schedule'
       with:
         file: coverage.xml
         fail_ci_if_error: True
