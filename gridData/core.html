@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 1.0.1+2.g069e535 documentation</title>
+  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 1.0.1+5.ge08f6c5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -14,14 +14,12 @@
   <![endif]-->
   
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.1+2.g069e535 documentation"
+          title="Search within GridDataFormats 1.0.1+5.ge08f6c5 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -34,15 +32,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: white" >
-            <a href="../index.html">
-            <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
                 1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -56,6 +58,26 @@
 <li class="toctree-l2"><a class="reference internal" href="#classes-and-functions">Classes and functions</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#gridData.core.Grid"><code class="docutils literal notranslate"><span class="pre">Grid</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.grid"><code class="docutils literal notranslate"><span class="pre">Grid.grid</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.delta"><code class="docutils literal notranslate"><span class="pre">Grid.delta</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.origin"><code class="docutils literal notranslate"><span class="pre">Grid.origin</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.edges"><code class="docutils literal notranslate"><span class="pre">Grid.edges</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.midpoints"><code class="docutils literal notranslate"><span class="pre">Grid.midpoints</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.metadata"><code class="docutils literal notranslate"><span class="pre">Grid.metadata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.centers"><code class="docutils literal notranslate"><span class="pre">Grid.centers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.check_compatible"><code class="docutils literal notranslate"><span class="pre">Grid.check_compatible()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.default_format"><code class="docutils literal notranslate"><span class="pre">Grid.default_format</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.export"><code class="docutils literal notranslate"><span class="pre">Grid.export()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.interpolated"><code class="docutils literal notranslate"><span class="pre">Grid.interpolated</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.interpolation_spline_order"><code class="docutils literal notranslate"><span class="pre">Grid.interpolation_spline_order</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.load"><code class="docutils literal notranslate"><span class="pre">Grid.load()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.resample"><code class="docutils literal notranslate"><span class="pre">Grid.resample()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.resample_factor"><code class="docutils literal notranslate"><span class="pre">Grid.resample_factor()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.save"><code class="docutils literal notranslate"><span class="pre">Grid.save()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#gridData.core.ndmeshgrid"><code class="docutils literal notranslate"><span class="pre">ndmeshgrid()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="formats.html">Formats</a></li>
 </ul>
 
@@ -72,8 +94,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/gridData/core.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -100,6 +122,8 @@ for specific formats:</p>
 </div>
 <section id="classes-and-functions">
 <h2>Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.core.Grid">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.core.</span></span><span class="sig-name descname"><span class="pre">Grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation_spline_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.core.Grid" title="Permalink to this definition">¶</a></dt>
@@ -113,35 +137,35 @@ array and so the data can be directly manipulated.</p>
 <p>Data can be read from a number of molecular volume/density formats
 and written out in different formats with <a class="reference internal" href="#gridData.core.Grid.export" title="gridData.core.Grid.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export()</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>grid</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>numpy.ndarray</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – Build the grid either from a histogram or density (a numpy nD
+<li><p><strong>grid</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><em>numpy.ndarray</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – Build the grid either from a histogram or density (a numpy nD
 array) or read data from a filename.</p></li>
-<li><p><strong>edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> (</em><em>optional</em><em>)</em>) – List of arrays, the lower and upper bin edges along the axes
-(same as the output by <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.23)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>)</p></li>
-<li><p><strong>origin</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (optional)) – Cartesian coordinates of the center of grid position at index
+<li><p><strong>edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> (</em><em>optional</em><em>)</em>) – List of arrays, the lower and upper bin edges along the axes
+(same as the output by <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.25)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>)</p></li>
+<li><p><strong>origin</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (optional)) – Cartesian coordinates of the center of grid position at index
 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">...,</span> <span class="pre">0]</span></code>.</p></li>
-<li><p><strong>delta</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (optional)) – Either <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">n</span></code> array containing the cell lengths in each dimension,
+<li><p><strong>delta</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (optional)) – Either <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">n</span></code> array containing the cell lengths in each dimension,
 or <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">1</span></code> array for rectangular arrays.</p></li>
-<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em> (</em><em>optional</em><em>)</em>) – A user defined dictionary of arbitrary key/value pairs
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a><em> (</em><em>optional</em><em>)</em>) – A user defined dictionary of arbitrary key/value pairs
 associated with the density; the class does not touch
 <a class="reference internal" href="#gridData.core.Grid.metadata" title="gridData.core.Grid.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a> but stores it with <a class="reference internal" href="#gridData.core.Grid.save" title="gridData.core.Grid.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a></p></li>
-<li><p><strong>interpolation_spline_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> (</em><em>optional</em><em>)</em>) – Order of interpolation function for resampling with
+<li><p><strong>interpolation_spline_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> (</em><em>optional</em><em>)</em>) – Order of interpolation function for resampling with
 <a class="reference internal" href="#gridData.core.Grid.resample" title="gridData.core.Grid.resample"><code class="xref py py-func docutils literal notranslate"><span class="pre">resample()</span></code></a>; cubic splines = 3 and the default is 3</p></li>
-<li><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – Name of the file format; only necessary when <cite>grid</cite> is a
+<li><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – Name of the file format; only necessary when <cite>grid</cite> is a
 filename (see <a class="reference internal" href="#gridData.core.Grid.load" title="gridData.core.Grid.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code></a>) and autodetection of the file
 format fails. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code> and normally the file
 format is guessed from the file extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><strong>TypeError</strong></a> – If the dimensions of the various input data do not agree with
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – If the dimensions of the various input data do not agree with
     each other.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If some of the required data are not provided in the keyword
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – If some of the required data are not provided in the keyword
     arguments, e.g., if only the <cite>grid</cite> is supplied as an array but
     not the <cite>edges</cite> or only <cite>grid</cite> and one of <cite>origin</cite> and <cite>delta</cite>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.10)"><strong>NotImplementedError</strong></a> – If triclinic (non-orthorhombic) boxes are supplied in <cite>delta</cite>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.11)"><strong>NotImplementedError</strong></a> – If triclinic (non-orthorhombic) boxes are supplied in <cite>delta</cite>
     
     .. Note:: <cite>delta</cite> can only be a 1D array of length <code class="xref py py-attr docutils literal notranslate"><span class="pre">grid.ndim</span></code></p></li>
 </ul>
@@ -157,8 +181,8 @@ convention in GridDataFormats</strong> is that axis 0 corresponds to
 the Cartesian <span class="math notranslate nohighlight">\(x\)</span> component, axis 1 corresponds to the
 <span class="math notranslate nohighlight">\(y\)</span> component, and axis 2 to the <span class="math notranslate nohighlight">\(z\)</span> component.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -170,8 +194,8 @@ the Cartesian <span class="math notranslate nohighlight">\(x\)</span> component,
 <span class="math notranslate nohighlight">\(y\)</span>, <span class="math notranslate nohighlight">\(z\)</span> dimensions. This is a <em>1D array</em> with
 length <code class="xref py py-attr docutils literal notranslate"><span class="pre">Grid.grid.ndim</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -182,8 +206,8 @@ length <code class="xref py py-attr docutils literal notranslate"><span class="p
 <dd><p>Array with the Cartesian coordinates of the coordinate system
 origin, the <em>center</em> of cell <code class="docutils literal notranslate"><span class="pre">Grid.grid[0,</span> <span class="pre">0,</span> <span class="pre">..,</span> <span class="pre">0]</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -200,8 +224,8 @@ the upper boundary for the last cell. The edges are assumed to
 be regular with spacing indicated in <a class="reference internal" href="#gridData.core.Grid.delta" title="gridData.core.Grid.delta"><code class="xref py py-attr docutils literal notranslate"><span class="pre">delta</span></code></a>, namely
 <code class="docutils literal notranslate"><span class="pre">Grid.delta[i]</span></code> for axis <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -213,8 +237,8 @@ be regular with spacing indicated in <a class="reference internal" href="#gridDa
 midpoints array contains the <em>midpoints</em> of the grid cells along
 the corresponding axis.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -226,15 +250,15 @@ the corresponding axis.</p>
 data. The content is not touched by <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>. It is saved
 together with the other data with <a class="reference internal" href="#gridData.core.Grid.save" title="gridData.core.Grid.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <p class="rubric">Example</p>
 <p>Create a Grid object from data.</p>
-<p>From <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.23)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
+<p>From <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.25)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">)</span>
 </pre></div>
@@ -288,12 +312,12 @@ with the deprecated/buggy <cite>ccp4.CCP4</cite></p>
 <p>In order to make <cite>other</cite> compatible, resample it on the same
 grid as this one using <a class="reference internal" href="#gridData.core.Grid.resample" title="gridData.core.Grid.resample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resample()</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><em>Grid</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Another object to be used for standard arithmetic
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><em>Grid</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Another object to be used for standard arithmetic
 operations with this <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a></p>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><strong>TypeError</strong></a> – if not compatible</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if not compatible</p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -325,11 +349,11 @@ is simpler than <code class="docutils literal notranslate"><span class="pre">exp
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – name of the output file</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – name of the output file</p></li>
 <li><p><strong>file_format</strong> (<em>{'dx'</em><em>, </em><em>'pickle'</em><em>, </em><em>None}</em><em> (</em><em>optional</em><em>)</em>) – output file format, the default is “dx”</p></li>
-<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
 By default (<code class="docutils literal notranslate"><span class="pre">None</span></code>), the DX type is determined from the numpy
 dtype of the array of the grid (and this will typically result in
 “double”).</p>
@@ -337,7 +361,7 @@ dtype of the array of the grid (and this will typically result in
 <p><span class="versionmodified added">New in version 0.4.0.</span></p>
 </div>
 </p></li>
-<li><p><strong>typequote</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>For DX, set the character used to quote the type string;
+<li><p><strong>typequote</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>For DX, set the character used to quote the type string;
 by default this is a double-quote character, ‘”’.
 Custom parsers like the one from NAMD-GridForces (backend for MDFF)
 expect no quotes, and typequote=’’ may be used to appease them.</p>
@@ -379,7 +403,7 @@ that the spline will generate values that would not normally
 appear in the data. For example, a density is non-negative but
 a cubic spline interpolation can generate negative values,
 especially at the boundary between 0 and high values.</p>
-<p>Internally, the function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates" title="(in SciPy v1.9.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.map_coordinates()</span></code></a>
+<p>Internally, the function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.map_coordinates()</span></code></a>
 with <code class="docutils literal notranslate"><span class="pre">mode=&quot;constant&quot;</span></code> whereby interpolated values outside
 the interpolated grid are determined by filling all values beyond
 the edge with the same constant value, defined by the
@@ -399,7 +423,7 @@ extruded volumes when interpolating beyond the grid.</p>
 <dd><p>Order of the B-spline interpolation of the data.</p>
 <p>3 = cubic; 4 &amp; 5 are also supported</p>
 <p>Only choose values that are acceptable to
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.9.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#gridData.core.Grid.interpolated" title="gridData.core.Grid.interpolated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interpolated</span></code></a></p>
@@ -424,15 +448,15 @@ order of the interpolation is set by
 <a class="reference internal" href="#gridData.core.Grid.interpolation_spline_order" title="gridData.core.Grid.interpolation_spline_order"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Grid.interpolation_spline_order</span></code></a>: change the value
 <em>before</em> calling <a class="reference internal" href="#gridData.core.Grid.resample" title="gridData.core.Grid.resample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resample()</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>edges</strong> (<em>tuple of arrays</em><em> or </em><a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><em>Grid</em></a>) – edges of the new grid or a <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> instance that
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a><em> of </em><em>arrays</em><em> or </em><a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><em>Grid</em></a>) – edges of the new grid or a <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> instance that
 provides <a class="reference internal" href="#gridData.core.Grid.edges" title="gridData.core.Grid.edges"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Grid.edges</span></code></a></p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>a new <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> with the data interpolated over the
 new grid cells</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid">Grid</a></p>
 </dd>
 </dl>
@@ -455,17 +479,17 @@ the argument for this method</p>
 <span class="sig-name descname"><span class="pre">resample_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.resample_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.core.Grid.resample_factor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resample to a new regular grid.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The number of grid cells are scaled with <cite>factor</cite> in each
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The number of grid cells are scaled with <cite>factor</cite> in each
 dimension, i.e., <code class="docutils literal notranslate"><span class="pre">factor</span> <span class="pre">*</span> <span class="pre">N_i</span></code> cells along each
 dimension i. Must be positive, and cannot result in fewer
 than 2 cells along a dimension.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>interpolated grid</strong> – The resampled data are represented on a <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> with the new
 grid cell sizes.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid">Grid</a></p>
 </dd>
 </dl>
@@ -514,8 +538,6 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
 <a class="reference external" href="http://stackoverflow.com/questions/1827489/numpy-meshgrid-in-3d">http://stackoverflow.com/questions/1827489/numpy-meshgrid-in-3d</a> and fixed.</p>
 </dd></dl>
 
-</section>
-</section>
 
 
            </div>

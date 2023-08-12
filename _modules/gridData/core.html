@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.core &mdash; GridDataFormats 1.0.1+2.g069e535 documentation</title>
+  <title>gridData.core &mdash; GridDataFormats 1.0.1+5.ge08f6c5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -13,13 +13,11 @@
   <![endif]-->
   
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.1+2.g069e535 documentation"
+          title="Search within GridDataFormats 1.0.1+5.ge08f6c5 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -30,15 +28,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: white" >
-            <a href="../../index.html">
-            <img src="../../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
                 1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -49,6 +51,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/basic.html">Basic use</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html#gridData.core.Grid"><code class="docutils literal notranslate"><span class="pre">Grid</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html#gridData.core.ndmeshgrid"><code class="docutils literal notranslate"><span class="pre">ndmeshgrid()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/formats.html">Formats</a></li>
 </ul>
 
@@ -65,9 +69,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>gridData.core</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gridData.core</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -117,7 +121,7 @@
 
 
 <span class="k">def</span> <span class="nf">_grid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Access the underlying ndarray of a Grid object or return the object itself&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Access the underlying ndarray of a Grid object or return the object itself&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">grid</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
@@ -125,7 +129,7 @@
 
 
 <div class="viewcode-block" id="Grid"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid">[docs]</a><span class="k">class</span> <span class="nc">Grid</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A multidimensional grid object with origin and grid spacings.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A multidimensional grid object with origin and grid spacings.</span>
 
 <span class="sd">    :class:`Grid` objects can be used in arithmetical calculations</span>
 <span class="sd">    just like numpy arrays *if* they are compatible, i.e., they have</span>
@@ -323,7 +327,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">interpolation_spline_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Order of the B-spline interpolation of the data.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Order of the B-spline interpolation of the data.</span>
 
 <span class="sd">        3 = cubic; 4 &amp; 5 are also supported</span>
 
@@ -339,7 +343,7 @@
 
     <span class="nd">@interpolation_spline_order</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">interpolation_spline_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Setting the ``interpolation_spline_order`` updates :func:`interpolated`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setting the ``interpolation_spline_order`` updates :func:`interpolated`</span>
 
 <span class="sd">        Because we cache the interpolation function, we need to rebuild the</span>
 <span class="sd">        cache whenever the interpolation order changes: this is</span>
@@ -350,7 +354,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Grid.resample"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.resample">[docs]</a>    <span class="k">def</span> <span class="nf">resample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Resample data to a new grid with edges *edges*.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resample data to a new grid with edges *edges*.</span>
 
 <span class="sd">        This method creates a new grid with the data from the current</span>
 <span class="sd">        grid resampled to a regular grid specified by `edges`.  The</span>
@@ -398,7 +402,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">newgrid</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Grid.resample_factor"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.resample_factor">[docs]</a>    <span class="k">def</span> <span class="nf">resample_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Resample to a new regular grid.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resample to a new regular grid.</span>
 
 
 <span class="sd">        Parameters</span>
@@ -450,7 +454,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;compute/update all derived data</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;compute/update all derived data</span>
 
 <span class="sd">        Can be called without harm and is idem-potent.</span>
 
@@ -473,7 +477,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">interpolated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;B-spline function over the data grid(x,y,z).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;B-spline function over the data grid(x,y,z).</span>
 
 <span class="sd">        The :func:`interpolated` function allows one to obtain data</span>
 <span class="sd">        values for any values of the coordinates::</span>
@@ -612,7 +616,7 @@
                     <span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">))</span>
 
 <div class="viewcode-block" id="Grid.load"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Load saved grid and edges from `filename`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load saved grid and edges from `filename`</span>
 
 <span class="sd">        The :meth:`load` method calls the class&#39;s constructor method and</span>
 <span class="sd">        completely resets all values, based on the loaded data.</span>
@@ -634,7 +638,7 @@
                    <span class="n">metadata</span><span class="o">=</span><span class="n">saved</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_load_mrc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initializes Grid from a MRC/CCP4 file.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes Grid from a MRC/CCP4 file.&quot;&quot;&quot;</span>
         <span class="n">mrcfile</span> <span class="o">=</span> <span class="n">mrc</span><span class="o">.</span><span class="n">MRC</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">grid</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">mrcfile</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
@@ -643,21 +647,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_mrc_header</span> <span class="o">=</span> <span class="n">mrcfile</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_load_dx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initializes Grid from a OpenDX file.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes Grid from a OpenDX file.&quot;&quot;&quot;</span>
         <span class="n">dx</span> <span class="o">=</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">dx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">grid</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_load_plt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize Grid from gOpenMol plt file.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize Grid from gOpenMol plt file.&quot;&quot;&quot;</span>
         <span class="n">g</span> <span class="o">=</span> <span class="n">gOpenMol</span><span class="o">.</span><span class="n">Plt</span><span class="p">()</span>
         <span class="n">g</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">grid</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Grid.export"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">typequote</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;export density to file using the given format.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;export density to file using the given format.</span>
 
 <span class="sd">        The format can also be deduced from the suffix of the filename</span>
 <span class="sd">        although the `file_format` keyword takes precedence.</span>
@@ -707,7 +711,7 @@
     <span class="c1"># so. However, they must ignore any kwargs that they are not processing.</span>
 
     <span class="k">def</span> <span class="nf">_export_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Pickle the Grid object</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pickle the Grid object</span>
 
 <span class="sd">        The object is dumped as a dictionary with grid and edges: This</span>
 <span class="sd">        is sufficient to recreate the grid object with ``__init__()``.</span>
@@ -717,7 +721,7 @@
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_export_dx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">typequote</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Export the density grid to an OpenDX file.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export the density grid to an OpenDX file.</span>
 
 <span class="sd">        The file format is the simplest regular grid array and it is</span>
 <span class="sd">        also understood by VMD&#39;s and Chimera&#39;s DX reader; PyMOL</span>
@@ -757,7 +761,7 @@
         <span class="n">dx</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Grid.save"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Save a grid object to `filename` and add &quot;.pickle&quot; extension.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save a grid object to `filename` and add &quot;.pickle&quot; extension.</span>
 
 <span class="sd">        Internally, this calls</span>
 <span class="sd">        ``Grid.export(filename, format=&quot;python&quot;)``. A grid can be</span>
@@ -775,7 +779,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">&quot;pickle&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Grid.centers"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.centers">[docs]</a>    <span class="k">def</span> <span class="nf">centers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the coordinates of the centers of all grid cells as an iterator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the coordinates of the centers of all grid cells as an iterator.</span>
 
 
 <span class="sd">        See Also</span>
@@ -786,7 +790,7 @@
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span></div>
 
 <div class="viewcode-block" id="Grid.check_compatible"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.check_compatible">[docs]</a>    <span class="k">def</span> <span class="nf">check_compatible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Check if `other` can be used in an arithmetic operation.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if `other` can be used in an arithmetic operation.</span>
 
 <span class="sd">        `other` is compatible if</span>
 
@@ -821,7 +825,7 @@
         <span class="k">return</span> <span class="kc">True</span></div>
 
     <span class="k">def</span> <span class="nf">_interpolationFunctionFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spline_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cval</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a function F(x,y,z) that interpolates any values on the grid.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a function F(x,y,z) that interpolates any values on the grid.</span>
 
 <span class="sd">        _interpolationFunctionFactory(self,spline_order=3,cval=None) --&gt; F</span>
 
@@ -862,7 +866,7 @@
             <span class="k">return</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">cnew</span><span class="p">)</span> <span class="o">-</span> <span class="n">c0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dc</span>
 
         <span class="k">def</span> <span class="nf">interpolatedF</span><span class="p">(</span><span class="o">*</span><span class="n">coordinates</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;B-spline function over the data grid(x,y,z).</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;B-spline function over the data grid(x,y,z).</span>
 
 <span class="sd">            interpolatedF([x1,x2,...],[y1,y2,...],[z1,z2,...]) -&gt; F[x1,y1,z1],F[x2,y2,z2],...</span>
 
@@ -960,7 +964,7 @@
 
 
 <div class="viewcode-block" id="ndmeshgrid"><a class="viewcode-back" href="../../gridData/core.html#gridData.core.ndmeshgrid">[docs]</a><span class="k">def</span> <span class="nf">ndmeshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">arrs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return a mesh grid for N dimensions.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a mesh grid for N dimensions.</span>
 
 <span class="sd">    The input are N arrays, each of which contains the values along one axis of</span>
 <span class="sd">    the coordinate system. The arrays do not have to have the same number of</span>

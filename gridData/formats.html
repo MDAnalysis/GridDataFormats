@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formats &mdash; GridDataFormats 1.0.1+2.g069e535 documentation</title>
+  <title>Formats &mdash; GridDataFormats 1.0.1+5.ge08f6c5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -14,13 +14,11 @@
   <![endif]-->
   
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.1+2.g069e535 documentation"
+          title="Search within GridDataFormats 1.0.1+5.ge08f6c5 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -33,15 +31,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: white" >
-            <a href="../index.html">
-            <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
                 1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -52,12 +54,25 @@
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic use</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core.html">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html#gridData.core.Grid"><code class="docutils literal notranslate"><span class="pre">Grid</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html#gridData.core.ndmeshgrid"><code class="docutils literal notranslate"><span class="pre">ndmeshgrid()</span></code></a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Formats</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#supported-file-formats">Supported file formats</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#format-specific-modules">Format-specific modules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXInitObject"><code class="docutils literal notranslate"><span class="pre">DXInitObject</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXParseError"><code class="docutils literal notranslate"><span class="pre">DXParseError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXParser"><code class="docutils literal notranslate"><span class="pre">DXParser</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXParserNoTokens"><code class="docutils literal notranslate"><span class="pre">DXParserNoTokens</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXclass"><code class="docutils literal notranslate"><span class="pre">DXclass</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.array"><code class="docutils literal notranslate"><span class="pre">array</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.field"><code class="docutils literal notranslate"><span class="pre">field</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.gridconnections"><code class="docutils literal notranslate"><span class="pre">gridconnections</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.gridpositions"><code class="docutils literal notranslate"><span class="pre">gridpositions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="formats/gOpenMol.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/gOpenMol.html#gridData.gOpenMol.Plt"><code class="docutils literal notranslate"><span class="pre">Plt</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="formats/mrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> — the MRC/CCP4 volumetric data format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats/mrc.html#gridData.mrc.MRC"><code class="docutils literal notranslate"><span class="pre">MRC</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -77,8 +92,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Formats</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Formats</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/gridData/formats.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -103,14 +118,6 @@ applications that were encountered so far. Hence, at the moment only a
 small number of file formats is directly supported.</p>
 <table class="docutils align-default" id="id2">
 <caption><span class="caption-text">Available file formats in <a class="reference internal" href="overview.html#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 10%" />
-<col style="width: 9%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 42%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>module or class</p></th>
 <th class="head"><p>format</p></th>
@@ -157,8 +164,19 @@ small number of file formats is directly supported.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code> — routines to read and write simple OpenDX files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXInitObject"><code class="docutils literal notranslate"><span class="pre">DXInitObject</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXParseError"><code class="docutils literal notranslate"><span class="pre">DXParseError</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXParser"><code class="docutils literal notranslate"><span class="pre">DXParser</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXParserNoTokens"><code class="docutils literal notranslate"><span class="pre">DXParserNoTokens</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.DXclass"><code class="docutils literal notranslate"><span class="pre">DXclass</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.array"><code class="docutils literal notranslate"><span class="pre">array</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.field"><code class="docutils literal notranslate"><span class="pre">field</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.gridconnections"><code class="docutils literal notranslate"><span class="pre">gridconnections</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.gridpositions"><code class="docutils literal notranslate"><span class="pre">gridpositions</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="formats/gOpenMol.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/gOpenMol.html#gridData.gOpenMol.Plt"><code class="docutils literal notranslate"><span class="pre">Plt</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="formats/mrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> — the MRC/CCP4 volumetric data format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats/mrc.html#gridData.mrc.MRC"><code class="docutils literal notranslate"><span class="pre">MRC</span></code></a></li>
 </ul>
 </div>
 </section>
