@@ -21,7 +21,6 @@ import sys, os
 # make sure sphinx always uses the current branch
 sys.path.insert(0, os.path.abspath('../..'))
 
-import sphinx_rtd_theme
 
 # -- General configuration -----------------------------------------------------
 
@@ -115,36 +114,18 @@ pygments_style = 'default'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'mdanalysis_sphinx_theme'
 
-html_theme_path = [
-    sphinx_rtd_theme.get_html_theme_path()
-]
+# html_theme_path = []
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# styles/fonts to match https://userguide.mdanalysis.org
-#
-# /* MDAnalysis orange: #FF9200 */
-# /* MDAnalysis gray: #808080 */
-# /* MDAnalysis white: #FFFFFF */
-# /* MDAnalysis black: #000000 */
+
 
 html_theme_options = {
-    'canonical_url': '',
-    'logo_only': True,
-    'display_version': True,
-    'prev_next_buttons_location': 'bottom',
-    'style_external_links': False,
-    'style_nav_header_background': 'white',
-    # Toc options
-    'collapse_navigation': True,
-    'sticky_navigation': True,
-    'navigation_depth': 4,
-    'includehidden': True,
-    'titles_only': False,
+    'mda_official': True
 }
 
 
@@ -155,7 +136,7 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 # For RTD theme: custom.css to override theme defaults.
 html_static_path = ['_static']
-html_css_files = ['custom.css']
+# html_css_files = []
 
 
 # The name of an image file (relative to this directory) to place at the top
@@ -165,7 +146,7 @@ html_logo = "_static/logos/mdanalysis-griddataformats-logo.png"
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = "_static/logos/mdanalysis-logo.ico"
+# html_favicon = "_static/logos/mdanalysis-logo.ico"
 
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
@@ -287,7 +268,8 @@ texinfo_documents = [
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None,
-                       'https://docs.scipy.org/doc/numpy/': None,
-                       'https://docs.scipy.org/doc/scipy/reference/': None,
-                       }
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3/', None),
+    'numpy': ('https://numpy.org/doc/stable/', None),
+    'scipy': ('https://docs.scipy.org/doc/scipy/', None)
+}
