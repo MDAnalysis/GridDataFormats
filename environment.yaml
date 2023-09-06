@@ -1,0 +1,9 @@
+name: griddataformats-docs
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pip
+
+  - mdanalysis_sphinx_theme >=1.0.1
+  

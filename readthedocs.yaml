@@ -1,0 +1,17 @@
+version: 2
+sphinx:
+  configuration: doc/source/conf.py
+
+# Build documentation with MkDocs
+
+build:
+  os: "ubuntu-22.04"
+  tools:
+    python: "mambaforge-4.10"
+
+conda:
+  environment: environment.yaml
+formats:
+- epub
+- pdf
+- htmlzip
