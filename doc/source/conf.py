@@ -69,7 +69,7 @@ authors = (
     "Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, "
     "Irfan Alibay，Zhiyi Wu"
 )
-copyright = "2007-2021, " + authors
+copyright = "2007-2023, " + authors
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
