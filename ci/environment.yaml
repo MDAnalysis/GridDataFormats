@@ -5,7 +5,7 @@ dependencies:
   - pip
   - numpy>=1.21
   - scipy
-  - mcrfile
+  - mrcfile
   - sphinx<7.0
   - pip:
     - sphinx-sitemap
