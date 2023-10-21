@@ -1,3 +1,5 @@
 numpy
 scipy
+mrcfile
+mdanalysis-sphinx-theme >=1.0.1
 sphinx-sitemap
