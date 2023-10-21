@@ -24,11 +24,13 @@ jobs:
         with:
           token: ${{ secrets.TEST_PYPI_API_TOKEN }}
           test_submission: true
-          package_name: 'gridData'
+          package_name: GridDataFormats
+          module_name: 'gridData'
 
       - name: pypi_deploy
         uses: MDAnalysis/pypi-deployment@main
         if: github.event_name == 'release' && github.event.action == 'published'
         with:
           token: ${{ secrets.PYPI_API_TOKEN }}
-          package_name: 'gridData'
+          package_name: GridDataFormats
+          module_name: 'gridData'
