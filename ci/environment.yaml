@@ -2,10 +2,12 @@ name: griddata_env
 channels:
   - conda-forge
 dependencies:
+  - pip
   - numpy>=1.21
   - scipy
   - mrcfile
 
   # documentation
   - mdanalysis-sphinx-theme >=1.0.1
- 
+  - pip:
+    - sphinx_sitemap
