@@ -25,7 +25,8 @@ The rules for this file:
   Fixes
 
   * updated versioneer to be able to run under Python 3.12 (#124, PR #128)
-        
+  * replaced deprecated pkg_resources in tests with importlib (#130)
+  
 
 05/24/2022 IAlibay
 
