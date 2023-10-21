@@ -34,7 +34,7 @@ jobs:
 
     - name: install package deps
       run: |
-        mamba install numpy scipy pytest pytest-cov codecov six sphinx
+        mamba install numpy scipy pytest pytest-cov codecov sphinx
         pip install sphinx-sitemap sphinx-rtd-theme
 
     - name: check install
