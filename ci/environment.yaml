@@ -6,7 +6,8 @@ dependencies:
   - numpy>=1.21
   - scipy
   - mrcfile
-  - sphinx<7.0
+
+  # documentation
+  - mdanalysis-sphinx-theme >=1.0.1
   - pip:
-    - sphinx-sitemap
-    - sphinx-rtd-theme
+    - sphinx_sitemap

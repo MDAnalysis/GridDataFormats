@@ -13,20 +13,20 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-10/21/2023 IAlibay, orbeckst
+10/21/2023 IAlibay, orbeckst, lilyminium
 
   * 1.0.2
 
   Changes
 
-  * Python 3.12 is now supported
-
+  * Python 3.12 is now supported (PR #128)
+  * Use new MDAnalysis docs theme (PR #127)
 
   Fixes
 
   * updated versioneer to be able to run under Python 3.12 (#124, PR #128)
   * replaced deprecated pkg_resources in tests with importlib (#130)
-  
+
 
 05/24/2022 IAlibay
 
