@@ -1,24 +1,41 @@
+
+
+
+  
+    
+  
+
+
+
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.1/css/academicons.min.css" integrity="sha512-b1ASx0WHgVFL5ZQhTgiPWX+68KjS38Jk87jg7pe+qC7q9YkEtFq0z7xCglv7qGIs/68d3mAp+StfC8WKC5SSAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="shortcut icon" href="../_static/logo/mda_favicon.ico">
+</head>
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Handling grids of data — gridData &mdash; GridDataFormats 1.0.1+5.ge08f6c5 documentation</title>
+  <title>Handling grids of data — gridData &mdash; GridDataFormats 1.0.2+2.gaee81c2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-    <link rel="shortcut icon" href="../_static/mdanalysis-logo.ico"/>
+      <link rel="stylesheet" href="../_static/site.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/versions.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.1+5.ge08f6c5 documentation"
+          title="Search within GridDataFormats 1.0.2+2.gaee81c2 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,17 +47,32 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: white" >
+        <div class="wy-side-nav-search" >
 
-          
-          
-          <a href="../index.html">
-            
-              <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
-          </a>
-              <div class="version">
-                1.0
-              </div>
+
+
+
+  
+
+
+
+
+<a href="../index.html">
+  
+    <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+</a>
+
+
+  
+  
+  
+    <div class="version">
+      1.0
+    </div>
+  
+
+
+
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -48,8 +80,11 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+        <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
@@ -66,11 +101,12 @@
 <li class="toctree-l1"><a class="reference internal" href="formats.html">Formats</a></li>
 </ul>
 
-        </div>
+</div>
+
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">GridDataFormats</a>
       </nav>
@@ -91,9 +127,9 @@
            <div itemprop="articleBody">
              
   <span class="target" id="module-gridData"></span><section id="handling-grids-of-data-griddata">
-<h1>Handling grids of data — <a class="reference internal" href="#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a><a class="headerlink" href="#handling-grids-of-data-griddata" title="Permalink to this heading">¶</a></h1>
+<h1>Handling grids of data — <a class="reference internal" href="#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a><a class="headerlink" href="#handling-grids-of-data-griddata" title="Permalink to this heading"></a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <p>This module contains classes that allow importing and exporting of
 simple gridded data, A grid is an N-dimensional array that represents
 a discrete mesh over a region of space. The array axes are taken to be
@@ -104,10 +140,10 @@ axes. In this way the grid is anchored in space.</p>
 <p>The <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can be resampled at arbitrary
 resolution (by interpolating the data). Standard algebraic operations
 are defined for grids on a point-wise basis (same as for
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
 </section>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <p>The package reads grid data from files, makes them available as a
 <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object, and allows one to write out the data again.</p>
 <p>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> consists of a rectangular, regular, N-dimensional
@@ -125,17 +161,17 @@ corresponds to (0,0,…,0)</p></li>
 </ol>
 <p><a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> objects have some convenient properties:</p>
 <ul class="simple">
-<li><p>The data is represented as a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in
+<li><p>The data is represented as a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Grid.grid</span></code> and thus can be directly
 manipulated with all the tools available in NumPy.</p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code> instances can be manipulated arithmetically, e.g. one
 can simply add or subtract two of them and get another one, or
 multiply by a constant. Note that all operations are defined
-point-wise (see the <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.25)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> documentation for details) and that
+point-wise (see the <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v1.26)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a> documentation for details) and that
 only grids defined on the same cell edges can be combined.</p></li>
 <li><p>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object can also be created from
 within python code e.g. from the output of the
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.25)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function.</p></li>
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.26)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function.</p></li>
 <li><p>The representation of the data is abstracted from the format that
 the files are saved in. This makes it straightforward to add
 additional readers for new formats.</p></li>
@@ -144,7 +180,7 @@ other programs such as <a class="reference external" href="https://www.ks.uiuc.e
 </ul>
 </section>
 <section id="reading-grid-data-files">
-<h2>Reading grid data files<a class="headerlink" href="#reading-grid-data-files" title="Permalink to this heading">¶</a></h2>
+<h2>Reading grid data files<a class="headerlink" href="#reading-grid-data-files" title="Permalink to this heading"></a></h2>
 <p>Some <a class="reference internal" href="#formats">Formats</a> can be read directly from a file on disk:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
@@ -152,7 +188,7 @@ other programs such as <a class="reference external" href="https://www.ks.uiuc.e
 <p><em>filename</em> could be, for instance, “density.dx”.</p>
 </section>
 <section id="constructing-a-grid">
-<h2>Constructing a Grid<a class="headerlink" href="#constructing-a-grid" title="Permalink to this heading">¶</a></h2>
+<h2>Constructing a Grid<a class="headerlink" href="#constructing-a-grid" title="Permalink to this heading"></a></h2>
 <p>Data from an n-dimensional array can be packaged as a <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>
 for convenient handling (especially export to other formats).  The
 <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> class acts as a universal constructor:</p>
@@ -165,7 +201,7 @@ for convenient handling (especially export to other formats).  The
 <p>See the doc string for <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> for details.</p>
 </section>
 <section id="formats">
-<h2>Formats<a class="headerlink" href="#formats" title="Permalink to this heading">¶</a></h2>
+<h2>Formats<a class="headerlink" href="#formats" title="Permalink to this heading"></a></h2>
 <p>For the available file formats see <a class="reference internal" href="formats.html#supported-file-formats"><span class="std std-ref">Supported file formats</span></a>.</p>
 </section>
 </section>
@@ -181,14 +217,11 @@ for convenient handling (especially export to other formats).  The
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2007-2021, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu.</p>
+    <p>&#169; Copyright 2007-2023, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu.</p>
   </div>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
   
- 
+
 <div class="footer"><p>Please see
     our <a href="https://www.mdanalysis.org/pages/privacy/">Privacy Policy</a>
     to learn how <a href="https://www.mdanalysis.org">MDAnalysis</a> collects data.</p>
@@ -197,12 +230,31 @@ for convenient handling (especially export to other formats).  The
 </div>
 
 
+
 </footer>
         </div>
       </div>
     </section>
   </div>
   <script>
+    var versions_json_url = ''
+</script>
+
+<div class="rst-versions" data-toggle="rst-versions" role="note"
+     aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"></span>
+        1.0.2+2.gaee81c2
+      <span class="fa fa-caret-down"></span>
+    </span>
+
+    <div class="rst-other-versions">
+        <dl id="versionselector">
+            <dt>Other Versions</dt>
+        </dl>
+
+    </div>
+</div><script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
