@@ -10,4 +10,4 @@ dependencies:
   # documentation
   - mdanalysis-sphinx-theme >=1.0.1
   - pip:
-    - sphinx_sitemap
+    - sphinx-sitemap

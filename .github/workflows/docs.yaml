@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 
 concurrency:
   group: "${{ github.ref }}-${{ github.head_ref }}"
@@ -18,44 +21,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
-        fetch-depth: 0         
-
+        fetch-depth: 0
+        
     - name: setup_miniconda
       uses: conda-incubator/setup-miniconda@v2
       with:
-        python-version: 3.9
+        python-version: 3.11
+        environment-file: ci/environment.yaml
         auto-update-conda: true
         channel-priority: flexible
         channels: conda-forge
-        add-pip-as-python-dependency: true
-        mamba-version: "*"
-
-    - name: install package deps
-      run: |
-        mamba install numpy scipy pytest pytest-cov codecov sphinx
-        pip install sphinx-sitemap sphinx-rtd-theme
-
-    - name: check install
-      run: |
-        which python
-        which pip
-        conda info
-        conda list
-
+        miniforge-variant: Mambaforge
+        use-mamba: true
+        
     - name: install package
       run: |
         pip install -v .
 
     - name: build docs
       run: |
-        python setup.py build_sphinx
+        cd doc && sphinx-build -b html source build
 
     - name: deploy docs
       uses: peaceiris/actions-gh-pages@v3
+      if: github.event_name != 'pull_request'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build/sphinx/html
+        publish_dir: ./doc/build
         user_name: 'github-actions'
         user_email: 'github-action@users.noreply.github.com'
