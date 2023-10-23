@@ -96,9 +96,9 @@ welcome. Please fork the repository and submit a `pull request`_.
      :alt: Coverage Status
      :target: https://codecov.io/gh/MDAnalysis/GridDataFormats
 
-.. |docs| image:: https://readthedocs.org/projects/griddataformats/badge/?version=latest
+.. |docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
     :alt: Documentation
-    :target: http://griddataformats.readthedocs.org/en/latest/
+    :target: https://www.mdanalysis.org/GridDataFormats/
 
 .. |zenodo| image:: https://zenodo.org/badge/13219/MDAnalysis/GridDataFormats.svg
     :alt: Zenodo DOI
