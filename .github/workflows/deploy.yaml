@@ -28,7 +28,6 @@ jobs:
         uses: MDAnalysis/pypi-deployment@main
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         with:
-          token: ${{ secrets.TEST_PYPI_API_TOKEN }}
           test_submission: true
           package_name: GridDataFormats
           module_name: 'gridData'
@@ -52,6 +51,5 @@ jobs:
         uses: MDAnalysis/pypi-deployment@main
         if: github.event_name == 'release' && github.event.action == 'published'
         with:
-          token: ${{ secrets.PYPI_API_TOKEN }}
           package_name: GridDataFormats
           module_name: 'gridData'
