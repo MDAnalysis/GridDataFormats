@@ -20,22 +20,22 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Handling grids of data — gridData &mdash; GridDataFormats 1.0.2+3.g354ec73 documentation</title>
+  <title>Handling grids of data — gridData &mdash; GridDataFormats 1.0.2+4.ge768b0f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/site.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=323fee5e"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/js/versions.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+3.g354ec73 documentation"
+          title="Search within GridDataFormats 1.0.2+4.ge768b0f documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -126,10 +126,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <span class="target" id="module-gridData"></span><section id="handling-grids-of-data-griddata">
-<h1>Handling grids of data — <a class="reference internal" href="#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a><a class="headerlink" href="#handling-grids-of-data-griddata" title="Permalink to this heading"></a></h1>
+  <section id="handling-grids-of-data-griddata">
+<span id="module-gridData"></span><h1>Handling grids of data — <a class="reference internal" href="#module-gridData" title="gridData"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a><a class="headerlink" href="#handling-grids-of-data-griddata" title="Link to this heading"></a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>This module contains classes that allow importing and exporting of
 simple gridded data, A grid is an N-dimensional array that represents
 a discrete mesh over a region of space. The array axes are taken to be
@@ -143,7 +143,7 @@ are defined for grids on a point-wise basis (same as for
 <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>).</p>
 </section>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
 <p>The package reads grid data from files, makes them available as a
 <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object, and allows one to write out the data again.</p>
 <p>A <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> consists of a rectangular, regular, N-dimensional
@@ -180,7 +180,7 @@ other programs such as <a class="reference external" href="https://www.ks.uiuc.e
 </ul>
 </section>
 <section id="reading-grid-data-files">
-<h2>Reading grid data files<a class="headerlink" href="#reading-grid-data-files" title="Permalink to this heading"></a></h2>
+<h2>Reading grid data files<a class="headerlink" href="#reading-grid-data-files" title="Link to this heading"></a></h2>
 <p>Some <a class="reference internal" href="#formats">Formats</a> can be read directly from a file on disk:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </pre></div>
@@ -188,7 +188,7 @@ other programs such as <a class="reference external" href="https://www.ks.uiuc.e
 <p><em>filename</em> could be, for instance, “density.dx”.</p>
 </section>
 <section id="constructing-a-grid">
-<h2>Constructing a Grid<a class="headerlink" href="#constructing-a-grid" title="Permalink to this heading"></a></h2>
+<h2>Constructing a Grid<a class="headerlink" href="#constructing-a-grid" title="Link to this heading"></a></h2>
 <p>Data from an n-dimensional array can be packaged as a <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>
 for convenient handling (especially export to other formats).  The
 <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> class acts as a universal constructor:</p>
@@ -201,7 +201,7 @@ for convenient handling (especially export to other formats).  The
 <p>See the doc string for <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> for details.</p>
 </section>
 <section id="formats">
-<h2>Formats<a class="headerlink" href="#formats" title="Permalink to this heading"></a></h2>
+<h2>Formats<a class="headerlink" href="#formats" title="Link to this heading"></a></h2>
 <p>For the available file formats see <a class="reference internal" href="formats.html#supported-file-formats"><span class="std std-ref">Supported file formats</span></a>.</p>
 </section>
 </section>
@@ -244,7 +244,7 @@ for convenient handling (especially export to other formats).  The
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+3.g354ec73
+        1.0.2+4.ge768b0f
       <span class="fa fa-caret-down"></span>
     </span>
 

@@ -19,22 +19,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.mrc &mdash; GridDataFormats 1.0.2+3.g354ec73 documentation</title>
+  <title>gridData.mrc &mdash; GridDataFormats 1.0.2+4.ge768b0f documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/site.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=323fee5e"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+3.g354ec73 documentation"
+          title="Search within GridDataFormats 1.0.2+4.ge768b0f documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -152,7 +152,9 @@
 <span class="kn">import</span> <span class="nn">mrcfile</span>
 
 
-<div class="viewcode-block" id="MRC"><a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC">[docs]</a><span class="k">class</span> <span class="nc">MRC</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="MRC">
+<a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC">[docs]</a>
+<span class="k">class</span> <span class="nc">MRC</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represent a MRC/CCP4 file.</span>
 
 <span class="sd">    Load `MRC/CCP4 2014 &lt;MRC2014 file format&gt;`_ 3D volumetric data with</span>
@@ -210,7 +212,9 @@
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MRC.read"><a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="MRC.read">
+<a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC.read">[docs]</a>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Populate the instance from the MRC/CCP4 file *filename*.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
@@ -247,6 +251,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">z</span><span class="p">])</span> <span class="o">+</span> <span class="n">offsets</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="mi">3</span></div>
 
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Shape of the :attr:`array`&quot;&quot;&quot;</span>
@@ -263,9 +268,13 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)]</span>
 
-<div class="viewcode-block" id="MRC.histogramdd"><a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC.histogramdd">[docs]</a>    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MRC.histogramdd">
+<a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC.histogramdd">[docs]</a>
+    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return array data as (edges,grid), i.e. a numpy nD histogram.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span></div>
+</div>
+
 
 
 
@@ -305,7 +314,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+3.g354ec73
+        1.0.2+4.ge768b0f
       <span class="fa fa-caret-down"></span>
     </span>
 

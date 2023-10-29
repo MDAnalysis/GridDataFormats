@@ -20,22 +20,22 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gOpenMol — the gOpenMol plt format &mdash; GridDataFormats 1.0.2+3.g354ec73 documentation</title>
+  <title>gOpenMol — the gOpenMol plt format &mdash; GridDataFormats 1.0.2+4.ge768b0f documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/site.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=323fee5e"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+3.g354ec73 documentation"
+          title="Search within GridDataFormats 1.0.2+4.ge768b0f documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -150,8 +150,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <span class="target" id="module-gridData.gOpenMol"></span><section id="gopenmol-the-gopenmol-plt-format">
-<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format<a class="headerlink" href="#gopenmol-the-gopenmol-plt-format" title="Permalink to this heading"></a></h1>
+  <section id="gopenmol-the-gopenmol-plt-format">
+<span id="module-gridData.gOpenMol"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">gOpenMol</span></code> — the gOpenMol plt format<a class="headerlink" href="#gopenmol-the-gopenmol-plt-format" title="Link to this heading"></a></h1>
 <p>The module provides a simple implementation of a reader for <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a>
 <em>plt</em> files. Plt files are binary files. The <a class="reference internal" href="#gridData.gOpenMol.Plt" title="gridData.gOpenMol.Plt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plt</span></code></a> reader tries
 to guess the endianess of the file, but this can fail (with a
@@ -159,13 +159,13 @@ to guess the endianess of the file, but this can fail (with a
 <p>Only the reader is implemented. If you want to write gridded data use a format
 that is more standard, such as OpenDX (see <code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code>).</p>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading"></a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading"></a></h2>
 <p>gOpenMol <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">http://www.csc.fi/english/pages/g0penMol</a> plt format.</p>
 <p>Used to be documented at <a class="reference external" href="http://www.csc.fi/gopenmol/developers/plt_format.phtml">http://www.csc.fi/gopenmol/developers/plt_format.phtml</a> but currently this is only accessible through the internet archive at
 <a class="reference external" href="http://web.archive.org/web/20061011125817/http://www.csc.fi/gopenmol/developers/plt_format.phtml">http://web.archive.org/web/20061011125817/http://www.csc.fi/gopenmol/developers/plt_format.phtml</a></p>
 </section>
 <section id="grid-data-plt-file-format">
-<h2>Grid data plt file format<a class="headerlink" href="#grid-data-plt-file-format" title="Permalink to this heading"></a></h2>
+<h2>Grid data plt file format<a class="headerlink" href="#grid-data-plt-file-format" title="Link to this heading"></a></h2>
 <p>Copyright CSC, 2005. Last modified: September 23, 2003 09:18:50</p>
 <p>Plot file (plt) format The plot files are regular 3D grid files for plotting of
 molecular orbitals, electron densities or other molecular properties. The plot
@@ -178,7 +178,7 @@ the format can be found elsewhere in this manual. gOpenMol can read binary plot
 files from different hardware platforms independent of the system type (little
 or big endian machines).</p>
 <section id="format-of-the-binary-plt-file">
-<h3>Format of the binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file<a class="headerlink" href="#format-of-the-binary-plt-file" title="Permalink to this heading"></a></h3>
+<h3>Format of the binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file<a class="headerlink" href="#format-of-the-binary-plt-file" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> file binary and formatted file formats are very simple but please
 observe that unformatted files written with a FORTRAN program are not pure
 binary files because there are file records between the values while pure
@@ -187,7 +187,7 @@ able to figure out if the file is pure binary or FORTRAN unformatted but it is
 not very well tested.</p>
 </section>
 <section id="binary-plt-grid-file-format">
-<h3>Binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#binary-plt-grid-file-format" title="Permalink to this heading"></a></h3>
+<h3>Binary <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#binary-plt-grid-file-format" title="Link to this heading"></a></h3>
 <p>Record number and meaning:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#1: Integer, rank value must always be = 3
 #2: Integer, possible values are 1 ... 50. This value is not used but
@@ -242,7 +242,7 @@ Value 100 is reserved for grid data coming from OpenMol!
 </div>
 </section>
 <section id="formatted-plt-grid-file-format">
-<h3>Formatted <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#formatted-plt-grid-file-format" title="Permalink to this heading"></a></h3>
+<h3>Formatted <code class="docutils literal notranslate"><span class="pre">*.plt</span></code> (grid) file format<a class="headerlink" href="#formatted-plt-grid-file-format" title="Link to this heading"></a></h3>
 <p>Line numbers and variables on the line:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="c1">#1: Integer, Integer. Rank and type of surface (rank is always = 3)</span>
 <span class="n">line</span> <span class="c1">#2: Integer, Integer, Integer. Zdim, Ydim, Xdim (number of points in the z,y,x directions)</span>
@@ -257,12 +257,12 @@ Value 100 is reserved for grid data coming from OpenMol!
 </section>
 </section>
 <section id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h2>
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
 </section>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.gOpenMol.Plt">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.gOpenMol.</span></span><span class="sig-name descname"><span class="pre">Plt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.gOpenMol.Plt" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.gOpenMol.</span></span><span class="sig-name descname"><span class="pre">Plt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.gOpenMol.Plt" title="Link to this definition"></a></dt>
 <dd><p>A class to represent a <a class="reference external" href="http://www.csc.fi/english/pages/g0penMol">gOpenMol</a> plt file.</p>
 <dl>
 <dt>Only reading is implemented; either supply a filename to the constructor</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">Plt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -287,20 +287,20 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.gOpenMol.Plt.edges">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.gOpenMol.Plt.edges" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.gOpenMol.Plt.edges" title="Link to this definition"></a></dt>
 <dd><p>Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</p>
 <p>Only works for regular, orthonormal grids.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gridData.gOpenMol.Plt.histogramdd">
-<span class="sig-name descname"><span class="pre">histogramdd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt.histogramdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.gOpenMol.Plt.histogramdd" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">histogramdd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt.histogramdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.gOpenMol.Plt.histogramdd" title="Link to this definition"></a></dt>
 <dd><p>Return array data as (edges,grid), i.e. a numpy nD histogram.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gridData.gOpenMol.Plt.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.gOpenMol.Plt.read" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/gOpenMol.html#Plt.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.gOpenMol.Plt.read" title="Link to this definition"></a></dt>
 <dd><p>Populate the instance from the plt file <em>filename</em>.</p>
 </dd></dl>
 
@@ -345,7 +345,7 @@ the dict <code class="xref py py-attr docutils literal notranslate"><span class=
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+3.g354ec73
+        1.0.2+4.ge768b0f
       <span class="fa fa-caret-down"></span>
     </span>
 

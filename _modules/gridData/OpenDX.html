@@ -19,22 +19,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.OpenDX &mdash; GridDataFormats 1.0.2+3.g354ec73 documentation</title>
+  <title>gridData.OpenDX &mdash; GridDataFormats 1.0.2+4.ge768b0f documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/site.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=323fee5e"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+3.g354ec73 documentation"
+          title="Search within GridDataFormats 1.0.2+4.ge768b0f documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -300,7 +300,9 @@
         <span class="k">return</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 <span class="k">del</span> <span class="n">sys</span>
 
-<div class="viewcode-block" id="DXclass"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass">[docs]</a><span class="k">class</span> <span class="nc">DXclass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="DXclass">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass">[docs]</a>
+<span class="k">class</span> <span class="nc">DXclass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;&#39;class&#39; object as defined by OpenDX&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;id is the object number&quot;&quot;&quot;</span>
@@ -309,7 +311,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># component type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># dimensions</span>
 
-<div class="viewcode-block" id="DXclass.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">optstring</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="DXclass.write">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.write">[docs]</a>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">optstring</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;write the &#39;object&#39; line; additional args are packed in string&quot;&quot;&quot;</span>
         <span class="n">classid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">quote</span><span class="p">:</span> <span class="n">classid</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39;&quot;&#39;</span>
@@ -318,6 +322,7 @@
         <span class="c1"># spaces. (Chimera 1.4.1, PyMOL 1.3)</span>
         <span class="n">to_write</span> <span class="o">=</span> <span class="s1">&#39;object &#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39; class &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">optstring</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">to_write</span><span class="p">)</span></div>
+
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -329,16 +334,22 @@
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Reading is currently not supported.&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DXclass.ndformat"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.ndformat">[docs]</a>    <span class="k">def</span> <span class="nf">ndformat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="DXclass.ndformat">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.ndformat">[docs]</a>
+    <span class="k">def</span> <span class="nf">ndformat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a string with as many repetitions of s as self</span>
 <span class="sd">        has dimensions (derived from shape)&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">s</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;OpenDX.&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; object, id=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span></div>
 
 
-<div class="viewcode-block" id="gridpositions"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions">[docs]</a><span class="k">class</span> <span class="nc">gridpositions</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
+
+<div class="viewcode-block" id="gridpositions">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions">[docs]</a>
+<span class="k">class</span> <span class="nc">gridpositions</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenDX gridpositions class.</span>
 
 <span class="sd">    shape     D-tuplet describing size in each dimension</span>
@@ -366,7 +377,9 @@
             <span class="c1"># anything more complicated</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Only regularly spaced grids allowed, &#39;</span>
                                       <span class="s1">&#39;not delta=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">))</span>
-<div class="viewcode-block" id="gridpositions.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+<div class="viewcode-block" id="gridpositions.write">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.write">[docs]</a>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">gridpositions</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
             <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;origin </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">))</span>
@@ -376,16 +389,23 @@
                          <span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">{:.7g}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">delta</span><span class="p">)</span> <span class="o">+</span>
                          <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="gridpositions.edges"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.edges">[docs]</a>    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="gridpositions.edges">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.edges">[docs]</a>
+    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
 
 <span class="sd">        Only works for regular, orthonormal grids.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">]</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>\
-                <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">]</span>     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)]</span></div></div>
+                <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">]</span>     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)]</span></div>
+</div>
 
 
-<div class="viewcode-block" id="gridconnections"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections">[docs]</a><span class="k">class</span> <span class="nc">gridconnections</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
+
+<div class="viewcode-block" id="gridconnections">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections">[docs]</a>
+<span class="k">class</span> <span class="nc">gridconnections</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenDX gridconnections class&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -395,12 +415,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="s1">&#39;connections&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># D dimensional shape</span>
 
-<div class="viewcode-block" id="gridconnections.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+<div class="viewcode-block" id="gridconnections.write">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections.write">[docs]</a>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">gridconnections</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-            <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span></div></div>
+            <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span></div>
+</div>
 
 
-<div class="viewcode-block" id="array"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array">[docs]</a><span class="k">class</span> <span class="nc">array</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
+
+<div class="viewcode-block" id="array">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array">[docs]</a>
+<span class="k">class</span> <span class="nc">array</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenDX array class.</span>
 
 <span class="sd">    See `Array Objects`_ for details.</span>
@@ -495,7 +521,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">typequote</span> <span class="o">=</span> <span class="n">typequote</span>
 
-<div class="viewcode-block" id="array.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+<div class="viewcode-block" id="array.write">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array.write">[docs]</a>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the *class array* section.</span>
 
 <span class="sd">        Parameters</span>
@@ -535,9 +563,13 @@
             <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="k">break</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;attribute &quot;dep&quot; string &quot;positions&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;attribute &quot;dep&quot; string &quot;positions&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+</div>
 
-<div class="viewcode-block" id="field"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field">[docs]</a><span class="k">class</span> <span class="nc">field</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
+
+<div class="viewcode-block" id="field">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field">[docs]</a>
+<span class="k">class</span> <span class="nc">field</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenDX container class</span>
 
 <span class="sd">    The *field* is the top-level object and represents the whole</span>
@@ -611,7 +643,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="field.write"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="field.write">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.write">[docs]</a>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the complete dx object to the file.</span>
 
 <span class="sd">        This is the simple OpenDX format which includes the data into</span>
@@ -636,7 +670,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s1">&#39;component &quot;</span><span class="si">%s</span><span class="s1">&quot; value </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
                     <span class="n">component</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="n">id</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="field.read"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+
+<div class="viewcode-block" id="field.read">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.read">[docs]</a>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read DX field from file.</span>
 
 <span class="sd">            dx = OpenDX.field.read(dxfile)</span>
@@ -647,27 +684,40 @@
         <span class="n">p</span> <span class="o">=</span> <span class="n">DXParser</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">DXfield</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="field.add"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">component</span><span class="p">,</span><span class="n">DXobj</span><span class="p">):</span>
+
+<div class="viewcode-block" id="field.add">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add">[docs]</a>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">component</span><span class="p">,</span><span class="n">DXobj</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;add a component to the field&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="p">[</span><span class="n">component</span><span class="p">]</span> <span class="o">=</span> <span class="n">DXobj</span></div>
 
-<div class="viewcode-block" id="field.add_comment"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add_comment">[docs]</a>    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+
+<div class="viewcode-block" id="field.add_comment">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add_comment">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;add comments&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="field.sorted_components"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.sorted_components">[docs]</a>    <span class="k">def</span> <span class="nf">sorted_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="field.sorted_components">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.sorted_components">[docs]</a>
+    <span class="k">def</span> <span class="nf">sorted_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;iterator that returns (component,object) in id order&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">component</span><span class="p">,</span> <span class="nb">object</span> <span class="ow">in</span> \
                 <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
                        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">comp_obj</span><span class="p">:</span> <span class="n">comp_obj</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">component</span><span class="p">,</span> <span class="nb">object</span></div>
 
-<div class="viewcode-block" id="field.histogramdd"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.histogramdd">[docs]</a>    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="field.histogramdd">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.histogramdd">[docs]</a>
+    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return array data as (edges,grid), i.e. a numpy nD histogram.&quot;&quot;&quot;</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="s1">&#39;positions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="s1">&#39;positions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span>
         <span class="n">hist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">hist</span><span class="p">,</span><span class="n">edges</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
@@ -681,16 +731,23 @@
                <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39; objects&gt;&#39;</span></div>
 
 
+
 <span class="c1">#------------------------------------------------------------</span>
 <span class="c1"># DX file parsing</span>
 <span class="c1">#------------------------------------------------------------</span>
 
-<div class="viewcode-block" id="DXParseError"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParseError">[docs]</a><span class="k">class</span> <span class="nc">DXParseError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="DXParseError">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParseError">[docs]</a>
+<span class="k">class</span> <span class="nc">DXParseError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;general exception for parsing errors in DX files&quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
-<div class="viewcode-block" id="DXParserNoTokens"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParserNoTokens">[docs]</a><span class="k">class</span> <span class="nc">DXParserNoTokens</span><span class="p">(</span><span class="n">DXParseError</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DXParserNoTokens">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParserNoTokens">[docs]</a>
+<span class="k">class</span> <span class="nc">DXParserNoTokens</span><span class="p">(</span><span class="n">DXParseError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;raised when the token buffer is exhausted&quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
+
 
 <span class="k">class</span> <span class="nc">Token</span><span class="p">:</span>
     <span class="c1"># token categories (values of dx_regex must match up with these categories)</span>
@@ -723,7 +780,9 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;token &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">())</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span>
 
-<div class="viewcode-block" id="DXInitObject"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXInitObject">[docs]</a><span class="k">class</span> <span class="nc">DXInitObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="DXInitObject">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXInitObject">[docs]</a>
+<span class="k">class</span> <span class="nc">DXInitObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Storage class that holds data to initialize one of the &#39;real&#39;</span>
 <span class="sd">    classes such as OpenDX.array, OpenDX.gridconnections, ...</span>
 
@@ -739,12 +798,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">classtype</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-<div class="viewcode-block" id="DXInitObject.initialize"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXInitObject.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DXInitObject.initialize">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXInitObject.initialize">[docs]</a>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the corresponding DXclass from the data.</span>
 
 <span class="sd">        class = DXInitObject.initialize()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DXclasses</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span></div>
+
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
     <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
@@ -752,7 +814,10 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;DXInitObject instance type=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;, id=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span></div>
 
-<div class="viewcode-block" id="DXParser"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser">[docs]</a><span class="k">class</span> <span class="nc">DXParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DXParser">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser">[docs]</a>
+<span class="k">class</span> <span class="nc">DXParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Brain-dead baroque implementation to read a simple (VMD) dx file.</span>
 
 <span class="sd">    Requires a OpenDX.field instance.</span>
@@ -805,7 +870,9 @@
                         <span class="p">}</span>
 
 
-<div class="viewcode-block" id="DXParser.parse"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DXfield</span><span class="p">):</span>
+<div class="viewcode-block" id="DXParser.parse">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.parse">[docs]</a>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DXfield</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse the dx file and construct a DX field object with component classes.</span>
 
 <span class="sd">        A :class:`field` instance *DXfield* must be provided to be</span>
@@ -855,6 +922,7 @@
 
         <span class="c1"># free space</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentobject</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span></div>
+
 
 
 
@@ -1109,16 +1177,25 @@
     <span class="c1"># (with ideas from MDAnalysis.Selection and</span>
     <span class="c1"># http://effbot.org/zone/xml-scanner.htm)</span>
 
-<div class="viewcode-block" id="DXParser.use_parser"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.use_parser">[docs]</a>    <span class="k">def</span> <span class="nf">use_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parsername</span><span class="p">):</span>
+<div class="viewcode-block" id="DXParser.use_parser">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.use_parser">[docs]</a>
+    <span class="k">def</span> <span class="nf">use_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parsername</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set parsername as the current parser and apply it.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="p">[</span><span class="n">parsername</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parser</span><span class="p">()</span></div>
-<div class="viewcode-block" id="DXParser.set_parser"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.set_parser">[docs]</a>    <span class="k">def</span> <span class="nf">set_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parsername</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DXParser.set_parser">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.set_parser">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parsername</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set parsername as the current parser.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="p">[</span><span class="n">parsername</span><span class="p">]</span></div>
-<div class="viewcode-block" id="DXParser.apply_parser"><a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.apply_parser">[docs]</a>    <span class="k">def</span> <span class="nf">apply_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DXParser.apply_parser">
+<a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.apply_parser">[docs]</a>
+    <span class="k">def</span> <span class="nf">apply_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply the current parser to the token stream.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parser</span><span class="p">()</span></div>
+
 
     <span class="k">def</span> <span class="nf">__tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">string</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Split s into tokens and update the token buffer.</span>
@@ -1172,6 +1249,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># singlet</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DXParserNoTokens</span></div>
+
 </pre></div>
 
            </div>
@@ -1208,7 +1286,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+3.g354ec73
+        1.0.2+4.ge768b0f
       <span class="fa fa-caret-down"></span>
     </span>
 
