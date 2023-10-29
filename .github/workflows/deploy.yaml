@@ -16,7 +16,7 @@ jobs:
     permissions:
       id-token: write
     if: |
-      "github.repository == 'MDAnalysis/GridDataFormats'" &&
+      github.repository == 'MDAnalysis/GridDataFormats' &&
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     name: Build, upload and test pure Python wheels to TestPypi
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
     permissions:
       id-token: write
     if: |
-      "github.repository == 'MDAnalysis/GridDataFormats'" &&
+      github.repository == 'MDAnalysis/GridDataFormats' &&
       (github.event_name == 'release' && github.event.action == 'published')
     name: Build, upload and test pure Python wheels to PyPi
     runs-on: ubuntu-latest
