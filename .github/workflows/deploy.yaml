@@ -9,28 +9,47 @@ on:
       - published
 
 jobs:
-  pypi_push:
-    environment: deploy
-    if: "github.repository == 'MDAnalysis/GridDataFormats'"
-    name: Build, upload and test pure Python wheels
+  testpypi_push:
+    environment:
+      name: deploy
+      url: https://test.pypi.org/p/GridDataFormats
+    permissions:
+      id-token: write
+    if: |
+      github.repository == 'MDAnalysis/GridDataFormats' &&
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    name: Build, upload and test pure Python wheels to TestPypi
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: testpypi_deploy
         uses: MDAnalysis/pypi-deployment@main
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         with:
-          token: ${{ secrets.TEST_PYPI_API_TOKEN }}
           test_submission: true
           package_name: GridDataFormats
           module_name: 'gridData'
+
+  pypi_push:
+    environment:
+      name: deploy
+      url: https://pypi.org/p/GridDataFormats
+    permissions:
+      id-token: write
+    if: |
+      github.repository == 'MDAnalysis/GridDataFormats' &&
+      (github.event_name == 'release' && github.event.action == 'published')
+    name: Build, upload and test pure Python wheels to PyPi
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: pypi_deploy
         uses: MDAnalysis/pypi-deployment@main
         if: github.event_name == 'release' && github.event.action == 'published'
         with:
-          token: ${{ secrets.PYPI_API_TOKEN }}
           package_name: GridDataFormats
           module_name: 'gridData'
