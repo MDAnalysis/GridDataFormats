@@ -1,0 +1,91 @@
+[build-system]
+requires = [
+  "setuptools >= 40.9.0",
+  "versioningit",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "GridDataFormats"
+description = "Reading and writing of data on regular grids in Python"
+license = {file = "COPYING.LESSER" }
+authors = [
+    {name = "Oliver Beckstein", email = "orbeckst@gmail.com"},
+]
+maintainers = [
+    {name = "MDAnalysis", email = "mdanalysis@numfocus.org"},
+]
+classifiers = [
+    "Development Status :: 6 - Mature",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Operating System :: POSIX",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: C",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+readme = {file = "README.rst", content-type = "text/x-rst"}
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.21",
+    "scipy",
+    "mcrfile",
+]
+keywords = [
+    "science",
+    "array",
+    "density",
+]
+dynamic = [
+    "version",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "numpy",
+]
+
+[project.urls]
+source = "https://github.com/MDAnalysis/GridDataFormats"
+documentation = "https://www.mdanalysis.org/GridDataFormats/"
+
+[tool.setuptools]
+zip-safe = true
+include-package-data = true
+
+[tool.setuptools.packages.find]
+namespaces = false
+include=["gridData"]
+exclude=["devtools", "doc", "ci", "examples"]
+
+[tool.setuptools.package-data]
+gridData = [
+    "tests/datafiles/*.dx",
+    "tests/datafiles/*.dx.gz",
+    "tests/datafiles/*.ccp4",
+    "tests/datafiles/*.plt",
+    "tests/datafiles/*.bz2",
+]
+
+[tool.versioningit]
+default-version = "1+unknown"
+
+[tool.versioningit.vcs]
+method = "git"
+# the below line expects tags to look like '1.0.2'.
+# if prefixing with a v, e.g. 'v1.0.2', change it to ["v*"]
+match = ["*"]
+
+[tool.versioningit.format]
+distance = "{base_version}+{distance}.{vcs}{rev}"
+dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
+distance-dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
