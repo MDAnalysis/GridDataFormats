@@ -114,5 +114,5 @@ from . import mrc
 __all__ = ['Grid', 'OpenDX', 'gOpenMol', 'mrc']
 
 from importlib.metadata import version
-__version__ = version("gridData")
+__version__ = version("GridDataFormats")
 
