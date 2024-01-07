@@ -37,7 +37,7 @@ requires-python = ">=3.9"
 dependencies = [
     "numpy>=1.21",
     "scipy",
-    "mcrfile",
+    "mrcfile",
 ]
 keywords = [
     "science",
