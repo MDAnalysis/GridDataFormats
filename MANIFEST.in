@@ -1,6 +1,3 @@
-include README README.rst INSTALL CHANGELOG COPYING COPYING.LESSER AUTHORS
+include README.rst INSTALL CHANGELOG COPYING COPYING.LESSER AUTHORS
 include setup.py
 
-
-include versioneer.py
-include gridData/_version.py
