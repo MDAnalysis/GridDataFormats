@@ -14,31 +14,29 @@
   <link rel="shortcut icon" href="../../_static/logo/mda_favicon.ico">
 </head>
 
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 1.0.2+7.g020b199 documentation</title>
+  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 1.0.2+8.g86a4109 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=9749d284"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script src="../../_static/js/versions.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=4a4c2c85"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+7.g020b199 documentation"
+          title="Search within GridDataFormats 1.0.2+8.g86a4109 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -247,7 +245,7 @@ available values) then you can use the <code class="docutils literal notranslate
 <p>If you always want to be able to read OpenDX files with PyMOL, it is
 suggested to always export with <code class="docutils literal notranslate"><span class="pre">type=&quot;double&quot;</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 0.4.0.</span></p>
+<p><span class="versionmodified added">Added in version 0.4.0.</span></p>
 </div>
 </li>
 </ul>
@@ -274,7 +272,7 @@ elements are 0 and the diagonal ones correspond to the
 </dd>
 </dl>
 <p>The DX data type (“type” in the DX file) is determined from the
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> that is provided as
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> that is provided as
 the <em>grid</em> (or with the <em>type</em> keyword argument to
 <a class="reference internal" href="#gridData.OpenDX.array" title="gridData.OpenDX.array"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenDX.array</span></code></a>).</p>
 <p>For example, to build a <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">field</span></code></a>:</p>
@@ -300,11 +298,11 @@ the <em>grid</em> (or with the <em>type</em> keyword argument to
 </pre></div>
 </div>
 <p>Only simple arrays are read and initially stored as a 1-d
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in the <cite>dx.components[‘data’].array</cite> with the
-<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> determined by the DX type in the file.</p>
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> in the <cite>dx.components[‘data’].array</cite> with the
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> determined by the DX type in the file.</p>
 <p>The dx <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">field</span></code></a> object has a method
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">histogramdd()</span></code> that produces output identical to
-the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v1.26)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function by taking the stored dimension
+the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v2.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a> function by taking the stored dimension
 and deltas into account. In this way, one can store nD histograms in a
 portable and universal manner:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">()</span>
@@ -445,28 +443,28 @@ has dimensions (derived from shape)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – </p></li>
-<li><p><strong>array</strong> (<em>array_like</em>) – </p></li>
-<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
+<li><p><strong>classid</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>array</strong> (<em>array_like</em>)</p></li>
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>Set the DX type in the output file and cast <cite>array</cite> to
 the closest numpy dtype.  <cite>type</cite> must be one of the
 allowed types in DX files as defined under <a class="reference external" href="https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#Header_440">Array
 Objects</a>.  The default <code class="docutils literal notranslate"><span class="pre">None</span></code> tries to set the type
-from the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of <cite>array</cite>.</p>
+from the <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> of <cite>array</cite>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 0.4.0.</span></p>
+<p><span class="versionmodified added">Added in version 0.4.0.</span></p>
 </div>
 </p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>array</cite> is not provided; or if <cite>type</cite> is not of the correct
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – if <cite>array</cite> is not provided; or if <cite>type</cite> is not of the correct
     DX type</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gridData.OpenDX.array.dx_types">
 <span class="sig-name descname"><span class="pre">dx_types</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'byte':</span> <span class="pre">'uint8',</span> <span class="pre">'double':</span> <span class="pre">'float64',</span> <span class="pre">'float':</span> <span class="pre">'float32',</span> <span class="pre">'int':</span> <span class="pre">'int32',</span> <span class="pre">'short':</span> <span class="pre">'int16',</span> <span class="pre">'signed</span> <span class="pre">byte':</span> <span class="pre">'int8',</span> <span class="pre">'signed</span> <span class="pre">int':</span> <span class="pre">'int32',</span> <span class="pre">'signed</span> <span class="pre">short':</span> <span class="pre">'int16',</span> <span class="pre">'unsigned</span> <span class="pre">byte':</span> <span class="pre">'uint8',</span> <span class="pre">'unsigned</span> <span class="pre">int':</span> <span class="pre">'uint32',</span> <span class="pre">'unsigned</span> <span class="pre">short':</span> <span class="pre">'uint16'}</span></em><a class="headerlink" href="#gridData.OpenDX.array.dx_types" title="Link to this definition"></a></dt>
-<dd><p>conversion from OpenDX type to closest <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a>
+<dd><p>conversion from OpenDX type to closest <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a>
 (round-tripping is not guaranteed to produce identical types); not all
 types are supported (e.g., strings and conversion to int64 are missing)</p>
 </dd></dl>
@@ -474,7 +472,7 @@ types are supported (e.g., strings and conversion to int64 are missing)</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gridData.OpenDX.array.np_types">
 <span class="sig-name descname"><span class="pre">np_types</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'float16':</span> <span class="pre">'float',</span> <span class="pre">'float32':</span> <span class="pre">'float',</span> <span class="pre">'float64':</span> <span class="pre">'double',</span> <span class="pre">'int16':</span> <span class="pre">'short',</span> <span class="pre">'int32':</span> <span class="pre">'int',</span> <span class="pre">'int64':</span> <span class="pre">'int',</span> <span class="pre">'int8':</span> <span class="pre">'signed</span> <span class="pre">byte',</span> <span class="pre">'uint16':</span> <span class="pre">'unsigned</span> <span class="pre">short',</span> <span class="pre">'uint32':</span> <span class="pre">'unsigned</span> <span class="pre">int',</span> <span class="pre">'uint64':</span> <span class="pre">'unsigned</span> <span class="pre">int',</span> <span class="pre">'uint8':</span> <span class="pre">'byte'}</span></em><a class="headerlink" href="#gridData.OpenDX.array.np_types" title="Link to this definition"></a></dt>
-<dd><p>conversion from <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.name.html#numpy.dtype.name" title="(in NumPy v1.26)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">numpy.dtype.name</span></code></a> to closest OpenDX array type
+<dd><p>conversion from <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.name.html#numpy.dtype.name" title="(in NumPy v2.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">numpy.dtype.name</span></code></a> to closest OpenDX array type
 (round-tripping is not guaranteed to produce identical types); not all
 types are supported (e.g., strings are missing)</p>
 </dd></dl>
@@ -485,10 +483,10 @@ types are supported (e.g., strings are missing)</p>
 <dd><p>Write the <em>class array</em> section.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stream</strong> (<em>stream</em>) – </p>
+<dd class="field-odd"><p><strong>stream</strong> (<em>stream</em>)</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If the <cite>dxtype</cite> is not a valid type, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
     raised.</p>
 </dd>
 </dl>
@@ -508,8 +506,8 @@ OpenDX file. It contains a number of other objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – arbitrary string</p></li>
-<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – arbitrary string</p></li>
+<li><p><strong>components</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – <p>dictionary of DXclass instances (no sanity check on the
 individual ids!) which correspond to</p>
 <ul>
 <li><p>positions</p></li>
@@ -517,7 +515,7 @@ individual ids!) which correspond to</p>
 <li><p>data</p></li>
 </ul>
 </p></li>
-<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – list of strings; each string becomes a comment line
+<li><p><strong>comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – list of strings; each string becomes a comment line
 prefixed with ‘#’. Avoid newlines.</p></li>
 </ul>
 </dd>
@@ -661,7 +659,7 @@ delta     DxD array describing the deltas</p>
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+7.g020b199
+        1.0.2+8.g86a4109
       <span class="fa fa-caret-down"></span>
     </span>
 
