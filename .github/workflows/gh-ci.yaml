@@ -16,7 +16,7 @@ concurrency:
 
 defaults:
   run:
-    shell: bash -l {0}
+    shell: bash -leo pipefail {0}
 
 jobs:
   unittests:
@@ -36,20 +36,20 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: setup_miniconda
-      uses: conda-incubator/setup-miniconda@v3
+    - name: setup_micromamba
+      uses: mamba-org/setup-micromamba@v2
       with:
-        python-version: ${{ matrix.python-version }}
-        auto-update-conda: true
-        channel-priority: flexible
-        channels: conda-forge
-        add-pip-as-python-dependency: true
-        use-mamba: true
-        miniforge-version: latest
+        environment-name: mda
+        create-args: >-
+          python=${{ matrix.python-version }}
+          pip
+        condarc: |
+          channels:
+            - conda-forge
 
     - name: install package deps
       run: |
-        mamba install numpy scipy mrcfile pytest pytest-cov codecov
+        micromamba install numpy scipy mrcfile pytest pytest-cov codecov
 
     - name: check install
       run: |
