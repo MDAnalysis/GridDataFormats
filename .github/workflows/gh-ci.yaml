@@ -55,8 +55,8 @@ jobs:
       run: |
         which python
         which pip
-        conda info
-        conda list
+        micromamba info
+        micromamba list
 
     - name: install package
       run: |
