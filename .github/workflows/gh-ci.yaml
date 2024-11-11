@@ -26,18 +26,18 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, ]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         include:
           - os: windows-latest
-            python-version: "3.12"
+            python-version: "3.13"
           - os: macos-latest
-            python-version: "3.12"
+            python-version: "3.13"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: setup_miniconda
-      uses: conda-incubator/setup-miniconda@v2
+      uses: conda-incubator/setup-miniconda@v3
       with:
         python-version: ${{ matrix.python-version }}
         auto-update-conda: true
@@ -45,7 +45,7 @@ jobs:
         channels: conda-forge
         add-pip-as-python-dependency: true
         use-mamba: true
-        miniforge-variant: Mambaforge
+        miniforge-version: latest
 
     - name: install package deps
       run: |
@@ -67,7 +67,7 @@ jobs:
         pytest -v --cov=gridData --cov-report=xml --color=yes ./gridData/tests
 
     - name: codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       if: github.event_name != 'schedule'
       with:
         file: coverage.xml
