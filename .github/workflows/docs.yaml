@@ -21,24 +21,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        
-    - name: setup_miniconda
-      uses: conda-incubator/setup-miniconda@v2
+
+    - name: "Setup Micromamba"
+      uses: mamba-org/setup-micromamba@v2
       with:
-        python-version: 3.11
-        environment-file: ci/environment.yaml
-        auto-update-conda: true
-        channel-priority: flexible
-        channels: conda-forge
-        miniforge-variant: Mambaforge
-        use-mamba: true
+        environment-file: environment.yaml
+        environment-name: griddata_env
+        create-args: >-
+          python=3.11
+        init-shell: bash
         
     - name: install package
       run: |
-        pip install -v .
+        python -m pip install -v .
 
     - name: build docs
       run: |
