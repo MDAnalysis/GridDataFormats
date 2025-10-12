@@ -28,7 +28,7 @@ jobs:
     - name: "Setup Micromamba"
       uses: mamba-org/setup-micromamba@v2
       with:
-        environment-file: environment.yaml
+        environment-file: ci/environment.yaml
         environment-name: griddata_env
         create-args: >-
           python=3.11
