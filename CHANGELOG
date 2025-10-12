@@ -13,6 +13,14 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+??/??/???? IAlibay
+  * 1.0.3
+
+  Changes
+
+  * Python 3.13 and 3.14 are now supported (PR #140)
+  * Support for Python 3.9 and 3.10 is now dropped as per SPEC0 (PR #140)
+
 10/21/2023 IAlibay, orbeckst, lilyminium
 
   * 1.0.2
