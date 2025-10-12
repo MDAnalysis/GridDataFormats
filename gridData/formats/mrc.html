@@ -22,20 +22,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mrc — the MRC/CCP4 volumetric data format &mdash; GridDataFormats 1.0.2+8.g86a4109 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+  <title>mrc — the MRC/CCP4 volumetric data format &mdash; GridDataFormats 1.0.2+9.g8b55865 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=4a4c2c85"></script>
+      <script src="../../_static/documentation_options.js?v=38f5f320"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+8.g86a4109 documentation"
+          title="Search within GridDataFormats 1.0.2+9.g8b55865 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -175,16 +175,16 @@ Cryst.</em> D73:469-477. doi: <a class="reference external" href="https://doi.or
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.mrc.MRC">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.mrc.</span></span><span class="sig-name descname"><span class="pre">MRC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.mrc.</span></span><span class="sig-name descname"><span class="pre">MRC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC" title="Link to this definition"></a></dt>
 <dd><p>Represent a MRC/CCP4 file.</p>
 <p>Load <a class="reference external" href="MRC2014fileformat">MRC/CCP4 2014</a> 3D volumetric data with
 the <a class="reference external" href="https://mrcfile.readthedocs.io/">mrcfile</a> library.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – input file (or stream), can be compressed</p>
+<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – input file (or stream), can be compressed</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If the unit cell is not orthorhombic or if the data
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the unit cell is not orthorhombic or if the data
     are not volumetric.</p>
 </dd>
 </dl>
@@ -194,7 +194,7 @@ the <a class="reference external" href="https://mrcfile.readthedocs.io/">mrcfile
 <dd><p>Header data from the MRC file as a numpy record array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.recarray.html#numpy.recarray" title="(in NumPy v2.1)">numpy.recarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.recarray.html#numpy.recarray" title="(in NumPy v2.3)">numpy.recarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -207,7 +207,7 @@ axis 1 to Y, and axis 2 to Z. This order is always enforced,
 regardless of the order in the mrc file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -219,7 +219,7 @@ regardless of the order in the mrc file.</p>
 (taken from the <code class="xref py py-attr docutils literal notranslate"><span class="pre">mrcfile.mrcfile.voxel_size</span></code> attribute)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -233,7 +233,7 @@ regardless of the order in the mrc file.</p>
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">header.origin.nzstart</span></code> and the spacing <a class="reference internal" href="#gridData.mrc.MRC.delta" title="gridData.mrc.MRC.delta"><code class="xref py py-attr docutils literal notranslate"><span class="pre">delta</span></code></a>)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -244,7 +244,7 @@ regardless of the order in the mrc file.</p>
 <dd><p>The integer 3, denoting that only 3D maps are read.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -252,7 +252,7 @@ regardless of the order in the mrc file.</p>
 <p class="rubric">Notes</p>
 <ul class="simple">
 <li><p>Only volumetric (3D) densities are read.</p></li>
-<li><p>Only orthorhombic unitcells supported (other raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>)</p></li>
+<li><p>Only orthorhombic unitcells supported (other raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>)</p></li>
 <li><p>Only reading is currently supported.</p></li>
 </ul>
 <div class="versionadded">
@@ -260,7 +260,7 @@ regardless of the order in the mrc file.</p>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.mrc.MRC.edges">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.mrc.MRC.edges" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.mrc.MRC.edges" title="Link to this definition"></a></dt>
 <dd><p>Edges of the grid cells, origin at centre of 0,0,0 grid cell.</p>
 <p>Only works for regular, orthonormal grids.</p>
 </dd></dl>
@@ -279,7 +279,7 @@ regardless of the order in the mrc file.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.mrc.MRC.shape">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#gridData.mrc.MRC.shape" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#gridData.mrc.MRC.shape" title="Link to this definition"></a></dt>
 <dd><p>Shape of the <a class="reference internal" href="#gridData.mrc.MRC.array" title="gridData.mrc.MRC.array"><code class="xref py py-attr docutils literal notranslate"><span class="pre">array</span></code></a></p>
 </dd></dl>
 
@@ -323,7 +323,7 @@ regardless of the order in the mrc file.</p>
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+8.g86a4109
+        1.0.2+9.g8b55865
       <span class="fa fa-caret-down"></span>
     </span>
 

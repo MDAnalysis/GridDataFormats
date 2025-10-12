@@ -21,20 +21,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.OpenDX &mdash; GridDataFormats 1.0.2+8.g86a4109 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+  <title>gridData.OpenDX &mdash; GridDataFormats 1.0.2+9.g8b55865 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=4a4c2c85"></script>
+      <script src="../../_static/documentation_options.js?v=38f5f320"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+8.g86a4109 documentation"
+          title="Search within GridDataFormats 1.0.2+9.g8b55865 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -283,28 +283,28 @@
 <span class="sd">---------------------</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gzip</span>
 
-<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
 <span class="c1"># Python 2/3 compatibility (see issue #99)</span>
 <span class="c1"># and https://bugs.python.org/issue30012</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">):</span>
-    <span class="k">def</span> <span class="nf">_gzip_open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_gzip_open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">_gzip_open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_gzip_open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 <span class="k">del</span> <span class="n">sys</span>
 
 <div class="viewcode-block" id="DXclass">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass">[docs]</a>
-<span class="k">class</span> <span class="nc">DXclass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DXclass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;&#39;class&#39; object as defined by OpenDX&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;id is the object number&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>  <span class="c1"># serial number of the object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># name of the DXclass</span>
@@ -313,7 +313,7 @@
 
 <div class="viewcode-block" id="DXclass.write">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">optstring</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">optstring</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;write the &#39;object&#39; line; additional args are packed in string&quot;&quot;&quot;</span>
         <span class="n">classid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">quote</span><span class="p">:</span> <span class="n">classid</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span><span class="o">+</span><span class="n">classid</span><span class="o">+</span><span class="s1">&#39;&quot;&#39;</span>
@@ -325,38 +325,38 @@
 
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;write a line to the file&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">gzip</span><span class="o">.</span><span class="n">GzipFile</span><span class="p">):</span>
             <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
         <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Reading is currently not supported.&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DXclass.ndformat">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXclass.ndformat">[docs]</a>
-    <span class="k">def</span> <span class="nf">ndformat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ndformat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a string with as many repetitions of s as self</span>
 <span class="sd">        has dimensions (derived from shape)&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">s</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;OpenDX.&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; object, id=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span></div>
 
 
 
 <div class="viewcode-block" id="gridpositions">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions">[docs]</a>
-<span class="k">class</span> <span class="nc">gridpositions</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">gridpositions</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenDX gridpositions class.</span>
 
 <span class="sd">    shape     D-tuplet describing size in each dimension</span>
 <span class="sd">    origin    coordinates of the centre of the grid cell with index 0,0,...,0</span>
 <span class="sd">    delta     DxD array describing the deltas</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">origin</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">delta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all keyword arguments are required&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>
@@ -379,7 +379,7 @@
                                       <span class="s1">&#39;not delta=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">))</span>
 <div class="viewcode-block" id="gridpositions.write">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">gridpositions</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
             <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s1">&#39;origin </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">))</span>
@@ -392,7 +392,7 @@
 
 <div class="viewcode-block" id="gridpositions.edges">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridpositions.edges">[docs]</a>
-    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
 
 <span class="sd">        Only works for regular, orthonormal grids.</span>
@@ -405,9 +405,9 @@
 
 <div class="viewcode-block" id="gridconnections">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections">[docs]</a>
-<span class="k">class</span> <span class="nc">gridconnections</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">gridconnections</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenDX gridconnections class&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all keyword arguments are required&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>
@@ -417,7 +417,7 @@
 
 <div class="viewcode-block" id="gridconnections.write">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.gridconnections.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">gridconnections</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
             <span class="n">stream</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;counts &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ndformat</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span></div>
 </div>
@@ -426,7 +426,7 @@
 
 <div class="viewcode-block" id="array">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array">[docs]</a>
-<span class="k">class</span> <span class="nc">array</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">array</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenDX array class.</span>
 
 <span class="sd">    See `Array Objects`_ for details.</span>
@@ -472,7 +472,7 @@
         <span class="c1"># &quot;string&quot; not automatically supported</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classid</span><span class="p">,</span> <span class="n">array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">typequote</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classid</span><span class="p">,</span> <span class="n">array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">typequote</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
@@ -523,7 +523,7 @@
 
 <div class="viewcode-block" id="array.write">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.array.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the *class array* section.</span>
 
 <span class="sd">        Parameters</span>
@@ -569,7 +569,7 @@
 
 <div class="viewcode-block" id="field">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field">[docs]</a>
-<span class="k">class</span> <span class="nc">field</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">field</span><span class="p">(</span><span class="n">DXclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenDX container class</span>
 
 <span class="sd">    The *field* is the top-level object and represents the whole</span>
@@ -581,7 +581,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># perhaps this should not derive from DXclass as those are</span>
     <span class="c1"># objects in field but a field cannot contain itself</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classid</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">comments</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;OpenDX object, which is build from a list of components.</span>
 
 <span class="sd">        Parameters</span>
@@ -636,7 +636,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">components</span> <span class="o">=</span> <span class="n">components</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span> <span class="n">comments</span>
 
-    <span class="k">def</span> <span class="nf">_openfile_writing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_openfile_writing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a regular or gz file stream for writing&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
@@ -645,7 +645,7 @@
 
 <div class="viewcode-block" id="field.write">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the complete dx object to the file.</span>
 
 <span class="sd">        This is the simple OpenDX format which includes the data into</span>
@@ -673,7 +673,7 @@
 
 <div class="viewcode-block" id="field.read">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.read">[docs]</a>
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read DX field from file.</span>
 
 <span class="sd">            dx = OpenDX.field.read(dxfile)</span>
@@ -687,21 +687,21 @@
 
 <div class="viewcode-block" id="field.add">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add">[docs]</a>
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">component</span><span class="p">,</span><span class="n">DXobj</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">component</span><span class="p">,</span><span class="n">DXobj</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;add a component to the field&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="p">[</span><span class="n">component</span><span class="p">]</span> <span class="o">=</span> <span class="n">DXobj</span></div>
 
 
 <div class="viewcode-block" id="field.add_comment">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.add_comment">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;add comments&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="field.sorted_components">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.sorted_components">[docs]</a>
-    <span class="k">def</span> <span class="nf">sorted_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sorted_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;iterator that returns (component,object) in id order&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">component</span><span class="p">,</span> <span class="nb">object</span> <span class="ow">in</span> \
                 <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
@@ -711,7 +711,7 @@
 
 <div class="viewcode-block" id="field.histogramdd">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.field.histogramdd">[docs]</a>
-    <span class="k">def</span> <span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return array data as (edges,grid), i.e. a numpy nD histogram.&quot;&quot;&quot;</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="s1">&#39;positions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="s1">&#39;positions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span>
@@ -719,13 +719,13 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">hist</span><span class="p">,</span><span class="n">edges</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;OpenDX.field object, id=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;, with &#39;</span><span class="o">+</span>\
                <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39; components and &#39;</span><span class="o">+</span>\
                <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39; objects&gt;&#39;</span></div>
@@ -738,18 +738,18 @@
 
 <div class="viewcode-block" id="DXParseError">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParseError">[docs]</a>
-<span class="k">class</span> <span class="nc">DXParseError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DXParseError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;general exception for parsing errors in DX files&quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="DXParserNoTokens">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParserNoTokens">[docs]</a>
-<span class="k">class</span> <span class="nc">DXParserNoTokens</span><span class="p">(</span><span class="n">DXParseError</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DXParserNoTokens</span><span class="p">(</span><span class="n">DXParseError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;raised when the token buffer is exhausted&quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
 
-<span class="k">class</span> <span class="nc">Token</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Token</span><span class="p">:</span>
     <span class="c1"># token categories (values of dx_regex must match up with these categories)</span>
     <span class="n">category</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">],</span>
                 <span class="s1">&#39;WORD&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;WORD&#39;</span><span class="p">],</span>
@@ -765,24 +765,24 @@
             <span class="s1">&#39;WHITESPACE&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s1">&#39;NUMBER&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;REAL&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">code</span><span class="p">,</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">code</span><span class="p">,</span><span class="n">text</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>    <span class="c1"># store raw code</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
-    <span class="k">def</span> <span class="nf">equals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">equals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">v</span>
-    <span class="k">def</span> <span class="nf">iscode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">code</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">iscode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">code</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">[</span><span class="n">code</span><span class="p">]</span>  <span class="c1"># use many -&gt; 1 mappings</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ascode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ascode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return text cast to the correct type or the selected type&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">ascode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ascode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cast</span><span class="p">[</span><span class="n">ascode</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;token &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">())</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span>
 
 <div class="viewcode-block" id="DXInitObject">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXInitObject">[docs]</a>
-<span class="k">class</span> <span class="nc">DXInitObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DXInitObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Storage class that holds data to initialize one of the &#39;real&#39;</span>
 <span class="sd">    classes such as OpenDX.array, OpenDX.gridconnections, ...</span>
 
@@ -794,30 +794,30 @@
                  <span class="s1">&#39;array&#39;</span><span class="p">:</span><span class="n">array</span><span class="p">,</span> <span class="s1">&#39;field&#39;</span><span class="p">:</span><span class="n">field</span><span class="p">,</span>
                  <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classtype</span><span class="p">,</span><span class="n">classid</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">classtype</span><span class="p">,</span><span class="n">classid</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">classtype</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">classid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 <div class="viewcode-block" id="DXInitObject.initialize">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXInitObject.initialize">[docs]</a>
-    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the corresponding DXclass from the data.</span>
 
 <span class="sd">        class = DXInitObject.initialize()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DXclasses</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;DXInitObject instance type=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;, id=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span></div>
 
 
 <div class="viewcode-block" id="DXParser">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser">[docs]</a>
-<span class="k">class</span> <span class="nc">DXParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DXParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Brain-dead baroque implementation to read a simple (VMD) dx file.</span>
 
 <span class="sd">    Requires a OpenDX.field instance.</span>
@@ -845,7 +845,7 @@
 <span class="s2">    &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup a parser for a simple DX file (from VMD)</span>
 
 <span class="sd">        &gt;&gt;&gt; DXfield_object = OpenDX.field(id)</span>
@@ -872,7 +872,7 @@
 
 <div class="viewcode-block" id="DXParser.parse">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.parse">[docs]</a>
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DXfield</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DXfield</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse the dx file and construct a DX field object with component classes.</span>
 
 <span class="sd">        A :class:`field` instance *DXfield* must be provided to be</span>
@@ -926,7 +926,7 @@
 
 
 
-    <span class="k">def</span> <span class="nf">__general</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__general</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Level-0 parser and main loop.</span>
 
 <span class="sd">        Look for a token that matches a level-1 parser and hand over control.&quot;&quot;&quot;</span>
@@ -958,7 +958,7 @@
                                     <span class="c1"># (possibly been set further down the hierarchy!)</span>
 
     <span class="c1"># Level-1 parser</span>
-    <span class="k">def</span> <span class="nf">__comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Level-1 parser for comments.</span>
 
 <span class="sd">        pattern: #.*</span>
@@ -968,7 +968,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">DXfield</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_parser</span><span class="p">(</span><span class="s1">&#39;general&#39;</span><span class="p">)</span>   <span class="c1"># switch back to general parser</span>
 
-    <span class="k">def</span> <span class="nf">__object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Level-1 parser for objects.</span>
 
 <span class="sd">        pattern: &#39;object&#39; id &#39;class&#39; type ...</span>
@@ -991,7 +991,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">use_parser</span><span class="p">(</span><span class="n">classtype</span><span class="p">)</span>
 
     <span class="c1"># Level-2 parser (object parsers)</span>
-    <span class="k">def</span> <span class="nf">__gridpositions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__gridpositions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Level-2 parser for gridpositions.</span>
 
 <span class="sd">        pattern:</span>
@@ -1050,7 +1050,7 @@
             <span class="k">raise</span> <span class="n">DXParseError</span><span class="p">(</span><span class="s1">&#39;gridpositions: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; not recognized.&#39;</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">__gridconnections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__gridconnections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Level-2 parser for gridconnections.</span>
 
 <span class="sd">        pattern:</span>
@@ -1078,7 +1078,7 @@
             <span class="k">raise</span> <span class="n">DXParseError</span><span class="p">(</span><span class="s1">&#39;gridconnections: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; not recognized.&#39;</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">__array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Level-2 parser for arrays.</span>
 
 <span class="sd">        pattern:</span>
@@ -1147,7 +1147,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DXParseError</span><span class="p">(</span><span class="s1">&#39;array: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; not recognized.&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Level-2 parser for a DX field object.</span>
 
 <span class="sd">        pattern:</span>
@@ -1179,25 +1179,25 @@
 
 <div class="viewcode-block" id="DXParser.use_parser">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.use_parser">[docs]</a>
-    <span class="k">def</span> <span class="nf">use_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parsername</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">use_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parsername</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set parsername as the current parser and apply it.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="p">[</span><span class="n">parsername</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parser</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DXParser.set_parser">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.set_parser">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parsername</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parsername</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set parsername as the current parser.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="p">[</span><span class="n">parsername</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="DXParser.apply_parser">
 <a class="viewcode-back" href="../../gridData/formats/OpenDX.html#gridData.OpenDX.DXParser.apply_parser">[docs]</a>
-    <span class="k">def</span> <span class="nf">apply_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply the current parser to the token stream.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parser</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span> <span class="nf">__tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">string</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Split s into tokens and update the token buffer.</span>
 
 <span class="sd">        __tokenize(string)</span>
@@ -1213,7 +1213,7 @@
                  <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
                  <span class="c1"># print &quot;DEBUG tokenize: &quot;+str(tok)</span>
 
-    <span class="k">def</span> <span class="nf">__refill_tokenbuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__refill_tokenbuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a new tokenized line from the file to the token buffer.</span>
 
 <span class="sd">        __refill_tokenbuffer()</span>
@@ -1227,14 +1227,14 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__tokenize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dxfile</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">__peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__refill_tokenbuffer</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DXParserNoTokens</span>
 
-    <span class="k">def</span> <span class="nf">__consume</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__consume</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the next token from the buffer and remove it/them.</span>
 
 <span class="sd">        try:</span>
@@ -1286,7 +1286,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+8.g86a4109
+        1.0.2+9.g8b55865
       <span class="fa fa-caret-down"></span>
     </span>
 
