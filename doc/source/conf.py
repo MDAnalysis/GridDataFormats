@@ -67,9 +67,9 @@ project = "GridDataFormats"
 authors = (
     "Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, "
     "Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, "
-    "Irfan Alibay，Zhiyi Wu"
+    "Irfan Alibay，Zhiyi Wu, Andrés Montoya (logo)"
 )
-copyright = "2007-2023, " + authors
+copyright = "2007-2025, " + authors
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
