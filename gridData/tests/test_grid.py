@@ -107,12 +107,18 @@ class TestGrid(object):
     def test_compatibility_type(self, data):
         assert data['grid'].check_compatible(data['grid'])
         assert data['grid'].check_compatible(3)
-        g = Grid(data['griddata'], origin=data['origin'] - 1, delta=data['delta'])
+        g = Grid(data['griddata'], origin=data['origin'], delta=data['delta'])
         assert data['grid'].check_compatible(g)
+        assert data['grid'].check_compatible(g.grid)
 
     def test_wrong_compatibile_type(self, data):
+        g = Grid(data['griddata'], origin=data['origin'] + 1, delta=data['delta'])
         with pytest.raises(TypeError):
-            data['grid'].check_compatible("foo")
+            data['grid'].check_compatible(g)
+
+        arr = np.zeros(data['griddata'].shape[-1] + 1)  # Not broadcastable
+        with pytest.raises(TypeError):
+            data['grid'].check_compatible(arr)
 
     def test_non_orthonormal_boxes(self, data):
         delta = np.eye(3)
