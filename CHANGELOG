@@ -13,8 +13,8 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/???? IAlibay, conradolandia, orbeckst
-  * 1.0.3
+??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst
+  * 1.1.0
 
   Changes
 
@@ -22,6 +22,17 @@ The rules for this file:
     (issue #143)
   * Python 3.13 and 3.14 are now supported (PR #140)
   * Support for Python 3.9 and 3.10 is now dropped as per SPEC0 (PR #140)
+
+  Enhancements
+
+  * `Grid` now accepts binary operations with any operand that can be 
+    broadcasted to the grid's shape according to `numpy` broadcasting rules
+    (PR #142)
+
+  Fixes
+
+  * Attempting binary operations on grids with different edges now raises an
+    exception (PR #142)
 
 
 10/21/2023 IAlibay, orbeckst, lilyminium

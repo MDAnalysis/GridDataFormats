@@ -711,7 +711,7 @@ class Grid(object):
 
         `other` is compatible if
 
-        1) `other` is a scalar
+        1) `other` is a scalar or an array-like broadcastable to the grid
         2) `other` is a grid defined on the same edges
 
         In order to make `other` compatible, resample it on the same
@@ -732,13 +732,22 @@ class Grid(object):
         --------
         :meth:`resample`
         """
-
-        if not (numpy.isreal(other) or self == other):
+        if isinstance(other, Grid):
+            is_compatible = all(
+                numpy.allclose(other_edge, self_edge)
+                for other_edge, self_edge in zip(other.edges, self.edges)
+            )
+        else:
+            try:
+                is_compatible = numpy.broadcast(self.grid, other).shape == self.grid.shape
+            except ValueError:
+                is_compatible = False
+        if not is_compatible:
             raise TypeError(
                 "The argument cannot be arithmetically combined with the grid. "
-                "It must be a scalar or a grid with identical edges. "
-                "Use Grid.resample(other.edges) to make a new grid that is "
-                "compatible with other.")
+                "It must be broadcastable to the grid's shape or a `Grid` with identical edges. "
+                "Use `Grid.resample(other.edges)` to make a new grid that is "
+                "compatible with `other`.")
         return True
 
     def _interpolationFunctionFactory(self, spline_order=None, cval=None):
