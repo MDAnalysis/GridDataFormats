@@ -13,6 +13,19 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+12/09/2025 ollyfutur
+  * 1.0.4
+
+  Changes
+
+  * `Grid` now accepts binary operations with operands that can be broadcasted
+    to the grid's shape according to `numpy` broadcasting rules (PR #142)
+
+  Fixes
+
+  * Attempting binary operations on grids with different edges now raises an
+    exception (PR #142)
+
 ??/??/???? IAlibay
   * 1.0.3
 
