@@ -164,7 +164,7 @@ class MRC(object):
         header information (including mapc, mapr, maps ordering) is preserved.
         Otherwise, standard ordering (mapc=1, mapr=2, maps=3) is used.
         
-        .. versionadded:: 0.8.0
+        .. versionadded:: 1.1.0
         """
         if filename is not None:
             self.filename = filename
