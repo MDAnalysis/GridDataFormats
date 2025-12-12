@@ -133,3 +133,126 @@ class TestGridMRC():
 
     def test_data(self, grid, ccp4data):
         assert_allclose(grid.grid, ccp4data.array)
+
+class TestMRCWrite:
+    """Tests for MRC write functionality"""
+    
+    def test_mrc_write_roundtrip(self, ccp4data, tmpdir):
+        """Test writing and reading back preserves data"""
+        outfile = str(tmpdir / "roundtrip.mrc")
+        
+        # Write the file
+        ccp4data.write(outfile)
+        
+        # Read it back
+        mrc_read = mrc.MRC(outfile)
+        
+        # Check data matches
+        assert_allclose(mrc_read.array, ccp4data.array)
+        assert_allclose(mrc_read.origin, ccp4data.origin, rtol=1e-5, atol=1e-3)
+        assert_allclose(mrc_read.delta, ccp4data.delta, rtol=1e-5)
+    
+    def test_mrc_write_header_preserved(self, ccp4data, tmpdir):
+        """Test that header fields are preserved"""
+        outfile = str(tmpdir / "header.mrc")
+        
+        ccp4data.write(outfile)
+        mrc_read = mrc.MRC(outfile)
+        
+        # Check axis ordering preserved
+        assert mrc_read.header.mapc == ccp4data.header.mapc
+        assert mrc_read.header.mapr == ccp4data.header.mapr
+        assert mrc_read.header.maps == ccp4data.header.maps
+        
+        # Check offsets preserved
+        assert mrc_read.header.nxstart == ccp4data.header.nxstart
+        assert mrc_read.header.nystart == ccp4data.header.nystart
+        assert mrc_read.header.nzstart == ccp4data.header.nzstart
+    
+    def test_mrc_write_new_file(self, tmpdir):
+        """Test creating new MRC file from scratch"""
+        outfile = str(tmpdir / "new.mrc")
+        
+        # Create new MRC object
+        mrc_new = mrc.MRC()
+        mrc_new.array = np.arange(24).reshape(2, 3, 4).astype(np.float32)
+        mrc_new.delta = np.diag([1.0, 2.0, 3.0])
+        mrc_new.origin = np.array([5.0, 10.0, 15.0])
+        mrc_new.rank = 3
+        
+        # Write and read back
+        mrc_new.write(outfile)
+        mrc_read = mrc.MRC(outfile)
+        
+        # Verify
+        assert_allclose(mrc_read.array, mrc_new.array, rtol=1e-5)
+        assert_allclose(mrc_read.origin, mrc_new.origin, rtol=1e-4)
+        assert_allclose(np.diag(mrc_read.delta), np.diag(mrc_new.delta), rtol=1e-5)
+    
+    def test_mrc_write_zero_voxel_raises(self, tmpdir):
+        """Test that zero voxel size raises ValueError"""
+        outfile = str(tmpdir / "invalid.mrc")
+        
+        mrc_obj = mrc.MRC()
+        mrc_obj.array = np.ones((2, 2, 2), dtype=np.float32)
+        mrc_obj.delta = np.diag([0.0, 1.0, 1.0])
+        mrc_obj.origin = np.array([0.0, 0.0, 0.0])
+        mrc_obj.rank = 3
+        
+        with pytest.raises(ValueError, match="Voxel size must be positive"):
+            mrc_obj.write(outfile)
+
+
+class TestGridMRCWrite:
+    """Tests for Grid.export() with MRC format"""
+    
+    def test_grid_export_mrc(self, tmpdir):
+        """Test Grid.export() with file_format='mrc'"""
+        outfile = str(tmpdir / "grid.mrc")
+        
+        # Create simple grid
+        data = np.arange(60).reshape(3, 4, 5).astype(np.float32)
+        g = Grid(data, origin=[0, 0, 0], delta=[1.0, 1.0, 1.0])
+        
+        # Export and read back
+        g.export(outfile, file_format='mrc')
+        g_read = Grid(outfile)
+        
+        # Verify
+        assert_allclose(g_read.grid, g.grid, rtol=1e-5)
+        assert_allclose(g_read.origin, g.origin, rtol=1e-4)
+        assert_allclose(g_read.delta, g.delta, rtol=1e-5)
+    
+    def test_grid_export_mrc_roundtrip(self, tmpdir):
+        """Test MRC → Grid → export → Grid preserves data"""
+        outfile = str(tmpdir / "roundtrip_grid.mrc")
+        
+        # Load original
+        g_orig = Grid(datafiles.CCP4_1JZV)
+        
+        # Export and reload
+        g_orig.export(outfile, file_format='mrc')
+        g_read = Grid(outfile)
+        
+        # Verify
+        assert_allclose(g_read.grid, g_orig.grid, rtol=1e-5)
+        assert_allclose(g_read.origin, g_orig.origin, rtol=1e-4)
+        assert_allclose(g_read.delta, g_orig.delta, rtol=1e-5)
+        assert_equal(g_read.grid.shape, g_orig.grid.shape)
+    
+    def test_grid_export_mrc_preserves_header(self, tmpdir):
+        """Test that Grid preserves MRC header through export"""
+        outfile = str(tmpdir / "header_grid.mrc")
+        
+        g_orig = Grid(datafiles.CCP4_1JZV)
+        orig_mapc = g_orig._mrc_header.mapc
+        orig_mapr = g_orig._mrc_header.mapr
+        orig_maps = g_orig._mrc_header.maps
+        
+        # Export and check
+        g_orig.export(outfile, file_format='mrc')
+        g_read = Grid(outfile)
+        
+        assert g_read._mrc_header.mapc == orig_mapc
+        assert g_read._mrc_header.mapr == orig_mapr
+        assert g_read._mrc_header.maps == orig_maps

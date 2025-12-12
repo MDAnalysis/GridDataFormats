@@ -13,6 +13,17 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+12/12/2025 Pradyumn-cloud
+  * 1.1.0
+
+  Changes
+
+  * Added MRC file writing support (Issue #108)
+  * Implemented MRC.write() method with proper coordinate transformations
+  * Added Grid.export() integration for MRC format
+  * Preserved header information (mapc/mapr/maps, nstart, cell dimensions)
+  * Added comprehensive tests
+  
 ??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst
   * 1.1.0
 
