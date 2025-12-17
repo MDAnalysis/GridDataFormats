@@ -25,26 +25,19 @@ https://github.com/MDAnalysis/GridDataFormats.
 
 .. rubric:: Participating
 
-Ask questions on the `mdnalysis-discussion mailing list`_ and join the
-discussion.
+Ask questions in the `discussion forum`_.
 
-Please report problems and enhancement requests through the `issue
-tracker`_.
+Please report problems and enhancement requests through the `issue tracker`_. 
+Please remember that this is an open source project, maintained by volunteers and responses may take some time.
 
-GridDataFormats is open source and welcomes your contributions. Fork
-the `GridDataFormats repository on GitHub`_ and submit a pull request. Participate on the
-`developer mailing list`_.
-
+GridDataFormats is open source and welcomes your contributions. Fork the `GridDataFormats repository on GitHub`_ and submit a pull request.
 
 
 .. _`Lesser GNU General Public License, version 3`: 
    https://www.gnu.org/licenses/lgpl-3.0.en.html
 .. _GridDataFormats: https://pypi.python.org/pypi/GridDataFormats/
 .. _issue tracker: https://github.com/MDAnalysis/GridDataFormats/issues
-.. _mdnalysis-discussion mailing list:
-   https://groups.google.com/group/mdnalysis-discussion
-.. _developer mailing list:
-   https://groups.google.com/group/mdnalysis-devel
+.. _discussion forum: https://github.com/MDAnalysis/GridDataFormats/discussions
 .. _GridDataFormats repository on GitHub:
    https://github.com/MDAnalysis/GridDataFormats
    
