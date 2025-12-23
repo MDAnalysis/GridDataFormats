@@ -699,7 +699,7 @@ class Grid(object):
           information (including axis ordering) is preserved
         * For new grids, standard ordering (mapc=1, mapr=2, maps=3) is used
         
-        .. versionadded:: 0.8.0
+        .. versionadded:: 1.1.0
         """
         # Create MRC object and populate with Grid data
         mrc_file = mrc.MRC()

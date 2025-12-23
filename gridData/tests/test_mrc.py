@@ -256,3 +256,47 @@ class TestGridMRCWrite:
         assert g_read._mrc_header.mapc == orig_mapc
         assert g_read._mrc_header.mapr == orig_mapr
         assert g_read._mrc_header.maps == orig_maps
+
+    def test_mrc_write_4x4x4_with_header(self, tmpdir):
+        """Test writing 4x4x4 MRC file with custom header values."""
+        
+        # Create 4x4x4 data
+        data = np.arange(64, dtype=np.float32).reshape((4, 4, 4))
+        outfile = str(tmpdir / "test_with_header.mrc")
+        
+        # Create and write MRC
+        m = mrc.MRC()
+        m.array = data
+        m.delta = np.diag([1.5, 2.0, 2.5])
+        m.origin = np.array([10.0, 20.0, 30.0])
+        m.rank = 3
+        m.write(outfile)
+        
+        # Read back and verify
+        m_read = mrc.MRC(outfile)
+        assert_allclose(m_read.array, data)
+        assert_allclose(np.diag(m_read.delta), [1.5, 2.0, 2.5])
+        assert_allclose(m_read.origin, [10.0, 20.0, 30.0], rtol=1e-4, atol=1.0)
+
+
+    def test_mrc_write_4x4x4_without_header(self, tmpdir):
+        """Test writing 4x4x4 MRC file with default header."""
+        
+        # Create 4x4x4 random data
+        np.random.seed(42)
+        data = np.random.rand(4, 4, 4).astype(np.float32)
+        outfile = str(tmpdir / "test_without_header.mrc")
+        
+        # Create and write MRC
+        m = mrc.MRC()
+        m.array = data
+        m.delta = np.diag([1.0, 1.0, 1.0])
+        m.origin = np.array([0.0, 0.0, 0.0])
+        m.rank = 3
+        m.write(outfile)
+        
+        # Read back and verify
+        m_read = mrc.MRC(outfile)
+        assert_allclose(m_read.array, data)
+        assert_allclose(np.diag(m_read.delta), [1.0, 1.0, 1.0])
+        assert_allclose(m_read.origin, [0.0, 0.0, 0.0], rtol=1e-4, atol=1.0)

@@ -13,18 +13,8 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-12/12/2025 Pradyumn-cloud
-  * 1.1.0
-
-  Changes
-
-  * Added MRC file writing support (Issue #108)
-  * Implemented MRC.write() method with proper coordinate transformations
-  * Added Grid.export() integration for MRC format
-  * Preserved header information (mapc/mapr/maps, nstart, cell dimensions)
-  * Added comprehensive tests
   
-??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst
+??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst, Pradyumn-cloud
   * 1.1.0
 
   Changes
@@ -39,6 +29,7 @@ The rules for this file:
   * `Grid` now accepts binary operations with any operand that can be 
     broadcasted to the grid's shape according to `numpy` broadcasting rules
     (PR #142)
+  * Added MRC file writing support (Issue #108)
 
   Fixes
 
