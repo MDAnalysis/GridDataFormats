@@ -13,6 +13,19 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
+27/12/2025 IAlibay, spyke7, orbeckst
+  * 1.1.0
+
+  Changes
+
+  * Added `OpenVDB.py` inside `gridData` to simply export and write in .vdb format
+  * Added `test_vdb.py` inside `gridData\tests`
+
+  Fixes
+
+  * Adding openVDB formats (Issue #141)
+
+
 ??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst
   * 1.1.0
 
