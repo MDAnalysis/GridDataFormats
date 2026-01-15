@@ -28,6 +28,8 @@ The rules for this file:
   * `Grid` now accepts binary operations with any operand that can be 
     broadcasted to the grid's shape according to `numpy` broadcasting rules
     (PR #142)
+  * `Grid` now allows forcing MRC/CCP4 maps to be read as volumes even when
+    the header indicates they are stacks of 2D images. (#150, PR #149)
 
   Fixes
 

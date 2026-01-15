@@ -7,6 +7,7 @@ __all__ = ["DX", "CCP4", "gOpenMol"]
 DX = importlib_resources.files(__name__) / 'test.dx'
 DXGZ = importlib_resources.files(__name__) / 'test.dx.gz'
 CCP4 = importlib_resources.files(__name__) / 'test.ccp4'
+ISPG_0 = importlib_resources.files(__name__) / "ispg_0.mrc"
 # from http://www.ebi.ac.uk/pdbe/coordinates/files/1jzv.ccp4
 # (see issue #57)
 CCP4_1JZV = importlib_resources.files(__name__) / '1jzv.ccp4'

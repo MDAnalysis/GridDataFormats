@@ -113,6 +113,15 @@ def test_triclinic_ValueError():
                        "supported, not"):
         Grid(datafiles.MRC_EMD3001, file_format="MRC")
 
+def test_mrcfile_volume_check():
+    with pytest.raises(ValueError, match="is not a volumetric density"):
+        Grid(datafiles.ISPG_0)
+
+def test_mrcfile_volume_force():
+    grid = Grid(datafiles.ISPG_0, assume_volumetric=True)
+    assert_allclose(np.sum(grid.grid), 829.925)
+
+
 class TestGridMRC():
     @pytest.fixture(scope="class")
     def grid(self):
