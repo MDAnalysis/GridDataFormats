@@ -13,7 +13,7 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney
+??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney, Pradyumn-cloud
   * 1.1.0
 
   Changes
@@ -30,6 +30,7 @@ The rules for this file:
     (PR #142)
   * `Grid` now allows forcing MRC/CCP4 maps to be read as volumes even when
     the header indicates they are stacks of 2D images. (#150, PR #149)
+  * Added MRC file writing support (Issue #108)
 
   Fixes
 

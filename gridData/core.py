@@ -212,6 +212,7 @@ class Grid(object):
             'PKL': self._export_python,
             'PICKLE': self._export_python,  # compatibility
             'PYTHON': self._export_python,  # compatibility
+            'MRC': self._export_mrc,
         }
         self._loaders = {
             'CCP4': self._load_mrc,
@@ -600,6 +601,8 @@ class Grid(object):
 
         dx
             :mod:`OpenDX`
+        mrc
+            :mod:`mrc` MRC/CCP4 format
         pickle
             pickle (use :meth:`Grid.load` to restore); :meth:`Grid.save`
             is simpler than ``export(format='python')``.
@@ -609,7 +612,7 @@ class Grid(object):
         filename : str
             name of the output file
 
-        file_format : {'dx', 'pickle', None} (optional)
+        file_format : {'dx', 'pickle', 'mrc', None} (optional)
             output file format, the default is "dx"
 
         type : str (optional)
@@ -686,6 +689,41 @@ class Grid(object):
         if ext == '.gz':
             filename = root + ext
         dx.write(filename)
+    
+    def _export_mrc(self, filename, **kwargs):
+        """Export the density grid to an MRC/CCP4 file.
+        
+        The MRC2014 file format is used via the mrcfile library.
+        
+        Parameters
+        ----------
+        filename : str
+            Output filename
+        **kwargs
+            Additional keyword arguments (currently ignored)
+        
+        Notes
+        -----
+        * Only orthorhombic unit cells are supported
+        * If the Grid was loaded from an MRC file, the original header
+          information (including axis ordering) is preserved
+        * For new grids, standard ordering (mapc=1, mapr=2, maps=3) is used
+        
+        .. versionadded:: 1.1.0
+        """
+        # Create MRC object and populate with Grid data
+        mrc_file = mrc.MRC()
+        mrc_file.array = self.grid
+        mrc_file.delta = numpy.diag(self.delta)
+        mrc_file.origin = self.origin
+        mrc_file.rank = 3
+        
+        # Transfer header if it exists (preserves axis ordering and other metadata)
+        if hasattr(self, '_mrc_header'):
+            mrc_file.header = self._mrc_header
+        
+        # Write to file
+        mrc_file.write(filename)
 
     def save(self, filename):
         """Save a grid object to `filename` and add ".pickle" extension.
