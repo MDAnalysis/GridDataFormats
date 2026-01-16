@@ -22,21 +22,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 1.0.2+13.gabd0feb documentation</title>
+  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 1.0.2+14.gfe90a65 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/site.css" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=20af9d82"></script>
+      <script src="../_static/documentation_options.js?v=f0d0b688"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       <script src="../_static/js/versions.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+13.gabd0feb documentation"
+          title="Search within GridDataFormats 1.0.2+14.gfe90a65 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -162,7 +162,7 @@ for specific formats:</p>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.core.Grid">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.core.</span></span><span class="sig-name descname"><span class="pre">Grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation_spline_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.core.Grid" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.core.</span></span><span class="sig-name descname"><span class="pre">Grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation_spline_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_volumetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.core.Grid" title="Link to this definition"></a></dt>
 <dd><p>A multidimensional grid object with origin and grid spacings.</p>
 <p><a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> objects can be used in arithmetical calculations
 just like numpy arrays <em>if</em> they are compatible, i.e., they have
@@ -175,13 +175,13 @@ and written out in different formats with <a class="reference internal" href="#g
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>grid</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><em>numpy.ndarray</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – Build the grid either from a histogram or density (a numpy nD
+<li><p><strong>grid</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>numpy.ndarray</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – Build the grid either from a histogram or density (a numpy nD
 array) or read data from a filename.</p></li>
 <li><p><strong>edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> (</em><em>optional</em><em>)</em>) – List of arrays, the lower and upper bin edges along the axes
-(same as the output by <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>)</p></li>
-<li><p><strong>origin</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (optional)) – Cartesian coordinates of the center of grid position at index
+(same as the output by <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v2.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>)</p></li>
+<li><p><strong>origin</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (optional)) – Cartesian coordinates of the center of grid position at index
 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">...,</span> <span class="pre">0]</span></code>.</p></li>
-<li><p><strong>delta</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (optional)) – Either <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">n</span></code> array containing the cell lengths in each dimension,
+<li><p><strong>delta</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (optional)) – Either <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">n</span></code> array containing the cell lengths in each dimension,
 or <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">1</span></code> array for rectangular arrays.</p></li>
 <li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em> (</em><em>optional</em><em>)</em>) – A user defined dictionary of arbitrary key/value pairs
 associated with the density; the class does not touch
@@ -192,6 +192,17 @@ associated with the density; the class does not touch
 filename (see <a class="reference internal" href="#gridData.core.Grid.load" title="gridData.core.Grid.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code></a>) and autodetection of the file
 format fails. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code> and normally the file
 format is guessed from the file extension.</p></li>
+<li><p><strong>assume_volumetric</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em> (</em><em>optional</em><em>)</em>) – <p>If <code class="docutils literal notranslate"><span class="pre">False</span></code> (default), check the file header to determine whether
+the data in <cite>grid</cite> is a 3D volume. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, assume <cite>grid</cite> is volumetric.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><cite>assume_volumetric</cite> only has an effect when loading
+MRC/CCP4 files. See <a class="reference internal" href="formats/mrc.html#gridData.mrc.MRC" title="gridData.mrc.MRC"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.mrc.MRC</span></code></a></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.1.0.</span></p>
+</div>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -218,7 +229,7 @@ the Cartesian <span class="math notranslate nohighlight">\(x\)</span> component,
 <span class="math notranslate nohighlight">\(y\)</span> component, and axis 2 to the <span class="math notranslate nohighlight">\(z\)</span> component.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -231,7 +242,7 @@ the Cartesian <span class="math notranslate nohighlight">\(x\)</span> component,
 length <code class="xref py py-attr docutils literal notranslate"><span class="pre">Grid.grid.ndim</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -243,7 +254,7 @@ length <code class="xref py py-attr docutils literal notranslate"><span class="p
 origin, the <em>center</em> of cell <code class="docutils literal notranslate"><span class="pre">Grid.grid[0,</span> <span class="pre">0,</span> <span class="pre">..,</span> <span class="pre">0]</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -294,7 +305,7 @@ together with the other data with <a class="reference internal" href="#gridData.
 
 <p class="rubric">Example</p>
 <p>Create a Grid object from data.</p>
-<p>From <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
+<p>From <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v2.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">histogramdd</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">)</span>
 </pre></div>
@@ -439,7 +450,7 @@ that the spline will generate values that would not normally
 appear in the data. For example, a density is non-negative but
 a cubic spline interpolation can generate negative values,
 especially at the boundary between 0 and high values.</p>
-<p>Internally, the function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates" title="(in SciPy v1.16.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.map_coordinates()</span></code></a>
+<p>Internally, the function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates" title="(in SciPy v1.17.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.map_coordinates()</span></code></a>
 with <code class="docutils literal notranslate"><span class="pre">mode=&quot;constant&quot;</span></code> whereby interpolated values outside
 the interpolated grid are determined by filling all values beyond
 the edge with the same constant value, defined by the
@@ -459,7 +470,7 @@ extruded volumes when interpolating beyond the grid.</p>
 <dd><p>Order of the B-spline interpolation of the data.</p>
 <p>3 = cubic; 4 &amp; 5 are also supported</p>
 <p>Only choose values that are acceptable to
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.16.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.spline_filter.html#scipy.ndimage.spline_filter" title="(in SciPy v1.17.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.ndimage.spline_filter()</span></code></a>!</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#gridData.core.Grid.interpolated" title="gridData.core.Grid.interpolated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interpolated</span></code></a></p>
@@ -468,7 +479,7 @@ extruded volumes when interpolating beyond the grid.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gridData.core.Grid.load">
-<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.core.Grid.load" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_volumetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.core.Grid.load" title="Link to this definition"></a></dt>
 <dd><p>Load saved grid and edges from <cite>filename</cite></p>
 <p>The <a class="reference internal" href="#gridData.core.Grid.load" title="gridData.core.Grid.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code></a> method calls the class’s constructor method and
 completely resets all values, based on the loaded data.</p>
@@ -613,7 +624,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+13.gabd0feb
+        1.0.2+14.gfe90a65
       <span class="fa fa-caret-down"></span>
     </span>
 

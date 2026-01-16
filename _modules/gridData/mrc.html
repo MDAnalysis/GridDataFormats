@@ -21,20 +21,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.mrc &mdash; GridDataFormats 1.0.2+13.gabd0feb documentation</title>
+  <title>gridData.mrc &mdash; GridDataFormats 1.0.2+14.gfe90a65 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=20af9d82"></script>
+      <script src="../../_static/documentation_options.js?v=f0d0b688"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+13.gabd0feb documentation"
+          title="Search within GridDataFormats 1.0.2+14.gfe90a65 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -164,6 +164,12 @@
 <span class="sd">    ----------</span>
 <span class="sd">    filename : str (optional)</span>
 <span class="sd">       input file (or stream), can be compressed</span>
+<span class="sd">    assume_volumetric : bool (optional)</span>
+<span class="sd">      If ``False`` (default), check the file header to determine whether</span>
+<span class="sd">      the data in `grid` is a 3D volume. If ``True``, assume `grid` is volumetric.</span>
+
+<span class="sd">      .. versionadded:: 1.1.0</span>
+<span class="sd">        </span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -207,19 +213,25 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">assume_volumetric</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">assume_volumetric</span><span class="o">=</span><span class="n">assume_volumetric</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MRC.read">
 <a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC.read">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">assume_volumetric</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Populate the instance from the MRC/CCP4 file *filename*.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="k">with</span> <span class="n">mrcfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">mrc</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">mrc</span><span class="o">.</span><span class="n">is_volume</span><span class="p">():</span>                           <span class="c1">#pragma: no cover</span>
+            <span class="k">if</span> <span class="n">assume_volumetric</span><span class="p">:</span>
+                <span class="c1"># non 3D volumes should always fail, regardless of assume_volumetric value</span>
+                <span class="n">is_volume</span> <span class="o">=</span> <span class="n">mrc</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">mrc</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_volume</span> <span class="o">=</span> <span class="n">mrc</span><span class="o">.</span><span class="n">is_volume</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_volume</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="s2">&quot;MRC file </span><span class="si">{}</span><span class="s2"> is not a volumetric density.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">h</span> <span class="o">=</span> <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -314,7 +326,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+13.gabd0feb
+        1.0.2+14.gfe90a65
       <span class="fa fa-caret-down"></span>
     </span>
 
