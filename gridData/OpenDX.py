@@ -160,8 +160,46 @@ portable and universal manner::
    https://web.archive.org/web/20080808140524/http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm
 .. http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF
 
-Classes and functions
----------------------
+Classes
+-------
+
+DX field class
+~~~~~~~~~~~~~~
+
+The primary class is :class:`field`, which is a container for the other classes.
+It contains the following classes:
+
+* :class:`gridpositions`
+* :class:`gridconnections`
+* :class:`array`
+
+The :class:`gridpositions` class contains the position of the grid cells.
+The :class:`gridconnections` class contains the connections between the grid cells.
+The :class:`array` class contains the data on the grid.
+
+.. autoclass:: field
+   :members:
+
+DX components
+~~~~~~~~~~~~~
+
+The :class:`field` class contains the following components:
+
+.. autoclass:: gridpositions
+   :members:
+
+.. autoclass:: gridconnections
+   :members:
+
+.. autoclass:: array
+   :members:
+
+DX parser
+~~~~~~~~~~
+The :class:`DXParser` class is used to parse the DX file and construct the :class:`field` object.
+
+.. autoclass:: DXParser
+   :members:
 
 """
 import numpy
