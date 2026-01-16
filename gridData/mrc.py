@@ -28,6 +28,10 @@ References
 Classes
 -------
 
+.. autoclass:: MRC
+   :members:
+
+
 """
 import numpy as np
 import mrcfile
@@ -175,6 +179,7 @@ class MRC(object):
         If the MRC object was created by reading an existing file, the original
         header information (including mapc, mapr, maps ordering) is preserved.
         Otherwise, standard ordering (mapc=1, mapr=2, maps=3) is used.
+        
         
         .. versionadded:: 1.1.0
         """

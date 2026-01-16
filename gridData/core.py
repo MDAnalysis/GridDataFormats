@@ -2,8 +2,8 @@
 # Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser General Public License, version 3 or later.
 r"""
-Core functionality for storing n-D grids --- :mod:`gridData.core`
-=================================================================
+Core functionality for storing n-D grids
+========================================
 
 The :mod:`core` module contains classes and functions that are
 independent of the grid data format. In particular this module
@@ -19,10 +19,20 @@ Some formats can also be read::
  g.load(filename)             # populate with data from filename
 
 
-Classes and functions
----------------------
+Classes
+-------
 
+.. autoclass:: Grid
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Functions
+---------
+
+.. autofunction:: ndmeshgrid
 """
+
 import os
 import errno
 import pickle
