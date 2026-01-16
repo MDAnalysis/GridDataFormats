@@ -21,20 +21,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.core &mdash; GridDataFormats 1.0.2+15.g394161b documentation</title>
+  <title>gridData.core &mdash; GridDataFormats 1.0.2+16.g30ad179 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=fc898309"></script>
+      <script src="../../_static/documentation_options.js?v=d84a3a55"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+15.g394161b documentation"
+          title="Search within GridDataFormats 1.0.2+16.g30ad179 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -333,6 +333,7 @@
             <span class="s1">&#39;PKL&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_python</span><span class="p">,</span>
             <span class="s1">&#39;PICKLE&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_python</span><span class="p">,</span>  <span class="c1"># compatibility</span>
             <span class="s1">&#39;PYTHON&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_python</span><span class="p">,</span>  <span class="c1"># compatibility</span>
+            <span class="s1">&#39;MRC&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_mrc</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;CCP4&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_mrc</span><span class="p">,</span>
@@ -732,6 +733,8 @@
 
 <span class="sd">        dx</span>
 <span class="sd">            :mod:`OpenDX`</span>
+<span class="sd">        mrc</span>
+<span class="sd">            :mod:`mrc` MRC/CCP4 format</span>
 <span class="sd">        pickle</span>
 <span class="sd">            pickle (use :meth:`Grid.load` to restore); :meth:`Grid.save`</span>
 <span class="sd">            is simpler than ``export(format=&#39;python&#39;)``.</span>
@@ -741,7 +744,7 @@
 <span class="sd">        filename : str</span>
 <span class="sd">            name of the output file</span>
 
-<span class="sd">        file_format : {&#39;dx&#39;, &#39;pickle&#39;, None} (optional)</span>
+<span class="sd">        file_format : {&#39;dx&#39;, &#39;pickle&#39;, &#39;mrc&#39;, None} (optional)</span>
 <span class="sd">            output file format, the default is &quot;dx&quot;</span>
 
 <span class="sd">        type : str (optional)</span>
@@ -819,6 +822,41 @@
         <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.gz&#39;</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="n">ext</span>
         <span class="n">dx</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_export_mrc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export the density grid to an MRC/CCP4 file.</span>
+<span class="sd">        </span>
+<span class="sd">        The MRC2014 file format is used via the mrcfile library.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Output filename</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Additional keyword arguments (currently ignored)</span>
+<span class="sd">        </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        * Only orthorhombic unit cells are supported</span>
+<span class="sd">        * If the Grid was loaded from an MRC file, the original header</span>
+<span class="sd">          information (including axis ordering) is preserved</span>
+<span class="sd">        * For new grids, standard ordering (mapc=1, mapr=2, maps=3) is used</span>
+<span class="sd">        </span>
+<span class="sd">        .. versionadded:: 1.1.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create MRC object and populate with Grid data</span>
+        <span class="n">mrc_file</span> <span class="o">=</span> <span class="n">mrc</span><span class="o">.</span><span class="n">MRC</span><span class="p">()</span>
+        <span class="n">mrc_file</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span>
+        <span class="n">mrc_file</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span>
+        <span class="n">mrc_file</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span>
+        <span class="n">mrc_file</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="mi">3</span>
+        
+        <span class="c1"># Transfer header if it exists (preserves axis ordering and other metadata)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_mrc_header&#39;</span><span class="p">):</span>
+            <span class="n">mrc_file</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mrc_header</span>
+        
+        <span class="c1"># Write to file</span>
+        <span class="n">mrc_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Grid.save">
 <a class="viewcode-back" href="../../gridData/core.html#gridData.core.Grid.save">[docs]</a>
@@ -1114,7 +1152,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+15.g394161b
+        1.0.2+16.g30ad179
       <span class="fa fa-caret-down"></span>
     </span>
 

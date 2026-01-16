@@ -21,20 +21,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.mrc &mdash; GridDataFormats 1.0.2+15.g394161b documentation</title>
+  <title>gridData.mrc &mdash; GridDataFormats 1.0.2+16.g30ad179 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=fc898309"></script>
+      <script src="../../_static/documentation_options.js?v=d84a3a55"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+15.g394161b documentation"
+          title="Search within GridDataFormats 1.0.2+16.g30ad179 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -206,7 +206,7 @@
 <span class="sd">    -----</span>
 <span class="sd">    * Only volumetric (3D) densities are read.</span>
 <span class="sd">    * Only orthorhombic unitcells supported (other raise :exc:`ValueError`)</span>
-<span class="sd">    * Only reading is currently supported.</span>
+<span class="sd">    * Reading and writing are supported.</span>
 
 
 <span class="sd">    .. versionadded:: 0.7.0</span>
@@ -285,10 +285,114 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return array data as (edges,grid), i.e. a numpy nD histogram.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MRC.write">
+<a class="viewcode-back" href="../../gridData/formats/mrc.html#gridData.mrc.MRC.write">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write grid data to MRC/CCP4 file format.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Output filename for the MRC file</span>
+<span class="sd">        </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The data array should be in xyz order (axis 0=X, axis 1=Y, axis 2=Z).</span>
+<span class="sd">        </span>
+<span class="sd">        If the MRC object was created by reading an existing file, the original</span>
+<span class="sd">        header information (including mapc, mapr, maps ordering) is preserved.</span>
+<span class="sd">        Otherwise, standard ordering (mapc=1, mapr=2, maps=3) is used.</span>
+<span class="sd">        </span>
+<span class="sd">        .. versionadded:: 1.1.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        
+        <span class="c1"># Preserve header if it exists, otherwise use defaults</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;header&#39;</span><span class="p">):</span>
+            <span class="c1"># File was read - preserve original ordering</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>
+            <span class="n">axes_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">mapc</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">mapr</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">maps</span><span class="p">])</span>
+            <span class="n">mapc</span><span class="p">,</span> <span class="n">mapr</span><span class="p">,</span> <span class="n">maps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">mapc</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">mapr</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">maps</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># New file - use standard ordering</span>
+            <span class="n">axes_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+            <span class="n">mapc</span><span class="p">,</span> <span class="n">mapr</span><span class="p">,</span> <span class="n">maps</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># Reverse the transformation done in read()</span>
+        <span class="n">transpose_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axes_order</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">inverse_transpose_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">transpose_order</span><span class="p">)</span>
+        
+        <span class="c1"># Transform our xyz array back to the file&#39;s native ordering</span>
+        <span class="n">data_for_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">inverse_transpose_order</span><span class="p">)</span>
+        
+        <span class="c1"># Ensure proper data type (float32 is standard for mode 2)</span>
+        <span class="n">data_for_file</span> <span class="o">=</span> <span class="n">data_for_file</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        
+        <span class="c1"># Create new MRC file</span>
+        <span class="k">with</span> <span class="n">mrcfile</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">mrc</span><span class="p">:</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data_for_file</span><span class="p">)</span>
+            
+            <span class="c1"># Set voxel size from delta (diagonal elements)</span>
+            <span class="n">voxel_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">voxel_size</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">voxel_size</span><span class="p">)</span>
+            
+            <span class="c1"># Set map ordering</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">mapc</span> <span class="o">=</span> <span class="n">mapc</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">mapr</span> <span class="o">=</span> <span class="n">mapr</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">maps</span> <span class="o">=</span> <span class="n">maps</span>
+            
+            <span class="c1"># Handle nstart and origin</span>
+            <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Preserve original header values</span>
+                <span class="n">nxstart</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">nxstart</span><span class="p">)</span>
+                <span class="n">nystart</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">nystart</span><span class="p">)</span>
+                <span class="n">nzstart</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">nzstart</span><span class="p">)</span>
+                <span class="n">header_origin_xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">z</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                
+                <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">mx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">mx</span><span class="p">)</span>
+                <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">my</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">my</span><span class="p">)</span>
+                <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">mz</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">mz</span><span class="p">)</span>
+                
+                <span class="c1"># Preserve cell dimensions</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="s1">&#39;cella&#39;</span><span class="p">):</span>
+                    <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">cella</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">cella</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">cella</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">cella</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+                    <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">cella</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">cella</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="s1">&#39;cellb&#39;</span><span class="p">):</span>
+                    <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+                    <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span>
+                    <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">cellb</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span>
+                <span class="c1"># Copy space group if available</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="s1">&#39;ispg&#39;</span><span class="p">):</span>
+                    <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">ispg</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">ispg</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># For new files, calculate nstart from origin</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">voxel_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Voxel size must be positive, got </span><span class="si">{</span><span class="n">voxel_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                
+                <span class="c1"># Set header.origin = 0 and encode everything in nstart</span>
+                <span class="n">header_origin_xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="n">nxstart</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">voxel_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                <span class="n">nystart</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">voxel_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="n">nzstart</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">voxel_size</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+            
+            <span class="c1"># Set the start positions</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">nxstart</span> <span class="o">=</span> <span class="n">nxstart</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">nystart</span> <span class="o">=</span> <span class="n">nystart</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">nzstart</span> <span class="o">=</span> <span class="n">nzstart</span>
+            
+            <span class="c1"># Set explicit origin</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_origin_xyz</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_origin_xyz</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_origin_xyz</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            
+            <span class="c1"># Update statistics only</span>
+            <span class="n">mrc</span><span class="o">.</span><span class="n">update_header_stats</span><span class="p">()</span></div>
 </div>
-
-
-
 
 </pre></div>
 
@@ -326,7 +430,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+15.g394161b
+        1.0.2+16.g30ad179
       <span class="fa fa-caret-down"></span>
     </span>
 

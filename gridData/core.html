@@ -22,21 +22,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 1.0.2+15.g394161b documentation</title>
+  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 1.0.2+16.g30ad179 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/site.css" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=fc898309"></script>
+      <script src="../_static/documentation_options.js?v=d84a3a55"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       <script src="../_static/js/versions.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+15.g394161b documentation"
+          title="Search within GridDataFormats 1.0.2+16.g30ad179 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -391,6 +391,8 @@ visualization.</p>
 <dl class="simple">
 <dt>dx</dt><dd><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">OpenDX</span></code></p>
 </dd>
+<dt>mrc</dt><dd><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">mrc</span></code> MRC/CCP4 format</p>
+</dd>
 <dt>pickle</dt><dd><p>pickle (use <a class="reference internal" href="#gridData.core.Grid.load" title="gridData.core.Grid.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Grid.load()</span></code></a> to restore); <a class="reference internal" href="#gridData.core.Grid.save" title="gridData.core.Grid.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Grid.save()</span></code></a>
 is simpler than <code class="docutils literal notranslate"><span class="pre">export(format='python')</span></code>.</p>
 </dd>
@@ -399,7 +401,7 @@ is simpler than <code class="docutils literal notranslate"><span class="pre">exp
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – name of the output file</p></li>
-<li><p><strong>file_format</strong> (<em>{'dx'</em><em>, </em><em>'pickle'</em><em>, </em><em>None}</em><em> (</em><em>optional</em><em>)</em>) – output file format, the default is “dx”</p></li>
+<li><p><strong>file_format</strong> (<em>{'dx'</em><em>, </em><em>'pickle'</em><em>, </em><em>'mrc'</em><em>, </em><em>None}</em><em> (</em><em>optional</em><em>)</em>) – output file format, the default is “dx”</p></li>
 <li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> (</em><em>optional</em><em>)</em>) – <p>for DX, set the output DX array type, e.g., “double” or “float”.
 By default (<code class="docutils literal notranslate"><span class="pre">None</span></code>), the DX type is determined from the numpy
 dtype of the array of the grid (and this will typically result in
@@ -624,7 +626,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+15.g394161b
+        1.0.2+16.g30ad179
       <span class="fa fa-caret-down"></span>
     </span>
 
