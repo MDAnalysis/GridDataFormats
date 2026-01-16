@@ -27,7 +27,7 @@ small number of file formats is directly supported.
    ============================ ==========  =========  =====  =====  =========================================
    :mod:`~gridData.OpenDX`      OpenDX_     dx         x      x      subset of OpenDX implemented
    :mod:`~gridData.gOpenMol`    gOpenMol_   plt        x
-   :mod:`~gridData.mrc`         CCP4_       ccp4,mrc   x             subset implemented
+   :mod:`~gridData.mrc`         CCP4_       ccp4,mrc   x      x      subset implemented
    :class:`~gridData.core.Grid` pickle      pickle     x      x      standard Python pickle of the Grid class
    ============================ ==========  =========  =====  =====  =========================================
 

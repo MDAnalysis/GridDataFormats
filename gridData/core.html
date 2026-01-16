@@ -22,21 +22,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core functionality for storing n-D grids — gridData.core &mdash; GridDataFormats 1.0.2+16.g30ad179 documentation</title>
+  <title>Core functionality for storing n-D grids &mdash; GridDataFormats 1.0.2+18.gdd8d17f documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/site.css" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=d84a3a55"></script>
+      <script src="../_static/documentation_options.js?v=1083e286"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       <script src="../_static/js/versions.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.0.2+16.g30ad179 documentation"
+          title="Search within GridDataFormats 1.0.2+18.gdd8d17f documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -89,30 +89,35 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic use</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#classes-and-functions">Classes and functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core functionality for storing n-D grids</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gridData.core.Grid"><code class="docutils literal notranslate"><span class="pre">Grid</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.grid"><code class="docutils literal notranslate"><span class="pre">Grid.grid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.delta"><code class="docutils literal notranslate"><span class="pre">Grid.delta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.origin"><code class="docutils literal notranslate"><span class="pre">Grid.origin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.edges"><code class="docutils literal notranslate"><span class="pre">Grid.edges</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.midpoints"><code class="docutils literal notranslate"><span class="pre">Grid.midpoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.metadata"><code class="docutils literal notranslate"><span class="pre">Grid.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.centers"><code class="docutils literal notranslate"><span class="pre">Grid.centers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.check_compatible"><code class="docutils literal notranslate"><span class="pre">Grid.check_compatible()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.default_format"><code class="docutils literal notranslate"><span class="pre">Grid.default_format</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.export"><code class="docutils literal notranslate"><span class="pre">Grid.export()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.interpolated"><code class="docutils literal notranslate"><span class="pre">Grid.interpolated</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.interpolation_spline_order"><code class="docutils literal notranslate"><span class="pre">Grid.interpolation_spline_order</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.load"><code class="docutils literal notranslate"><span class="pre">Grid.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.resample"><code class="docutils literal notranslate"><span class="pre">Grid.resample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.resample_factor"><code class="docutils literal notranslate"><span class="pre">Grid.resample_factor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gridData.core.Grid.save"><code class="docutils literal notranslate"><span class="pre">Grid.save()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#gridData.core.Grid"><code class="docutils literal notranslate"><span class="pre">Grid</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.grid"><code class="docutils literal notranslate"><span class="pre">Grid.grid</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.delta"><code class="docutils literal notranslate"><span class="pre">Grid.delta</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.origin"><code class="docutils literal notranslate"><span class="pre">Grid.origin</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.edges"><code class="docutils literal notranslate"><span class="pre">Grid.edges</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.midpoints"><code class="docutils literal notranslate"><span class="pre">Grid.midpoints</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.metadata"><code class="docutils literal notranslate"><span class="pre">Grid.metadata</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.centers"><code class="docutils literal notranslate"><span class="pre">Grid.centers()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.check_compatible"><code class="docutils literal notranslate"><span class="pre">Grid.check_compatible()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.default_format"><code class="docutils literal notranslate"><span class="pre">Grid.default_format</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.export"><code class="docutils literal notranslate"><span class="pre">Grid.export()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.interpolated"><code class="docutils literal notranslate"><span class="pre">Grid.interpolated</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.interpolation_spline_order"><code class="docutils literal notranslate"><span class="pre">Grid.interpolation_spline_order</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.load"><code class="docutils literal notranslate"><span class="pre">Grid.load()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.resample"><code class="docutils literal notranslate"><span class="pre">Grid.resample()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.resample_factor"><code class="docutils literal notranslate"><span class="pre">Grid.resample_factor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gridData.core.Grid.save"><code class="docutils literal notranslate"><span class="pre">Grid.save()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#gridData.core.ndmeshgrid"><code class="docutils literal notranslate"><span class="pre">ndmeshgrid()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gridData.core.ndmeshgrid"><code class="docutils literal notranslate"><span class="pre">ndmeshgrid()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="formats.html">Formats</a></li>
 </ul>
 
@@ -131,7 +136,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Core functionality for storing n-D grids — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></li>
+      <li class="breadcrumb-item active">Core functionality for storing n-D grids</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/gridData/core.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -141,8 +146,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="core-functionality-for-storing-n-d-grids-griddata-core">
-<span id="module-gridData.core"></span><h1>Core functionality for storing n-D grids — <a class="reference internal" href="#module-gridData.core" title="gridData.core"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.core</span></code></a><a class="headerlink" href="#core-functionality-for-storing-n-d-grids-griddata-core" title="Link to this heading"></a></h1>
+  <section id="core-functionality-for-storing-n-d-grids">
+<span id="module-gridData.core"></span><h1>Core functionality for storing n-D grids<a class="headerlink" href="#core-functionality-for-storing-n-d-grids" title="Link to this heading"></a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">core</span></code> module contains classes and functions that are
 independent of the grid data format. In particular this module
 contains the <a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> class that acts as a universal constructor
@@ -156,14 +161,13 @@ for specific formats:</p>
 <span class="n">g</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>             <span class="c1"># populate with data from filename</span>
 </pre></div>
 </div>
-<section id="classes-and-functions">
-<h2>Classes and functions<a class="headerlink" href="#classes-and-functions" title="Link to this heading"></a></h2>
-</section>
-</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.core.Grid">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.core.</span></span><span class="sig-name descname"><span class="pre">Grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation_spline_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_volumetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.core.Grid" title="Link to this definition"></a></dt>
-<dd><p>A multidimensional grid object with origin and grid spacings.</p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A multidimensional grid object with origin and grid spacings.</p>
 <p><a class="reference internal" href="#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> objects can be used in arithmetical calculations
 just like numpy arrays <em>if</em> they are compatible, i.e., they have
 the same shapes and lengths. In order to make arrays compatible,
@@ -575,6 +579,9 @@ is a better alternative for portability.</p>
 
 </dd></dl>
 
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="gridData.core.ndmeshgrid">
 <span class="sig-prename descclassname"><span class="pre">gridData.core.</span></span><span class="sig-name descname"><span class="pre">ndmeshgrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gridData/core.html#ndmeshgrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.core.ndmeshgrid" title="Link to this definition"></a></dt>
@@ -587,6 +594,8 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
 <a class="reference external" href="http://stackoverflow.com/questions/1827489/numpy-meshgrid-in-3d">http://stackoverflow.com/questions/1827489/numpy-meshgrid-in-3d</a> and fixed.</p>
 </dd></dl>
 
+</section>
+</section>
 
 
            </div>
@@ -626,7 +635,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.0.2+16.g30ad179
+        1.0.2+18.gdd8d17f
       <span class="fa fa-caret-down"></span>
     </span>
 
