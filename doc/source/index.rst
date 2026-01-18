@@ -49,7 +49,7 @@ GridDataFormats is open source and welcomes your contributions. Fork the `GridDa
 .. Contents (sidebar)
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 3
    :hidden:
 
    installation	      

@@ -28,6 +28,10 @@ References
 Classes
 -------
 
+.. autoclass:: MRC
+   :members:
+
+
 """
 import numpy as np
 import mrcfile
@@ -43,6 +47,12 @@ class MRC(object):
     ----------
     filename : str (optional)
        input file (or stream), can be compressed
+    assume_volumetric : bool (optional)
+      If ``False`` (default), check the file header to determine whether
+      the data in `grid` is a 3D volume. If ``True``, assume `grid` is volumetric.
+
+      .. versionadded:: 1.1.0
+        
 
     Raises
     ------
@@ -79,24 +89,30 @@ class MRC(object):
     -----
     * Only volumetric (3D) densities are read.
     * Only orthorhombic unitcells supported (other raise :exc:`ValueError`)
-    * Only reading is currently supported.
+    * Reading and writing are supported.
 
 
     .. versionadded:: 0.7.0
 
     """
 
-    def __init__(self, filename=None):
+    def __init__(self, filename=None, assume_volumetric=False):
         self.filename = filename
         if filename is not None:
-            self.read(filename)
+            self.read(filename, assume_volumetric=assume_volumetric)
 
-    def read(self, filename):
+    def read(self, filename, assume_volumetric=False):
         """Populate the instance from the MRC/CCP4 file *filename*."""
         if filename is not None:
             self.filename = filename
         with mrcfile.open(filename) as mrc:
-            if not mrc.is_volume():                           #pragma: no cover
+            if assume_volumetric:
+                # non 3D volumes should always fail, regardless of assume_volumetric value
+                is_volume = mrc.data is not None and len(mrc.data.shape) == 3
+            else:
+                is_volume = mrc.is_volume()
+
+            if not is_volume:
                 raise ValueError(
                     "MRC file {} is not a volumetric density.".format(filename))
             self.header = h = mrc.header.copy()
@@ -148,5 +164,107 @@ class MRC(object):
         """Return array data as (edges,grid), i.e. a numpy nD histogram."""
         return (self.array, self.edges)
 
-
-
+    def write(self, filename):
+        """Write grid data to MRC/CCP4 file format.
+        
+        Parameters
+        ----------
+        filename : str
+            Output filename for the MRC file
+        
+        Notes
+        -----
+        The data array should be in xyz order (axis 0=X, axis 1=Y, axis 2=Z).
+        
+        If the MRC object was created by reading an existing file, the original
+        header information (including mapc, mapr, maps ordering) is preserved.
+        Otherwise, standard ordering (mapc=1, mapr=2, maps=3) is used.
+        
+        
+        .. versionadded:: 1.1.0
+        """
+        if filename is not None:
+            self.filename = filename
+        
+        # Preserve header if it exists, otherwise use defaults
+        if hasattr(self, 'header'):
+            # File was read - preserve original ordering
+            h = self.header
+            axes_order = np.hstack([h.mapc, h.mapr, h.maps])
+            mapc, mapr, maps = int(h.mapc), int(h.mapr), int(h.maps)
+        else:
+            # New file - use standard ordering
+            axes_order = np.array([1, 2, 3])
+            mapc, mapr, maps = 1, 2, 3
+            h = None
+        
+        # Reverse the transformation done in read()
+        transpose_order = np.argsort(axes_order[::-1])
+        inverse_transpose_order = np.argsort(transpose_order)
+        
+        # Transform our xyz array back to the file's native ordering
+        data_for_file = np.transpose(self.array, axes=inverse_transpose_order)
+        
+        # Ensure proper data type (float32 is standard for mode 2)
+        data_for_file = data_for_file.astype(np.float32)
+        
+        # Create new MRC file
+        with mrcfile.new(filename, overwrite=True) as mrc:
+            mrc.set_data(data_for_file)
+            
+            # Set voxel size from delta (diagonal elements)
+            voxel_size = np.diag(self.delta).astype(np.float32)
+            mrc.voxel_size = tuple(voxel_size)
+            
+            # Set map ordering
+            mrc.header.mapc = mapc
+            mrc.header.mapr = mapr
+            mrc.header.maps = maps
+            
+            # Handle nstart and origin
+            if h is not None:
+                # Preserve original header values
+                nxstart = int(h.nxstart)
+                nystart = int(h.nystart)
+                nzstart = int(h.nzstart)
+                header_origin_xyz = np.array([h.origin.x, h.origin.y, h.origin.z], dtype=np.float32)
+                
+                mrc.header.mx = int(h.mx)
+                mrc.header.my = int(h.my)
+                mrc.header.mz = int(h.mz)
+                
+                # Preserve cell dimensions
+                if hasattr(h, 'cella'):
+                    mrc.header.cella.x = float(h.cella.x)
+                    mrc.header.cella.y = float(h.cella.y)
+                    mrc.header.cella.z = float(h.cella.z)
+                if hasattr(h, 'cellb'):
+                    mrc.header.cellb.alpha = float(h.cellb.alpha)
+                    mrc.header.cellb.beta = float(h.cellb.beta)
+                    mrc.header.cellb.gamma = float(h.cellb.gamma)
+                # Copy space group if available
+                if hasattr(h, 'ispg'):
+                    mrc.header.ispg = int(h.ispg)
+            else:
+                # For new files, calculate nstart from origin
+                if np.any(voxel_size <= 0):
+                    raise ValueError(f"Voxel size must be positive, got {voxel_size}")
+                
+                # Set header.origin = 0 and encode everything in nstart
+                header_origin_xyz = np.zeros(3, dtype=np.float32)
+                nxstart = int(np.round(self.origin[0] / voxel_size[0]))
+                nystart = int(np.round(self.origin[1] / voxel_size[1]))
+                nzstart = int(np.round(self.origin[2] / voxel_size[2]))
+            
+            # Set the start positions
+            mrc.header.nxstart = nxstart
+            mrc.header.nystart = nystart
+            mrc.header.nzstart = nzstart
+            
+            # Set explicit origin
+            mrc.header.origin.x = float(header_origin_xyz[0])
+            mrc.header.origin.y = float(header_origin_xyz[1])
+            mrc.header.origin.z = float(header_origin_xyz[2])
+            
+            # Update statistics only
+            mrc.update_header_stats()

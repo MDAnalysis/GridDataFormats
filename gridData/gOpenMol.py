@@ -126,6 +126,9 @@ Line numbers and variables on the line::
 Classes
 -------
 
+.. autoclass:: Plt
+   :members:
+
 """
 import warnings
 import struct

@@ -27,6 +27,10 @@ The rules for this file:
 
 
 ??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst
+-------------------------------------------------------------------------------
+01/16/2026 IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney, 
+           Pradyumn-cloud
+
   * 1.1.0
 
   Changes
@@ -41,6 +45,9 @@ The rules for this file:
   * `Grid` now accepts binary operations with any operand that can be 
     broadcasted to the grid's shape according to `numpy` broadcasting rules
     (PR #142)
+  * `Grid` now allows forcing MRC/CCP4 maps to be read as volumes even when
+    the header indicates they are stacks of 2D images. (#150, PR #149)
+  * Added MRC file writing support (#108, PR #147)
 
   Fixes
 
