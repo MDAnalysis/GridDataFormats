@@ -704,6 +704,23 @@ class Grid(object):
         
     def _export_vdb(self, filename, **kwargs):
         """Export the density grid to an OpenVDB file.
+        
+        The file format is compatible with Blender's volume system.
+        Only 3D grids are supported.
+        
+        For the file format see https://www.openvdb.org
+        """
+        if self.grid.ndim != 3:
+            raise ValueError(
+                "OpenVDB export requires a 3D grid, got {}D".format(self.grid.ndim))
+
+        # Get grid name from metadata if available
+        grid_name = self.metadata.get('name', 'density')
+
+        # Create and populate VDB field
+        vdb_field = OpenVDB.field(grid_name)
+        vdb_field.populate(self.grid, self.origin, self.delta)
+        vdb_field.write(filename)
     
     def _export_mrc(self, filename, **kwargs):
         """Export the density grid to an MRC/CCP4 file.
@@ -740,22 +757,6 @@ class Grid(object):
         # Write to file
         mrc_file.write(filename)
 
-        The file format is compatible with Blender's volume system.
-        Only 3D grids are supported.
-
-        For the file format see https://www.openvdb.org
-        """
-        if self.grid.ndim != 3:
-            raise ValueError(
-                "OpenVDB export requires a 3D grid, got {}D".format(self.grid.ndim))
-
-        # Get grid name from metadata if available
-        grid_name = self.metadata.get('name', 'density')
-
-        # Create and populate VDB field
-        vdb_field = OpenVDB.field(grid_name)
-        vdb_field.populate(self.grid, self.origin, self.delta)
-        vdb_field.write(filename)
     def save(self, filename):
         """Save a grid object to `filename` and add ".pickle" extension.
 
