@@ -2,8 +2,8 @@
 # Copyright (c) 2009-2014 Oliver Beckstein <orbeckst@gmail.com>
 # Released under the GNU Lesser General Public License, version 3 or later.
 r"""
-Core functionality for storing n-D grids --- :mod:`gridData.core`
-=================================================================
+Core functionality for storing n-D grids
+========================================
 
 The :mod:`core` module contains classes and functions that are
 independent of the grid data format. In particular this module
@@ -19,10 +19,20 @@ Some formats can also be read::
  g.load(filename)             # populate with data from filename
 
 
-Classes and functions
----------------------
+Classes
+-------
 
+.. autoclass:: Grid
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Functions
+---------
+
+.. autofunction:: ndmeshgrid
 """
+
 import os
 import errno
 import pickle
@@ -93,6 +103,15 @@ class Grid(object):
       filename (see :meth:`load`) and autodetection of the file
       format fails. The default is ``None`` and normally the file
       format is guessed from the file extension.
+
+    assume_volumetric : bool (optional)
+      If ``False`` (default), check the file header to determine whether
+      the data in `grid` is a 3D volume. If ``True``, assume `grid` is volumetric.
+
+      .. Note:: `assume_volumetric` only has an effect when loading
+         MRC/CCP4 files. See :class:`gridData.mrc.MRC`
+
+      .. versionadded:: 1.1.0
 
     Raises
     ------
@@ -197,7 +216,7 @@ class Grid(object):
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
                  metadata=None, interpolation_spline_order=3,
-                 file_format=None):
+                 file_format=None, assume_volumetric=False):
         # file formats are guessed from extension == lower case key
         self._exporters = {
             'DX': self._export_dx,
@@ -205,6 +224,7 @@ class Grid(object):
             'PICKLE': self._export_python,  # compatibility
             'PYTHON': self._export_python,  # compatibility
             'VDB': self._export_vdb,
+            'MRC': self._export_mrc,
         }
         self._loaders = {
             'CCP4': self._load_mrc,
@@ -240,7 +260,7 @@ class Grid(object):
                     filename = str(grid)
 
             if filename is not None:
-                self.load(filename, file_format=file_format)
+                self.load(filename, file_format=file_format, assume_volumetric=assume_volumetric)
             else:
                 self._load(grid, edges, metadata, origin, delta)
 
@@ -534,7 +554,8 @@ class Grid(object):
                 "grid={0} edges={1} origin={2} delta={3}".format(
                     grid, edges, origin, delta))
 
-    def load(self, filename, file_format=None):
+    # NOTE: keep loader kwargs in sync between load() and __init__()
+    def load(self, filename, file_format=None, assume_volumetric=False):
         """Load saved grid and edges from `filename`
 
         The :meth:`load` method calls the class's constructor method and
@@ -547,32 +568,32 @@ class Grid(object):
             # are not really a file
             raise IOError(errno.ENOENT, "file not found", filename)
         loader = self._get_loader(filename, file_format=file_format)
-        loader(filename)
+        loader(filename, assume_volumetric=assume_volumetric)
 
-    def _load_python(self, filename):
+    def _load_python(self, filename, **kwargs):
         with open(filename, 'rb') as f:
             saved = pickle.load(f)
         self._load(grid=saved['grid'],
                    edges=saved['edges'],
                    metadata=saved['metadata'])
 
-    def _load_mrc(self, filename):
+    def _load_mrc(self, filename, assume_volumetric=False, **kwargs):
         """Initializes Grid from a MRC/CCP4 file."""
-        mrcfile = mrc.MRC(filename)
+        mrcfile = mrc.MRC(filename, assume_volumetric=assume_volumetric)
         grid, edges = mrcfile.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
         # Store header for access from Grid object (undocumented)
         # https://github.com/MDAnalysis/GridDataFormats/pull/100#discussion_r782604833
         self._mrc_header = mrcfile.header.copy()
 
-    def _load_dx(self, filename):
+    def _load_dx(self, filename, **kwargs):
         """Initializes Grid from a OpenDX file."""
         dx = OpenDX.field(0)
         dx.read(filename)
         grid, edges = dx.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
 
-    def _load_plt(self, filename):
+    def _load_plt(self, filename, **kwargs):
         """Initialize Grid from gOpenMol plt file."""
         g = gOpenMol.Plt()
         g.read(filename)
@@ -592,6 +613,8 @@ class Grid(object):
 
         dx
             :mod:`OpenDX`
+        mrc
+            :mod:`mrc` MRC/CCP4 format
         pickle
             pickle (use :meth:`Grid.load` to restore); :meth:`Grid.save`
             is simpler than ``export(format='python')``.
@@ -601,7 +624,7 @@ class Grid(object):
         filename : str
             name of the output file
 
-        file_format : {'dx', 'pickle', None} (optional)
+        file_format : {'dx', 'pickle', 'mrc', None} (optional)
             output file format, the default is "dx"
 
         type : str (optional)
@@ -681,6 +704,41 @@ class Grid(object):
         
     def _export_vdb(self, filename, **kwargs):
         """Export the density grid to an OpenVDB file.
+    
+    def _export_mrc(self, filename, **kwargs):
+        """Export the density grid to an MRC/CCP4 file.
+        
+        The MRC2014 file format is used via the mrcfile library.
+        
+        Parameters
+        ----------
+        filename : str
+            Output filename
+        **kwargs
+            Additional keyword arguments (currently ignored)
+        
+        Notes
+        -----
+        * Only orthorhombic unit cells are supported
+        * If the Grid was loaded from an MRC file, the original header
+          information (including axis ordering) is preserved
+        * For new grids, standard ordering (mapc=1, mapr=2, maps=3) is used
+        
+        .. versionadded:: 1.1.0
+        """
+        # Create MRC object and populate with Grid data
+        mrc_file = mrc.MRC()
+        mrc_file.array = self.grid
+        mrc_file.delta = numpy.diag(self.delta)
+        mrc_file.origin = self.origin
+        mrc_file.rank = 3
+        
+        # Transfer header if it exists (preserves axis ordering and other metadata)
+        if hasattr(self, '_mrc_header'):
+            mrc_file.header = self._mrc_header
+        
+        # Write to file
+        mrc_file.write(filename)
 
         The file format is compatible with Blender's volume system.
         Only 3D grids are supported.
