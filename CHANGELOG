@@ -13,24 +13,12 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 ------------------------------------------------------------------------------
-27/12/2025 IAlibay, spyke7, orbeckst
+??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst, spyke7
   * 1.1.0
 
   Changes
 
-  * Added `OpenVDB.py` inside `gridData` to simply export and write in .vdb format
-  * Added `test_vdb.py` inside `gridData\tests`
-
-  Fixes
-
-  * Adding openVDB formats (Issue #141)
-
-
-??/??/???? IAlibay, ollyfutur, conradolandia, orbeckst
-  * 1.1.0
-
-  Changes
-
+  * Added OpenVDB module for exporting to .vdb format (PR #148)
   * update logo from https://github.com/MDAnalysis/mdanalysis-subprojects-branding
     (issue #143)
   * Python 3.13 and 3.14 are now supported (PR #140)
@@ -38,6 +26,7 @@ The rules for this file:
 
   Enhancements
 
+  * Added openVDB format exports (Issue #141)
   * `Grid` now accepts binary operations with any operand that can be 
     broadcasted to the grid's shape according to `numpy` broadcasting rules
     (PR #142)

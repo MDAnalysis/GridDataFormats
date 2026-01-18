@@ -5,6 +5,8 @@ r"""
 The OpenVDB format is used by Blender and other VFX software for
 volumetric data. See https://www.openvdb.org
 
+pyopenvdb: https://github.com/AcademySoftwareFoundation/openvdb
+
 .. Note:: This module implements a simple writer for 3D regular grids,
           sufficient to export density data for visualization in Blender.
 
@@ -57,7 +59,10 @@ import warnings
 try:
     import pyopenvdb as vdb
 except ImportError:
-    vdb = None
+    try:
+        import openvdb as vdb
+    except ImportError:
+        vdb = None
 
 
 class field(object):
@@ -97,6 +102,7 @@ class field(object):
         if vdb is None:
             raise ImportError(
                 "pyopenvdb is required to write VDB files. "
+                "Install it with: conda install -c conda-forge openvdb"
             )
         self.name = name
         self.grid = None
@@ -180,11 +186,12 @@ class field(object):
         accessor = vdb_grid.getAccessor()
         threshold = 1e-10 
 
-        for i in range(self.grid.shape[0]):
-            for j in range(self.grid.shape[1]):
-                for k in range(self.grid.shape[2]):
-                    value = float(self.grid[i, j, k])
-                    if abs(value) > threshold:
-                        accessor.setValueOn((i, j, k), value)
+        mask = numpy.abs(slef.grid) > threshold
+        indices = numpy.argwhere(mask)
+        
+        for idx in indices:
+            i, j, k = idx
+            value = float(self.grid[i, j, k])
+            accessor.setValueOn((i, j, k), value)
 
         vdb.write(filename, grids=[vdb_grid])
