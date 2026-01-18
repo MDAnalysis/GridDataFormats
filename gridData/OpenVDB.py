@@ -186,7 +186,7 @@ class field(object):
         accessor = vdb_grid.getAccessor()
         threshold = 1e-10 
 
-        mask = numpy.abs(slef.grid) > threshold
+        mask = numpy.abs(self.grid) > threshold
         indices = numpy.argwhere(mask)
         
         for idx in indices:
