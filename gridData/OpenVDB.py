@@ -132,13 +132,12 @@ class field(object):
             raise ValueError(
                 "OpenVDB only supports 3D grids, got {}D".format(grid.ndim))
 
-        self.grid = grid.astype(numpy.float32)  # OpenVDB uses float32
+        self.grid = numpy.transpose(grid, (2, 1, 0)).astype(numpy.float32)
         self.origin = numpy.asarray(origin)
 
         # Handle delta: could be 1D array or diagonal matrix
         delta = numpy.asarray(delta)
         if delta.ndim == 2:
-            # Extract diagonal if it's a matrix
             self.delta = numpy.array([delta[i, i] for i in range(3)])
         else:
             self.delta = delta
@@ -159,30 +158,24 @@ class field(object):
         vdb_grid = vdb.FloatGrid()
         vdb_grid.name = self.name
 
-        # Set up transform (voxel size and position)
-        # Check for uniform spacing
-        if not numpy.allclose(self.delta, self.delta[0]):
-            warnings.warn(
-                "Non-uniform grid spacing {}. Using average spacing.".format(
-                    self.delta))
-            voxel_size = float(numpy.mean(self.delta))
-        else:
-            voxel_size = float(self.delta[0])
+        # this is an explicit linear transform using per-axis voxel sizes
+        # world = diag(delta) * index + corner_origin
+        corner_origin = (self.origin - 0.5 * self.delta).astype(float)
 
-        # Create linear transform with uniform voxel size
-        transform = vdb.createLinearTransform(voxelSize=voxel_size)
+        # Constructing 4x4 row-major matrix where the last row is the translation
+        matrix = [
+            [float(self.delta[0]), 0.0, 0.0, 0.0],
+            [0.0, float(self.delta[1]), 0.0, 0.0],
+            [0.0, 0.0, float(self.delta[2]), 0.0],
+            [float(corner_origin[0]), float(corner_origin[1]), float(corner_origin[2]), 1.0]
+        ]
 
-        # OpenVDB transform is at corner of voxel [0,0,0],
-        # but GridDataFormats origin is at center of voxel [0,0,0]
-        corner_origin = self.origin - 0.5 * self.delta
-        transform.translate(corner_origin)
+        transform = vdb.createLinearTransform(matrix)
         vdb_grid.transform = transform
 
-        # Set background value for sparse storage
         vdb_grid.background = 0.0
 
         # Populate the grid
-        
         accessor = vdb_grid.getAccessor()
         threshold = 1e-10 
 
