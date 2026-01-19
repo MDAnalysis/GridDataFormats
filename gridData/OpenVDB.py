@@ -132,7 +132,7 @@ class field(object):
             raise ValueError(
                 "OpenVDB only supports 3D grids, got {}D".format(grid.ndim))
 
-        self.grid = numpy.transpose(grid, (2, 1, 0)).astype(numpy.float32)
+        self.grid = grid.astype(numpy.float32)
         self.origin = numpy.asarray(origin)
 
         # Handle delta: could be 1D array or diagonal matrix
