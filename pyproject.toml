@@ -60,12 +60,11 @@ documentation = "https://www.mdanalysis.org/GridDataFormats/"
 
 [tool.setuptools]
 zip-safe = true
-include-package-data = true
 
 [tool.setuptools.packages.find]
 namespaces = false
-include=["gridData"]
-exclude=["devtools", "doc", "ci", "examples"]
+include = ["gridData", "gridData.tests", "gridData.tests.datafiles"]
+exclude = ["devtools", "doc", "ci", "examples"]
 
 [tool.setuptools.package-data]
 gridData = [
