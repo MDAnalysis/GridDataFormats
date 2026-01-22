@@ -163,6 +163,9 @@ jobs:
         with:
           python-version: "3.14"
 
+      - name: Checkout repository for actions
+        uses: actions/checkout@v4
+
       - name: Wait for version to be available on TestPyPI
         uses: ./.github/actions/wait-for-pypi-version
         with:
@@ -199,6 +202,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.14"
+
+      - name: Checkout repository for actions
+        uses: actions/checkout@v4
 
       - name: Wait for version to be available on PyPI
         uses: ./.github/actions/wait-for-pypi-version
