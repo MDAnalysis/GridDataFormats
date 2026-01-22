@@ -21,6 +21,8 @@ jobs:
   build:
     name: Build package
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,6 +44,24 @@ jobs:
       - name: Check package
         run: |
           twine check dist/*
+
+      - name: Extract package version
+        id: extract-version
+        run: |
+          WHEEL_FILE=$(ls dist/*.whl)
+          # Extract version from wheel filename (format: griddataformats-VERSION-py3-none-any.whl)
+          VERSION=$(basename "$WHEEL_FILE" | sed -n 's/griddataformats-\([^-]*\)-.*/\1/p')
+          # Fallback: install wheel temporarily and get version
+          if [ -z "$VERSION" ]; then
+            # This is a bit dirty; running in a virtual environment would be cleaner.
+            # (pip install only works because our package's dependencies are easy to install.)
+            python -m pip install --upgrade pip
+            pip install "$WHEEL_FILE" --quiet
+            VERSION=$(python -c "import gridData; print(gridData.__version__)")
+            pip uninstall -y griddataformats --quiet
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
 
       - name: Upload dist files
         uses: actions/upload-artifact@v4
@@ -133,7 +153,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-    needs: deploy-testpypi
+    needs: [build, deploy-testpypi]
     if: |
       github.repository == 'MDAnalysis/GridDataFormats' &&
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/'))
@@ -143,10 +163,17 @@ jobs:
         with:
           python-version: "3.14"
 
+      - name: Wait for version to be available on TestPyPI
+        uses: ./.github/actions/wait-for-pypi-version
+        with:
+          repository: testpypi
+          package: GridDataFormats
+          version: ${{ needs.build.outputs.version }}
+
       - name: Install from TestPyPI
         run: |
           python -m pip install --upgrade pip
-          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ GridDataFormats[test]
+          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "GridDataFormats==${{ needs.build.outputs.version }}[test]"
 
       - name: Test import
         run: |
@@ -163,7 +190,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-    needs: deploy-pypi
+    needs: [build, deploy-pypi]
     if: |
       github.repository == 'MDAnalysis/GridDataFormats' &&
       (github.event_name == 'release' && github.event.action == 'published')
@@ -173,10 +200,17 @@ jobs:
         with:
           python-version: "3.14"
 
+      - name: Wait for version to be available on PyPI
+        uses: ./.github/actions/wait-for-pypi-version
+        with:
+          repository: pypi
+          package: GridDataFormats
+          version: ${{ needs.build.outputs.version }}
+
       - name: Install from PyPI
         run: |
           python -m pip install --upgrade pip
-          pip install GridDataFormats[test]
+          pip install "GridDataFormats==${{ needs.build.outputs.version }}[test]"
 
       - name: Test import
         run: |
