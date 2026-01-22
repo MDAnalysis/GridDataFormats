@@ -71,6 +71,7 @@ gridData = [
     "tests/datafiles/*.dx",
     "tests/datafiles/*.dx.gz",
     "tests/datafiles/*.ccp4",
+    "tests/datafiles/*.mrc",
     "tests/datafiles/*.plt",
     "tests/datafiles/*.bz2",
 ]
