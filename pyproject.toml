@@ -8,7 +8,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "GridDataFormats"
 description = "Reading and writing of data on regular grids in Python"
-license = {file = "COPYING.LESSER" }
+license = "LGPL-3.0-or-later"
+license-files = ["COPYING", "COPYING.LESSER", "AUTHORS"]
 authors = [
     {name = "Oliver Beckstein", email = "orbeckst@gmail.com"},
 ]
@@ -19,7 +20,6 @@ classifiers = [
     "Development Status :: 6 - Mature",
     "Environment :: Console",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
     "Operating System :: POSIX",
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: Microsoft :: Windows",
@@ -60,18 +60,18 @@ documentation = "https://www.mdanalysis.org/GridDataFormats/"
 
 [tool.setuptools]
 zip-safe = true
-include-package-data = true
 
 [tool.setuptools.packages.find]
 namespaces = false
-include=["gridData"]
-exclude=["devtools", "doc", "ci", "examples"]
+include = ["gridData", "gridData.tests", "gridData.tests.datafiles"]
+exclude = ["devtools", "doc", "ci", "examples"]
 
 [tool.setuptools.package-data]
 gridData = [
     "tests/datafiles/*.dx",
     "tests/datafiles/*.dx.gz",
     "tests/datafiles/*.ccp4",
+    "tests/datafiles/*.mrc",
     "tests/datafiles/*.plt",
     "tests/datafiles/*.bz2",
 ]
