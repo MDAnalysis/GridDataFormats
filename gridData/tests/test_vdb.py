@@ -1,178 +1,107 @@
 import numpy as np
-from numpy.testing import (assert_array_equal, assert_array_almost_equal,
-                           assert_almost_equal)
+from numpy.testing import assert_allclose, assert_equal
 
 import pytest
 
+import gridData.OpenVDB
 from gridData import Grid
 
-def f_arithmetic(g):
-    return g + g - 2.5 * g / (g + 5.3)
+from . import datafiles
 
-@pytest.fixture(scope="class")
-def data():
-    d = dict(
-        griddata=np.arange(1, 28).reshape(3, 3, 3),
-        origin=np.zeros(3),
-        delta=np.ones(3))
-    d['grid'] = Grid(d['griddata'], origin=d['origin'],
-                     delta=d['delta'])
-    return d
 
-class TestGrid(object):
-    @pytest.fixture
-    def pklfile(self, data, tmpdir):
-        g = data['grid']
-        fn = tmpdir.mkdir('grid').join('grid.dat')
-        g.save(fn)  # always saves as pkl
-        return fn
+try:
+    import pyopenvdb as vdb
+    HAS_OPENVDB = True
+except ImportError:
+    try:
+        import openvdb as vdb
+        HAS_OPENVDB = True
+    except ImportError:
+        HAS_OPENVDB = False
 
-    def test_init(self, data):
-        g = Grid(data['griddata'], origin=data['origin'],
-                 delta=1)
-        assert_array_equal(g.delta, data['delta'])
 
-    def test_init_wrong_origin(self, data):
-        with pytest.raises(TypeError):
-            Grid(data['griddata'], origin=np.ones(4), delta=data['delta'])
-
-    def test_init_wrong_delta(self, data):
-        with pytest.raises(TypeError):
-            Grid(data['griddata'], origin=data['origin'], delta=np.ones(4))
-
-    def test_init_missing_delta_ValueError(self, data):
-        with pytest.raises(ValueError):
-            Grid(data['griddata'], origin=data['origin'])
-
-    def test_init_missing_origin_ValueError(self, data):
-        with pytest.raises(ValueError):
-            Grid(data['griddata'], delta=data['delta'])
-
-    def test_init_wrong_data_exception(self):
-        with pytest.raises(IOError):
-            Grid("__does_not_exist__")
-
-    def test_load_wrong_fileformat_ValueError(self):
-        with pytest.raises(ValueError):
-            Grid(grid=True, file_format="xxx")
-
-    def test_equality(self, data):
-        assert data['grid'] == data['grid']
-        assert data['grid'] != 'foo'
-        g = Grid(data['griddata'], origin=data['origin'] + 1, delta=data['delta'])
-        assert data['grid'] != g
-
-    def test_compatibility_type(self, data):
-        assert data['grid'].check_compatible(data['grid'])
-        assert data['grid'].check_compatible(3)
-        g = Grid(data['griddata'], origin=data['origin'], delta=data['delta'])
-        assert data['grid'].check_compatible(g)
-        assert data['grid'].check_compatible(g.grid)
-
-    def test_wrong_compatibile_type(self, data):
-        g = Grid(data['griddata'], origin=data['origin'] + 1, delta=data['delta'])
-        with pytest.raises(TypeError):
-            data['grid'].check_compatible(g)
-
-        arr = np.zeros(data['griddata'].shape[-1] + 1)  # Not broadcastable
-        with pytest.raises(TypeError):
-            data['grid'].check_compatible(arr)
-
-    def test_non_orthonormal_boxes(self, data):
-        delta = np.eye(3)
-        with pytest.raises(NotImplementedError):
-            Grid(data['griddata'], origin=data['origin'], delta=delta)
-
-    def test_centers(self, data):
-        g = Grid(data['griddata'], origin=np.ones(3), delta=data['delta'])
-        centers = np.array(list(g.centers()))
-        assert_array_equal(centers[0], g.origin)
-        assert_array_equal(centers[-1] - g.origin,
-                           (np.array(g.grid.shape) - 1) * data['delta'])
-
-    def test_resample_factor_failure(self, data):
-        pytest.importorskip('scipy')
-
-        with pytest.raises(ValueError):
-            g = data['grid'].resample_factor(0)
-
-    def test_resample_factor(self, data):
-        pytest.importorskip('scipy')
-
-        g = data['grid'].resample_factor(2)
-        assert_array_equal(g.delta, np.ones(3) * .5)
+@pytest.mark.skipif(not HAS_OPENVDB, reason="pyopenvdb/openvdb not installed")
+class TestVDBWrite:
+    def test_write_vdb_from_grid(self, tmpdir):
+        data = np.arange(1, 28).reshape(3, 3, 3).astype(np.float32)
+        g = Grid(data, origin=np.zeros(3), delta=np.ones(3))
         
-        assert_array_equal(g.grid.shape, np.ones(3) * 5)
+        outfile = str(tmpdir / "test.vdb")
+        g.export(outfile, file_format='VDB')
         
-        assert_array_almost_equal(g.grid[::2, ::2, ::2],
-                                  data['grid'].grid)
+        assert tmpdir.join("test.vdb").exists()
+        
+        grids, metadata = vdb.readAll(outfile)
+        assert len(grids) == 1
+        assert grids[0].name == 'density'
 
-    def test_load_pickle(self, data, tmpdir):
-        g = data['grid']
-        fn = str(tmpdir.mkdir('grid').join('grid.pkl'))
-        g.save(fn)
+    def test_write_vdb_autodetect_extension(self, tmpdir):
+        data = np.arange(24).reshape(2, 3, 4).astype(np.float32)
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        
+        outfile = str(tmpdir / "auto.vdb")
+        g.export(outfile) 
+        
+        assert tmpdir.join("auto.vdb").exists()
 
-        h = Grid()
-        h.load(fn)
+    def test_write_vdb_with_metadata(self, tmpdir):
+        data = np.ones((3, 3, 3), dtype=np.float32)
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        g.metadata['name'] = 'test_density'
+        
+        outfile = str(tmpdir / "metadata.vdb")
+        g.export(outfile)
+        
+        grids, metadata = vdb.readAll(outfile)
+        assert grids[0].name == 'test_density'
 
-        assert h == g
+    def test_write_vdb_origin_and_spacing(self, tmpdir):
+        data = np.ones((4, 4, 4), dtype=np.float32)
+        origin = np.array([10.0, 20.0, 30.0])
+        delta = np.array([0.5, 0.5, 0.5])
+        
+        g = Grid(data, origin=origin, delta=delta)
+        outfile = str(tmpdir / "transform.vdb")
+        g.export(outfile)
+        
+        grids, metadata = vdb.readAll(outfile)
+        grid_vdb = grids[0]
+        
+        voxel_size = grid_vdb.transform.voxelSize()
+        assert_allclose([voxel_size[i] for i in range(3)], delta, rtol=1e-5)
 
-    def test_init_pickle_pathobjects(self, data, tmpdir):
-        g = data['grid']
-        fn = tmpdir.mkdir('grid').join('grid.pickle')
-        g.save(fn)
+    def test_write_vdb_from_ccp4(self, tmpdir):
+        g = Grid(datafiles.CCP4)
+        outfile = str(tmpdir / "from_ccp4.vdb")
+        
+        g.export(outfile, file_format='VDB')
+        
+        assert tmpdir.join("from_ccp4.vdb").exists()
+        grids, metadata = vdb.readAll(outfile)
+        assert len(grids) == 1
 
-        h = Grid(fn)
+    def test_vdb_field_direct(self, tmpdir):
+        data = np.arange(27).reshape(3, 3, 3).astype(np.float32)
+        
+        vdb_field = gridData.OpenVDB.field('direct_test')
+        vdb_field.populate(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        
+        outfile = str(tmpdir / "direct.vdb")
+        vdb_field.write(outfile)
+        
+        grids, metadata = vdb.readAll(outfile)
+        assert grids[0].name == 'direct_test'
 
-        assert h == g
+    def test_vdb_field_no_data_raises(self, tmpdir):
+        vdb_field = gridData.OpenVDB.field('empty')
+        
+        outfile = str(tmpdir / "empty.vdb")
+        with pytest.raises(ValueError, match="No data to write"):
+            vdb_field.write(outfile)
 
-    @pytest.mark.parametrize("fileformat", ("pkl", "PKL", "pickle", "python"))
-    def test_load_fileformat(self, data, pklfile, fileformat):
-        h = Grid(pklfile, file_format="pkl")
-        assert h == data['grid']
-
-    @pytest.mark.xfail
-    @pytest.mark.parametrize("fileformat", ("ccp4", "plt", "dx"))
-    def test_load_wrong_fileformat(self, data, pklfile, fileformat):
-        with pytest.raises('ValueError'):
-            Grid(pklfile, file_format=fileformat)
-
-    @pytest.mark.parametrize("fileformat", ("dx", "pkl"))
-    def test_export(self, data, fileformat, tmpdir):
-        g = data['grid']
-        fn = tmpdir.mkdir('grid_export').join("grid.{}".format(fileformat))
-        g.export(fn)  
-        h = Grid(fn)   
-        assert g == h
-
-    @pytest.mark.parametrize("fileformat", ("ccp4", "plt"))
-    def test_export_not_supported(self, data, fileformat, tmpdir):
-        g = data['grid']
-        fn = tmpdir.mkdir('grid_export').join("grid.{}".format(fileformat))
-        with pytest.raises(ValueError):
-            g.export(fn)
-
-
-def test_inheritance(data):
-    class DerivedGrid(Grid):
-        pass
-
-    dg = DerivedGrid(data['griddata'], origin=data['origin'],
-                     delta=data['delta'])
-    result = f_arithmetic(dg)
-
-    assert isinstance(result, DerivedGrid)
-
-    ref = f_arithmetic(data['grid'])
-    assert_almost_equal(result.grid, ref.grid)
-
-def test_anyarray(data):
-    ma = np.ma.MaskedArray(data['griddata'])
-    mg = Grid(ma, origin=data['origin'], delta=data['delta'])
-
-    assert isinstance(mg.grid, ma.__class__)
-
-    result = f_arithmetic(mg)
-    ref = f_arithmetic(data['grid'])
-
-    assert_almost_equal(result.grid, ref.grid)
+    def test_vdb_field_2d_raises(self):
+        data_2d = np.arange(12).reshape(3, 4)
+        vdb_field = gridData.OpenVDB.field('test')
+        
+        with pytest.raises(ValueError, match="3D grids"):
+            vdb_field.populate(data_2d, origin=[0, 0], delta=[1, 1])
