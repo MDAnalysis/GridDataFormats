@@ -176,7 +176,7 @@ jobs:
       - name: Install from TestPyPI
         run: |
           python -m pip install --upgrade pip
-          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "GridDataFormats==${{ needs.build.outputs.version }}[test]"
+          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "GridDataFormats[test]==${{ needs.build.outputs.version }}"
 
       - name: Test import
         run: |
@@ -216,7 +216,7 @@ jobs:
       - name: Install from PyPI
         run: |
           python -m pip install --upgrade pip
-          pip install "GridDataFormats==${{ needs.build.outputs.version }}[test]"
+          pip install "GridDataFormats[test]==${{ needs.build.outputs.version }}"
 
       - name: Test import
         run: |
