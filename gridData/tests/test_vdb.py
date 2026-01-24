@@ -34,6 +34,16 @@ class TestVDBWrite:
         grids, metadata = vdb.readAll(outfile)
         assert len(grids) == 1
         assert grids[0].name == 'density'
+        
+    def test_write_vdb_default_grid_name(self, tmpdir):
+        data = np.ones((3, 3, 3), dtype=np.float32)
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        g.metadata = {}
+        
+        outfile = str(tmpdir / "default_name.vdb")
+        g.export(outfile)
+        grids, metadata = vdb.readAll(outfile)
+        assert grids[0].name == 'density'
 
     def test_write_vdb_autodetect_extension(self, tmpdir):
         data = np.arange(24).reshape(2, 3, 4).astype(np.float32)
@@ -94,8 +104,8 @@ class TestVDBWrite:
 
     def test_vdb_field_no_data_raises(self, tmpdir):
         vdb_field = gridData.OpenVDB.field('empty')
-        
         outfile = str(tmpdir / "empty.vdb")
+        
         with pytest.raises(ValueError, match="No data to write"):
             vdb_field.write(outfile)
 
@@ -105,3 +115,45 @@ class TestVDBWrite:
         
         with pytest.raises(ValueError, match="3D grids"):
             vdb_field.populate(data_2d, origin=[0, 0], delta=[1, 1])
+            
+    def test_write_vdb_nonuniform_spacing_warning(self, tmpdir):
+        data = np.ones((3, 3, 3), dtype=np.float32)
+        delta = np.array([0.5, 1.0, 1.5])
+        g = Grid(data, origin=[0, 0, 0], delta=delta)
+        
+        outfile = str(tmpdir / "nonuniform.vdb")
+        g.export(outfile)
+        assert tmpdir.join("nonuniform.vdb").exists()
+        
+    def test_write_vdb_with_delta_matrix(self, tmpdir):
+        data = np.ones((3, 3, 3), dtype=np.float32)
+        delta = np.diag([1.0, 2.0, 3.0])
+        
+        vdb_field = gridData.OpenVDB.field('matrix_delta')
+        vdb_field.populate(data, origin=[0, 0, 0], delta=delta)
+        
+        outfile = str(tmpdir / "matrix_delta.vdb")
+        vdb_field.write(outfile)
+        assert tmpdir.join("matrix_delta.vdb").exists()
+    
+    def test_write_vdb_sparse_data(self, tmpdir):
+        data = np.zeros((10, 10, 10), dtype=np.float32)
+        data[2, 3, 4] = 5.0
+        data[7, 8, 9] = 10.0
+        
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        outfile = str(tmpdir / "sparse.vdb")
+        g.export(outfile)
+        
+        assert tmpdir.join("sparse.vdb").exists()
+        grids, metadata = vdb.readAll(outfile)
+        assert len(grids) == 1
+        
+    def test_write_vdb_zero_threshold(self, tmpdir):
+        data = np.ones((3, 3, 3), dtype=np.float32) * 1e-11
+        data[1, 1, 1] = 1.0  
+        
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        outfile = str(tmpdir / "threshold.vdb")
+        g.export(outfile)
+        assert tmpdir.join("threshold.vdb").exists()
