@@ -8,48 +8,180 @@ on:
     types:
       - published
 
+concurrency:
+  group: "${{ github.ref }}-${{ github.head_ref }}-${{ github.workflow }}"
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash -l {0}
+  
+
 jobs:
-  testpypi_push:
-    environment:
-      name: deploy
-      url: https://test.pypi.org/p/GridDataFormats
-    permissions:
-      id-token: write
+  build:
+    name: Build package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: Build package (binary wheel and source distribution package)
+        run: |
+          python -m build
+
+      - name: Check package
+        run: |
+          twine check dist/*
+
+      - name: Upload dist files
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: dist/
+          retention-days: 1
+
+  test-pytest:
+    name: Run tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Download dist files
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+          path: dist/
+
+      - name: Install package with test dependencies and tests
+        run: |
+          python -m pip install --upgrade pip
+          WHEEL_FILE=$(ls dist/*.whl)
+          pip install "$WHEEL_FILE"[test]
+
+      - name: Test import
+        run: |
+          python -c "import gridData; print(f'Package {gridData.__version__} imported successfully')"
+          
+      - name: Run basic tests
+        run: |
+          pytest --verbose --pyargs gridData
+
+  deploy-testpypi:
+    name: Deploy to TestPyPI
+    runs-on: ubuntu-latest
+    needs: [build, test-pytest]
     if: |
       github.repository == 'MDAnalysis/GridDataFormats' &&
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/'))
-    name: Build, upload and test pure Python wheels to TestPypi
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: testpypi_deploy
-        uses: MDAnalysis/pypi-deployment@main
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        with:
-          test_submission: true
-          package_name: GridDataFormats
-          module_name: 'gridData'
-
-  pypi_push:
     environment:
-      name: deploy
-      url: https://pypi.org/p/GridDataFormats
+      name: testpypi
+      url: https://test.pypi.org/p/GridDataFormats
     permissions:
-      id-token: write
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    steps:
+      - name: Download dist files
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+          path: dist/
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@v1.13.0
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  deploy-pypi:
+    name: Deploy to PyPI
+    runs-on: ubuntu-latest
+    needs: [build, test-pytest]
     if: |
       github.repository == 'MDAnalysis/GridDataFormats' &&
       (github.event_name == 'release' && github.event.action == 'published')
-    name: Build, upload and test pure Python wheels to PyPi
-    runs-on: ubuntu-latest
-
+    environment:
+      name: pypi
+      url: https://pypi.org/p/GridDataFormats
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
-      - uses: actions/checkout@v4
-
-      - name: pypi_deploy
-        uses: MDAnalysis/pypi-deployment@main
-        if: github.event_name == 'release' && github.event.action == 'published'
+      - name: Download dist files
+        uses: actions/download-artifact@v4
         with:
-          package_name: GridDataFormats
-          module_name: 'gridData'
+          name: dist-files
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.13.0
+
+  test-deployed-testpypi:
+    name: Test deployed package (TestPyPI)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    needs: deploy-testpypi
+    if: |
+      github.repository == 'MDAnalysis/GridDataFormats' &&
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/'))
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install from TestPyPI
+        run: |
+          python -m pip install --upgrade pip
+          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ GridDataFormats[test]
+
+      - name: Test import
+        run: |
+          python -c "import gridData; print(f'Package {gridData.__version__} imported successfully from TestPyPi')"
+
+      - name: Run basic tests
+        run: |
+          pytest --verbose --pyargs gridData
+
+  test-deployed-pypi:
+    name: Test deployed package (PyPI)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    needs: deploy-pypi
+    if: |
+      github.repository == 'MDAnalysis/GridDataFormats' &&
+      (github.event_name == 'release' && github.event.action == 'published')
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install from PyPI
+        run: |
+          python -m pip install --upgrade pip
+          pip install GridDataFormats[test]
+
+      - name: Test import
+        run: |
+          python -c "import gridData; print(f'Package {gridData.__version__} imported successfully from PyPi')"
+
+      - name: Run basic tests
+        run: |
+          pytest --verbose --pyargs gridData

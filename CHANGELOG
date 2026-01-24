@@ -15,6 +15,16 @@ The rules for this file:
 ------------------------------------------------------------------------------
 01/16/2026 IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney, 
            Pradyumn-cloud, spyke7
+-------------------------------------------------------------------------------
+??/??/???? orbeckst
+
+ * 1.1.1
+
+ Fixes
+
+
+01/22/2026 IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney,
+           Pradyumn-cloud
 
   * 1.1.0
 
@@ -25,11 +35,13 @@ The rules for this file:
     (issue #143)
   * Python 3.13 and 3.14 are now supported (PR #140)
   * Support for Python 3.9 and 3.10 is now dropped as per SPEC0 (PR #140)
+  * all tests and data files are now included in the distribution (#156)
 
   Enhancements
 
   * Added openVDB format exports (Issue #141)
   * `Grid` now accepts binary operations with any operand that can be 
+  * `Grid` now accepts binary operations with any operand that can be
     broadcasted to the grid's shape according to `numpy` broadcasting rules
     (PR #142)
   * `Grid` now allows forcing MRC/CCP4 maps to be read as volumes even when
@@ -40,6 +52,7 @@ The rules for this file:
 
   * Attempting binary operations on grids with different edges now raises an
     exception (PR #142)
+  * updated metadata license identifier (#155)
 
 
 10/21/2023 IAlibay, orbeckst, lilyminium
