@@ -714,12 +714,14 @@ class Grid(object):
             raise ValueError(
                 "OpenVDB export requires a 3D grid, got {}D".format(self.grid.ndim))
 
-        # Get grid name from metadata if available
         grid_name = self.metadata.get('name', 'density')
 
-        # Create and populate VDB field
-        vdb_field = OpenVDB.field(grid_name)
-        vdb_field.populate(self.grid, self.origin, self.delta)
+        vdb_field = OpenVDB.OpenVDBField(
+            grid=self.grid,
+            origin=self.origin,
+            delta=self.delta,
+            name=grid_name
+        )
         vdb_field.write(filename)
     
     def _export_mrc(self, filename, **kwargs):

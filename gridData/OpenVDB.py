@@ -2,13 +2,21 @@ r"""
 :mod:`~gridData.OpenVDB` --- routines to write OpenVDB files
 =============================================================
 
-The OpenVDB format is used by Blender and other VFX software for
-volumetric data. See https://www.openvdb.org
+The `OpenVDB format`_ is used by Blender_ and other VFX software for
+volumetric data.
 
-pyopenvdb: https://github.com/AcademySoftwareFoundation/openvdb
+.. _`OpenVDB format`: https://www.openvdb.org
+.. _Blender: https://www.blender.org/
+
+This module uses the pyopenvdb_ library to write OpenVDB files.
+ 
+.. _pyopenvdb: https://github.com/AcademySoftwareFoundation/openvdb
 
 .. Note:: This module implements a simple writer for 3D regular grids,
-          sufficient to export density data for visualization in Blender.
+          sufficient to export density data for visualization in Blender_.
+          See the `Blender volume docs`_ for details on importing VDB files.
+          
+.. _`Blender volume docs`: https://docs.blender.org/manual/en/latest/modeling/volumes/introduction.html
 
 The OpenVDB format uses a sparse tree structure to efficiently store
 volumetric data. It is the native format for Blender's volume system.
@@ -25,11 +33,17 @@ OpenVDB format::
   g.export("data.vdb")
 
 This will create a file that can be imported directly into Blender
-(File -> Import -> OpenVDB).
+(File -> Import -> OpenVDB) or (shift+A -> Volume -> Import OpenVDB). See `importing VDB in Blender`_ for details.
+
+.. _`importing VDB in Blender`: https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/input/import/vdb.html
 
 
 Building an OpenVDB field from a numpy array
 ---------------------------------------------
+
+If you want to create VDB files without using the Grid class,
+you can directly use the OpenVDB field API. This is useful
+for custom workflows or when integrating with other libraries.
 
 Requires:
 
@@ -65,7 +79,7 @@ except ImportError:
         vdb = None
 
 
-class field(object):
+class OpenVDBField(object):
     """OpenVDB field object for writing volumetric data.
 
     This class provides a simple interface to write 3D grid data to
@@ -90,13 +104,30 @@ class field(object):
 
     """
 
-    def __init__(self, name='density'):
+    def __init__(self, grid, origin, delta, name='density', threshold=1e-10):
         """Initialize an OpenVDB field.
 
         Parameters
         ----------
+        grid : numpy.ndarray
+            3D numpy array with the data
+        origin : numpy.ndarray
+            Coordinates of the center of grid cell [0,0,0]
+        delta : numpy.ndarray
+            Grid spacing (can be 1D array or diagonal matrix)
         name : str
-            Name of the grid (will be visible in Blender)
+            Name of the grid (will be visible in Blender), default 'density'
+        threshold : float
+            Values below this threshold are treated as background (sparse),
+            default 1e-10
+
+        Raises
+        ------
+        ImportError
+            If pyopenvdb is not installed
+        ValueError
+            If grid is not 3D, or if delta is not 1D/2D or describes
+            non-orthorhombic cell
 
         """
         if vdb is None:
@@ -105,11 +136,10 @@ class field(object):
                 "Install it with: conda install -c conda-forge openvdb"
             )
         self.name = name
-        self.grid = None
-        self.origin = None
-        self.delta = None
+        self.threshold = threshold
+        self._populate(grid, origin, delta)
 
-    def populate(self, grid, origin, delta):
+    def _populate(self, grid, origin, delta):
         """Populate the field with grid data.
 
         Parameters
@@ -124,13 +154,14 @@ class field(object):
         Raises
         ------
         ValueError
-            If grid is not 3D
+            If grid is not 3D, or if delta is not 1D/2D or describes
+            non-orthorhombic cell
 
         """
         grid = numpy.asarray(grid)
         if grid.ndim != 3:
             raise ValueError(
-                "OpenVDB only supports 3D grids, got {}D".format(grid.ndim))
+                f"OpenVDB only supports 3D grids, got {grid.ndim}D")
 
         self.grid = grid.astype(numpy.float32)
         self.origin = numpy.asarray(origin)
@@ -138,9 +169,23 @@ class field(object):
         # Handle delta: could be 1D array or diagonal matrix
         delta = numpy.asarray(delta)
         if delta.ndim == 2:
-            self.delta = numpy.array([delta[i, i] for i in range(3)])
+            if (delta.shape != (3,3)):
+                raise ValueError("delta as a matrix must be 3x3")
+            
+            if not numpy.allclose(delta, numpy.diag(numpy.diag(delta))):
+                raise ValueError("Non-orthorhombic cells are not supported")
+                
+            self.delta = numpy.diag(delta)
+        
+        elif delta.ndim == 1:
+            if (len(delta) != 3):
+                raise ValueError("delta must have length 3 for 3D grids")
+            self.delta=delta
+                
         else:
-            self.delta = delta
+            raise ValueError(
+                "delta must be either a length-3 vector or a 3x3 diagonal matrix"
+            )
 
     def write(self, filename):
         """Write the field to an OpenVDB file.
@@ -150,41 +195,27 @@ class field(object):
         filename : str
             Output filename (should end in .vdb)
 
-        """
-        if self.grid is None:
-            raise ValueError("No data to write. Use populate() first.")
-
-        # Create OpenVDB grid
+        """        
+        self.grid=numpy.ascontiguousarray(self.grid, dtype=numpy.float32)
+        
         vdb_grid = vdb.FloatGrid()
         vdb_grid.name = self.name
 
         # this is an explicit linear transform using per-axis voxel sizes
         # world = diag(delta) * index + corner_origin
-        corner_origin = (self.origin - 0.5 * self.delta).astype(float)
+        corner_origin = (self.origin - 0.5 * self.delta)
 
-        # Constructing 4x4 row-major matrix where the last row is the translation
         matrix = [
-            [float(self.delta[0]), 0.0, 0.0, 0.0],
-            [0.0, float(self.delta[1]), 0.0, 0.0],
-            [0.0, 0.0, float(self.delta[2]), 0.0],
-            [float(corner_origin[0]), float(corner_origin[1]), float(corner_origin[2]), 1.0]
+            [self.delta[0], 0.0, 0.0, 0.0],
+            [0.0, self.delta[1], 0.0, 0.0],
+            [0.0, 0.0, self.delta[2], 0.0],
+            [corner_origin[0], corner_origin[1], corner_origin[2], 1.0]
         ]
 
-        transform = vdb.createLinearTransform(matrix)
-        vdb_grid.transform = transform
-
         vdb_grid.background = 0.0
-
-        # Populate the grid
-        accessor = vdb_grid.getAccessor()
-        threshold = 1e-10 
-
-        mask = numpy.abs(self.grid) > threshold
-        indices = numpy.argwhere(mask)
+        vdb_grid.transform = vdb.createLinearTransform(matrix)
         
-        for idx in indices:
-            i, j, k = idx
-            value = float(self.grid[i, j, k])
-            accessor.setValueOn((i, j, k), value)
+        vdb_grid.copyFromArray(self.grid, tolerance=self.threshold)
+        vdb_grid.prune()
 
         vdb.write(filename, grids=[vdb_grid])

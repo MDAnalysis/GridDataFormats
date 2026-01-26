@@ -16,17 +16,13 @@ The rules for this file:
 01/16/2026 IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney, 
            Pradyumn-cloud, spyke7
 -------------------------------------------------------------------------------
-??/??/???? orbeckst, BradyAJohnston, spyke7
+??/??/???? orbeckst, spyke7
 
-  * 1.1.1
+ * 1.2.0
 
-  Changes
+ Enhancements
 
-  * Added OpenVDB module for exporting to .vdb format (PR #148)
-
-  Enhancements
-
-  * Added openVDB format exports (Issue #141, PR #148)
+ * Added openVDB format exports (Issue #141, PR #148)
 
 
   Fixes
