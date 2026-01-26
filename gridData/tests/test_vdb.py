@@ -152,6 +152,7 @@ class TestVDBWrite:
         g.export(outfile)
         assert tmpdir.join("threshold.vdb").exists()
         
+    
     def test_vdb_non_orthrhombic_raises(self):
         data=np.ones((3,3,3), dtype=np.float32)
         delta = np.array([
@@ -166,6 +167,30 @@ class TestVDBWrite:
                 origin=[0, 0, 0],
                 delta=delta
             )
+            
+    def test_delta_matrix_wrong_shape_raises(self):
+        data = np.ones((3, 3, 3), dtype=np.float32)
+        origin = [0.0, 0.0, 0.0]
+        bad_delta = np.eye(2)
+
+        with pytest.raises(ValueError, match="delta as a matrix must be 3x3"):
+            gridData.OpenVDB.OpenVDBField(data, origin, bad_delta)
+    
+    def test_delta_scalar_raises(self):
+        data = np.ones((3, 3, 3), dtype=np.float32)
+        origin = [0.0, 0.0, 0.0]
+        bad_delta = np.array(1.0)
+
+        with pytest.raises(ValueError, match="delta must be either a length-3 vector or a 3x3 diagonal matrix"):
+            gridData.OpenVDB.OpenVDBField(data, origin, bad_delta)
+            
+    def test_delta_1d_wrong_length_raises(self):
+        data = np.ones((3, 3, 3), dtype=np.float32)
+        origin = [0.0, 0.0, 0.0]
+        bad_delta = np.array([1.0, 2.0]) 
+
+        with pytest.raises(ValueError, match="must have length-3"):
+            gridData.OpenVDB.OpenVDBField(data, origin, bad_delta)
         
 @pytest.mark.skipif(HAS_OPENVDB, reason="Testing import error handling")
 def test_vdb_import_error():

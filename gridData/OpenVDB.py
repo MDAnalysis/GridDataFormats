@@ -179,7 +179,7 @@ class OpenVDBField(object):
         
         elif delta.ndim == 1:
             if (len(delta) != 3):
-                raise ValueError("delta must have length 3 for 3D grids")
+                raise ValueError("delta must have length-3 for 3D grids")
             self.delta=delta
                 
         else:
