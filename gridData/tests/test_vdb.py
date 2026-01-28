@@ -1,5 +1,5 @@
 import numpy as np
-from numpy.testing import assert_allclose, assert_equal
+from numpy.testing import assert_allclose
 
 import pytest
 
@@ -7,7 +7,6 @@ import gridData.OpenVDB
 from gridData import Grid
 
 from . import datafiles
-
 
 try:
     import pyopenvdb as vdb
@@ -19,12 +18,16 @@ except ImportError:
     except ImportError:
         HAS_OPENVDB = False
 
+@pytest.fixture
+def grid345():
+    data = np.arange(1, 61, dtype=np.float32).reshape((3, 4, 5))
+    g = Grid(data.copy(), origin=np.zeros(3), delta=np.ones(3))
+    return data, g
 
 @pytest.mark.skipif(not HAS_OPENVDB, reason="pyopenvdb/openvdb not installed")
 class TestVDBWrite:
-    def test_write_vdb_from_grid(self, tmpdir):
-        data = np.arange(1, 28).reshape(3, 3, 3).astype(np.float32)
-        g = Grid(data, origin=np.zeros(3), delta=np.ones(3))
+    def test_write_vdb_from_grid(self, tmpdir, grid345):
+        data,g = grid345
         
         outfile = str(tmpdir / "test.vdb")
         g.export(outfile, file_format='VDB')
@@ -34,6 +37,20 @@ class TestVDBWrite:
         grids, metadata = vdb.readAll(outfile)
         assert len(grids) == 1
         assert grids[0].name == 'density'
+        
+        grid_vdb = grids[0]
+        acc = grid_vdb.getAccessor()
+
+        assert grid_vdb.evalActiveVoxelDim() == data.shape
+        
+        corners = [
+        (0, 0, 0),
+        (data.shape[0] - 1, data.shape[1] - 1, data.shape[2] - 1),
+        (1, 2, 3)
+        ]
+        for (i, j, k) in corners:
+            got = acc.getValue((i, j, k))
+            assert got == pytest.approx(float(data[i, j, k]))
         
     def test_write_vdb_default_grid_name(self, tmpdir):
         data = np.ones((3, 3, 3), dtype=np.float32)
@@ -45,9 +62,8 @@ class TestVDBWrite:
         grids, metadata = vdb.readAll(outfile)
         assert grids[0].name == 'density'
 
-    def test_write_vdb_autodetect_extension(self, tmpdir):
-        data = np.arange(24).reshape(2, 3, 4).astype(np.float32)
-        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+    def test_write_vdb_autodetect_extension(self, tmpdir, grid345):
+        data, g = grid345
         
         outfile = str(tmpdir / "auto.vdb")
         g.export(outfile) 
@@ -78,7 +94,9 @@ class TestVDBWrite:
         grid_vdb = grids[0]
         
         voxel_size = grid_vdb.transform.voxelSize()
-        assert_allclose([voxel_size[i] for i in range(3)], delta, rtol=1e-5)
+        
+        spacing=[voxel_size[0], voxel_size[1], voxel_size[2]]
+        assert_allclose(spacing, delta, rtol=1e-5)
 
     def test_write_vdb_from_ccp4(self, tmpdir):
         g = Grid(datafiles.CCP4)
@@ -111,7 +129,7 @@ class TestVDBWrite:
                 delta=[1, 1]
             )
             
-    def test_write_vdb_nonuniform_spacing_warning(self, tmpdir):
+    def test_write_vdb_nonuniform_spacing(self, tmpdir):
         data = np.ones((3, 3, 3), dtype=np.float32)
         delta = np.array([0.5, 1.0, 1.5])
         g = Grid(data, origin=[0, 0, 0], delta=delta)
@@ -119,6 +137,14 @@ class TestVDBWrite:
         outfile = str(tmpdir / "nonuniform.vdb")
         g.export(outfile)
         assert tmpdir.join("nonuniform.vdb").exists()
+        
+        grids, metadata = vdb.readAll(outfile)
+        grid_vdb = grids[0]
+        voxel_size = grid_vdb.transform.voxelSize()
+        
+        spacing = [voxel_size[0], voxel_size[1], voxel_size[2]]
+        
+        assert_allclose(spacing, delta, rtol=1e-5)
         
     def test_write_vdb_with_delta_matrix(self, tmpdir):
         data = np.ones((3, 3, 3), dtype=np.float32)
@@ -129,7 +155,15 @@ class TestVDBWrite:
         outfile = str(tmpdir / "matrix_delta.vdb")
         vdb_field.write(outfile)
         assert tmpdir.join("matrix_delta.vdb").exists()
-    
+
+        grids, metadata = vdb.readAll(outfile)
+        grid_vdb = grids[0]
+        voxel_size = grid_vdb.transform.voxelSize()
+        
+        spacing = [voxel_size[0], voxel_size[1], voxel_size[2]]
+        
+        assert_allclose(spacing, [1.0, 2.0, 3.0], rtol=1e-5)
+        
     def test_write_vdb_sparse_data(self, tmpdir):
         data = np.zeros((10, 10, 10), dtype=np.float32)
         data[2, 3, 4] = 5.0
@@ -143,6 +177,11 @@ class TestVDBWrite:
         grids, metadata = vdb.readAll(outfile)
         assert len(grids) == 1
         
+        grid_vdb = grids[0]
+        acc = grid_vdb.getAccessor()
+        assert acc.getValue((2, 3, 4)) == pytest.approx(5.0)
+        assert acc.getValue((7, 8, 9)) == pytest.approx(10.0)
+        
     def test_write_vdb_zero_threshold(self, tmpdir):
         data = np.ones((3, 3, 3), dtype=np.float32) * 1e-11
         data[1, 1, 1] = 1.0  
@@ -152,6 +191,15 @@ class TestVDBWrite:
         g.export(outfile)
         assert tmpdir.join("threshold.vdb").exists()
         
+        grids, metadata = vdb.readAll(outfile)
+        grid_vdb = grids[0]
+        acc = grid_vdb.getAccessor()
+        
+        assert acc.getValue((1, 1, 1)) == pytest.approx(1.0)
+
+        val, is_active  = grid_vdb.getConstAccessor().probeValue((0, 0, 0))
+        
+        assert (not is_active ) or (val == pytest.approx(0.0))
     
     def test_vdb_non_orthrhombic_raises(self):
         data=np.ones((3,3,3), dtype=np.float32)

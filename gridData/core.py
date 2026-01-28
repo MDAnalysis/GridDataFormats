@@ -712,7 +712,7 @@ class Grid(object):
         """
         if self.grid.ndim != 3:
             raise ValueError(
-                "OpenVDB export requires a 3D grid, got {}D".format(self.grid.ndim))
+                f"OpenVDB export requires a 3D grid, got {self.grid.ndim}D")
 
         grid_name = self.metadata.get('name', 'density')
 
