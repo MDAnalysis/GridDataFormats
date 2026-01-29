@@ -68,7 +68,6 @@ Classes and functions
 """
 
 import numpy
-import warnings
 
 try:
     import openvdb as vdb
