@@ -2,6 +2,7 @@ import numpy as np
 from numpy.testing import assert_allclose
 
 import pytest
+from unittest.mock import patch
 
 import gridData.OpenVDB
 from gridData import Grid
@@ -9,14 +10,10 @@ from gridData import Grid
 from . import datafiles
 
 try:
-    import pyopenvdb as vdb
+    import openvdb as vdb
     HAS_OPENVDB = True
 except ImportError:
-    try:
-        import openvdb as vdb
-        HAS_OPENVDB = True
-    except ImportError:
-        HAS_OPENVDB = False
+    HAS_OPENVDB = False
 
 @pytest.fixture
 def grid345():
@@ -24,7 +21,6 @@ def grid345():
     g = Grid(data.copy(), origin=np.zeros(3), delta=np.ones(3))
     return data, g
 
-@pytest.mark.skipif(not HAS_OPENVDB, reason="pyopenvdb/openvdb not installed")
 class TestVDBWrite:
     def test_write_vdb_from_grid(self, tmpdir, grid345):
         data,g = grid345
@@ -240,11 +236,11 @@ class TestVDBWrite:
         with pytest.raises(ValueError, match="must have length-3"):
             gridData.OpenVDB.OpenVDBField(data, origin, bad_delta)
         
-@pytest.mark.skipif(HAS_OPENVDB, reason="Testing import error handling")
 def test_vdb_import_error():
-    with pytest.raises(ImportError, match="pyopenvdb is required"):
-        gridData.OpenVDB.OpenVDBField(
-            np.ones((3, 3, 3)),
-            origin=[0, 0, 0],
-            delta=[1, 1, 1]
-        )
+    with patch('gridData.OpenVDB.vdb', None):
+        with pytest.raises(ImportError, match="openvdb is required"):
+            gridData.OpenVDB.OpenVDBField(
+                np.ones((3, 3, 3)),
+                origin=[0, 0, 0],
+                delta=[1, 1, 1]
+            )
