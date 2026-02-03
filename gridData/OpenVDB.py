@@ -101,7 +101,7 @@ class OpenVDBField(object):
 
     """
 
-    def __init__(self, grid, origin, delta, name='density', tolerance=1e-10):
+    def __init__(self, grid, origin, delta, name="density", tolerance=1e-10):
         """Initialize an OpenVDB field.
 
         Parameters
@@ -157,30 +157,29 @@ class OpenVDBField(object):
         """
         grid = numpy.asarray(grid)
         if grid.ndim != 3:
-            raise ValueError(
-                f"OpenVDB only supports 3D grids, got {grid.ndim}D")
+            raise ValueError(f"OpenVDB only supports 3D grids, got {grid.ndim}D")
 
         self.grid = grid.astype(numpy.float32)
-        self.grid=numpy.ascontiguousarray(self.grid, dtype=numpy.float32)
-        
+        self.grid = numpy.ascontiguousarray(self.grid, dtype=numpy.float32)
+
         self.origin = numpy.asarray(origin)
 
         # Handle delta: could be 1D array or diagonal matrix
         delta = numpy.asarray(delta)
         if delta.ndim == 2:
-            if (delta.shape != (3,3)):
+            if delta.shape != (3, 3):
                 raise ValueError("delta as a matrix must be 3x3")
-            
+
             if not numpy.allclose(delta, numpy.diag(numpy.diag(delta))):
                 raise ValueError("Non-orthorhombic cells are not supported")
-                
+
             self.delta = numpy.diag(delta)
-        
+
         elif delta.ndim == 1:
-            if (len(delta) != 3):
+            if len(delta) != 3:
                 raise ValueError("delta must have length-3 for 3D grids")
-            self.delta=delta
-                
+            self.delta = delta
+
         else:
             raise ValueError(
                 "delta must be either a length-3 vector or a 3x3 diagonal matrix"
@@ -194,25 +193,25 @@ class OpenVDBField(object):
         filename : str
             Output filename (should end in .vdb)
 
-        """        
-        
+        """
+
         vdb_grid = vdb.FloatGrid()
         vdb_grid.name = self.name
 
         # this is an explicit linear transform using per-axis voxel sizes
         # world = diag(delta) * index + corner_origin
-        corner_origin = (self.origin - 0.5 * self.delta)
+        corner_origin = self.origin - 0.5 * self.delta
 
         matrix = [
             [self.delta[0], 0.0, 0.0, 0.0],
             [0.0, self.delta[1], 0.0, 0.0],
             [0.0, 0.0, self.delta[2], 0.0],
-            [corner_origin[0], corner_origin[1], corner_origin[2], 1.0]
+            [corner_origin[0], corner_origin[1], corner_origin[2], 1.0],
         ]
 
         vdb_grid.background = 0.0
         vdb_grid.transform = vdb.createLinearTransform(matrix)
-        
+
         vdb_grid.copyFromArray(self.grid, tolerance=self.tolerance)
         vdb_grid.prune()
 
