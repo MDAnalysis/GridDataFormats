@@ -24,6 +24,7 @@ def grid345():
     return data, g
 
 
+@pytest.mark.skipif(not HAS_OPENVDB, reason="openvdb not installed")
 class TestVDBWrite:
     def test_write_vdb_from_grid(self, tmpdir, grid345):
         data, g = grid345
@@ -247,6 +248,7 @@ class TestVDBWrite:
             gridData.OpenVDB.OpenVDBField(data, origin, bad_delta)
 
 
+@pytest.mark.skipif(not HAS_OPENVDB, reason="Need openvdb to test import error handling")
 def test_vdb_import_error():
     with patch("gridData.OpenVDB.vdb", None):
         with pytest.raises(ImportError, match="openvdb is required"):
