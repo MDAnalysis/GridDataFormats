@@ -114,8 +114,8 @@ class OpenVDBField(object):
             Grid spacing (can be 1D array or diagonal matrix)
         name : str
             Name of the grid (will be visible in Blender), default 'density'
-        threshold : float
-            Values below this threshold are treated as background (sparse),
+        tolerance : float
+            Values below this tolerance are treated as background (sparse),
             default 1e-10
 
         Raises
@@ -198,19 +198,9 @@ class OpenVDBField(object):
         vdb_grid = vdb.FloatGrid()
         vdb_grid.name = self.name
 
-        # this is an explicit linear transform using per-axis voxel sizes
-        # world = diag(delta) * index + corner_origin
-        corner_origin = self.origin - 0.5 * self.delta
-
-        matrix = [
-            [self.delta[0], 0.0, 0.0, 0.0],
-            [0.0, self.delta[1], 0.0, 0.0],
-            [0.0, 0.0, self.delta[2], 0.0],
-            [corner_origin[0], corner_origin[1], corner_origin[2], 1.0],
-        ]
-
-        vdb_grid.background = 0.0
-        vdb_grid.transform = vdb.createLinearTransform(matrix)
+        vdb_grid.transform = vdb.createLinearTransform()
+        vdb_grid.transform.preScale(self.delta.tolist())
+        vdb_grid.transform.postTranslate(self.origin.tolist())
 
         vdb_grid.copyFromArray(self.grid, tolerance=self.tolerance)
         vdb_grid.prune()
