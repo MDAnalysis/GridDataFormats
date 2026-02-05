@@ -56,7 +56,7 @@ delta
 
 Example::
 
-  import OpenVDB
+  from gridData import OpenVDB
   vdb_field = OpenVDB.field('density')
   vdb_field.populate(grid, origin, delta)
   vdb_field.write('output.vdb')
