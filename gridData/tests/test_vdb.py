@@ -188,24 +188,14 @@ class TestVDBWrite:
         assert acc.getValue((2, 3, 4)) == pytest.approx(data[2, 3, 4])
         assert acc.getValue((7, 8, 9)) == pytest.approx(data[7, 8, 9])
 
-    def test_write_vdb_zero_threshold(self, tmpdir):
-        data = np.ones((3, 3, 3), dtype=np.float32) * 1e-11
-        data[1, 1, 1] = 1.0
-
+    def test_write_vdb_with_zero_tolerance(self, tmpdir):
+        data = np.ones((3, 3, 3), dtype=np.float32)
         g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
-        outfile = str(tmpdir / "threshold.vdb")
-        g.export(outfile)
-        assert tmpdir.join("threshold.vdb").exists()
+        outfile = str(tmpdir / "zero_tolerance.vdb")
 
-        grids, metadata = vdb.readAll(outfile)
-        grid_vdb = grids[0]
-        acc = grid_vdb.getAccessor()
+        g.export(outfile, tolerance=0)
 
-        assert acc.getValue((1, 1, 1)) == pytest.approx(data[1, 1, 1])
-
-        val, is_active = grid_vdb.getConstAccessor().probeValue((0, 0, 0))
-
-        assert (not is_active) or (val == pytest.approx(0.0))
+        assert tmpdir.join("zero_tolerance.vdb").exists()
 
     def test_vdb_non_orthrhombic_raises(self):
         data = np.ones((3, 3, 3), dtype=np.float32)
@@ -247,8 +237,45 @@ class TestVDBWrite:
         with pytest.raises(ValueError, match="must have length-3"):
             gridData.OpenVDB.OpenVDBField(data, origin, bad_delta)
 
+    def test_write_vdb_boolean_grid(self, tmpdir):
+        data = np.random.random((10, 10, 10)) > 0.5
 
-@pytest.mark.skipif(not HAS_OPENVDB, reason="Need openvdb to test import error handling")
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        g.metadata["name"] = "boolean_mask"
+
+        outfile = str(tmpdir / "boolean.vdb")
+        g.export(outfile)
+        assert tmpdir.join("boolean.vdb").exists()
+
+        grids, _ = vdb.readAll(outfile)
+        assert len(grids) == 1
+
+        grid_vdb = grids[0]
+
+        assert isinstance(grid_vdb, vdb.BoolGrid)
+
+        acc = grid_vdb.getAccessor()
+        assert acc.getValue((0, 0, 0)) == bool(data[0, 0, 0])
+        assert acc.getValue((5, 5, 5)) == bool(data[5, 5, 5])
+
+    def test_write_vdb_with_tolerance_parameter(self, tmpdir, grid345):
+        data, g = grid345
+        outfile = str(tmpdir / "with_tolerance.vdb")
+        g.export(outfile, tolerance=0.1)
+
+        assert tmpdir.join("with_tolerance.vdb").exists()
+
+        grids, _ = vdb.readAll(outfile)
+        grid_vdb = grids[0]
+
+        acc = grid_vdb.getAccessor()
+        assert acc.getValue((0, 0, 0)) == pytest.approx(float(data[0, 0, 0]))
+        assert acc.getValue((1, 2, 3)) == pytest.approx(float(data[1, 2, 3]))
+
+
+@pytest.mark.skipif(
+    not HAS_OPENVDB, reason="Need openvdb to test import error handling"
+)
 def test_vdb_import_error():
     with patch("gridData.OpenVDB.vdb", None):
         with pytest.raises(ImportError, match="openvdb is required"):

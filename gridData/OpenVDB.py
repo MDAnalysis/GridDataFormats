@@ -56,10 +56,10 @@ delta
 
 Example::
 
-  from gridData import OpenVDB
-  vdb_field = OpenVDB.field('density')
-  vdb_field.populate(grid, origin, delta)
-  vdb_field.write('output.vdb')
+  from gridData import Grid
+  
+  g = Grid("data.dx")
+  g.export("data.vdb")
 
 
 Classes and functions
@@ -68,6 +68,7 @@ Classes and functions
 """
 
 import numpy
+import warnings
 
 try:
     import openvdb as vdb
@@ -90,8 +91,9 @@ class OpenVDBField(object):
     -------
     Create a field and write it::
 
-      vdb_field = OpenVDB.field('density')
-      vdb_field.populate(grid, origin, delta)
+      import gridData.OpenVDB as OpenVDB
+
+      vdb_field = OpenVDB.OpenVDBField('density')
       vdb_field.write('output.vdb')
 
     Or use directly from Grid::
@@ -101,7 +103,15 @@ class OpenVDBField(object):
 
     """
 
-    def __init__(self, grid, origin, delta, name="density", tolerance=1e-10):
+    def __init__(
+        self,
+        grid=None,
+        origin=None,
+        delta=None,
+        name="density",
+        tolerance=None,
+        metadata=None,
+    ):
         """Initialize an OpenVDB field.
 
         Parameters
@@ -114,9 +124,11 @@ class OpenVDBField(object):
             Grid spacing (can be 1D array or diagonal matrix)
         name : str
             Name of the grid (will be visible in Blender), default 'density'
-        tolerance : float
+        tolerance : float (optional)
             Values below this tolerance are treated as background (sparse),
-            default 1e-10
+            default None
+        metadata : dict (optional)
+            Additional metadata to embed in the VDB file.
 
         Raises
         ------
@@ -134,7 +146,17 @@ class OpenVDBField(object):
             )
         self.name = name
         self.tolerance = tolerance
-        self._populate(grid, origin, delta)
+        if metadata is not None:
+            self.metadata = metadata
+        else:
+            self.metadata = {}
+
+        if grid is not None:
+            self._populate(grid, origin, delta)
+        else:
+            self.grid = None
+            self.origin = None
+            self.delta = None
 
     def _populate(self, grid, origin, delta):
         """Populate the field with grid data.
@@ -155,12 +177,11 @@ class OpenVDBField(object):
             non-orthorhombic cell
 
         """
-        grid = numpy.asarray(grid)
+        self.grid = numpy.asarray(grid)
         if grid.ndim != 3:
             raise ValueError(f"OpenVDB only supports 3D grids, got {grid.ndim}D")
 
-        self.grid = grid.astype(numpy.float32)
-        self.grid = numpy.ascontiguousarray(self.grid, dtype=numpy.float32)
+        self.grid = numpy.ascontiguousarray(self.grid)
 
         self.origin = numpy.asarray(origin)
 
@@ -193,16 +214,42 @@ class OpenVDBField(object):
         filename : str
             Output filename (should end in .vdb)
 
+        Notes
+        -----
+        Limitations in OpenVDB can lead to loss of precision. If the input
+        data is not of type float32, it will be converted to FloatGrid which is float32.
+
         """
 
-        vdb_grid = vdb.FloatGrid()
+        if self.grid.dtype == numpy.bool_ or self.grid.dtype == bool:
+            vdb_grid = vdb.BoolGrid()
+            use_tolerance = False
+
+        else:
+            vdb_grid = vdb.FloatGrid()
+            if self.tolerance == None or self.tolerance == 0:
+                use_tolerance = False
+            else:
+                use_tolerance = True
+
         vdb_grid.name = self.name
 
         vdb_grid.transform = vdb.createLinearTransform()
         vdb_grid.transform.preScale(self.delta.tolist())
         vdb_grid.transform.postTranslate(self.origin.tolist())
 
-        vdb_grid.copyFromArray(self.grid, tolerance=self.tolerance)
-        vdb_grid.prune()
+        if self.metadata:
+            for key, val in self.metadata.items():
+                try:
+                    vdb_grid[key] = val
+                except (TypeError, ValueError) as e:
+                    warnings.warn(f"Could not set metadata '{key}': {e}", UserWarning)
+
+        if use_tolerance:
+            vdb_grid.copyFromArray(self.grid, tolerance=self.tolerance)
+            vdb_grid.prune()
+        else:
+            vdb_grid.copyFromArray(self.grid)
+            vdb_grid.prune(tolerance=False)
 
         vdb.write(filename, grids=[vdb_grid])
