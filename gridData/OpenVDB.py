@@ -69,12 +69,18 @@ Classes and functions
 
 import numpy
 import warnings
+from dataclasses import dataclass
 
 try:
     import openvdb as vdb
 
 except ImportError:
     vdb = None
+
+
+@dataclass
+class DownCastTo:
+    gridType: str
 
 
 class OpenVDBField(object):
@@ -153,10 +159,12 @@ class OpenVDBField(object):
 
         if grid is not None:
             self._populate(grid, origin, delta)
+            self.vdb_grid = self._create_openvdb_grid()
         else:
             self.grid = None
             self.origin = None
             self.delta = None
+            self.vdb_grid = None
 
     def _populate(self, grid, origin, delta):
         """Populate the field with grid data.
@@ -206,31 +214,70 @@ class OpenVDBField(object):
                 "delta must be either a length-3 vector or a 3x3 diagonal matrix"
             )
 
-    def write(self, filename):
-        """Write the field to an OpenVDB file.
+    def _get_best_grid_type(self):
+        """Selects the suitable OpenVDB grid type
 
-        Parameters
-        ----------
-        filename : str
-            Output filename (should end in .vdb)
+        Returns
+        -------
+        openvdb.GridBase
 
-        Notes
-        -----
-        Limitations in OpenVDB can lead to loss of precision. If the input
-        data is not of type float32, it will be converted to FloatGrid which is float32.
+        Raises
+        ------
+        TypeError
+            If dtype is not supported or no suitable grid type is available
+        """
+        datatypes = {
+            numpy.dtype("bool"): ["BoolGrid"],
+            numpy.dtype("int8"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
+            numpy.dtype("uint8"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
+            numpy.dtype("int16"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
+            numpy.dtype("uint16"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
+            numpy.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")],
+            numpy.dtype("uint32"): ["Int32Grid", DownCastTo("FloatGrid")],
+            numpy.dtype("int64"): ["Int64Grid", DownCastTo("FloatGrid")],
+            numpy.dtype("uint64"): ["Int64Grid", DownCastTo("FloatGrid")],
+            numpy.dtype("float16"): [DownCastTo("HalfGrid"), DownCastTo("FloatGrid")],
+            numpy.dtype("float32"): ["FloatGrid"],
+            numpy.dtype("float64"): ["DoubleGrid", DownCastTo("FloatGrid")],
+        }
+
+        try:
+            vdb_gridtypes = datatypes[self.grid.dtype]
+        except KeyError:
+            raise TypeError(f"Data type {self.grid.dtype} not supported for VDB")
+
+        for gridtype_downcast in vdb_gridtypes:
+            if isinstance(gridtype_downcast, DownCastTo):
+                gridtype = gridtype_downcast.gridType
+            else:
+                gridtype = gridtype_downcast
+
+            try:
+                VDB_Grid = getattr(vdb, gridtype)
+            except AttributeError:
+                continue
+            else:
+                if isinstance(gridtype_downcast, DownCastTo):
+                    warnings.warn(
+                        f"Grid type {vdb_gridtypes[0]} not available. Using {gridtype} instead. Data may lose precision.",
+                        UserWarning,
+                    )
+                return VDB_Grid()
+
+        raise TypeError(
+            f"Could not find any VDB grid type for numpy dtype {self.grid.dtype}"
+        )
+
+    def _create_openvdb_grid(self):
+        """Create and populate an OpenVDB grid
+
+        Returns
+        -------
+        openvdb.GridBase
 
         """
 
-        if self.grid.dtype == numpy.bool_ or self.grid.dtype == bool:
-            vdb_grid = vdb.BoolGrid()
-            use_tolerance = False
-
-        else:
-            vdb_grid = vdb.FloatGrid()
-            if self.tolerance == None or self.tolerance == 0:
-                use_tolerance = False
-            else:
-                use_tolerance = True
+        vdb_grid = self._get_best_grid_type()
 
         vdb_grid.name = self.name
 
@@ -245,11 +292,27 @@ class OpenVDBField(object):
                 except (TypeError, ValueError) as e:
                     warnings.warn(f"Could not set metadata '{key}': {e}", UserWarning)
 
-        if use_tolerance:
-            vdb_grid.copyFromArray(self.grid, tolerance=self.tolerance)
-            vdb_grid.prune()
-        else:
+        if isinstance(vdb_grid, vdb.BoolGrid) and (
+            self.tolerance is None or self.tolerance == 0
+        ):
             vdb_grid.copyFromArray(self.grid)
             vdb_grid.prune(tolerance=False)
+        else:
+            if self.tolerance is None:
+                vdb_grid.copyFromArray(self.grid)
+            else:
+                vdb_grid.copyFromArray(self.grid, tolerance=self.tolerance)
 
-        vdb.write(filename, grids=[vdb_grid])
+            vdb_grid.prune()
+
+        return vdb_grid
+
+    def write(self, filename):
+        """Write the field to an OpenVDB file.
+
+        Parameters
+        ----------
+        filename : str
+            Output filename (should end in .vdb)
+        """
+        vdb.write(filename, grids=[self.vdb_grid])

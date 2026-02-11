@@ -272,6 +272,38 @@ class TestVDBWrite:
         assert acc.getValue((0, 0, 0)) == pytest.approx(float(data[0, 0, 0]))
         assert acc.getValue((1, 2, 3)) == pytest.approx(float(data[1, 2, 3]))
 
+    def test_write_vdb_float64_conversion_warning(self, tmpdir):
+        data = np.random.random((5, 5, 5))
+
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        outfile = str(tmpdir / "float64.vdb")
+
+        with pytest.warns(
+            UserWarning, match="Grid type DoubleGrid not available.*FloatGrid"
+        ):
+            g.export(outfile)
+
+        grids, _ = vdb.readAll(outfile)
+        assert isinstance(grids[0], vdb.FloatGrid)
+
+    def test_write_vdb_int32_conversion_warning(self, tmpdir):
+        data = np.arange(27, dtype=np.int32).reshape((3, 3, 3))
+
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        outfile = str(tmpdir / "int32.vdb")
+
+        with pytest.warns(
+            UserWarning, match="Grid type Int32Grid not available.*FloatGrid"
+        ):
+            g.export(outfile)
+
+        grids, _ = vdb.readAll(outfile)
+        assert isinstance(grids[0], vdb.FloatGrid)
+
+        acc = grids[0].getAccessor()
+        assert acc.getValue((0, 0, 0)) == pytest.approx(float(data[0, 0, 0]))
+        assert acc.getValue((1, 1, 1)) == pytest.approx(float(data[1, 1, 1]))
+
 
 @pytest.mark.skipif(
     not HAS_OPENVDB, reason="Need openvdb to test import error handling"
