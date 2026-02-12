@@ -304,6 +304,38 @@ class TestVDBWrite:
         assert acc.getValue((0, 0, 0)) == pytest.approx(float(data[0, 0, 0]))
         assert acc.getValue((1, 1, 1)) == pytest.approx(float(data[1, 1, 1]))
 
+    def test_write_vdb_unsupported_dtype_raises(self):
+        data_complex = np.ones((3, 3, 3), dtype=np.complex64)
+
+        with pytest.raises(TypeError, match="Data type.*not supported for VDB"):
+            gridData.OpenVDB.OpenVDBField(
+                data_complex, origin=[0, 0, 0], delta=[1, 1, 1]
+            )
+
+    def test_openvdb_field_empty_initialization(self, tmpdir):
+        vdb_field = gridData.OpenVDB.OpenVDBField()
+
+        assert vdb_field.grid is None
+        assert vdb_field.origin is None
+        assert vdb_field.delta is None
+        assert vdb_field.vdb_grid is None
+        assert vdb_field.name == "density"
+        assert vdb_field.metadata == {}
+
+        data = np.ones((3, 3, 3), dtype=np.float32)
+        vdb_field._populate(data, [0, 0, 0], [1, 1, 1])
+        vdb_field.vdb_grid = vdb_field._create_openvdb_grid()
+
+        assert vdb_field.grid is not None
+        assert vdb_field.origin is not None
+        assert vdb_field.delta is not None
+        assert vdb_field.vdb_grid is not None
+
+        outfile = str(tmpdir / "empty_init.vdb")
+        vdb_field.write(outfile)
+
+        assert tmpdir.join("empty_init.vdb").exists()
+
 
 @pytest.mark.skipif(
     not HAS_OPENVDB, reason="Need openvdb to test import error handling"
