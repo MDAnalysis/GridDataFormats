@@ -279,7 +279,7 @@ class TestVDBWrite:
         outfile = str(tmpdir / "float64.vdb")
 
         with pytest.warns(
-            UserWarning, match="Grid type DoubleGrid not available.*FloatGrid"
+            RuntimeWarning, match="Grid type DoubleGrid not available.*FloatGrid"
         ):
             g.export(outfile)
 
@@ -293,7 +293,7 @@ class TestVDBWrite:
         outfile = str(tmpdir / "int32.vdb")
 
         with pytest.warns(
-            UserWarning, match="Grid type Int32Grid not available.*FloatGrid"
+            RuntimeWarning, match="Grid type Int32Grid not available.*FloatGrid"
         ):
             g.export(outfile)
 

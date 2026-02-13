@@ -228,15 +228,15 @@ class OpenVDBField(object):
         """
         datatypes = {
             numpy.dtype("bool"): ["BoolGrid"],
-            numpy.dtype("int8"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
-            numpy.dtype("uint8"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
-            numpy.dtype("int16"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
-            numpy.dtype("uint16"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
+            numpy.dtype("int8"): ["Int32Grid", "FloatGrid"],
+            numpy.dtype("uint8"): ["Int32Grid", "FloatGrid"],
+            numpy.dtype("int16"): ["Int32Grid", "FloatGrid"],
+            numpy.dtype("uint16"): ["Int32Grid", "FloatGrid"],
             numpy.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")],
-            numpy.dtype("uint32"): ["Int32Grid", DownCastTo("FloatGrid")],
+            numpy.dtype("uint32"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
             numpy.dtype("int64"): ["Int64Grid", DownCastTo("FloatGrid")],
             numpy.dtype("uint64"): ["Int64Grid", DownCastTo("FloatGrid")],
-            numpy.dtype("float16"): [DownCastTo("HalfGrid"), DownCastTo("FloatGrid")],
+            numpy.dtype("float16"): ["HalfGrid", "FloatGrid"],
             numpy.dtype("float32"): ["FloatGrid"],
             numpy.dtype("float64"): ["DoubleGrid", DownCastTo("FloatGrid")],
         }
@@ -257,16 +257,18 @@ class OpenVDBField(object):
             except AttributeError:
                 continue
             else:
-                if isinstance(gridtype_downcast, DownCastTo):
-                    warnings.warn(
-                        f"Grid type {vdb_gridtypes[0]} not available. Using {gridtype} instead. Data may lose precision.",
-                        UserWarning,
-                    )
-                return VDB_Grid()
+                break
+        else:
+            raise TypeError(
+                f"Could not find any VDB grid type for numpy dtype {self.grid.dtype}"
+            )
 
-        raise TypeError(
-            f"Could not find any VDB grid type for numpy dtype {self.grid.dtype}"
-        )
+        if isinstance(gridtype_downcast, DownCastTo):
+            warnings.warn(
+                f"Grid type {vdb_gridtypes[0]} not available. Using {gridtype} instead. Data may lose precision.",
+                RuntimeWarning,
+            )
+        return VDB_Grid()
 
     def _create_openvdb_grid(self):
         """Create and populate an OpenVDB grid
