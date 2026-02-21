@@ -246,26 +246,33 @@ class OpenVDBField(object):
         except KeyError:
             raise TypeError(f"Data type {self.grid.dtype} not supported for VDB")
 
-        for gridtype_downcast in vdb_gridtypes:
-            if isinstance(gridtype_downcast, DownCastTo):
-                gridtype = gridtype_downcast.gridType
+        VDB_Grid = None
+        selected_gridtype = None
+        is_downcast = False
+
+        for gridtype in vdb_gridtypes:
+            if isinstance(gridtype, DownCastTo):
+                gridtype_name = gridtype.gridType
+                is_downcast = True
             else:
-                gridtype = gridtype_downcast
+                gridtype_name = gridtype
+                is_downcast = False
 
             try:
-                VDB_Grid = getattr(vdb, gridtype)
+                VDB_Grid = getattr(vdb, gridtype_name)
             except AttributeError:
                 continue
             else:
+                selected_gridtype = gridtype_name
                 break
         else:
             raise TypeError(
                 f"Could not find any VDB grid type for numpy dtype {self.grid.dtype}"
             )
 
-        if isinstance(gridtype_downcast, DownCastTo):
+        if is_downcast:
             warnings.warn(
-                f"Grid type {vdb_gridtypes[0]} not available. Using {gridtype} instead. Data may lose precision.",
+                f"Grid type {vdb_gridtypes[0]} not available. Using {selected_gridtype} instead. Data may lose precision.",
                 RuntimeWarning,
             )
         return VDB_Grid()
