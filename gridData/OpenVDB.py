@@ -186,10 +186,16 @@ class OpenVDBField(object):
 
         """
         self.grid = numpy.asarray(grid)
-        if grid.ndim != 3:
+        if self.grid.ndim != 3:
             raise ValueError(f"OpenVDB only supports 3D grids, got {grid.ndim}D")
 
         self.grid = numpy.ascontiguousarray(self.grid)
+
+        if origin is None:
+            raise ValueError("origin must be provided for VDB export")
+
+        if len(origin) != 3:
+            raise ValueError("origin must be length-3")
 
         self.origin = numpy.asarray(origin)
 

@@ -622,6 +622,40 @@ class Grid(object):
         grid, edges = g.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
 
+    def convert_to(self, format_specifier, tolerance=None, **kwargs):
+        """generates an instance of the native object for a given format
+        
+        Implemented formats:
+        
+        vdb
+            :mod:`OpenVDB`
+            
+        Parameters
+        ----------
+        format_specifier : str 
+            vdb, etc
+
+        Returns
+        -------
+        native object
+        
+        """
+        formats = ("mrc", "vdb")
+        if (format_specifier.lower() == formats[1]):
+            grid_name = self.metadata.get("name", "density")
+            vdb_field  = OpenVDB.OpenVDBField(
+                grid=self.grid,
+                origin=self.origin,
+                delta=self.delta,
+                name=grid_name,
+                tolerance=tolerance,
+                metadata=self.metadata
+            )
+            
+            return vdb_field.vdb_grid
+        
+        raise ValueError(f"Unsupported convert_to format : {format_specifier}")
+
     def export(
         self, filename, file_format=None, type=None, typequote='"', tolerance=None
     ):

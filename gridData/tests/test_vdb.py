@@ -336,6 +336,32 @@ class TestVDBWrite:
 
         assert tmpdir.join("empty_init.vdb").exists()
 
+    def test_vdb_origin_none_raises(self):
+        data = np.ones((5, 5, 5))
+
+        with pytest.raises(ValueError, match="origin must be provided"):
+            gridData.OpenVDB.OpenVDBField(grid=data, origin=None, delta=(1, 1, 1))
+
+    def test_vdb_origin_wrong_length_raises(self):
+        data = np.ones((5, 5, 5))
+
+        with pytest.raises(ValueError, match="length-3"):
+            gridData.OpenVDB.OpenVDBField(grid=data, origin=(0, 0), delta=(1, 1, 1))
+
+    def test_vdb_write_without_grid_raises(self, tmpdir):
+        vdb_field = gridData.OpenVDB.OpenVDBField()
+
+        outfile = str(tmpdir / "test.vdb")
+
+        with pytest.raises(ValueError, match="No grid data"):
+            vdb_field.write(str(outfile))
+
+    def test_grid_convert_to_vdb(self, grid345):
+        data, g = grid345
+        native = g.convert_to("vdb")
+
+        assert isinstance(native, vdb.GridBase)
+
 
 @pytest.mark.skipif(
     not HAS_OPENVDB, reason="Need openvdb to test import error handling"
