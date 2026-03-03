@@ -330,4 +330,6 @@ class OpenVDBField(object):
         filename : str
             Output filename (should end in .vdb)
         """
+        if self.vdb_grid is None:
+            raise ValueError("No grid data to write")
         vdb.write(filename, grids=[self.vdb_grid])
