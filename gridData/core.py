@@ -38,7 +38,11 @@ import errno
 import pickle
 
 import numpy
-import openvdb as vdb
+
+try:
+    import openvdb as vdb
+except ImportError:
+    vdb = None
 
 # For interpolated grids: need scipy.ndimage but we import it only when needed:
 # import scipy
@@ -639,7 +643,7 @@ class Grid(object):
         bool
             True if obj is a native format object
         """
-        if isinstance(obj, vdb.GridBase):
+        if vdb is not None and isinstance(obj, vdb.GridBase):
             return True
 
         return False
