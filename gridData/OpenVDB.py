@@ -158,8 +158,13 @@ class OpenVDBField(object):
             self.metadata = {}
 
         if grid is not None:
-            self._populate(grid, origin, delta)
-            self.vdb_grid = self._create_openvdb_grid()
+            if isinstance(grid, vdb.GridBase):
+                self.vdb_grid = grid
+                print("hello")
+                self._extract_from_vdb_grid()
+            else:
+                self._populate(grid, origin, delta)
+                self.vdb_grid = self._create_openvdb_grid()
         else:
             self.grid = None
             self.origin = None
@@ -321,6 +326,60 @@ class OpenVDBField(object):
             vdb_grid.prune()
 
         return vdb_grid
+
+    def _extract_from_vdb_grid(self):
+        """Extract numpy array, origin, delta from stored VDB grid.
+
+        This method converts the sparse VDB grid to a dense numpy array
+        and extracts the transform information.
+        """
+        if self.vdb_grid.name:
+            self.name = self.vdb_grid.name
+
+        for key in self.vdb_grid.metadata:
+            try:
+                self.metadata[key] = self.vdb_grid[key]
+            except (TypeError, ValueError):
+                pass
+
+        transformation = self.vdb_grid.transform
+
+        v_origin = numpy.array(transformation.indexToWorld([0, 0, 0]))
+        v_delta = numpy.array(transformation.indexToWorld([1, 1, 1])) - v_origin
+
+        self.origin = v_origin
+        self.delta = v_delta
+
+        vdb_native_dtype = {
+            "BoolGrid": numpy.dtype("bool"),
+            "Int32Grid": numpy.dtype("int32"),
+            "Int64Grid": numpy.dtype("int64"),
+            "FloatGrid": numpy.dtype("float32"),
+            "DoubleGrid": numpy.dtype("float64"),
+            "HalfGrid": numpy.dtype("float16"),
+            "Vec3SGrid": numpy.dtype("float32"),
+            "Vec3DGrid": numpy.dtype("float64"),
+        }
+        dtype = vdb_native_dtype.get(
+            type(self.vdb_grid).__name__, numpy.dtype("float32")
+        )
+
+        bbox = self.vdb_grid.evalActiveVoxelBoundingBox()
+
+        if bbox is None or bbox[0] == bbox[1]:
+            self.grid = numpy.zeros((0, 0, 0), dtype=dtype)
+            return
+
+        shape = tuple(numpy.array(bbox[1]) - numpy.array(bbox[0]) + 1)
+
+        self.grid = numpy.zeros(shape, dtype=dtype)
+        print(dtype)
+        self.vdb_grid.copyToArray(self.grid, ijk=bbox[0])
+
+        if not numpy.all(numpy.array(bbox[0]) == 0):
+            self.origin = numpy.array(
+                transformation.indexToWorld(numpy.array(bbox[0]).tolist())
+            )
 
     def write(self, filename):
         """Write the field to an OpenVDB file.

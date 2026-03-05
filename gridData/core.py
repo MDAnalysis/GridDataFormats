@@ -38,6 +38,7 @@ import errno
 import pickle
 
 import numpy
+import openvdb as vdb
 
 # For interpolated grids: need scipy.ndimage but we import it only when needed:
 # import scipy
@@ -250,7 +251,10 @@ class Grid(object):
         self.interpolation_cval = None  # default to using min(grid)
 
         if grid is not None:
-            if isinstance(grid, str):
+            if self._is_native_object(grid):
+                self._load_from_native(grid)
+                filename = None
+            elif isinstance(grid, str):
                 # can probably safely try to load() it...
                 filename = grid
             else:
@@ -273,7 +277,7 @@ class Grid(object):
                     file_format=file_format,
                     assume_volumetric=assume_volumetric,
                 )
-            else:
+            elif not self._is_native_object(grid):
                 self._load(grid, edges, metadata, origin, delta)
 
     @property
@@ -622,38 +626,76 @@ class Grid(object):
         grid, edges = g.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
 
-    def convert_to(self, format_specifier, tolerance=None, **kwargs):
-        """generates an instance of the native object for a given format
-        
-        Implemented formats:
-        
-        vdb
-            :mod:`OpenVDB`
-            
+    def _is_native_object(self, obj):
+        """Check if object is a native format object (OpenVDB grid, MRC object).
+
         Parameters
         ----------
-        format_specifier : str 
+        obj : object
+            Object to check
+
+        Returns
+        -------
+        bool
+            True if obj is a native format object
+        """
+        if isinstance(obj, vdb.GridBase):
+            return True
+
+        return False
+
+    def _load_from_native(self, obj):
+        """Load Grid from a native format object.
+
+        Parameters
+        ----------
+        obj : object
+            Native format object (openvdb.GridBase, mrcfile.mrcfile.MrcFile, etc.)
+
+        """
+        self.vdb_field = OpenVDB.OpenVDBField(grid=obj)
+
+        origin = self.vdb_field.origin
+        delta = self.vdb_field.delta
+        grid = self.vdb_field.grid
+
+        self.metadata = self.vdb_field.metadata
+        self._from_native_vdb = True
+
+        self._load(grid=grid, origin=origin, delta=delta)
+
+    def convert_to(self, format_specifier, tolerance=None, **kwargs):
+        """generates an instance of the native object for a given format
+
+        Implemented formats:
+
+        vdb
+            :mod:`OpenVDB`
+
+        Parameters
+        ----------
+        format_specifier : str
             vdb, etc
 
         Returns
         -------
         native object
-        
+
         """
         formats = ("mrc", "vdb")
-        if (format_specifier.lower() == formats[1]):
+        if format_specifier.lower() == formats[1]:
             grid_name = self.metadata.get("name", "density")
-            vdb_field  = OpenVDB.OpenVDBField(
+            vdb_field = OpenVDB.OpenVDBField(
                 grid=self.grid,
                 origin=self.origin,
                 delta=self.delta,
                 name=grid_name,
                 tolerance=tolerance,
-                metadata=self.metadata
+                metadata=self.metadata,
             )
-            
+
             return vdb_field.vdb_grid
-        
+
         raise ValueError(f"Unsupported convert_to format : {format_specifier}")
 
     def export(
@@ -773,6 +815,14 @@ class Grid(object):
 
         For the file format see https://www.openvdb.org
         """
+        if (
+            hasattr(self, "_from_native_vdb")
+            and self._from_native_vdb
+            and tolerance is None
+        ):
+            self.vdb_field.write(filename)
+            return
+
         if self.grid.ndim != 3:
             raise ValueError(
                 f"OpenVDB export requires a 3D grid, got {self.grid.ndim}D"

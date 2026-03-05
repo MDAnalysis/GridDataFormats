@@ -1,5 +1,6 @@
 import numpy as np
 from numpy.testing import assert_allclose
+import os
 
 import pytest
 from unittest.mock import patch
@@ -361,6 +362,33 @@ class TestVDBWrite:
         native = g.convert_to("vdb")
 
         assert isinstance(native, vdb.GridBase)
+
+    def test_grid_from_native_vdb_preserve_values(self, grid345):
+        data, g = grid345
+        native = g.convert_to("vdb")
+        g2 = Grid(grid=native)
+
+        assert g._is_native_object(native) is True
+
+        assert g2.grid.shape == data.shape
+        assert_allclose(g2.origin, g.origin, rtol=1e-5)
+        assert_allclose(g2.delta, g.delta, rtol=1e-5)
+        assert_allclose(g2.grid, data, rtol=1e-5)
+
+    def test_grid_from_native_vdb_export_with_tolerance(self, tmpdir, grid345):
+        data, g = grid345
+        native = g.convert_to("vdb")
+        g2 = Grid(grid=native)
+
+        out_no_tol = str(tmpdir / "no_tolerance.vdb")
+        out_with_tol = str(tmpdir / "with_tolerance.vdb")
+
+        g2.export(out_no_tol)
+        g2.export(out_with_tol, tolerance=5.0)
+
+        size_no_tol = os.path.getsize(out_no_tol)
+        size_with_tol = os.path.getsize(out_with_tol)
+        assert size_with_tol < size_no_tol
 
 
 @pytest.mark.skipif(
