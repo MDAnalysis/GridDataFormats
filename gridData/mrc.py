@@ -100,6 +100,25 @@ class MRC(object):
         self.filename = filename
         if filename is not None:
             self.read(filename, assume_volumetric=assume_volumetric)
+            
+    @staticmethod
+    def from_grid(grid, **kwargs):
+        mrc_obj = MRC()
+    
+        mrc_obj.array = grid.grid
+        mrc_obj.delta = np.diag(grid.delta)
+        mrc_obj.origin = grid.origin
+        mrc_obj.rank = 3
+    
+        if hasattr(grid, "_mrc_header"):
+            mrc_obj.header = grid._mrc_header
+    
+        return mrc_obj
+
+    @property
+    def native(self):
+        """Native object is the MRC wrapper itself."""
+        return self
 
     def read(self, filename, assume_volumetric=False):
         """Populate the instance from the MRC/CCP4 file *filename*."""

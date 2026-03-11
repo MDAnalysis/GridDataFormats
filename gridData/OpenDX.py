@@ -523,6 +523,33 @@ class field(DXclass):
         self.components = components
         self.comments= comments
 
+    @staticmethod
+    def from_grid(grid, type=None, typequote='"', **kwargs):
+        comments = [
+            "OpenDX density file written by gridDataFormats.Grid.export()",
+            "File format: http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF",
+            "Data are embedded in the header and tied to the grid positions.",
+            "Data is written in C array order: In grid[x,y,z] the axis z is fastest",
+            "varying, then y, then finally x, i.e. z is the innermost loop.",
+        ]
+        if grid.metadata:
+            comments.append("Meta data stored with the python Grid object:")
+        for k in grid.metadata:
+            comments.append("   " + str(k) + " = " + str(grid.metadata[k]))
+        comments.append("(Note: the VMD dx-reader chokes on comments below this line)")
+        
+        components = dict(
+            positions=gridpositions(1, grid.grid.shape, grid.origin, grid.delta),
+            connections=gridconnections(2, grid.grid.shape),
+            data=array(3, grid.grid, type=type, typequote=typequote),
+        )
+        dx_field = field('density', components=components, comments=comments)
+        return dx_field
+
+    @property
+    def native(self):
+        return self
+
     def _openfile_writing(self, filename):
         """Returns a regular or gz file stream for writing"""
         if filename.endswith('.gz'):
