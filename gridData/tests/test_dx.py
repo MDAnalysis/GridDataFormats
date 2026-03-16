@@ -90,3 +90,26 @@ def test_delta_precision(tmpdir):
         g.delta, g2.delta,
         decimal=7,
         err_msg="deltas of written grid do not match original")
+
+def test_dx_from_grid():
+    data = np.ones((5, 5, 5), dtype=np.float32)
+    g = Grid(data, origin=[1.0, 2.0, 3.0], delta=[0.5, 0.5, 0.5])
+    g.metadata['name'] = 'test_density'
+    g.metadata['author'] = 'test_user'
+    
+    dx_field = gridData.OpenDX.field.from_grid(g)
+    
+    assert isinstance(dx_field, gridData.OpenDX.field)
+    
+    assert any('test_density' and 'test_user' in str(c) for c in dx_field.comments)
+    # assert any('test_user' in str(c) for c in dx_field.comments)
+    
+    assert_equal(dx_field.components['data'].array, data)
+    assert_equal(dx_field.components['positions'].origin, g.origin)
+    
+def test_dx_native():
+    data = np.ones((5, 5, 5))
+    g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+    
+    dx_field = gridData.OpenDX.field.from_grid(g)
+    assert dx_field.native is dx_field

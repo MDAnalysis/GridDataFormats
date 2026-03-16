@@ -142,6 +142,27 @@ class TestGridMRC():
 
     def test_data(self, grid, ccp4data):
         assert_allclose(grid.grid, ccp4data.array)
+        
+    def test_mrc_from_grid(self):
+        data = np.arange(27, dtype=np.float32).reshape((3, 3, 3))
+        g = Grid(data, origin=[1.0, 2.0, 3.0], delta=[0.5, 0.5, 0.5])
+        
+        mrc_obj = mrc.MRC.from_grid(g)
+        
+        assert isinstance(mrc_obj, mrc.MRC)
+        
+        assert_equal(mrc_obj.array, data)
+        assert_allclose(mrc_obj.delta, np.diag(g.delta))
+        assert_allclose(mrc_obj.origin, g.origin)
+        assert mrc_obj.rank == 3
+        
+    def test_mrc_native_property(self):
+        data = np.ones((3, 3, 3))
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        
+        mrc_obj = mrc.MRC.from_grid(g)
+        
+        assert mrc_obj.native is mrc_obj
 
 class TestMRCWrite:
     """Tests for MRC write functionality"""
