@@ -103,6 +103,21 @@ class MRC(object):
             
     @staticmethod
     def from_grid(grid, **kwargs):
+        """Create MRC object from a Grid.
+        
+        Parameters
+        ----------
+        grid : Grid
+            Grid object to convert
+        **kwargs
+            Additional keyword arguments (currently unused)
+        
+        Returns
+        -------
+        MRC
+            MRC wrapper object
+        
+        """
         mrc_obj = MRC()
     
         mrc_obj.array = grid.grid

@@ -525,6 +525,21 @@ class field(DXclass):
 
     @staticmethod
     def from_grid(grid, type=None, typequote='"', **kwargs):
+        """Create OpenDX field from Grid.
+    
+        Parameters
+        ----------
+        grid : Grid
+        type : str, optional
+        typequote : str, optional
+        **kwargs
+            Additional keyword arguments (currently unused)
+        
+        Returns
+        -------
+        field
+            OpenDX field wrapper
+        """
         comments = [
             "OpenDX density file written by gridDataFormats.Grid.export()",
             "File format: http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF",
@@ -548,6 +563,7 @@ class field(DXclass):
 
     @property
     def native(self):
+        """Return native object"""
         return self
 
     def _openfile_writing(self, filename):

@@ -605,7 +605,7 @@ class Grid(object):
         self._load(grid=grid, edges=edges, metadata=self.metadata)
 
     def convert_to(self, format_specifier, tolerance=None, **kwargs):
-        """Generates an instance of the native object for a given format
+        """Returns an instance of the native object for a given format
         
         Implemented formats:
         
@@ -618,7 +618,7 @@ class Grid(object):
         ----------
         format_specifier : str 
         
-        tolerance : float (default is None)
+        tolerance : float (default is None) - for OpenVDB
             
         Returns
         -------
