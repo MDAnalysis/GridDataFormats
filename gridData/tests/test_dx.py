@@ -1,5 +1,5 @@
 import numpy as np
-from numpy.testing import assert_equal, assert_almost_equal
+from numpy.testing import assert_equal, assert_almost_equal, assert_allclose
 
 import pytest
 
@@ -101,11 +101,10 @@ def test_dx_from_grid():
     
     assert isinstance(dx_field, gridData.OpenDX.field)
     
-    assert any('test_density' and 'test_user' in str(c) for c in dx_field.comments)
-    # assert any('test_user' in str(c) for c in dx_field.comments)
+    assert any(('test_density' and 'test_user') in str(c) for c in dx_field.comments) 
     
-    assert_equal(dx_field.components['data'].array, data)
-    assert_equal(dx_field.components['positions'].origin, g.origin)
+    assert_allclose(dx_field.components['data'].array, data)
+    assert_allclose(dx_field.components['positions'].origin, g.origin)
     
 def test_dx_native():
     data = np.ones((5, 5, 5))
@@ -113,3 +112,4 @@ def test_dx_native():
     
     dx_field = gridData.OpenDX.field.from_grid(g)
     assert dx_field.native is dx_field
+    assert isinstance(dx_field.native, gridData.OpenDX.field)

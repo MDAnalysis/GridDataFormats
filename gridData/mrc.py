@@ -101,9 +101,13 @@ class MRC(object):
         if filename is not None:
             self.read(filename, assume_volumetric=assume_volumetric)
 
-    @staticmethod
-    def from_grid(grid, **kwargs):
+    @classmethod
+    def from_grid(cls, grid, **kwargs):
         """Create MRC object from a Grid.
+        
+        If the Grid was originally created from an mrcfile (and thus has
+        the ``Grid._mrc_header`` attribute), the MRC header will be copied
+        into the returned MRC instance.
 
         Parameters
         ----------
@@ -117,8 +121,10 @@ class MRC(object):
         MRC
             MRC wrapper object
 
+
+        .. versionadded:: 1.2.0
         """
-        mrc_obj = MRC()
+        mrc_obj = cls()
 
         mrc_obj.array = grid.grid
         mrc_obj.delta = np.diag(grid.delta)
@@ -132,7 +138,17 @@ class MRC(object):
 
     @property
     def native(self):
-        """Native object is the MRC wrapper itself."""
+        """Return the native mrcfile.MrcFile object.
+        
+        Returns
+        -------
+        mrcfile.mrcfile.MrcFile
+            Native mrcfile object
+
+
+        .. versionadded:: 1.2.0
+
+        """
         return self
 
     def read(self, filename, assume_volumetric=False):

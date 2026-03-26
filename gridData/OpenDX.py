@@ -559,15 +559,24 @@ class field(DXclass):
         self.components = components
         self.comments = comments
 
-    @staticmethod
-    def from_grid(grid, type=None, typequote='"', **kwargs):
+    @classmethod
+    def from_grid(cls, grid, type=None, typequote='"', **kwargs):
         """Create OpenDX field from Grid.
 
         Parameters
         ----------
         grid : Grid
+            Grid object to convert
         type : str, optional
+            for DX, set the output DX array type, e.g., "double" or "float".
+            By default (``None``), the DX type is determined from the numpy
+            dtype of the array of the grid (and this will typically result in
+            "double").
         typequote : str, optional
+            For DX, set the character used to quote the type string;
+            by default this is a double-quote character, '"'.
+            Custom parsers like the one from NAMD-GridForces (backend for MDFF)
+            expect no quotes, and typequote='' may be used to appease them.
         **kwargs
             Additional keyword arguments (currently unused)
 
@@ -575,6 +584,9 @@ class field(DXclass):
         -------
         field
             OpenDX field wrapper
+            
+            
+        .. versionadded:: 1.2.0
         """
         comments = [
             "OpenDX density file written by gridDataFormats.Grid.export()",
@@ -594,12 +606,18 @@ class field(DXclass):
             connections=gridconnections(2, grid.grid.shape),
             data=array(3, grid.grid, type=type, typequote=typequote),
         )
-        dx_field = field("density", components=components, comments=comments)
+        dx_field = cls("density", components=components, comments=comments)
         return dx_field
 
     @property
     def native(self):
-        """Return native object"""
+        """Return native object
+        
+        The "native" object is the :class:gridData.OpenDX.field itself.
+            
+        
+        .. versionadded:: 1.2.0
+        """
         return self
 
     def _openfile_writing(self, filename):

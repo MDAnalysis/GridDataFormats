@@ -15,9 +15,9 @@ The rules for this file:
 -------------------------------------------------------------------------------
 ??/??/???? orbeckst, spyke7
 
- * 1.1.1
+ * 1.2.0
 
-  Changes
+  Enhancements 
 
   * `from_grid()` and `native` functions are added inside mrc and OpenDX,
     which is used by `Grid._export_<FORMAT>` and a new `convert_to()` is added

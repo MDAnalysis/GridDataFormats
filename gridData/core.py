@@ -215,7 +215,7 @@ class Grid(object):
     
     converter = {
         'MRC': mrc.MRC.from_grid, 
-        'VDB': None, 
+        # 'VDB': None, 
         'DX': OpenDX.field.from_grid,  
     }
 
@@ -604,25 +604,26 @@ class Grid(object):
         grid, edges = g.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
 
-    def convert_to(self, format_specifier, tolerance=None, **kwargs):
+    def convert_to(self, format_specifier, **kwargs):
         """Returns an instance of the native object for a given format
         
         Implemented formats:
         
         DX
-            :mod:`OpenDX`
+            :mod:`OpenDX.field`
         MRC
-            :mod:`mrc` MRC/CCP4 format
+            :mod:`mrcfile.MrcFile` MRC/CCP4 format
             
         Parameters
         ----------
         format_specifier : str 
-        
-        tolerance : float (default is None) - for OpenVDB
             
         Returns
         -------
         native object
+        
+        
+        .. versionadded:: 1.2.0
         
         """
         fmt_upper = format_specifier.upper()
