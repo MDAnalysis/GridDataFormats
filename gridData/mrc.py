@@ -35,6 +35,7 @@ Classes
 """
 import numpy as np
 import mrcfile
+import tempfile, os
 
 
 class MRC(object):
@@ -104,7 +105,7 @@ class MRC(object):
     @classmethod
     def from_grid(cls, grid, **kwargs):
         """Create MRC object from a Grid.
-        
+
         If the Grid was originally created from an mrcfile (and thus has
         the ``Grid._mrc_header`` attribute), the MRC header will be copied
         into the returned MRC instance.
@@ -139,7 +140,7 @@ class MRC(object):
     @property
     def native(self):
         """Return the native mrcfile.MrcFile object.
-        
+
         Returns
         -------
         mrcfile.mrcfile.MrcFile
@@ -149,7 +150,12 @@ class MRC(object):
         .. versionadded:: 1.2.0
 
         """
-        return self
+        fd, temp_path = tempfile.mkstemp(suffix=".mrc")
+
+        os.close(fd)
+        self.write(temp_path)
+
+        return mrcfile.open(temp_path)
 
     def read(self, filename, assume_volumetric=False):
         """Populate the instance from the MRC/CCP4 file *filename*."""
