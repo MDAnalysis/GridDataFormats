@@ -19,9 +19,11 @@ The rules for this file:
 
   Enhancements 
 
-  * `from_grid()` and `native` functions are added inside mrc and OpenDX,
-    which is used by `Grid._export_<FORMAT>` and a new `convert_to()` is added
-    (issue #161, PR #164)
+  * new API-level interoperability features (#160)
+    * new `Grid.convert_to()` method to create the native object (#161, PR #164)
+    * `mrc.MRC`, `OpenDX.field`: new `from_grid()` class method to create the
+      correpsonding GridDataFormats wrapper from a `Grid`; the new attribute `native`
+      contains the native object (#161, PR #164)
 
   Fixes
 
