@@ -199,9 +199,8 @@ class TestGridMRC:
         mrc_wrapper = mrc.MRC.from_grid(g)
         native_mrc = mrc_wrapper.native
 
-        assert isinstance(native_mrc, mrcfile.mrcfile.MrcFile)
+        assert isinstance(native_mrc, mrcfile.mrcinterpreter.MrcInterpreter)
         np.testing.assert_allclose(native_mrc.data, data.T)
-        native_mrc.close()
 
 
 class TestMRCWrite:
