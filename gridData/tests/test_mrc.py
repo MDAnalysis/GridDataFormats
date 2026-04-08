@@ -180,8 +180,8 @@ class TestGridMRC:
         assert_allclose(grid.grid, ccp4data.array)
 
     def test_mrc_from_grid(self):
-        data = np.arange(27, dtype=np.float32).reshape((3, 3, 3))
-        g = Grid(data, origin=[1.0, 2.0, 3.0], delta=[0.5, 0.5, 0.5])
+        data = np.arange(60, dtype=np.float32).reshape((3, 4, 5))
+        g = Grid(data, origin=[1.0, 2.0, 3.0], delta=[0.5, 1.5, 1.0])
 
         mrc_obj = mrc.MRC.from_grid(g)
 
@@ -193,8 +193,8 @@ class TestGridMRC:
         assert mrc_obj.rank == 3
 
     def test_mrc_native_property(self):
-        data = np.ones((3, 3, 3))
-        g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
+        data = np.arange(60, dtype=np.float32).reshape((3, 4, 5))
+        g = Grid(data, origin=[0, 0, 0], delta=[1, 3, 2.5])
 
         mrc_wrapper = mrc.MRC.from_grid(g)
         native_mrc = mrc_wrapper.native
