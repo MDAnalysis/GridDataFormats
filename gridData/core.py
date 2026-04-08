@@ -605,18 +605,18 @@ class Grid(object):
         self._load(grid=grid, edges=edges, metadata=self.metadata)
 
     def convert_to(self, format_specifier, **kwargs):
-        """Returns an instance of the native object for a given format
+        """Returns an instance of the native object for a given format.
         
         Implemented formats:
         
         DX
             :mod:`OpenDX.field`
         MRC
-            :mod:`mrcfile.MrcFile` MRC/CCP4 format
+            :mod:`mrcfile.mrcinterpreter.MrcInterpreter` MRC/CCP4 format
             
         Parameters
         ----------
-        format_specifier : str 
+        format_specifier : {"DX", "MRC" }
             
         Returns
         -------

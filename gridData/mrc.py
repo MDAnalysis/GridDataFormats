@@ -139,23 +139,125 @@ class MRC(object):
 
     @property
     def native(self):
-        """Return the native mrcfile.MrcFile object.
+        """Return a native :class:`~mrcfile.mrcinterpreter.MrcInterpreter` object.
+
+        The object is :class:`~mrcfile.mrcobject.MrcObject` that is connected
+        to a stream. It is implemented as a managed property and regenerated
+        whenever :attr:`native` is used. In order to re-use the object, assign
+        it to a variable::
+
+            mrc = gdfMRC.native
+
+        In order to write to a file, open the file and assign it to the
+        :class:`~mrcfile.mrcinterpreter.MrcInterpreter._iostream` attribute and
+        call the :meth:`~mrcfile.mrcinterpreter.MrcInterpreter.flush` method::
+
+            mrc = gdfMRC.native   # important: assign to variable mrc!
+            with open("new.mrc", "wb") as f:
+               mrc._iostream = f
+               mrc.flush()
+           
 
         Returns
         -------
-        mrcfile.mrcfile.MrcFile
+        mrcfile.mrcinterpreter.MrcInterpreter
             Native mrcfile object
 
+        SeeAlso
+        -------
+        write
+        
 
         .. versionadded:: 1.2.0
 
         """
-        fd, temp_path = tempfile.mkstemp(suffix=".mrc")
+        # "write only", i.e., do not initialize with a stream
+        mrc = mrcfile.mrcinterpreter.MrcInterpreter()
+        mrc._create_default_attributes()
+        
+        # Preserve header if it exists, otherwise use defaults
+        if hasattr(self, "header"):
+            # File was read - preserve original ordering
+            h = self.header
+            axes_order = np.hstack([h.mapc, h.mapr, h.maps])
+            mapc, mapr, maps = int(h.mapc), int(h.mapr), int(h.maps)
+        else:
+            # New file - use standard ordering
+            axes_order = np.array([1, 2, 3])
+            mapc, mapr, maps = 1, 2, 3
+            h = None
 
-        os.close(fd)
-        self.write(temp_path)
+        # Reverse the transformation done in read()
+        transpose_order = np.argsort(axes_order[::-1])
+        inverse_transpose_order = np.argsort(transpose_order)
 
-        return mrcfile.open(temp_path)
+        # Transform our xyz array back to the file's native ordering
+        # Ensure proper data type (float32 is standard for mode 2)
+        data = np.transpose(self.array,
+                            axes=inverse_transpose_order).astype(np.float32)
+
+        mrc.set_data(data)
+
+        # Set voxel size from delta (diagonal elements)
+        voxel_size = np.diag(self.delta).astype(np.float32)
+        mrc.voxel_size = tuple(voxel_size)
+
+        # Set map ordering
+        mrc.header.mapc = mapc
+        mrc.header.mapr = mapr
+        mrc.header.maps = maps
+
+        # Handle nstart and origin
+        if h is not None:
+            # Preserve original header values
+            nxstart = int(h.nxstart)
+            nystart = int(h.nystart)
+            nzstart = int(h.nzstart)
+            header_origin_xyz = np.array(
+                [h.origin.x, h.origin.y, h.origin.z], dtype=np.float32
+            )
+
+            mrc.header.mx = int(h.mx)
+            mrc.header.my = int(h.my)
+            mrc.header.mz = int(h.mz)
+
+            # Preserve cell dimensions
+            if hasattr(h, "cella"):
+                mrc.header.cella.x = float(h.cella.x)
+                mrc.header.cella.y = float(h.cella.y)
+                mrc.header.cella.z = float(h.cella.z)
+            if hasattr(h, "cellb"):
+                mrc.header.cellb.alpha = float(h.cellb.alpha)
+                mrc.header.cellb.beta = float(h.cellb.beta)
+                mrc.header.cellb.gamma = float(h.cellb.gamma)
+            # Copy space group if available
+            if hasattr(h, "ispg"):
+                mrc.header.ispg = int(h.ispg)
+        else:
+            # For new files, calculate nstart from origin
+            if np.any(voxel_size <= 0):
+                raise ValueError(f"Voxel size must be positive, got {voxel_size}")
+
+            # Set header.origin = 0 and encode everything in nstart
+            header_origin_xyz = np.zeros(3, dtype=np.float32)
+            nxstart = int(np.round(self.origin[0] / voxel_size[0]))
+            nystart = int(np.round(self.origin[1] / voxel_size[1]))
+            nzstart = int(np.round(self.origin[2] / voxel_size[2]))
+
+        # Set the start positions
+        mrc.header.nxstart = nxstart
+        mrc.header.nystart = nystart
+        mrc.header.nzstart = nzstart
+
+        # Set explicit origin
+        mrc.header.origin.x = float(header_origin_xyz[0])
+        mrc.header.origin.y = float(header_origin_xyz[1])
+        mrc.header.origin.z = float(header_origin_xyz[2])
+
+        # Update statistics only
+        mrc.update_header_stats()
+
+        return mrc
 
     def read(self, filename, assume_volumetric=False):
         """Populate the instance from the MRC/CCP4 file *filename*."""
@@ -230,8 +332,8 @@ class MRC(object):
 
     def histogramdd(self):
         """Return array data as (edges,grid), i.e. a numpy nD histogram."""
-        return (self.array, self.edges)
-
+        return (self.array, self.edges)        
+    
     def write(self, filename):
         """Write grid data to MRC/CCP4 file format.
 
@@ -248,93 +350,18 @@ class MRC(object):
         header information (including mapc, mapr, maps ordering) is preserved.
         Otherwise, standard ordering (mapc=1, mapr=2, maps=3) is used.
 
+        Currently, only *uncompressed* files are supported for writing. (For
+        reading, gzip and bzip2-compressed files are supported.)
+
 
         .. versionadded:: 1.1.0
+
         """
         if filename is not None:
             self.filename = filename
 
-        # Preserve header if it exists, otherwise use defaults
-        if hasattr(self, "header"):
-            # File was read - preserve original ordering
-            h = self.header
-            axes_order = np.hstack([h.mapc, h.mapr, h.maps])
-            mapc, mapr, maps = int(h.mapc), int(h.mapr), int(h.maps)
-        else:
-            # New file - use standard ordering
-            axes_order = np.array([1, 2, 3])
-            mapc, mapr, maps = 1, 2, 3
-            h = None
-
-        # Reverse the transformation done in read()
-        transpose_order = np.argsort(axes_order[::-1])
-        inverse_transpose_order = np.argsort(transpose_order)
-
-        # Transform our xyz array back to the file's native ordering
-        data_for_file = np.transpose(self.array, axes=inverse_transpose_order)
-
-        # Ensure proper data type (float32 is standard for mode 2)
-        data_for_file = data_for_file.astype(np.float32)
-
-        # Create new MRC file
-        with mrcfile.new(filename, overwrite=True) as mrc:
-            mrc.set_data(data_for_file)
-
-            # Set voxel size from delta (diagonal elements)
-            voxel_size = np.diag(self.delta).astype(np.float32)
-            mrc.voxel_size = tuple(voxel_size)
-
-            # Set map ordering
-            mrc.header.mapc = mapc
-            mrc.header.mapr = mapr
-            mrc.header.maps = maps
-
-            # Handle nstart and origin
-            if h is not None:
-                # Preserve original header values
-                nxstart = int(h.nxstart)
-                nystart = int(h.nystart)
-                nzstart = int(h.nzstart)
-                header_origin_xyz = np.array(
-                    [h.origin.x, h.origin.y, h.origin.z], dtype=np.float32
-                )
-
-                mrc.header.mx = int(h.mx)
-                mrc.header.my = int(h.my)
-                mrc.header.mz = int(h.mz)
-
-                # Preserve cell dimensions
-                if hasattr(h, "cella"):
-                    mrc.header.cella.x = float(h.cella.x)
-                    mrc.header.cella.y = float(h.cella.y)
-                    mrc.header.cella.z = float(h.cella.z)
-                if hasattr(h, "cellb"):
-                    mrc.header.cellb.alpha = float(h.cellb.alpha)
-                    mrc.header.cellb.beta = float(h.cellb.beta)
-                    mrc.header.cellb.gamma = float(h.cellb.gamma)
-                # Copy space group if available
-                if hasattr(h, "ispg"):
-                    mrc.header.ispg = int(h.ispg)
-            else:
-                # For new files, calculate nstart from origin
-                if np.any(voxel_size <= 0):
-                    raise ValueError(f"Voxel size must be positive, got {voxel_size}")
-
-                # Set header.origin = 0 and encode everything in nstart
-                header_origin_xyz = np.zeros(3, dtype=np.float32)
-                nxstart = int(np.round(self.origin[0] / voxel_size[0]))
-                nystart = int(np.round(self.origin[1] / voxel_size[1]))
-                nzstart = int(np.round(self.origin[2] / voxel_size[2]))
-
-            # Set the start positions
-            mrc.header.nxstart = nxstart
-            mrc.header.nystart = nystart
-            mrc.header.nzstart = nzstart
-
-            # Set explicit origin
-            mrc.header.origin.x = float(header_origin_xyz[0])
-            mrc.header.origin.y = float(header_origin_xyz[1])
-            mrc.header.origin.z = float(header_origin_xyz[2])
-
-            # Update statistics only
-            mrc.update_header_stats()
+        mrc = self.native
+        # TODO: make compression work
+        with open(filename, "wb") as f:
+            mrc._iostream = f
+            mrc.flush()
