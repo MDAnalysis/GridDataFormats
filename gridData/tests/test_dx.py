@@ -103,7 +103,7 @@ def test_delta_precision(tmpdir):
 
 def test_dx_from_grid():
     data = np.arange(60, dtype=np.float32).reshape((3, 4, 5))
-    g = Grid(data, origin=[0, 0, 0], delta=[1, 3, 2.5])
+    g = Grid(data, origin=[0, 0, 0], delta=[1, 1.5, 2.5])
 
     g.metadata["name"] = "test_density"
     g.metadata["author"] = "test_user"
@@ -125,3 +125,15 @@ def test_dx_native():
     dx_field = gridData.OpenDX.field.from_grid(g)
     assert dx_field.native is dx_field
     assert isinstance(dx_field.native, gridData.OpenDX.field)
+
+
+def test_grid_convert_to_dx():
+    data = np.arange(60, dtype=np.float32).reshape((3, 4, 5))
+    g = Grid(data, origin=[0, 0, 0], delta=[1, 2, 3])
+
+    dx_native = g.convert_to("dx")
+
+    assert isinstance(dx_native, gridData.OpenDX.field)
+
+    dx_field = gridData.OpenDX.field.from_grid(g)
+    assert isinstance(dx_native, type(dx_field.native))

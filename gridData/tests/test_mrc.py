@@ -202,6 +202,15 @@ class TestGridMRC:
         assert isinstance(native_mrc, mrcfile.mrcinterpreter.MrcInterpreter)
         np.testing.assert_allclose(native_mrc.data, data.T)
 
+    def test_grid_convert_to_mrc(self):
+        g = Grid(datafiles.CCP4_1JZV)
+        mrc_native = g.convert_to("mrc")
+
+        assert isinstance(mrc_native, mrcfile.mrcinterpreter.MrcInterpreter)
+        assert mrc_native.header.mapc == g._mrc_header.mapc
+        assert mrc_native.header.mapr == g._mrc_header.mapr
+        assert mrc_native.header.maps == g._mrc_header.maps
+
 
 class TestMRCWrite:
     """Tests for MRC write functionality"""
