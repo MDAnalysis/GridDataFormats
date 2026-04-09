@@ -35,7 +35,6 @@ Classes
 """
 import numpy as np
 import mrcfile
-import tempfile, os
 
 
 class MRC(object):
