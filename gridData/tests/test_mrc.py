@@ -143,7 +143,7 @@ def test_origin(ccp4data):
 
 def test_triclinic_ValueError():
     with pytest.raises(
-        ValueError, match="Only orthorhombic unitcells are currently " "supported, not"
+        ValueError, match="Only orthorhombic unitcells are currently supported, not"
     ):
         Grid(datafiles.MRC_EMD3001, file_format="MRC")
 
@@ -200,6 +200,7 @@ class TestGridMRC:
         native_mrc = mrc_wrapper.native
 
         assert isinstance(native_mrc, mrcfile.mrcinterpreter.MrcInterpreter)
+        # The default axis order in MRC is the transpose of the grid data:
         np.testing.assert_allclose(native_mrc.data, data.T)
 
     def test_grid_convert_to_mrc(self):
