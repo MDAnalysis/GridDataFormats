@@ -15,9 +15,12 @@ The rules for this file:
 -------------------------------------------------------------------------------
 ??/??/???? orbeckst
 
- * 1.1.1
+ * 1.2.0
 
- Fixes
+  Fixes
+
+  * Ensure that when Grid() or Grid.load() load a datafile with the
+    wrong format a ValueError is raised consistently. (PR #165)
 
 
 01/22/2026 IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney,

@@ -179,12 +179,9 @@ class TestGrid(object):
         h = Grid(pklfile, file_format="pkl")
         assert h == data['grid']
 
-    # At the moment, reading the file with the wrong parser does not give
-    # good error messages.
-    @pytest.mark.xfail
     @pytest.mark.parametrize("fileformat", ("ccp4", "plt", "dx"))
     def test_load_wrong_fileformat(self, data, pklfile, fileformat):
-        with pytest.raises('ValueError'):
+        with pytest.raises(ValueError):
             Grid(pklfile, file_format=fileformat)
 
     # just check that we can export without stupid failures; detailed
