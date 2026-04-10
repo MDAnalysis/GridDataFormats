@@ -613,7 +613,7 @@ class field(DXclass):
     def native(self):
         """Return native object
         
-        The "native" object is the :class:gridData.OpenDX.field itself.
+        The "native" object is the :class:`gridData.OpenDX.field` itself.
             
         
         .. versionadded:: 1.2.0
