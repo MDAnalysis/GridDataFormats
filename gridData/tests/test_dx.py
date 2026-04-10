@@ -112,7 +112,8 @@ def test_dx_from_grid():
 
     assert isinstance(dx_field, gridData.OpenDX.field)
 
-    assert any(("test_density" and "test_user") in str(c) for c in dx_field.comments)
+    assert any("test_density" in str(c) for c in dx_field.comments)                                                                         
+    assert any("test_user" in str(c) for c in dx_field.comments) 
 
     assert_allclose(dx_field.components["data"].array, data)
     assert_allclose(dx_field.components["positions"].origin, g.origin)

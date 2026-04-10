@@ -215,7 +215,6 @@ class Grid(object):
     
     converter = {
         'MRC': mrc.MRC.from_grid, 
-        # 'VDB': None, 
         'DX': OpenDX.field.from_grid,  
     }
 
