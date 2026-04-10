@@ -25,10 +25,10 @@ jobs:
       version: ${{ steps.extract-version.outputs.version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
@@ -64,7 +64,7 @@ jobs:
           echo "Extracted version: $VERSION"
 
       - name: Upload dist files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist-files
           path: dist/
@@ -76,12 +76,12 @@ jobs:
     needs: build
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
       - name: Download dist files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist-files
           path: dist/
@@ -114,7 +114,7 @@ jobs:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
       - name: Download dist files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist-files
           path: dist/
@@ -138,7 +138,7 @@ jobs:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
       - name: Download dist files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist-files
           path: dist/
@@ -159,20 +159,16 @@ jobs:
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/'))
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
       - name: Checkout repository for actions
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Wait for version to be available on TestPyPI
-        uses: ./.github/actions/wait-for-pypi-version
-        with:
-          repository: testpypi
-          package: GridDataFormats
-          version: ${{ needs.build.outputs.version }}
-
+      - name: Wait for version to be available on TestPyPI (30 seconds)
+        run: sleep 30
+        
       - name: Install from TestPyPI
         run: |
           python -m pip install --upgrade pip
@@ -199,20 +195,16 @@ jobs:
       (github.event_name == 'release' && github.event.action == 'published')
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
       - name: Checkout repository for actions
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Wait for version to be available on PyPI
-        uses: ./.github/actions/wait-for-pypi-version
-        with:
-          repository: pypi
-          package: GridDataFormats
-          version: ${{ needs.build.outputs.version }}
-
+      - name: Wait for version to be available on PyPI (30 seconds)
+        run: sleep 30
+        
       - name: Install from PyPI
         run: |
           python -m pip install --upgrade pip
