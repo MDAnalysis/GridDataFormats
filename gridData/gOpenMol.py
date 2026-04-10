@@ -218,7 +218,7 @@ class Plt(object):
                 a = numpy.array(unpack(datafmt, plt.read(calcsize(datafmt))))
         except Exception as err:
             raise ValueError(f"gOpenMol PLT file {filename} could not be read. "
-                             "The error was\n"
+                             "The original error was\n"
                              f"   {err.__class__.__name__}: {err}")
         self.header['filename'] = self.filename
         self.array = a.reshape(h['nz'], h['ny'], h['nx']).transpose()  # unpack plt in reverse!!

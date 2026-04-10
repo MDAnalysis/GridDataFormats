@@ -176,11 +176,11 @@ class TestGrid(object):
 
     @pytest.mark.parametrize("fileformat", ("pkl", "PKL", "pickle", "python"))
     def test_load_fileformat(self, data, pklfile, fileformat):
-        h = Grid(pklfile, file_format="pkl")
+        h = Grid(pklfile, file_format=fileformat)
         assert h == data['grid']
 
     @pytest.mark.parametrize("fileformat", ("ccp4", "plt", "dx"))
-    def test_load_wrong_fileformat(self, data, pklfile, fileformat):
+    def test_load_wrong_fileformat_raises_ValueError(self, pklfile, fileformat):
         with pytest.raises(ValueError):
             Grid(pklfile, file_format=fileformat)
 
