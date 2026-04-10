@@ -331,7 +331,7 @@ class MRC(object):
 
     def histogramdd(self):
         """Return array data as (edges,grid), i.e. a numpy nD histogram."""
-        return (self.array, self.edges)        
+        return (self.array, self.edges)
     
     def write(self, filename):
         """Write grid data to MRC/CCP4 file format.
