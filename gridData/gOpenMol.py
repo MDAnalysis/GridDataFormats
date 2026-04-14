@@ -216,7 +216,7 @@ class Plt(object):
                 # quick and dirty... slurp it all in one go
                 datafmt = h['bsaflag'] + str(nentries) + self._data_bintype
                 a = numpy.array(unpack(datafmt, plt.read(calcsize(datafmt))))
-        except Exception as err:
+        except TypeError as err:
             raise ValueError(f"gOpenMol PLT file {filename} could not be read. "
                              "The original error was\n"
                              f"   {err.__class__.__name__}: {err}")

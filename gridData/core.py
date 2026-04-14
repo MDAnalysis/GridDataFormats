@@ -536,7 +536,7 @@ class Grid(object):
                 raise NotImplementedError(
                     "Non-rectangular grids are not supported.")
             elif len(delta) != grid.ndim:
-                raise TypeError("delta should be scalar or array-like of"
+                raise TypeError("delta should be scalar or array-like of "
                                 "len(grid.ndim)")
             # note that origin is CENTER so edges must be shifted by -0.5*delta
             self.edges = [origin[dim] +

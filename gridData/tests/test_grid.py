@@ -33,11 +33,15 @@ class TestGrid(object):
         assert_array_equal(g.delta, data['delta'])
 
     def test_init_wrong_origin(self, data):
-        with pytest.raises(TypeError):
+        with pytest.raises(TypeError,
+                           match=(r"Dimension of origin is not the same as "
+                                  r"grid dimension\.")):
             Grid(data['griddata'], origin=np.ones(4), delta=data['delta'])
 
     def test_init_wrong_delta(self, data):
-        with pytest.raises(TypeError):
+        with pytest.raises(TypeError,
+                           match=(r"delta should be scalar or array-like of "
+                                  r"len\(grid\.ndim\)")):
             Grid(data['griddata'], origin=data['origin'], delta=np.ones(4))
 
     def test_empty_Grid(self):
@@ -45,19 +49,24 @@ class TestGrid(object):
         assert isinstance(g, Grid)
 
     def test_init_missing_delta_ValueError(self, data):
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError,
+                           match="Wrong/missing data to set up Grid"):
             Grid(data['griddata'], origin=data['origin'])
 
     def test_init_missing_origin_ValueError(self, data):
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError,
+                           match="Wrong/missing data to set up Grid"):
             Grid(data['griddata'], delta=data['delta'])
 
     def test_init_wrong_data_exception(self):
-        with pytest.raises(IOError):
-            Grid("__does_not_exist__")
+        fn = "__does_not_exist__"
+        with pytest.raises(IOError,
+                           match=r"\[Errno 2\] file not found:" + f" '{fn}'"):
+            Grid(fn)
 
-    def test_load_wrong_fileformat_ValueError(self):
-        with pytest.raises(ValueError):
+    def test_load_unknown_fileformat_ValueError(self):
+        with pytest.raises(ValueError,
+                           match="Wrong/missing data to set up Grid"):
             Grid(grid=True, file_format="xxx")
 
     def test_equality(self, data):
@@ -113,16 +122,19 @@ class TestGrid(object):
 
     def test_wrong_compatibile_type(self, data):
         g = Grid(data['griddata'], origin=data['origin'] + 1, delta=data['delta'])
-        with pytest.raises(TypeError):
+        with pytest.raises(TypeError,
+                           match="The argument cannot be arithmetically combined"):
             data['grid'].check_compatible(g)
 
         arr = np.zeros(data['griddata'].shape[-1] + 1)  # Not broadcastable
-        with pytest.raises(TypeError):
+        with pytest.raises(TypeError,
+                           match="The argument cannot be arithmetically combined"):
             data['grid'].check_compatible(arr)
 
     def test_non_orthonormal_boxes(self, data):
         delta = np.eye(3)
-        with pytest.raises(NotImplementedError):
+        with pytest.raises(NotImplementedError,
+                           match="Non-rectangular grids are not supported"):
             Grid(data['griddata'], origin=data['origin'], delta=delta)
 
     def test_centers(self, data):
@@ -138,7 +150,7 @@ class TestGrid(object):
     def test_resample_factor_failure(self, data):
         pytest.importorskip('scipy')
 
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match="Factor must be positive"):
             g = data['grid'].resample_factor(0)
 
     def test_resample_factor(self, data):
@@ -179,14 +191,16 @@ class TestGrid(object):
         h = Grid(pklfile, file_format=fileformat)
         assert h == data['grid']
 
-    @pytest.mark.parametrize("fileformat", ("ccp4", "plt", "dx"))
+    @pytest.mark.parametrize("fileformat", ("mrc", "plt", "dx"))
     def test_load_wrong_fileformat_raises_ValueError(self, pklfile, fileformat):
+        # no error matching because ValueErrors can come from different
+        # parts of the underlying file parser and have different messages
         with pytest.raises(ValueError):
             Grid(pklfile, file_format=fileformat)
 
     # just check that we can export without stupid failures; detailed
     # format checks in separate tests
-    @pytest.mark.parametrize("fileformat", ("dx", "pkl"))
+    @pytest.mark.parametrize("fileformat", ("dx", "mrc", "pkl"))
     def test_export(self, data, fileformat, tmpdir):
         g = data['grid']
         fn = tmpdir.mkdir('grid_export').join("grid.{}".format(fileformat))
@@ -194,11 +208,12 @@ class TestGrid(object):
         h = Grid(fn)   # use format autodetection
         assert g == h
 
-    @pytest.mark.parametrize("fileformat", ("ccp4", "plt"))
+    @pytest.mark.parametrize("fileformat", ("plt",))
     def test_export_not_supported(self, data, fileformat, tmpdir):
         g = data['grid']
-        fn = tmpdir.mkdir('grid_export').join("grid.{}".format(fileformat))
-        with pytest.raises(ValueError):
+        fn = tmpdir.mkdir('grid_export').join(f"grid.{fileformat}")
+        with pytest.raises(ValueError,
+                           match=f"File format {fileformat.upper()} not available"):
             g.export(fn)
 
 
