@@ -659,10 +659,33 @@ class field(DXclass):
             dx = OpenDX.field.read(dxfile)
 
         The classid is discarded and replaced with the one from the file.
+
+        Parameters
+        ----------
+        stream : str or stream
+            read from the file in OpenDX format or open file-like object
+
+        Raises
+        ------
+        ValueError
+            if the data could not be parsed correctly
+
+
+        .. versionchanged:: 1.2.0
+           Ensure that ValueError is raised (instead of
+           :exc:`UnicodeDecodeError` or :exc:`RecursionError`)
+
         """
         DXfield = self
         p = DXParser(stream)
-        p.parse(DXfield)
+        try:
+            p.parse(DXfield)
+        except (UnicodeDecodeError, RecursionError) as err:
+            # parser got confused, likely not a valid file
+            # (RecursionError was only observed on Windows)
+            raise ValueError("DX file could not be read. "
+                             "The original error was\n"
+                             f"   {err.__class__.__name__}: {err}")
 
     def add(self, component, DXobj):
         """add a component to the field"""

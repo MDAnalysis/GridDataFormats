@@ -27,6 +27,9 @@ The rules for this file:
 
   Fixes
 
+  * Ensure that when Grid() or Grid.load() load a datafile with the
+    wrong format a ValueError is raised consistently. (PR #165)
+
 
 01/22/2026 IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney,
            Pradyumn-cloud
