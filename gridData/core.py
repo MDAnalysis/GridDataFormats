@@ -558,9 +558,8 @@ class Grid(object):
             elif delta.ndim > 1:
                 raise NotImplementedError("Non-rectangular grids are not supported.")
             elif len(delta) != grid.ndim:
-                raise TypeError(
-                    "delta should be scalar or array-like of" "len(grid.ndim)"
-                )
+                raise TypeError("delta should be scalar or array-like of "
+                                "len(grid.ndim)")
             # note that origin is CENTER so edges must be shifted by -0.5*delta
             self.edges = [
                 origin[dim] + (numpy.arange(m + 1) - 0.5) * delta[dim]
@@ -584,6 +583,29 @@ class Grid(object):
 
         The :meth:`load` method calls the class's constructor method and
         completely resets all values, based on the loaded data.
+
+        Parameters
+        ----------
+        filename : str
+             Name of the file.
+
+        file_format : str or None, optional
+             Set the file format (e.g., "DX" or "MRC"). If ``None`` then
+             try to guess the format.
+
+        assume_volumetric : bool, optional
+              Optional keyword argument that is only taken into account by
+              the :class:`gridData.mrc.MRC` file parser.
+
+        Raises
+        ------
+        ValueError
+             The underlying file parser raises an :exc:`ValueError` if it fails
+             to parse the file.
+
+
+        .. versionchanged:: 1.2.0
+           Ensure that underlying parsers consistently raise ValueError.
         """
         filename = str(filename)
         if not os.path.exists(filename):

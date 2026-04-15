@@ -21,12 +21,14 @@ jobs:
   build:
     name: Build package
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
@@ -43,8 +45,26 @@ jobs:
         run: |
           twine check dist/*
 
+      - name: Extract package version
+        id: extract-version
+        run: |
+          WHEEL_FILE=$(ls dist/*.whl)
+          # Extract version from wheel filename (format: griddataformats-VERSION-py3-none-any.whl)
+          VERSION=$(basename "$WHEEL_FILE" | sed -n 's/griddataformats-\([^-]*\)-.*/\1/p')
+          # Fallback: install wheel temporarily and get version
+          if [ -z "$VERSION" ]; then
+            # This is a bit dirty; running in a virtual environment would be cleaner.
+            # (pip install only works because our package's dependencies are easy to install.)
+            python -m pip install --upgrade pip
+            pip install "$WHEEL_FILE" --quiet
+            VERSION=$(python -c "import gridData; print(gridData.__version__)")
+            pip uninstall -y griddataformats --quiet
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
       - name: Upload dist files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist-files
           path: dist/
@@ -56,12 +76,12 @@ jobs:
     needs: build
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
       - name: Download dist files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist-files
           path: dist/
@@ -94,7 +114,7 @@ jobs:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
       - name: Download dist files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist-files
           path: dist/
@@ -118,7 +138,7 @@ jobs:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
       - name: Download dist files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist-files
           path: dist/
@@ -133,20 +153,26 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-    needs: deploy-testpypi
+    needs: [build, deploy-testpypi]
     if: |
       github.repository == 'MDAnalysis/GridDataFormats' &&
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/'))
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
+      - name: Checkout repository for actions
+        uses: actions/checkout@v6
+
+      - name: Wait for version to be available on TestPyPI (30 seconds)
+        run: sleep 30
+        
       - name: Install from TestPyPI
         run: |
           python -m pip install --upgrade pip
-          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ GridDataFormats[test]
+          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "GridDataFormats[test]==${{ needs.build.outputs.version }}"
 
       - name: Test import
         run: |
@@ -163,20 +189,26 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-    needs: deploy-pypi
+    needs: [build, deploy-pypi]
     if: |
       github.repository == 'MDAnalysis/GridDataFormats' &&
       (github.event_name == 'release' && github.event.action == 'published')
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
+      - name: Checkout repository for actions
+        uses: actions/checkout@v6
+
+      - name: Wait for version to be available on PyPI (30 seconds)
+        run: sleep 30
+        
       - name: Install from PyPI
         run: |
           python -m pip install --upgrade pip
-          pip install GridDataFormats[test]
+          pip install "GridDataFormats[test]==${{ needs.build.outputs.version }}"
 
       - name: Test import
         run: |

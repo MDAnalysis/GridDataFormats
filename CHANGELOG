@@ -12,20 +12,19 @@ The rules for this file:
     use tabs but use spaces for formatting
   * accompany each entry with github issue/PR number (Issue #xyz)
 
-------------------------------------------------------------------------------
-01/16/2026 IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney, 
-           Pradyumn-cloud, spyke7
--------------------------------------------------------------------------------
+
 ??/??/???? orbeckst, spyke7
 
- * 1.2.0
+  * 1.2.0
 
- Enhancements
+  Enhancements
 
- * Added openVDB format exports (Issue #141, PR #148)
-
-
+  * Added openVDB format exports (Issue #141, PR #148)
+ 
   Fixes
+
+  * Ensure that when Grid() or Grid.load() load a datafile with the
+    wrong format a ValueError is raised consistently. (PR #165)
 
 
 01/22/2026 IAlibay, ollyfutur, conradolandia, orbeckst, PlethoraChutney,
