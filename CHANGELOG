@@ -15,8 +15,12 @@ The rules for this file:
 -------------------------------------------------------------------------------
 ??/??/???? orbeckst, spyke7
 
- * 1.2.0
+  * 1.2.0
 
+  Enhancements
+
+  * Added openVDB format exports (Issue #141, PR #148)
+ 
   Enhancements 
 
   * new API-level interoperability features (#160)
@@ -46,6 +50,7 @@ The rules for this file:
 
   Enhancements
 
+  * `Grid` now accepts binary operations with any operand that can be 
   * `Grid` now accepts binary operations with any operand that can be
     broadcasted to the grid's shape according to `numpy` broadcasting rules
     (PR #142)
