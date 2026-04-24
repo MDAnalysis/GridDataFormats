@@ -22,21 +22,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 1.1.0+3.gaccce2b documentation</title>
+  <title>OpenDX — routines to read and write simple OpenDX files &mdash; GridDataFormats 1.1.0+4.g05a26a9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=fe1cc5af"></script>
+      <script src="../../_static/documentation_options.js?v=571995be"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.1.0+3.gaccce2b documentation"
+          title="Search within GridDataFormats 1.1.0+4.g05a26a9 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -342,9 +342,50 @@ components. Objects are referenced by their unique id.)</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="gridData.OpenDX.field.from_grid">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">typequote</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'&quot;'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.from_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenDX.field.from_grid" title="Link to this definition"></a></dt>
+<dd><p>Create OpenDX field from Grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid</strong> (<a class="reference internal" href="../core.html#gridData.core.Grid" title="gridData.core.Grid"><em>Grid</em></a>) – Grid object to convert</p></li>
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – for DX, set the output DX array type, e.g., “double” or “float”.
+By default (<code class="docutils literal notranslate"><span class="pre">None</span></code>), the DX type is determined from the numpy
+dtype of the array of the grid (and this will typically result in
+“double”).</p></li>
+<li><p><strong>typequote</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – For DX, set the character used to quote the type string;
+by default this is a double-quote character, ‘”’.
+Custom parsers like the one from NAMD-GridForces (backend for MDFF)
+expect no quotes, and typequote=’’ may be used to appease them.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments (currently unused)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>OpenDX field wrapper</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field">field</a></p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.2.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="gridData.OpenDX.field.histogramdd">
 <span class="sig-name descname"><span class="pre">histogramdd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenDX.html#field.histogramdd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenDX.field.histogramdd" title="Link to this definition"></a></dt>
 <dd><p>Return array data as (edges,grid), i.e. a numpy nD histogram.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gridData.OpenDX.field.native">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">native</span></span><a class="headerlink" href="#gridData.OpenDX.field.native" title="Link to this definition"></a></dt>
+<dd><p>Return native object</p>
+<p>The “native” object is the <a class="reference internal" href="#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenDX.field</span></code></a> itself.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.2.0.</span></p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -598,7 +639,7 @@ not implemented yet.</p></li>
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.1.0+3.gaccce2b
+        1.1.0+4.g05a26a9
       <span class="fa fa-caret-down"></span>
     </span>
 
