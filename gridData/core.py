@@ -216,7 +216,8 @@ class Grid(object):
     
     converter = {
         'MRC': mrc.MRC.from_grid, 
-        'DX': OpenDX.field.from_grid,  
+        'DX': OpenDX.field.from_grid, 
+        'VDB': OpenVDB.OpenVDBField.from_grid,
     }
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
@@ -650,10 +651,12 @@ class Grid(object):
             :mod:`OpenDX.field`
         MRC
             :mod:`mrcfile.mrcinterpreter.MrcInterpreter` MRC/CCP4 format
+        VDB
+            :class:`openvdb.GridBase` OpenVDB format (e.g., FloatGrid, DoubleGrid)
             
         Parameters
         ----------
-        format_specifier : {"DX", "MRC" }
+        format_specifier : {"DX", "MRC", "VDB"}
             
         Returns
         -------
@@ -668,7 +671,7 @@ class Grid(object):
         wrapper = self.converter[fmt_upper](self, **kwargs)
         return wrapper.native
 
-    def export(self, filename, file_format=None, type=None, typequote='"'):
+    def export(self, filename, file_format=None, type=None, typequote='"', tolerance=None):
         """export density to file using the given format.
 
         The format can also be deduced from the suffix of the filename
@@ -716,6 +719,8 @@ class Grid(object):
         tolerance : float (optional)
             For VDB, values below this tolerance are treated as background (sparse),
             default None
+            
+            .. versionadded:: 1.2.0
 
         """
         filename = str(filename)

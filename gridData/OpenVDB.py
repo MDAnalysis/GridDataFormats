@@ -166,6 +166,65 @@ class OpenVDBField(object):
             self.delta = None
             self.vdb_grid = None
 
+    @classmethod
+    def from_grid(cls, grid, tolerance=None, **kwargs):
+        """Create OpenVDB field from Grid.
+
+        Parameters
+        ----------
+        grid : Grid
+            Grid object to convert
+        tolerance : float, optional
+            Values below this tolerance are treated as background (sparse).
+            Default None means no tolerance-based pruning for non-boolean grids.
+        **kwargs
+            Additional keyword arguments:
+            - name : str, grid name (default 'density')
+            - metadata : dict, additional metadata
+
+        Returns
+        -------
+        OpenVDBField
+            OpenVDB field wrapper
+
+
+        .. versionadded:: 1.2.0
+        """
+
+        name = kwargs.get("name", grid.metadata.get("name", "density"))
+        metadata = kwargs.get("metadata", grid.metadata)
+
+        if grid.grid.ndim != 3:
+            raise ValueError(f"OpenVDB requires a 3D grid, got {grid.grid.ndim}D")
+
+        vdb_field = cls(
+            grid=grid.grid,
+            origin=grid.origin,
+            delta=grid.delta,
+            name=name,
+            tolerance=tolerance,
+            metadata=metadata,
+        )
+
+        return vdb_field
+
+    @property
+    def native(self):
+        """Return the native openvdb grid object.
+
+        The "native" object is the underlying :class:`openvdb.GridBase`
+        object (e.g., FloatGrid, DoubleGrid) from the openvdb library.
+
+        Returns
+        -------
+        openvdb.GridBase
+            Native openvdb grid object (e.g., openvdb.FloatGrid)
+
+
+        .. versionadded:: 1.2.0
+        """
+        return self.vdb_grid
+
     def _populate(self, grid, origin, delta):
         """Populate the field with grid data.
 
