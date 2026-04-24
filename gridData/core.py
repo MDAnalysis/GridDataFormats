@@ -212,6 +212,11 @@ class Grid(object):
 
     #: Default format for exporting with :meth:`export`.
     default_format = 'DX'
+    
+    converter = {
+        'MRC': mrc.MRC.from_grid, 
+        'DX': OpenDX.field.from_grid,  
+    }
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
                  metadata=None, interpolation_spline_order=3,
@@ -621,6 +626,33 @@ class Grid(object):
         grid, edges = g.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
 
+    def convert_to(self, format_specifier, **kwargs):
+        """Returns an instance of the native object for a given format.
+        
+        Implemented formats:
+        
+        DX
+            :mod:`OpenDX.field`
+        MRC
+            :mod:`mrcfile.mrcinterpreter.MrcInterpreter` MRC/CCP4 format
+            
+        Parameters
+        ----------
+        format_specifier : {"DX", "MRC" }
+            
+        Returns
+        -------
+        native object
+        
+        
+        .. versionadded:: 1.2.0
+        
+        """
+        fmt_upper = format_specifier.upper()
+            
+        wrapper = self.converter[fmt_upper](self, **kwargs)
+        return wrapper.native
+
     def export(self, filename, file_format=None, type=None, typequote='"'):
         """export density to file using the given format.
 
@@ -696,29 +728,8 @@ class Grid(object):
         """
         root, ext = os.path.splitext(filename)
         filename = root + '.dx'
-
-        comments = [
-            'OpenDX density file written by gridDataFormats.Grid.export()',
-            'File format: http://opendx.sdsc.edu/docs/html/pages/usrgu068.htm#HDREDF',
-            'Data are embedded in the header and tied to the grid positions.',
-            'Data is written in C array order: In grid[x,y,z] the axis z is fastest',
-            'varying, then y, then finally x, i.e. z is the innermost loop.']
-
-        # write metadata in comments section
-        if self.metadata:
-            comments.append('Meta data stored with the python Grid object:')
-        for k in self.metadata:
-            comments.append('   ' + str(k) + ' = ' + str(self.metadata[k]))
-        comments.append(
-            '(Note: the VMD dx-reader chokes on comments below this line)')
-
-        components = dict(
-            positions=OpenDX.gridpositions(1, self.grid.shape, self.origin,
-                                           self.delta),
-            connections=OpenDX.gridconnections(2, self.grid.shape),
-            data=OpenDX.array(3, self.grid, type=type, typequote=typequote),
-        )
-        dx = OpenDX.field('density', components=components, comments=comments)
+        dx = OpenDX.field.from_grid(self, type=type, typequote=typequote, **kwargs)
+        
         if ext == '.gz':
             filename = root + ext
         dx.write(filename)
@@ -744,16 +755,7 @@ class Grid(object):
         
         .. versionadded:: 1.1.0
         """
-        # Create MRC object and populate with Grid data
-        mrc_file = mrc.MRC()
-        mrc_file.array = self.grid
-        mrc_file.delta = numpy.diag(self.delta)
-        mrc_file.origin = self.origin
-        mrc_file.rank = 3
-        
-        # Transfer header if it exists (preserves axis ordering and other metadata)
-        if hasattr(self, '_mrc_header'):
-            mrc_file.header = self._mrc_header
+        mrc_file = mrc.MRC.from_grid(self, **kwargs)
         
         # Write to file
         mrc_file.write(filename)

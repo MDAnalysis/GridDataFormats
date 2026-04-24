@@ -13,9 +13,17 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 -------------------------------------------------------------------------------
-??/??/???? orbeckst
+??/??/???? orbeckst, spyke7
 
  * 1.2.0
+
+  Enhancements 
+
+  * new API-level interoperability features (#160)
+    * new `Grid.convert_to()` method to create the native object (#161, PR #164)
+    * `mrc.MRC`, `OpenDX.field`: new `from_grid()` class method to create the
+      corresponding GridDataFormats wrapper from a `Grid`; the new attribute `native`
+      contains the native object (#161, PR #164)
 
   Fixes
 
