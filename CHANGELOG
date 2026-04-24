@@ -12,6 +12,8 @@ The rules for this file:
     use tabs but use spaces for formatting
   * accompany each entry with github issue/PR number (Issue #xyz)
 
+-------------------------------------------------------------------------------
+??/??/???? orbeckst, spyke7
 
 ??/??/???? orbeckst, spyke7
 
@@ -21,6 +23,14 @@ The rules for this file:
 
   * Added openVDB format exports (Issue #141, PR #148)
  
+  Enhancements 
+
+  * new API-level interoperability features (#160)
+    * new `Grid.convert_to()` method to create the native object (#161, PR #164)
+    * `mrc.MRC`, `OpenDX.field`: new `from_grid()` class method to create the
+      corresponding GridDataFormats wrapper from a `Grid`; the new attribute `native`
+      contains the native object (#161, PR #164)
+
   Fixes
 
   * Ensure that when Grid() or Grid.load() load a datafile with the
