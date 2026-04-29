@@ -163,9 +163,6 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Checkout repository for actions
-        uses: actions/checkout@v6
-
       - name: Wait for version to be available on TestPyPI (30 seconds)
         run: sleep 30
         
