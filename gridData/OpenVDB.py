@@ -73,7 +73,6 @@ from dataclasses import dataclass
 
 try:
     import openvdb as vdb
-
 except ImportError:
     vdb = None
 
