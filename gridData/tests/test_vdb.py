@@ -11,7 +11,6 @@ from . import datafiles
 
 try:
     import openvdb as vdb
-
     HAS_OPENVDB = True
 except ImportError:
     HAS_OPENVDB = False
