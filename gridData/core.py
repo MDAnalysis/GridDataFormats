@@ -45,6 +45,7 @@ import numpy
 from . import OpenDX
 from . import gOpenMol
 from . import mrc
+from . import OpenVDB
 
 
 def _grid(x):
@@ -215,7 +216,8 @@ class Grid(object):
     
     converter = {
         'MRC': mrc.MRC.from_grid, 
-        'DX': OpenDX.field.from_grid,  
+        'DX': OpenDX.field.from_grid, 
+        'VDB': OpenVDB.OpenVDBField.from_grid,
     }
 
     def __init__(self, grid=None, edges=None, origin=None, delta=None,
@@ -223,20 +225,21 @@ class Grid(object):
                  file_format=None, assume_volumetric=False):
         # file formats are guessed from extension == lower case key
         self._exporters = {
-            'DX': self._export_dx,
-            'PKL': self._export_python,
-            'PICKLE': self._export_python,  # compatibility
-            'PYTHON': self._export_python,  # compatibility
-            'MRC': self._export_mrc,
+            "DX": self._export_dx,
+            "PKL": self._export_python,
+            "PICKLE": self._export_python,  # compatibility
+            "PYTHON": self._export_python,  # compatibility
+            "VDB": self._export_vdb,
+            "MRC": self._export_mrc,
         }
         self._loaders = {
-            'CCP4': self._load_mrc,
-            'MRC':  self._load_mrc,
-            'DX': self._load_dx,
-            'PLT': self._load_plt,
-            'PKL': self._load_python,
-            'PICKLE': self._load_python,  # compatibility
-            'PYTHON': self._load_python,  # compatibility
+            "CCP4": self._load_mrc,
+            "MRC": self._load_mrc,
+            "DX": self._load_dx,
+            "PLT": self._load_plt,
+            "PKL": self._load_python,
+            "PICKLE": self._load_python,  # compatibility
+            "PYTHON": self._load_python,  # compatibility
         }
 
         self.metadata = metadata if metadata is not None else {}
@@ -253,7 +256,7 @@ class Grid(object):
                     # Can we read this as a file?
                     # Use str(x) to work with py.path.LocalPath and pathlib.Path instances
                     # even for Python < 3.6
-                    with open(str(grid), 'rb'):
+                    with open(str(grid), "rb"):
                         pass
                 except (OSError, IOError):
                     # no, this is probably an array-like thingy
@@ -263,7 +266,11 @@ class Grid(object):
                     filename = str(grid)
 
             if filename is not None:
-                self.load(filename, file_format=file_format, assume_volumetric=assume_volumetric)
+                self.load(
+                    filename,
+                    file_format=file_format,
+                    assume_volumetric=assume_volumetric,
+                )
             else:
                 self._load(grid, edges, metadata, origin, delta)
 
@@ -378,21 +385,32 @@ class Grid(object):
             raise ValueError("Factor must be positive")
         # Determine current spacing
         spacing = (numpy.array(self._max_edges()) - numpy.array(self._min_edges())) / (
-                  -1 + numpy.array(self._len_edges()))
+            -1 + numpy.array(self._len_edges())
+        )
         # First guess at the new spacing is inversely related to the
         # magnification factor.
         newspacing = spacing / float(factor)
         smidpoints = numpy.array(self._midpoints())
         # We require that the new spacing result in an even subdivision of the
         # existing midpoints
-        newspacing = (smidpoints[:, -1] - smidpoints[:, 0]) / (numpy.maximum(
-            1, numpy.floor((smidpoints[:, -1] - smidpoints[:, 0]) / newspacing)))
+        newspacing = (smidpoints[:, -1] - smidpoints[:, 0]) / (
+            numpy.maximum(
+                1, numpy.floor((smidpoints[:, -1] - smidpoints[:, 0]) / newspacing)
+            )
+        )
         # How many edge points should there be? It is the number of intervals
         # between midpoints + 2
-        edgelength = 2 + \
-            numpy.round((smidpoints[:, -1] - smidpoints[:, 0]) / newspacing)
-        edges = [numpy.linspace(start, stop, num=int(N), endpoint=True) for (start, stop, N) in zip(
-            smidpoints[:, 0] - 0.5 * newspacing, smidpoints[:, -1] + 0.5 * newspacing, edgelength)]
+        edgelength = 2 + numpy.round(
+            (smidpoints[:, -1] - smidpoints[:, 0]) / newspacing
+        )
+        edges = [
+            numpy.linspace(start, stop, num=int(N), endpoint=True)
+            for (start, stop, N) in zip(
+                smidpoints[:, 0] - 0.5 * newspacing,
+                smidpoints[:, -1] + 0.5 * newspacing,
+                edgelength,
+            )
+        ]
         return self.resample(edges)
 
     def _update(self):
@@ -409,8 +427,9 @@ class Grid(object):
               spline interpolation function that can generated a value for
               coordinate
         """
-        self.delta = numpy.array(list(
-            map(lambda e: (e[-1] - e[0]) / (len(e) - 1), self.edges)))
+        self.delta = numpy.array(
+            list(map(lambda e: (e[-1] - e[0]) / (len(e) - 1), self.edges))
+        )
         self.midpoints = self._midpoints(self.edges)
         self.origin = numpy.array(list(map(lambda m: m[0], self.midpoints)))
         if self.__interpolated is not None:
@@ -493,7 +512,7 @@ class Grid(object):
             available = self._loaders
         if file_format is None:
             splitted = os.path.splitext(filename)
-            if splitted[1][1:] in ('gz', ):
+            if splitted[1][1:] in ("gz",):
                 file_format = os.path.splitext(splitted[0])[1][1:]
             else:
                 file_format = splitted[1][1:]
@@ -503,26 +522,22 @@ class Grid(object):
         if file_format not in available:
             raise ValueError(
                 "File format {} not available, choose one of {}".format(
-                    file_format, available.keys()))
+                    file_format, available.keys()
+                )
+            )
         return file_format
 
     def _get_exporter(self, filename, file_format=None):
-        return self._exporters[self._guess_format(filename,
-                                                  file_format=file_format,
-                                                  export=True)]
+        return self._exporters[
+            self._guess_format(filename, file_format=file_format, export=True)
+        ]
 
     def _get_loader(self, filename, file_format=None):
-        return self._loaders[self._guess_format(filename,
-                                                file_format=file_format,
-                                                export=False)]
+        return self._loaders[
+            self._guess_format(filename, file_format=file_format, export=False)
+        ]
 
-    def _load(
-            self,
-            grid=None,
-            edges=None,
-            metadata=None,
-            origin=None,
-            delta=None):
+    def _load(self, grid=None, edges=None, metadata=None, origin=None, delta=None):
         if edges is not None:
             # set up from histogramdd-type data
             self.grid = numpy.asanyarray(grid)
@@ -534,19 +549,20 @@ class Grid(object):
             delta = numpy.asanyarray(delta)
             if len(origin) != grid.ndim:
                 raise TypeError(
-                    "Dimension of origin is not the same as grid dimension.")
+                    "Dimension of origin is not the same as grid dimension."
+                )
             if delta.shape == () and numpy.isreal(delta):
                 delta = numpy.ones(grid.ndim) * delta
             elif delta.ndim > 1:
-                raise NotImplementedError(
-                    "Non-rectangular grids are not supported.")
+                raise NotImplementedError("Non-rectangular grids are not supported.")
             elif len(delta) != grid.ndim:
                 raise TypeError("delta should be scalar or array-like of "
                                 "len(grid.ndim)")
             # note that origin is CENTER so edges must be shifted by -0.5*delta
-            self.edges = [origin[dim] +
-                          (numpy.arange(m + 1) - 0.5) * delta[dim]
-                          for dim, m in enumerate(grid.shape)]
+            self.edges = [
+                origin[dim] + (numpy.arange(m + 1) - 0.5) * delta[dim]
+                for dim, m in enumerate(grid.shape)
+            ]
             self.grid = numpy.asanyarray(grid)
             self._update()
         else:
@@ -555,7 +571,9 @@ class Grid(object):
                 "Grid(grid=<array>, edges=<list>) or "
                 "Grid(grid=<array>, origin=(x0, y0, z0), delta=(dx, dy, dz)):\n"
                 "grid={0} edges={1} origin={2} delta={3}".format(
-                    grid, edges, origin, delta))
+                    grid, edges, origin, delta
+                )
+            )
 
     # NOTE: keep loader kwargs in sync between load() and __init__()
     def load(self, filename, file_format=None, assume_volumetric=False):
@@ -597,11 +615,9 @@ class Grid(object):
         loader(filename, assume_volumetric=assume_volumetric)
 
     def _load_python(self, filename, **kwargs):
-        with open(filename, 'rb') as f:
+        with open(filename, "rb") as f:
             saved = pickle.load(f)
-        self._load(grid=saved['grid'],
-                   edges=saved['edges'],
-                   metadata=saved['metadata'])
+        self._load(grid=saved["grid"], edges=saved["edges"], metadata=saved["metadata"])
 
     def _load_mrc(self, filename, assume_volumetric=False, **kwargs):
         """Initializes Grid from a MRC/CCP4 file."""
@@ -635,10 +651,12 @@ class Grid(object):
             :mod:`OpenDX.field`
         MRC
             :mod:`mrcfile.mrcinterpreter.MrcInterpreter` MRC/CCP4 format
+        VDB
+            :class:`openvdb.GridBase` OpenVDB format (e.g., FloatGrid, DoubleGrid)
             
         Parameters
         ----------
-        format_specifier : {"DX", "MRC" }
+        format_specifier : {"DX", "MRC", "VDB"}
             
         Returns
         -------
@@ -653,7 +671,7 @@ class Grid(object):
         wrapper = self.converter[fmt_upper](self, **kwargs)
         return wrapper.native
 
-    def export(self, filename, file_format=None, type=None, typequote='"'):
+    def export(self, filename, file_format=None, type=None, typequote='"', tolerance=None):
         """export density to file using the given format.
 
         The format can also be deduced from the suffix of the filename
@@ -671,6 +689,8 @@ class Grid(object):
         pickle
             pickle (use :meth:`Grid.load` to restore); :meth:`Grid.save`
             is simpler than ``export(format='python')``.
+        vdb
+            :mod:`OpenVDB`
 
         Parameters
         ----------
@@ -696,10 +716,16 @@ class Grid(object):
 
             .. versionadded:: 0.5.0
 
+        tolerance : float (optional)
+            For VDB, values below this tolerance are treated as background (sparse),
+            default ``None``
+            
+            .. versionadded:: 1.2.0
+
         """
         filename = str(filename)
         exporter = self._get_exporter(filename, file_format=file_format)
-        exporter(filename, type=type, typequote=typequote)
+        exporter(filename, type=type, typequote=typequote, tolerance=tolerance)
 
     # note: the _export_FORMAT() methods all take the filename as a mandatory
     # argument. They can process kwargs but they are not required to do
@@ -712,7 +738,7 @@ class Grid(object):
         is sufficient to recreate the grid object with ``__init__()``.
         """
         data = dict(grid=self.grid, edges=self.edges, metadata=self.metadata)
-        with open(filename, 'wb') as f:
+        with open(filename, "wb") as f:
             pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
     def _export_dx(self, filename, type=None, typequote='"', **kwargs):
@@ -733,26 +759,37 @@ class Grid(object):
         if ext == '.gz':
             filename = root + ext
         dx.write(filename)
-    
+
+    def _export_vdb(self, filename, tolerance=None, **kwargs):
+        """Export the density grid to an OpenVDB file.
+
+        The file format is compatible with Blender's volume system.
+        Only 3D grids are supported.
+
+        For the file format see https://www.openvdb.org
+        """
+        vdb_field = OpenVDB.OpenVDBField.from_grid(self, tolerance=tolerance, **kwargs)
+        vdb_field.write(filename)
+
     def _export_mrc(self, filename, **kwargs):
         """Export the density grid to an MRC/CCP4 file.
-        
+
         The MRC2014 file format is used via the mrcfile library.
-        
+
         Parameters
         ----------
         filename : str
             Output filename
         **kwargs
             Additional keyword arguments (currently ignored)
-        
+
         Notes
         -----
         * Only orthorhombic unit cells are supported
         * If the Grid was loaded from an MRC file, the original header
           information (including axis ordering) is preserved
         * For new grids, standard ordering (mapc=1, mapr=2, maps=3) is used
-        
+
         .. versionadded:: 1.1.0
         """
         mrc_file = mrc.MRC.from_grid(self, **kwargs)
@@ -822,7 +859,9 @@ class Grid(object):
             )
         else:
             try:
-                is_compatible = numpy.broadcast(self.grid, other).shape == self.grid.shape
+                is_compatible = (
+                    numpy.broadcast(self.grid, other).shape == self.grid.shape
+                )
             except ValueError:
                 is_compatible = False
         if not is_compatible:
@@ -830,7 +869,8 @@ class Grid(object):
                 "The argument cannot be arithmetically combined with the grid. "
                 "It must be broadcastable to the grid's shape or a `Grid` with identical edges. "
                 "Use `Grid.resample(other.edges)` to make a new grid that is "
-                "compatible with `other`.")
+                "compatible with `other`."
+            )
         return True
 
     def _interpolationFunctionFactory(self, spline_order=None, cval=None):
@@ -884,26 +924,28 @@ class Grid(object):
               >>> FF = _interpolationFunction(XX,YY,ZZ)
             """
             _coordinates = numpy.array(
-                [_transform(coordinates[i], x0[i], dx[i]) for i in range(len(
-                    coordinates))])
-            return scipy.ndimage.map_coordinates(coeffs,
-                                                 _coordinates,
-                                                 prefilter=False,
-                                                 mode='constant',
-                                                 cval=cval)
+                [
+                    _transform(coordinates[i], x0[i], dx[i])
+                    for i in range(len(coordinates))
+                ]
+            )
+            return scipy.ndimage.map_coordinates(
+                coeffs, _coordinates, prefilter=False, mode="constant", cval=cval
+            )
+
         return interpolatedF
 
     def __eq__(self, other):
         if not isinstance(other, Grid):
             return False
-        return numpy.all(
-            other.grid == self.grid) and numpy.all(
-            other.origin == self.origin) and numpy.all(
-            numpy.all(
-                other_edge == self_edge) for other_edge,
-            self_edge in zip(
-                other.edges,
-                self.edges))
+        return (
+            numpy.all(other.grid == self.grid)
+            and numpy.all(other.origin == self.origin)
+            and numpy.all(
+                numpy.all(other_edge == self_edge)
+                for other_edge, self_edge in zip(other.edges, self.edges)
+            )
+        )
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -930,11 +972,7 @@ class Grid(object):
 
     def __pow__(self, other):
         self.check_compatible(other)
-        return self.__class__(
-            numpy.power(
-                self.grid,
-                _grid(other)),
-            edges=self.edges)
+        return self.__class__(numpy.power(self.grid, _grid(other)), edges=self.edges)
 
     def __radd__(self, other):
         self.check_compatible(other)
@@ -958,18 +996,14 @@ class Grid(object):
 
     def __rpow__(self, other):
         self.check_compatible(other)
-        return self.__class__(
-            numpy.power(
-                _grid(other),
-                self.grid),
-            edges=self.edges)
+        return self.__class__(numpy.power(_grid(other), self.grid), edges=self.edges)
 
     def __repr__(self):
         try:
             bins = self.grid.shape
         except AttributeError:
             bins = "no"
-        return '<{0} with {1!r} bins>'.format(self.__class__, bins)
+        return "<{0} with {1!r} bins>".format(self.__class__, bins)
 
 
 def ndmeshgrid(*arrs):

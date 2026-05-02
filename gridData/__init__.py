@@ -110,8 +110,9 @@ from .core import Grid
 from . import OpenDX
 from . import gOpenMol
 from . import mrc
+from . import OpenVDB
 
-__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'mrc']
+__all__ = ['Grid', 'OpenDX', 'gOpenMol', 'mrc', 'OpenVDB']
 
 from importlib.metadata import version
 __version__ = version("GridDataFormats")
