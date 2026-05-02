@@ -769,7 +769,7 @@ class Grid(object):
         For the file format see https://www.openvdb.org
         """
         vdb_field = OpenVDB.OpenVDBField.from_grid(self, tolerance=tolerance, **kwargs)
-        vdb_filed.write(filename)
+        vdb_field.write(filename)
 
     def _export_mrc(self, filename, **kwargs):
         """Export the density grid to an MRC/CCP4 file.
