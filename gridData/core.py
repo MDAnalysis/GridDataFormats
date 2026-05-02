@@ -768,22 +768,8 @@ class Grid(object):
 
         For the file format see https://www.openvdb.org
         """
-        if self.grid.ndim != 3:
-            raise ValueError(
-                f"OpenVDB export requires a 3D grid, got {self.grid.ndim}D"
-            )
-
-        grid_name = self.metadata.get("name", "density")
-
-        vdb_field = OpenVDB.OpenVDBField(
-            grid=self.grid,
-            origin=self.origin,
-            delta=self.delta,
-            name=grid_name,
-            tolerance=tolerance,
-            metadata=self.metadata,
-        )
-        vdb_field.write(filename)
+        vdb_field = OpenVDB.OpenVDBField.from_grid(self, tolerance=tolerance, **kwargs)
+        vdb_filed.write(filename)
 
     def _export_mrc(self, filename, **kwargs):
         """Export the density grid to an MRC/CCP4 file.
