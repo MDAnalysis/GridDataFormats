@@ -718,7 +718,7 @@ class Grid(object):
 
         tolerance : float (optional)
             For VDB, values below this tolerance are treated as background (sparse),
-            default None
+            default ``None``
             
             .. versionadded:: 1.2.0
 
