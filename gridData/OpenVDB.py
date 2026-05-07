@@ -243,11 +243,10 @@ class OpenVDBField(object):
             non-orthorhombic cell
 
         """
-        self.grid = np.asarray(grid)
         if grid.ndim != 3:
             raise ValueError(f"OpenVDB only supports 3D grids, got {grid.ndim}D")
 
-        self.grid = np.ascontiguousarray(self.grid)
+        self.grid = np.ascontiguousarray(grid)
 
         self.origin = np.asarray(origin)
 
