@@ -67,7 +67,7 @@ Classes and functions
 
 """
 
-import numpy
+import numpy as np
 import warnings
 from dataclasses import dataclass
 
@@ -243,24 +243,24 @@ class OpenVDBField(object):
             non-orthorhombic cell
 
         """
-        self.grid = numpy.asarray(grid)
+        self.grid = np.asarray(grid)
         if grid.ndim != 3:
             raise ValueError(f"OpenVDB only supports 3D grids, got {grid.ndim}D")
 
-        self.grid = numpy.ascontiguousarray(self.grid)
+        self.grid = np.ascontiguousarray(self.grid)
 
-        self.origin = numpy.asarray(origin)
+        self.origin = np.asarray(origin)
 
         # Handle delta: could be 1D array or diagonal matrix
-        delta = numpy.asarray(delta)
+        delta = np.asarray(delta)
         if delta.ndim == 2:
             if delta.shape != (3, 3):
                 raise ValueError("delta as a matrix must be 3x3")
 
-            if not numpy.allclose(delta, numpy.diag(numpy.diag(delta))):
+            if not np.allclose(delta, np.diag(np.diag(delta))):
                 raise ValueError("Non-orthorhombic cells are not supported")
 
-            self.delta = numpy.diag(delta)
+            self.delta = np.diag(delta)
 
         elif delta.ndim == 1:
             if len(delta) != 3:
@@ -285,18 +285,18 @@ class OpenVDBField(object):
             If dtype is not supported or no suitable grid type is available
         """
         datatypes = {
-            numpy.dtype("bool"): ["BoolGrid"],
-            numpy.dtype("int8"): ["Int32Grid", "FloatGrid"],
-            numpy.dtype("uint8"): ["Int32Grid", "FloatGrid"],
-            numpy.dtype("int16"): ["Int32Grid", "FloatGrid"],
-            numpy.dtype("uint16"): ["Int32Grid", "FloatGrid"],
-            numpy.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")],
-            numpy.dtype("uint32"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
-            numpy.dtype("int64"): ["Int64Grid", DownCastTo("FloatGrid")],
-            numpy.dtype("uint64"): ["Int64Grid", DownCastTo("FloatGrid")],
-            numpy.dtype("float16"): ["HalfGrid", "FloatGrid"],
-            numpy.dtype("float32"): ["FloatGrid"],
-            numpy.dtype("float64"): ["DoubleGrid", DownCastTo("FloatGrid")],
+            np.dtype("bool"): ["BoolGrid"],
+            np.dtype("int8"): ["Int32Grid", "FloatGrid"],
+            np.dtype("uint8"): ["Int32Grid", "FloatGrid"],
+            np.dtype("int16"): ["Int32Grid", "FloatGrid"],
+            np.dtype("uint16"): ["Int32Grid", "FloatGrid"],
+            np.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")],
+            np.dtype("uint32"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
+            np.dtype("int64"): ["Int64Grid", DownCastTo("FloatGrid")],
+            np.dtype("uint64"): ["Int64Grid", DownCastTo("FloatGrid")],
+            np.dtype("float16"): ["HalfGrid", "FloatGrid"],
+            np.dtype("float32"): ["FloatGrid"],
+            np.dtype("float64"): ["DoubleGrid", DownCastTo("FloatGrid")],
         }
 
         try:
