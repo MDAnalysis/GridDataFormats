@@ -11,6 +11,7 @@ from . import datafiles
 
 try:
     import openvdb as vdb
+
     HAS_OPENVDB = True
 except ImportError:
     HAS_OPENVDB = False
@@ -71,12 +72,16 @@ class TestVDBWrite:
     def test_write_vdb_with_metadata(self, tmpdir, grid345):
         data, g = grid345
         g.metadata["name"] = "test_density"
+        g.metadata["source"] = "test"
+        g.metadata["factor"] = 60
 
         outfile = str(tmpdir / "metadata.vdb")
         g.export(outfile)
 
-        grids, metadata = vdb.readAll(outfile)
-        assert grids[0].name == "test_density"
+        metadata = vdb.readAllGridMetadata(outfile)
+        assert metadata[0]["name"] == "test_density"
+        assert metadata[0]["source"] == "test"
+        assert metadata[0]["factor"] == 60
 
     def test_write_vdb_origin_and_spacing(self, tmpdir):
         data = np.ones((4, 4, 4), dtype=np.float32)
@@ -334,6 +339,41 @@ class TestVDBWrite:
         vdb_field.write(outfile)
 
         assert tmpdir.join("empty_init.vdb").exists()
+
+    def test_from_grid_openvdb_field(self, grid345):
+        data, g = grid345
+        vdb_field = gridData.OpenVDB.OpenVDBField.from_grid(g)
+
+        assert vdb_field.name == "density"
+        assert vdb_field.vdb_grid is not None
+        assert isinstance(vdb_field.native, vdb.FloatGrid)
+
+    def test_convert_to_vdb_native_grid(self, grid345):
+        data, g = grid345
+        native = g.convert_to("vdb")
+
+        assert isinstance(native, vdb.GridBase)
+        assert native.evalActiveVoxelDim() == data.shape
+
+    def test_from_native_grid_shape_values_and_dimension(self, grid345):
+        data, g = grid345
+        vdb_field = gridData.OpenVDB.OpenVDBField.from_grid(g)
+
+        native_grid = vdb_field.native
+
+        assert native_grid.evalActiveVoxelDim() == data.shape
+
+        acc = native_grid.getAccessor()
+        assert acc.getValue((0, 0, 0)) == pytest.approx(float(data[0, 0, 0]))
+        assert acc.getValue((1, 2, 3)) == pytest.approx(float(data[1, 2, 3]))
+
+        voxel_size = native_grid.transform.voxelSize()
+        assert_allclose(
+            [voxel_size[0], voxel_size[1], voxel_size[2]], g.delta, rtol=1e-5
+        )
+
+        world = native_grid.transform.indexToWorld((0, 0, 0))
+        assert_allclose([world[0], world[1], world[2]], g.origin, rtol=1e-5)
 
 
 @pytest.mark.skipif(
