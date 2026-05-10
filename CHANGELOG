@@ -20,9 +20,6 @@ The rules for this file:
   Enhancements
 
   * Added openVDB format exports (Issue #141, PR #148)
- 
-  Enhancements 
-
   * new API-level interoperability features (#160)
     * new `Grid.convert_to()` method to create the native object (#161, PR #164)
     * `mrc.MRC`, `OpenDX.field`: new `from_grid()` class method to create the
