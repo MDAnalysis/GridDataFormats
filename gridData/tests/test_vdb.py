@@ -201,7 +201,7 @@ class TestVDBWrite:
 
         assert tmpdir.join("zero_tolerance.vdb").exists()
 
-    def test_vdb_non_orthrhombic_raises(self):
+    def test_vdb_non_orthorhombic_raises(self):
         data = np.ones((3, 3, 3), dtype=np.float32)
         delta = np.array(
             [
