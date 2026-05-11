@@ -213,7 +213,12 @@ class TestVDBWrite:
         assert acc.getValue((1, 1, 1)) == pytest.approx(2.0)
         assert acc.getValue((2, 2, 2)) == pytest.approx(1e-7)
 
-    def test_vdb_non_orthrhombic_raises(self):
+        outfile_pruned = str(tmpdir / "with_tolerance.vdb")
+        g.export(outfile_pruned, tolerance=1e-6)
+        grids_pruned, _ = vdb.readAll(outfile_pruned)
+        assert not grids_pruned[0].getAccessor().isValueOn((2, 2, 2))
+
+    def test_vdb_non_orthorhombic_raises(self):
         data = np.ones((3, 3, 3), dtype=np.float32)
         delta = np.array(
             [
