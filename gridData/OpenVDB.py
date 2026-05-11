@@ -366,10 +366,12 @@ class OpenVDBField(object):
         else:
             if self.tolerance is None:
                 vdb_grid.copyFromArray(self.grid)
+                vdb_grid.prune()
+            elif self.tolerance == 0:
+                vdb_grid.copyFromArray(self.grid)
             else:
                 vdb_grid.copyFromArray(self.grid, tolerance=self.tolerance)
-
-            vdb_grid.prune()
+                vdb_grid.prune()
 
         return vdb_grid
 

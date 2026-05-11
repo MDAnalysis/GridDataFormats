@@ -193,13 +193,25 @@ class TestVDBWrite:
         assert acc.getValue((7, 8, 9)) == pytest.approx(data[7, 8, 9])
 
     def test_write_vdb_with_zero_tolerance(self, tmpdir):
-        data = np.ones((3, 3, 3), dtype=np.float32)
+        data = np.zeros((3, 3, 3), dtype=np.float32)
+        data[0, 0, 0] = 1.0
+        data[1, 1, 1] = 2.0
+        data[2, 2, 2] = 1e-7
+
         g = Grid(data, origin=[0, 0, 0], delta=[1, 1, 1])
         outfile = str(tmpdir / "zero_tolerance.vdb")
 
         g.export(outfile, tolerance=0)
 
         assert tmpdir.join("zero_tolerance.vdb").exists()
+
+        grids, _ = vdb.readAll(outfile)
+        grid_vdb = grids[0]
+        acc = grid_vdb.getAccessor()
+
+        assert acc.getValue((0, 0, 0)) == pytest.approx(1.0)
+        assert acc.getValue((1, 1, 1)) == pytest.approx(2.0)
+        assert acc.getValue((2, 2, 2)) == pytest.approx(1e-7)
 
     def test_vdb_non_orthrhombic_raises(self):
         data = np.ones((3, 3, 3), dtype=np.float32)
