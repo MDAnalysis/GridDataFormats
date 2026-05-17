@@ -697,7 +697,7 @@ class Grid(object):
         filename : str
             name of the output file
 
-        file_format : {'dx', 'pickle', 'mrc', None} (optional)
+        file_format : {'dx', 'pickle', 'mrc', 'vdb', None} (optional)
             output file format, the default is "dx"
 
         type : str (optional)
