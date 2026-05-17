@@ -49,7 +49,7 @@ jobs:
 
     - name: install package deps
       run: |
-        micromamba install numpy scipy mrcfile pytest pytest-cov codecov
+        micromamba install numpy scipy mrcfile pytest pytest-cov codecov openvdb
 
     - name: check install
       run: |

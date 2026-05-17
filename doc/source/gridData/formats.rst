@@ -29,6 +29,7 @@ small number of file formats is directly supported.
    :mod:`~gridData.gOpenMol`    gOpenMol_   plt        x
    :mod:`~gridData.mrc`         CCP4_       ccp4,mrc   x      x      subset implemented
    :class:`~gridData.core.Grid` pickle      pickle     x      x      standard Python pickle of the Grid class
+   :mod:`~gridData.OpenVDB`     OpenVDB_    vdb               x      implemented for Blender visualization
    ============================ ==========  =========  =====  =====  =========================================
 
 
@@ -39,6 +40,7 @@ small number of file formats is directly supported.
 .. _OpenDX: http://www.opendx.org/
 .. _gOpenMol: http://www.csc.fi/gopenmol/
 .. _CCP4: http://www.ccpem.ac.uk/mrc_format/mrc2014.php
+.. _OpenVDB: https://www.openvdb.org/
 
 
 Format-specific modules
@@ -50,3 +52,4 @@ Format-specific modules
    formats/OpenDX
    formats/gOpenMol
    formats/mrc
+   formats/OpenVDB
