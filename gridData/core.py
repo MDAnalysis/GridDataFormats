@@ -650,7 +650,7 @@ class Grid(object):
         DX
             :mod:`gridData.OpenDX.field`
         MRC
-            :mod:`mrcfile.mrcinterpreter.MrcInterpreter` MRC/CCP4 format
+            :mod:`gridData.mrcfile.mrcinterpreter.MrcInterpreter` MRC/CCP4 format
         VDB
             :mod:`gridData.OpenVDB.OpenVDBField` OpenVDB format (e.g., FloatGrid, DoubleGrid)
             
