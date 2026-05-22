@@ -56,11 +56,24 @@ delta
 
 Example::
 
-  from gridData import Grid
-  
-  g = Grid("data.dx")
-  g.export("data.vdb")
+  import numpy as np
+  from gridData.OpenVDB import OpenVDBField
 
+  grid = np.random.rand(10, 10, 10).astype(np.float32)
+  origin = np.array([0.0, 0.0, 0.0])
+  delta = np.array([1.0, 1.0, 1.0])
+
+  vdb_field = OpenVDBField(grid=grid, origin=origin, delta=delta)
+  vdb_field.write("output.vdb")
+  
+To get the underlying :class:`openvdb.GridBase` object directly,
+use :meth:`~gridData.core.Grid.convert_to` with ``"VDB"``::
+
+  vdb_grid = g.convert_to("VDB")
+
+This returns the native ``openvdb`` grid object via
+:attr:`~gridData.OpenVDB.OpenVDBField.native`, which can be passed directly
+to ``openvdb`` API calls.
 
 Classes and functions
 ---------------------
