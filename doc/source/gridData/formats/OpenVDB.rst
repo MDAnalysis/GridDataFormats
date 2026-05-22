@@ -1,2 +1,3 @@
-.. automodule:: gridData.OpenVDb
+.. automodule:: gridData.OpenVDB
+
 
