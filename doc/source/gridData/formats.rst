@@ -48,7 +48,6 @@ Format-specific modules
 
 .. toctree::
    :maxdepth: 1
-   :titlesonly:
 
    formats/OpenDX
    formats/gOpenMol
