@@ -648,11 +648,11 @@ class Grid(object):
         Implemented formats:
         
         DX
-            :mod:`OpenDX.field`
+            :mod:`gridData.OpenDX.field`
         MRC
             :mod:`mrcfile.mrcinterpreter.MrcInterpreter` MRC/CCP4 format
         VDB
-            :class:`openvdb.GridBase` OpenVDB format (e.g., FloatGrid, DoubleGrid)
+            :mod:`gridData.OpenVDB.OpenVDBField` OpenVDB format (e.g., FloatGrid, DoubleGrid)
             
         Parameters
         ----------
@@ -683,14 +683,14 @@ class Grid(object):
         Implemented formats:
 
         dx
-            :mod:`OpenDX`
+            :mod:`gridData.OpenDX`
         mrc
-            :mod:`mrc` MRC/CCP4 format
+            :mod:`gridData.mrc` MRC/CCP4 format
         pickle
             pickle (use :meth:`Grid.load` to restore); :meth:`Grid.save`
             is simpler than ``export(format='python')``.
         vdb
-            :mod:`OpenVDB`
+            :mod:`gridData.OpenVDB`
 
         Parameters
         ----------
