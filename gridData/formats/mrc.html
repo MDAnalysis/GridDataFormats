@@ -22,20 +22,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mrc — the MRC/CCP4 volumetric data format &mdash; GridDataFormats 1.1.0+6.g6bb99de documentation</title>
+  <title>mrc — the MRC/CCP4 volumetric data format &mdash; GridDataFormats 1.1.0+7.g5983c10 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=bb4d6355"></script>
+      <script src="../../_static/documentation_options.js?v=0388bb2d"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.1.0+6.g6bb99de documentation"
+          title="Search within GridDataFormats 1.1.0+7.g5983c10 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -105,6 +105,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../interoperability.html">API Interoperability</a></li>
 </ul>
 
 </div>
@@ -286,8 +287,8 @@ into the returned MRC instance.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.mrc.MRC.native">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">native</span></span><a class="headerlink" href="#gridData.mrc.MRC.native" title="Link to this definition"></a></dt>
-<dd><p>Return a native <code class="xref py py-class docutils literal notranslate"><span class="pre">MrcInterpreter</span></code> object.</p>
-<p>The object is <code class="xref py py-class docutils literal notranslate"><span class="pre">MrcObject</span></code> that is connected
+<dd><p>Return a native <a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcinterpreter.MrcInterpreter" title="(in mrcfile v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MrcInterpreter</span></code></a> object.</p>
+<p>The object is <a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcobject.MrcObject" title="(in mrcfile v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MrcObject</span></code></a> that is connected
 to a stream. It is implemented as a managed property and regenerated
 whenever <a class="reference internal" href="#gridData.mrc.MRC.native" title="gridData.mrc.MRC.native"><code class="xref py py-attr docutils literal notranslate"><span class="pre">native</span></code></a> is used. In order to re-use the object, assign
 it to a variable:</p>
@@ -296,7 +297,7 @@ it to a variable:</p>
 </div>
 <p>In order to write to a file, open the file and assign it to the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">_iostream</span></code> attribute and
-call the <code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code> method:</p>
+call the <a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcinterpreter.MrcInterpreter.flush" title="(in mrcfile v1.5.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a> method:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrc</span> <span class="o">=</span> <span class="n">gdfMRC</span><span class="o">.</span><span class="n">native</span>   <span class="c1"># important: assign to variable mrc!</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;new.mrc&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
    <span class="n">mrc</span><span class="o">.</span><span class="n">_iostream</span> <span class="o">=</span> <span class="n">f</span>
@@ -305,15 +306,16 @@ call the <code class="xref py py-meth docutils literal notranslate"><span class=
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><em>mrcfile.mrcinterpreter.MrcInterpreter</em> – Native mrcfile object</p></li>
-<li><p><em>SeeAlso</em></p></li>
-<li><p><em>——-</em></p></li>
-<li><p><em>write</em></p></li>
-</ul>
-</p>
+<dd class="field-odd"><p>Native mrcfile object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcinterpreter.MrcInterpreter" title="(in mrcfile v1.5.4)">mrcfile.mrcinterpreter.MrcInterpreter</a></p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#gridData.mrc.MRC.write" title="gridData.mrc.MRC.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code></a></p>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 1.2.0.</span></p>
 </div>
@@ -368,7 +370,7 @@ reading, gzip and bzip2-compressed files are supported.)</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2007-2025, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu, Andrés Montoya (logo).</p>
+    <p>&#169; Copyright 2007-2026, Irfan Alibay，Oliver Beckstein, Jan Domanski, Shreejan Dolai, Eloy Félix, Giacomo Fiorin, René Hafner, Jesse Johnson, Olivier Languin-Cattoën, Max Linke, Tyler Luchko, Dominik Mierzejewski, Pradyumn Prasad, Josh Vermaas, Rich Waldo, Lily Wang, Zhiyi Wu, Andrés Montoya (logo).</p>
   </div>
 
   
@@ -395,7 +397,7 @@ reading, gzip and bzip2-compressed files are supported.)</p>
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.1.0+6.g6bb99de
+        1.1.0+7.g5983c10
       <span class="fa fa-caret-down"></span>
     </span>
 

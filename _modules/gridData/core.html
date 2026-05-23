@@ -21,20 +21,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.core &mdash; GridDataFormats 1.1.0+6.g6bb99de documentation</title>
+  <title>gridData.core &mdash; GridDataFormats 1.1.0+7.g5983c10 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=bb4d6355"></script>
+      <script src="../../_static/documentation_options.js?v=0388bb2d"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.1.0+6.g6bb99de documentation"
+          title="Search within GridDataFormats 1.1.0+7.g5983c10 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -87,6 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/basic.html">Basic use</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html">Core functionality for storing n-D grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gridData/formats.html">Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/interoperability.html">API Interoperability</a></li>
 </ul>
 
 </div>
@@ -332,7 +333,8 @@
 
     <span class="c1">#: Default format for exporting with :meth:`export`.</span>
     <span class="n">default_format</span> <span class="o">=</span> <span class="s1">&#39;DX&#39;</span>
-    
+
+    <span class="c1">#: Available converters for :meth:`convert_to`.</span>
     <span class="n">converter</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;MRC&#39;</span><span class="p">:</span> <span class="n">mrc</span><span class="o">.</span><span class="n">MRC</span><span class="o">.</span><span class="n">from_grid</span><span class="p">,</span> 
         <span class="s1">&#39;DX&#39;</span><span class="p">:</span> <span class="n">OpenDX</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">from_grid</span><span class="p">,</span> 
@@ -778,12 +780,16 @@
 <span class="sd">        Implemented formats:</span>
 <span class="sd">        </span>
 <span class="sd">        DX</span>
-<span class="sd">            :mod:`gridData.OpenDX.field`</span>
+<span class="sd">            :class:`gridData.OpenDX.field` (**OpenDX** format)</span>
 <span class="sd">        MRC</span>
-<span class="sd">            :mod:`gridData.mrc.MRC` MRC/CCP4 format</span>
+<span class="sd">            :class:`mrcfile.mrcinterpreter.MrcInterpreter` via</span>
+<span class="sd">            :class:`gridData.mrc.MRC` (**MRC/CCP4** format)</span>
 <span class="sd">        VDB</span>
-<span class="sd">            :mod:`gridData.OpenVDB.OpenVDBField` OpenVDB format (e.g., FloatGrid, DoubleGrid)</span>
-<span class="sd">            </span>
+<span class="sd">            **OpenVDB** format, e.g., :class:`openvdb.FloatGrid` or, if available,</span>
+<span class="sd">            :class:`openvdb.DoubleGrid` via</span>
+<span class="sd">            :class:`gridData.OpenVDB.OpenVDBField`</span>
+
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        format_specifier : {&quot;DX&quot;, &quot;MRC&quot;, &quot;VDB&quot;}</span>
@@ -794,10 +800,9 @@
 <span class="sd">        </span>
 <span class="sd">        </span>
 <span class="sd">        .. versionadded:: 1.2.0</span>
-<span class="sd">        </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fmt_upper</span> <span class="o">=</span> <span class="n">format_specifier</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-            
         <span class="n">wrapper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">converter</span><span class="p">[</span><span class="n">fmt_upper</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">native</span></div>
 
@@ -1195,7 +1200,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2007-2025, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu, Andrés Montoya (logo).</p>
+    <p>&#169; Copyright 2007-2026, Irfan Alibay，Oliver Beckstein, Jan Domanski, Shreejan Dolai, Eloy Félix, Giacomo Fiorin, René Hafner, Jesse Johnson, Olivier Languin-Cattoën, Max Linke, Tyler Luchko, Dominik Mierzejewski, Pradyumn Prasad, Josh Vermaas, Rich Waldo, Lily Wang, Zhiyi Wu, Andrés Montoya (logo).</p>
   </div>
 
   
@@ -1222,7 +1227,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.1.0+6.g6bb99de
+        1.1.0+7.g5983c10
       <span class="fa fa-caret-down"></span>
     </span>
 

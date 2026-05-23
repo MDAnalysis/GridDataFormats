@@ -22,21 +22,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core functionality for storing n-D grids &mdash; GridDataFormats 1.1.0+6.g6bb99de documentation</title>
+  <title>Core functionality for storing n-D grids &mdash; GridDataFormats 1.1.0+7.g5983c10 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/site.css" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=bb4d6355"></script>
+      <script src="../_static/documentation_options.js?v=0388bb2d"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       <script src="../_static/js/versions.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.1.0+6.g6bb99de documentation"
+          title="Search within GridDataFormats 1.1.0+7.g5983c10 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -121,6 +121,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="formats.html">Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interoperability.html">API Interoperability</a></li>
 </ul>
 
 </div>
@@ -385,11 +386,14 @@ operations with this <a class="reference internal" href="#gridData.core.Grid" ti
 <dd><p>Returns an instance of the native object for a given format.</p>
 <p>Implemented formats:</p>
 <dl class="simple">
-<dt>DX</dt><dd><p><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.OpenDX.field</span></code></a></p>
+<dt>DX</dt><dd><p><a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenDX.field</span></code></a> (<strong>OpenDX</strong> format)</p>
 </dd>
-<dt>MRC</dt><dd><p><a class="reference internal" href="formats/mrc.html#gridData.mrc.MRC" title="gridData.mrc.MRC"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.mrc.MRC</span></code></a> MRC/CCP4 format</p>
+<dt>MRC</dt><dd><p><a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcinterpreter.MrcInterpreter" title="(in mrcfile v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mrcfile.mrcinterpreter.MrcInterpreter</span></code></a> via
+<a class="reference internal" href="formats/mrc.html#gridData.mrc.MRC" title="gridData.mrc.MRC"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.mrc.MRC</span></code></a> (<strong>MRC/CCP4</strong> format)</p>
 </dd>
-<dt>VDB</dt><dd><p><a class="reference internal" href="formats/OpenVDB.html#gridData.OpenVDB.OpenVDBField" title="gridData.OpenVDB.OpenVDBField"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData.OpenVDB.OpenVDBField</span></code></a> OpenVDB format (e.g., FloatGrid, DoubleGrid)</p>
+<dt>VDB</dt><dd><p><strong>OpenVDB</strong> format, e.g., <code class="xref py py-class docutils literal notranslate"><span class="pre">openvdb.FloatGrid</span></code> or, if available,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">openvdb.DoubleGrid</span></code> via
+<a class="reference internal" href="formats/OpenVDB.html#gridData.OpenVDB.OpenVDBField" title="gridData.OpenVDB.OpenVDBField"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenVDB.OpenVDBField</span></code></a></p>
 </dd>
 </dl>
 <dl class="field-list simple">
@@ -408,7 +412,8 @@ operations with this <a class="reference internal" href="#gridData.core.Grid" ti
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gridData.core.Grid.converter">
 <span class="sig-name descname"><span class="pre">converter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'DX':</span> <span class="pre">&lt;bound</span> <span class="pre">method</span> <span class="pre">field.from_grid</span> <span class="pre">of</span> <span class="pre">&lt;class</span> <span class="pre">'gridData.OpenDX.field'&gt;&gt;,</span> <span class="pre">'MRC':</span> <span class="pre">&lt;bound</span> <span class="pre">method</span> <span class="pre">MRC.from_grid</span> <span class="pre">of</span> <span class="pre">&lt;class</span> <span class="pre">'gridData.mrc.MRC'&gt;&gt;,</span> <span class="pre">'VDB':</span> <span class="pre">&lt;bound</span> <span class="pre">method</span> <span class="pre">OpenVDBField.from_grid</span> <span class="pre">of</span> <span class="pre">&lt;class</span> <span class="pre">'gridData.OpenVDB.OpenVDBField'&gt;&gt;}</span></em><a class="headerlink" href="#gridData.core.Grid.converter" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Available converters for <a class="reference internal" href="#gridData.core.Grid.convert_to" title="gridData.core.Grid.convert_to"><code class="xref py py-meth docutils literal notranslate"><span class="pre">convert_to()</span></code></a>.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gridData.core.Grid.default_format">
@@ -667,7 +672,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2007-2025, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu, Andrés Montoya (logo).</p>
+    <p>&#169; Copyright 2007-2026, Irfan Alibay，Oliver Beckstein, Jan Domanski, Shreejan Dolai, Eloy Félix, Giacomo Fiorin, René Hafner, Jesse Johnson, Olivier Languin-Cattoën, Max Linke, Tyler Luchko, Dominik Mierzejewski, Pradyumn Prasad, Josh Vermaas, Rich Waldo, Lily Wang, Zhiyi Wu, Andrés Montoya (logo).</p>
   </div>
 
   
@@ -694,7 +699,7 @@ so that they produce values for <em>all</em> points spanned by the axes <em>arrs
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.1.0+6.g6bb99de
+        1.1.0+7.g5983c10
       <span class="fa fa-caret-down"></span>
     </span>
 

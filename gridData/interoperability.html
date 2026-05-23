@@ -1,0 +1,245 @@
+
+
+
+  
+    
+  
+
+
+
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.1/css/academicons.min.css" integrity="sha512-b1ASx0WHgVFL5ZQhTgiPWX+68KjS38Jk87jg7pe+qC7q9YkEtFq0z7xCglv7qGIs/68d3mAp+StfC8WKC5SSAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="shortcut icon" href="../_static/logo/mda_favicon.ico">
+</head>
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Interoperability &mdash; GridDataFormats 1.1.0+7.g5983c10 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/site.css" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0388bb2d"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/versions.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats 1.1.0+7.g5983c10 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="OpenVDB — routines to write OpenVDB files" href="formats/OpenVDB.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+
+  
+
+
+
+
+<a href="../index.html">
+  
+    <img src="../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+</a>
+
+
+  
+  
+  
+    <div class="version">
+      1.1
+    </div>
+  
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core functionality for storing n-D grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats.html">Formats</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Interoperability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#converting-a-grid-object-to-a-native-object-grid-convert-to">Converting a Grid object to a native object: <code class="docutils literal notranslate"><span class="pre">Grid.convert_to()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-grid-from-a-native-object">Creating a Grid from a native object</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GridDataFormats</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Interoperability</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/gridData/interoperability.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-interoperability">
+<h1>API Interoperability<a class="headerlink" href="#api-interoperability" title="Link to this heading"></a></h1>
+<p>For a number of formats such as MRC or OpenVDB, GridDataFormats uses external
+packages to load data into a native data structure. In addition to using these
+data structures to provide <strong>file-level interoperability</strong> by reading files in
+one format and writing it in another, GridDataFormats is providing since
+release 1.2.0 <strong>API level interoperability</strong> (see issue <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/issues/160">#160</a>). In this way,
+users can directly work with <em>native</em> objects representing the data instead of
+files. This approach is more efficient in workflows and can make code cleaner.</p>
+<p>Typically, GridDataFormats does not work directly with <em>native objects</em> (such
+as a <code class="xref py py-class docutils literal notranslate"><span class="pre">openvdb.FloatGrid</span></code> for OpenVDB or <a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcfile.MrcFile" title="(in mrcfile v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mrcfile.mrcfile.MrcFile</span></code></a>
+for MRC files) but wraps these classes into <em>adapter classes</em> (namely,
+<a class="reference internal" href="formats/OpenVDB.html#gridData.OpenVDB.OpenVDBField" title="gridData.OpenVDB.OpenVDBField"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenVDB.OpenVDBField</span></code></a> or <a class="reference internal" href="formats/mrc.html#gridData.mrc.MRC" title="gridData.mrc.MRC"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.mrc.MRC</span></code></a>). For some
+formats, there is no external library available and the GridDataFormats class
+is the “native” object (for instance, <a class="reference internal" href="formats/OpenDX.html#gridData.OpenDX.field" title="gridData.OpenDX.field"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenDX.field</span></code></a> for OpenDX
+data).</p>
+<section id="converting-a-grid-object-to-a-native-object-grid-convert-to">
+<h2>Converting a Grid object to a native object: <code class="docutils literal notranslate"><span class="pre">Grid.convert_to()</span></code><a class="headerlink" href="#converting-a-grid-object-to-a-native-object-grid-convert-to" title="Link to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.2.0.</span></p>
+</div>
+<ol class="arabic">
+<li><p>The class <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> contains the method
+<a class="reference internal" href="core.html#gridData.core.Grid.convert_to" title="gridData.core.Grid.convert_to"><code class="xref py py-meth docutils literal notranslate"><span class="pre">convert_to()</span></code></a> that creates the <em>native object</em>.</p></li>
+<li><p>Each <em>adapter class</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">A</span></code> that supports the <code class="docutils literal notranslate"><span class="pre">convert_to</span></code> API <em>must</em>
+implement</p>
+<ol class="arabic">
+<li><p>the <em>classmethod</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">A.from_grid</span></code> with signature
+<code class="docutils literal notranslate"><span class="pre">from_grid(grid:</span> <span class="pre">Grid,</span> <span class="pre">**kwargs)</span> <span class="pre">→</span> <span class="pre">A</span></code> that will create the <em>adapter
+class</em> from a <code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code> (and use any additional optional arguments
+while ignoring any that it cannot process);</p></li>
+<li><p>the <em>attribute</em> <code class="xref py py-attr docutils literal notranslate"><span class="pre">A.native</span></code> that contains the underlying <em>native
+object</em>.</p>
+<p>This attribute can be implemented as a property and should be
+considered read-only, i.e., it is not guaranteed that changing this
+object affects the adapter class <code class="xref py py-class docutils literal notranslate"><span class="pre">A</span></code> although it may do so.</p>
+</li>
+</ol>
+</li>
+<li><p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">A.from_grid()</span></code> method is listed in the
+<a class="reference internal" href="core.html#gridData.core.Grid.converter" title="gridData.core.Grid.converter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Grid.converter</span></code></a> dictionary.</p></li>
+</ol>
+<p>For example, given a <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> named <code class="docutils literal notranslate"><span class="pre">g</span></code>, the following
+native objects are produced:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">Grid</span><span class="p">(</span><span class="s2">&quot;density.dx&quot;</span><span class="p">)</span>   <span class="c1"># -&gt; gdf.Grid</span>
+<span class="n">mrc</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="s2">&quot;mrc&quot;</span><span class="p">)</span>    <span class="c1"># -&gt; mrcfile.mrcinterpreter.MrcInterpreter</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="s2">&quot;vdb&quot;</span><span class="p">)</span>      <span class="c1"># -&gt; openvdb.GridBase (eg a FloatGrid)</span>
+</pre></div>
+</div>
+<p>(See issue <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/issues/161">#161</a> for additional background.)</p>
+</section>
+<section id="creating-a-grid-from-a-native-object">
+<h2>Creating a Grid from a native object<a class="headerlink" href="#creating-a-grid-from-a-native-object" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Not implemented yet.</strong> See issue <a class="reference external" href="https://github.com/MDAnalysis/GridDataFormats/issues/162">#162</a> for details.</p>
+</div>
+<p><a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> should be able to consume <em>native objects</em> in place of files.</p>
+<p>For example, a <a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcfile.MrcFile" title="(in mrcfile v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mrcfile.mrcfile.MrcFile</span></code></a> instance can be used to
+instantiate the <code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code> instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrc</span> <span class="o">=</span> <span class="n">mrcfile</span><span class="o">.</span><span class="n">mrcfile</span><span class="o">.</span><span class="n">MrcFile</span><span class="p">(</span><span class="s2">&quot;density.ccp4&quot;</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="n">mrc</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="formats/OpenVDB.html" class="btn btn-neutral float-left" title="OpenVDB — routines to write OpenVDB files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2007-2026, Irfan Alibay，Oliver Beckstein, Jan Domanski, Shreejan Dolai, Eloy Félix, Giacomo Fiorin, René Hafner, Jesse Johnson, Olivier Languin-Cattoën, Max Linke, Tyler Luchko, Dominik Mierzejewski, Pradyumn Prasad, Josh Vermaas, Rich Waldo, Lily Wang, Zhiyi Wu, Andrés Montoya (logo).</p>
+  </div>
+
+  
+
+<div class="footer"><p>Please see
+    our <a href="https://www.mdanalysis.org/pages/privacy/">Privacy Policy</a>
+    to learn how <a href="https://www.mdanalysis.org">MDAnalysis</a> collects data.</p>
+    <script data-goatcounter="https://mdanalysis.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</div>
+
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    var versions_json_url = ''
+</script>
+
+<div class="rst-versions" data-toggle="rst-versions" role="note"
+     aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"></span>
+        1.1.0+7.g5983c10
+      <span class="fa fa-caret-down"></span>
+    </span>
+
+    <div class="rst-other-versions">
+        <dl id="versionselector">
+            <dt>Other Versions</dt>
+        </dl>
+
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

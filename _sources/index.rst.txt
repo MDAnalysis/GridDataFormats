@@ -57,3 +57,4 @@ GridDataFormats is open source and welcomes your contributions. Fork the `GridDa
    gridData/basic
    gridData/core
    gridData/formats
+   gridData/interoperability
