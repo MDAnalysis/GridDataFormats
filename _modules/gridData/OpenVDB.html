@@ -1,0 +1,617 @@
+
+
+
+  
+    
+  
+
+
+
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.1/css/academicons.min.css" integrity="sha512-b1ASx0WHgVFL5ZQhTgiPWX+68KjS38Jk87jg7pe+qC7q9YkEtFq0z7xCglv7qGIs/68d3mAp+StfC8WKC5SSAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="shortcut icon" href="../../_static/logo/mda_favicon.ico">
+</head>
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gridData.OpenVDB &mdash; GridDataFormats 1.1.0+6.g6bb99de documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=bb4d6355"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/versions.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within GridDataFormats 1.1.0+6.g6bb99de documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+
+  
+
+
+
+
+<a href="../../index.html">
+  
+    <img src="../../_static/mdanalysis-griddataformats-logo.png" class="logo" alt="Logo"/>
+</a>
+
+
+  
+  
+  
+    <div class="version">
+      1.1
+    </div>
+  
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+        <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/overview.html">Handling grids of data — <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridData</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/basic.html">Basic use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/core.html">Core functionality for storing n-D grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gridData/formats.html">Formats</a></li>
+</ul>
+
+</div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GridDataFormats</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gridData.OpenVDB</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gridData.OpenVDB</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:mod:`~gridData.OpenVDB` --- routines to write OpenVDB files</span>
+<span class="sd">=============================================================</span>
+
+<span class="sd">The `OpenVDB format`_ is used by Blender_ and other VFX software for</span>
+<span class="sd">volumetric data.</span>
+
+<span class="sd">.. _`OpenVDB format`: https://www.openvdb.org</span>
+<span class="sd">.. _Blender: https://www.blender.org/</span>
+
+<span class="sd">This module uses the openvdb_ library to write OpenVDB files.</span>
+<span class="sd"> </span>
+<span class="sd">.. _openvdb: https://github.com/AcademySoftwareFoundation/openvdb</span>
+
+<span class="sd">.. Note:: This module implements a simple writer for 3D regular grids,</span>
+<span class="sd">          sufficient to export density data for visualization in Blender_.</span>
+<span class="sd">          See the `Blender volume docs`_ for details on importing VDB files.</span>
+<span class="sd">          </span>
+<span class="sd">.. _`Blender volume docs`: https://docs.blender.org/manual/en/latest/modeling/volumes/introduction.html</span>
+
+<span class="sd">The OpenVDB format uses a sparse tree structure to efficiently store</span>
+<span class="sd">volumetric data. It is the native format for Blender&#39;s volume system.</span>
+
+
+<span class="sd">Writing OpenVDB files</span>
+<span class="sd">---------------------</span>
+
+<span class="sd">If you have a :class:`~gridData.core.Grid` object, you can write it to</span>
+<span class="sd">OpenVDB format::</span>
+
+<span class="sd">  from gridData import Grid</span>
+<span class="sd">  g = Grid(&quot;data.dx&quot;)</span>
+<span class="sd">  g.export(&quot;data.vdb&quot;)</span>
+
+<span class="sd">This will create a file that can be imported directly into Blender</span>
+<span class="sd">(File -&gt; Import -&gt; OpenVDB) or (shift+A -&gt; Volume -&gt; Import OpenVDB). See `importing VDB in Blender`_ for details.</span>
+
+<span class="sd">.. _`importing VDB in Blender`: https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/input/import/vdb.html</span>
+
+
+<span class="sd">Building an OpenVDB field from a numpy array</span>
+<span class="sd">---------------------------------------------</span>
+
+<span class="sd">If you want to create VDB files without using the Grid class,</span>
+<span class="sd">you can directly use the OpenVDB field API. This is useful</span>
+<span class="sd">for custom workflows or when integrating with other libraries.</span>
+
+<span class="sd">Requires:</span>
+
+<span class="sd">grid</span>
+<span class="sd">    numpy 3D array</span>
+<span class="sd">origin</span>
+<span class="sd">    cartesian coordinates of the center of the (0,0,0) grid cell</span>
+<span class="sd">delta</span>
+<span class="sd">    n x n array with the length of a grid cell along each axis</span>
+
+<span class="sd">Example::</span>
+
+<span class="sd">  import numpy as np</span>
+<span class="sd">  from gridData.OpenVDB import OpenVDBField</span>
+
+<span class="sd">  grid = np.random.rand(10, 10, 10).astype(np.float32)</span>
+<span class="sd">  origin = np.array([0.0, 0.0, 0.0])</span>
+<span class="sd">  delta = np.array([1.0, 1.0, 1.0])</span>
+
+<span class="sd">  vdb_field = OpenVDBField(grid=grid, origin=origin, delta=delta)</span>
+<span class="sd">  vdb_field.write(&quot;output.vdb&quot;)</span>
+<span class="sd">  </span>
+<span class="sd">Alternatively, you can also create a :class:`~gridData.core.Grid` from the array and</span>
+<span class="sd">then use the :meth:`Grid.convert_to&lt;gridData.core.Grid.convert_to&gt;` method to directly</span>
+<span class="sd">get a :class:`gridData.OpenVDB.OpenVDBField`::</span>
+
+<span class="sd">  g = Grid(grid=grid, origin=origin, delta=delta)</span>
+<span class="sd">  vdb_field = g.convert_to(&quot;VDB&quot;)</span>
+<span class="sd">  </span>
+<span class="sd">See Also</span>
+<span class="sd">--------</span>
+<span class="sd">OpenVDBField.from_grid : directly create the :class:`OpenVDBField` from a :class:`~gridData.core.Grid`</span>
+<span class="sd">  </span>
+
+<span class="sd">Native OpenVDB object</span>
+<span class="sd">---------------------</span>
+
+<span class="sd">If you need the native :class:`openvdb.GridBase` grid object (e.g., a :class:`openvdb.FloatGrid`) then</span>
+<span class="sd">you can use the :attr:`OpenVDBField.native` attribute that gives direct access to this</span>
+<span class="sd">object::</span>
+
+<span class="sd">  g = Grid(&quot;data.dx&quot;)</span>
+<span class="sd">  vdb_field = g.convert_to(&quot;VDB&quot;)</span>
+<span class="sd">  vdb_grid = vdb_field.native</span>
+<span class="sd">  </span>
+<span class="sd">You can then manipulate the ``vdb_grid`` using all relevant transformations and other OpenVDB methods.</span>
+
+<span class="sd">Classes and functions</span>
+<span class="sd">---------------------</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">openvdb</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">vdb</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">vdb</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="DownCastTo">
+<a class="viewcode-back" href="../../gridData/formats/OpenVDB.html#gridData.OpenVDB.DownCastTo">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DownCastTo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;:func:`~dataclasses.dataclass` decorator serving as a marker for a downcast.</span>
+<span class="sd">    </span>
+<span class="sd">    This function is used to create a proxy for an OpenVDB grid type.</span>
+<span class="sd">    The field :attr:`gridType` contains the OpenVDB grid type that it represents.</span>
+<span class="sd">    :meth:`OpenVDBField._get_best_grid_type` selects a OpenVDB grid that best matches</span>
+<span class="sd">    the numpy dtype of the data but in some cases, only target OpenVDB grid types are</span>
+<span class="sd">    available that loose precision. In this case, this class wraps the orginal OpenVDB</span>
+<span class="sd">    class to indicate that the downcast. For example, ::</span>
+<span class="sd">    </span>
+<span class="sd">       np.dtype(&quot;int32&quot;): [&quot;Int32Grid&quot;, DownCastTo(&quot;FloatGrid&quot;)]</span>
+<span class="sd">       </span>
+<span class="sd">    indicates that NumPy int32 data should be represented by a :class:`openvdb.Int32Grid`</span>
+<span class="sd">    but if this is not available, a :class:`openvdb.FloatGrid` is used instead,</span>
+<span class="sd">    which, however, is only able to represent a subset of all 32-bit integers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gridType</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<div class="viewcode-block" id="OpenVDBField">
+<a class="viewcode-back" href="../../gridData/formats/OpenVDB.html#gridData.OpenVDB.OpenVDBField">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpenVDBField</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenVDB field object for writing volumetric data.</span>
+
+<span class="sd">    This class provides a simple interface to write 3D grid data to</span>
+<span class="sd">    OpenVDB format, which can be imported into Blender and other</span>
+<span class="sd">    VFX software.</span>
+
+<span class="sd">    The field object holds grid data and metadata, and can write it</span>
+<span class="sd">    to a .vdb file.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    Create a field and write it::</span>
+
+<span class="sd">      import gridData.OpenVDB as OpenVDB</span>
+
+<span class="sd">      vdb_field = OpenVDB.OpenVDBField(grid=np.ones((3, 4, 5)), </span>
+<span class="sd">                                       origin=np.array([1.5, 0, 0]),</span>
+<span class="sd">                                       delta=np.array([0.5, 0.5, 0.25]),</span>
+<span class="sd">                                       name=&#39;density&#39;)</span>
+<span class="sd">      vdb_field.write(&#39;output.vdb&#39;)</span>
+
+<span class="sd">    Or use directly from :class:`~gridData.core.Grid`::</span>
+
+<span class="sd">      g = Grid(...)</span>
+<span class="sd">      g.export(&#39;output.vdb&#39;, format=&#39;vdb&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;density&quot;</span><span class="p">,</span>
+        <span class="n">tolerance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize an OpenVDB field.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        grid : numpy.ndarray</span>
+<span class="sd">            3D numpy array with the data</span>
+<span class="sd">        origin : numpy.ndarray</span>
+<span class="sd">            Coordinates of the center of grid cell [0,0,0]</span>
+<span class="sd">        delta : numpy.ndarray</span>
+<span class="sd">            Grid spacing (can be 1D array or diagonal matrix)</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of the grid (will be visible in Blender), default &#39;density&#39;</span>
+<span class="sd">        tolerance : float (optional)</span>
+<span class="sd">            Values below this tolerance are treated as background (sparse),</span>
+<span class="sd">            default ``None``</span>
+<span class="sd">        metadata : dict (optional)</span>
+<span class="sd">            Additional metadata to embed in the VDB file.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ImportError</span>
+<span class="sd">            If openvdb is not installed</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If grid is not 3D, or if delta is not 1D/2D or describes</span>
+<span class="sd">            non-orthorhombic cell</span>
+
+
+<span class="sd">        .. versionadded:: 1.2.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">vdb</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s2">&quot;openvdb is required to write VDB files. &quot;</span>
+                <span class="s2">&quot;Install it with: conda install -c conda-forge openvdb&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span> <span class="o">=</span> <span class="n">tolerance</span>
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_populate</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_openvdb_grid</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="OpenVDBField.from_grid">
+<a class="viewcode-back" href="../../gridData/formats/OpenVDB.html#gridData.OpenVDB.OpenVDBField.from_grid">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_grid</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create OpenVDB field from Grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        grid : Grid</span>
+<span class="sd">            Grid object to convert</span>
+<span class="sd">        tolerance : float, optional</span>
+<span class="sd">            Values below this tolerance are treated as background (sparse).</span>
+<span class="sd">            Default None means no tolerance-based pruning for non-boolean grids.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Additional keyword arguments:</span>
+<span class="sd">            - name : str, grid name (default &#39;density&#39;)</span>
+<span class="sd">            - metadata : dict, additional metadata</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        OpenVDBField</span>
+<span class="sd">            OpenVDB field wrapper</span>
+
+
+<span class="sd">        .. versionadded:: 1.2.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;density&quot;</span><span class="p">))</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">grid</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OpenVDB requires a 3D grid, got </span><span class="si">{</span><span class="n">grid</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">D&quot;</span><span class="p">)</span>
+
+        <span class="n">vdb_field</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span>
+            <span class="n">origin</span><span class="o">=</span><span class="n">grid</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span>
+            <span class="n">delta</span><span class="o">=</span><span class="n">grid</span><span class="o">.</span><span class="n">delta</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">tolerance</span><span class="o">=</span><span class="n">tolerance</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">vdb_field</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">native</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the native openvdb grid object.</span>
+
+<span class="sd">        The &quot;native&quot; object is the underlying :class:`openvdb.GridBase`</span>
+<span class="sd">        object (e.g., FloatGrid, DoubleGrid) from the openvdb library.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        openvdb.GridBase</span>
+<span class="sd">            Native openvdb grid object (e.g., openvdb.FloatGrid)</span>
+
+
+<span class="sd">        .. versionadded:: 1.2.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_populate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Populate the field with grid data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        grid : numpy.ndarray</span>
+<span class="sd">            3D numpy array with the data</span>
+<span class="sd">        origin : numpy.ndarray</span>
+<span class="sd">            Coordinates of the center of grid cell [0,0,0]</span>
+<span class="sd">        delta : numpy.ndarray</span>
+<span class="sd">            Grid spacing (can be 1D array or diagonal matrix)</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If grid is not 3D, or if delta is not 1D/2D or describes</span>
+<span class="sd">            non-orthorhombic cell</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OpenVDB only supports 3D grids, got </span><span class="si">{</span><span class="n">grid</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">D&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
+
+        <span class="c1"># Handle delta: could be 1D array or diagonal matrix</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">delta</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">delta</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;delta as a matrix must be 3x3&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">delta</span><span class="p">))):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Non-orthorhombic cells are not supported&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">delta</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;delta must have length-3 for 3D grids&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;delta must be either a length-3 vector or a 3x3 diagonal matrix&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_best_grid_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Selects the suitable OpenVDB grid type</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        openvdb.GridBase</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If dtype is not supported or no suitable grid type is available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">datatypes</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;BoolGrid&quot;</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;int8&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;Int32Grid&quot;</span><span class="p">,</span> <span class="s2">&quot;FloatGrid&quot;</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;Int32Grid&quot;</span><span class="p">,</span> <span class="s2">&quot;FloatGrid&quot;</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;int16&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;Int32Grid&quot;</span><span class="p">,</span> <span class="s2">&quot;FloatGrid&quot;</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;uint16&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;Int32Grid&quot;</span><span class="p">,</span> <span class="s2">&quot;FloatGrid&quot;</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;int32&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;Int32Grid&quot;</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">&quot;FloatGrid&quot;</span><span class="p">)],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;uint32&quot;</span><span class="p">):</span> <span class="p">[</span><span class="n">DownCastTo</span><span class="p">(</span><span class="s2">&quot;Int32Grid&quot;</span><span class="p">),</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">&quot;FloatGrid&quot;</span><span class="p">)],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;Int64Grid&quot;</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">&quot;FloatGrid&quot;</span><span class="p">)],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;uint64&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;Int64Grid&quot;</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">&quot;FloatGrid&quot;</span><span class="p">)],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;float16&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;HalfGrid&quot;</span><span class="p">,</span> <span class="s2">&quot;FloatGrid&quot;</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;FloatGrid&quot;</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;DoubleGrid&quot;</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">&quot;FloatGrid&quot;</span><span class="p">)],</span>
+        <span class="p">}</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">vdb_gridtypes</span> <span class="o">=</span> <span class="n">datatypes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> not supported for VDB&quot;</span><span class="p">)</span>
+
+        <span class="n">VDB_Grid</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">selected_gridtype</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">is_downcast</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">gridtype</span> <span class="ow">in</span> <span class="n">vdb_gridtypes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gridtype</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">):</span>
+                <span class="n">gridtype_name</span> <span class="o">=</span> <span class="n">gridtype</span><span class="o">.</span><span class="n">gridType</span>
+                <span class="n">is_downcast</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">gridtype_name</span> <span class="o">=</span> <span class="n">gridtype</span>
+                <span class="n">is_downcast</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">VDB_Grid</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">vdb</span><span class="p">,</span> <span class="n">gridtype_name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selected_gridtype</span> <span class="o">=</span> <span class="n">gridtype_name</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Could not find any VDB grid type for numpy dtype </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">is_downcast</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Grid type </span><span class="si">{</span><span class="n">vdb_gridtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> not available. Using </span><span class="si">{</span><span class="n">selected_gridtype</span><span class="si">}</span><span class="s2"> instead. Data may lose precision.&quot;</span><span class="p">,</span>
+                <span class="ne">RuntimeWarning</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">VDB_Grid</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_openvdb_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create and populate an OpenVDB grid</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        openvdb.GridBase</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">vdb_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_best_grid_type</span><span class="p">()</span>
+
+        <span class="n">vdb_grid</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="n">vdb_grid</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">vdb</span><span class="o">.</span><span class="n">createLinearTransform</span><span class="p">()</span>
+        <span class="n">vdb_grid</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">preScale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="n">vdb_grid</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">postTranslate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">vdb_grid</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not set metadata &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vdb_grid</span><span class="p">,</span> <span class="n">vdb</span><span class="o">.</span><span class="n">BoolGrid</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">):</span>
+            <span class="n">vdb_grid</span><span class="o">.</span><span class="n">copyFromArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+            <span class="n">vdb_grid</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span><span class="n">tolerance</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">vdb_grid</span><span class="o">.</span><span class="n">copyFromArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+                <span class="n">vdb_grid</span><span class="o">.</span><span class="n">prune</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">vdb_grid</span><span class="o">.</span><span class="n">copyFromArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">vdb_grid</span><span class="o">.</span><span class="n">copyFromArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span><span class="p">)</span>
+                <span class="n">vdb_grid</span><span class="o">.</span><span class="n">prune</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">vdb_grid</span>
+
+<div class="viewcode-block" id="OpenVDBField.write">
+<a class="viewcode-back" href="../../gridData/formats/OpenVDB.html#gridData.OpenVDB.OpenVDBField.write">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the field to an OpenVDB file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Output filename (should end in .vdb)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vdb</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">grids</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span><span class="p">])</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2007-2025, Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, Irfan Alibay，Zhiyi Wu, Andrés Montoya (logo).</p>
+  </div>
+
+  
+
+<div class="footer"><p>Please see
+    our <a href="https://www.mdanalysis.org/pages/privacy/">Privacy Policy</a>
+    to learn how <a href="https://www.mdanalysis.org">MDAnalysis</a> collects data.</p>
+    <script data-goatcounter="https://mdanalysis.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</div>
+
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    var versions_json_url = ''
+</script>
+
+<div class="rst-versions" data-toggle="rst-versions" role="note"
+     aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"></span>
+        1.1.0+6.g6bb99de
+      <span class="fa fa-caret-down"></span>
+    </span>
+
+    <div class="rst-other-versions">
+        <dl id="versionselector">
+            <dt>Other Versions</dt>
+        </dl>
+
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
