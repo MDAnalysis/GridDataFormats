@@ -15,10 +15,11 @@ The rules for this file:
 -------------------------------------------------------------------------------
 ??/??/???? orbeckst, spyke7
 
- * 1.2.0
+  * 1.2.0
 
-  Enhancements 
+  Enhancements
 
+  * Added openVDB format exports (Issue #141, PR #148)
   * new API-level interoperability features (#160)
     * new `Grid.convert_to()` method to create the native object (#161, PR #164)
     * `mrc.MRC`, `OpenDX.field`: new `from_grid()` class method to create the
