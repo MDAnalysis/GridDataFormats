@@ -213,7 +213,8 @@ class Grid(object):
 
     #: Default format for exporting with :meth:`export`.
     default_format = 'DX'
-    
+
+    #: Available converters for :meth:`convert_to`.
     converter = {
         'MRC': mrc.MRC.from_grid, 
         'DX': OpenDX.field.from_grid, 
@@ -648,12 +649,16 @@ class Grid(object):
         Implemented formats:
         
         DX
-            :mod:`gridData.OpenDX.field`
+            :class:`gridData.OpenDX.field` (**OpenDX** format)
         MRC
-            :mod:`gridData.mrc.MRC` MRC/CCP4 format
+            :class:`mrcfile.mrcinterpreter.MrcInterpreter` via
+            :class:`gridData.mrc.MRC` (**MRC/CCP4** format)
         VDB
-            :mod:`gridData.OpenVDB.OpenVDBField` OpenVDB format (e.g., FloatGrid, DoubleGrid)
-            
+            **OpenVDB** format, e.g., :class:`openvdb.FloatGrid` or, if available,
+            :class:`openvdb.DoubleGrid` via
+            :class:`gridData.OpenVDB.OpenVDBField`
+
+
         Parameters
         ----------
         format_specifier : {"DX", "MRC", "VDB"}
@@ -664,10 +669,9 @@ class Grid(object):
         
         
         .. versionadded:: 1.2.0
-        
+
         """
         fmt_upper = format_specifier.upper()
-            
         wrapper = self.converter[fmt_upper](self, **kwargs)
         return wrapper.native
 
