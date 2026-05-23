@@ -162,8 +162,9 @@ class MRC(object):
         mrcfile.mrcinterpreter.MrcInterpreter
             Native mrcfile object
 
-        SeeAlso
-        -------
+
+        See Also
+        --------
         write
         
 

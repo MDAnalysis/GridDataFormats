@@ -65,11 +65,13 @@ master_doc = "index"
 # General information about the project.
 project = "GridDataFormats"
 authors = (
-    "Oliver Beckstein, Jan Domanski, Jesse Johnson, Max Linke, Tyler Luchko, "
-    "Dominik Mierzejewski, Giacomo Fiorin, Lily Wang, Josh Vermaas, "
-    "Irfan Alibay，Zhiyi Wu, Andrés Montoya (logo)"
+    "Irfan Alibay，Oliver Beckstein, Jan Domanski, Shreejan Dolai, Eloy Félix, "
+    "Giacomo Fiorin, René Hafner, "
+    "Jesse Johnson, Olivier Languin-Cattoën, Max Linke, Tyler Luchko, "
+    "Dominik Mierzejewski, Pradyumn Prasad, Josh Vermaas, Rich Waldo, Lily Wang, "
+    "Zhiyi Wu, Andrés Montoya (logo)"
 )
-copyright = "2007-2025, " + authors
+copyright = "2007-2026, " + authors
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -284,4 +286,5 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
     "scipy": ("https://docs.scipy.org/doc/scipy/", None),
+    "mrcfile": ("https://mrcfile.readthedocs.io/en/stable/", None),
 }
