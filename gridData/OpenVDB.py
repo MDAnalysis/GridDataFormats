@@ -66,14 +66,30 @@ Example::
   vdb_field = OpenVDBField(grid=grid, origin=origin, delta=delta)
   vdb_field.write("output.vdb")
   
-To get the underlying :class:`openvdb.GridBase` object directly,
-use :meth:`~gridData.core.Grid.convert_to` with ``"VDB"``::
+Alternatively, you can also create a :class:`~gridData.core.Grid` from the array and
+then use the :meth:`Grid.convert_to<gridData.core.Grid.convert_to>` method to directly
+get a :class:`gridData.OpenVDB.OpenVDBField`::
 
-  vdb_grid = g.convert_to("VDB")
+  g = Grid(grid=grid, origin=origin, delta=delta)
+  vdb_field = g.convert_to("VDB")
+  
+See Also
+--------
+OpenVDBField.from_grid : directly create the :class:`OpenVDBField` from a :class:`~gridData.core.Grid`
+  
 
-This returns the native ``openvdb`` grid object via
-:attr:`~gridData.OpenVDB.OpenVDBField.native`, which can be passed directly
-to ``openvdb`` API calls.
+Native OpenVDB object
+---------------------
+
+If you need the native :class:`openvdb.GridBase` grid object (e.g., a :class:`openvdb.FloatGrid`) then
+you can use the :attr:`OpenVDBField.native` attribute that gives direct access to this
+object::
+
+  g = Grid("data.dx")
+  vdb_field = g.convert_to("VDB")
+  vdb_grid = vdb_field.native
+  
+You can then manipulate the ``vdb_grid`` using all relevant transformations and other OpenVDB methods.
 
 Classes and functions
 ---------------------
@@ -92,6 +108,21 @@ except ImportError:
 
 @dataclass
 class DownCastTo:
+    """:func:`~dataclasses.dataclass` decorator serving as a marker for a downcast.
+    
+    This function is used to create a proxy for an OpenVDB grid type.
+    The field :attr:`gridType` contains the OpenVDB grid type that it represents.
+    :meth:`OpenVDBField._get_best_grid_type` selects a OpenVDB grid that best matches
+    the numpy dtype of the data but in some cases, only target OpenVDB grid types are
+    available that loose precision. In this case, this class wraps the orginal OpenVDB
+    class to indicate that the downcast. For example, ::
+    
+       np.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")]
+       
+    indicates that NumPy int32 data should be represented by a :class:`openvdb.Int32Grid`
+    but if this is not available, a :class:`openvdb.FloatGrid` is used instead,
+    which, however, is only able to represent a subset of all 32-bit integers.
+    """
     gridType: str
 
 
