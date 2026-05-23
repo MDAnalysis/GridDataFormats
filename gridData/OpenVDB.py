@@ -142,14 +142,16 @@ class OpenVDBField(object):
 
       import gridData.OpenVDB as OpenVDB
 
-      vdb_field = OpenVDB.OpenVDBField('density')
+      vdb_field = OpenVDB.OpenVDBField(grid=np.ones((3, 4, 5)), 
+                                       origin=np.array([1.5, 0, 0]),
+                                       delta=np.array([0.5, 0.5, 0.25]),
+                                       name='density')
       vdb_field.write('output.vdb')
 
-    Or use directly from Grid::
+    Or use directly from :class:`~gridData.core.Grid`::
 
       g = Grid(...)
       g.export('output.vdb', format='vdb')
-
     """
 
     def __init__(
@@ -175,7 +177,7 @@ class OpenVDBField(object):
             Name of the grid (will be visible in Blender), default 'density'
         tolerance : float (optional)
             Values below this tolerance are treated as background (sparse),
-            default None
+            default ``None``
         metadata : dict (optional)
             Additional metadata to embed in the VDB file.
 
@@ -187,6 +189,8 @@ class OpenVDBField(object):
             If grid is not 3D, or if delta is not 1D/2D or describes
             non-orthorhombic cell
 
+
+        .. versionadded:: 1.2.0
         """
         if vdb is None:
             raise ImportError(
