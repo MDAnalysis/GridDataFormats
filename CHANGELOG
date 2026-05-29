@@ -19,7 +19,7 @@ The rules for this file:
 
   Enhancements
 
-  * Implemented loading of a Grid from a native object for OpenVDB (Issue #162, PR #169)
+  * Implemented loading of a Grid from a native object for OpenVDB (Issue #162, PR #170)
 
   Fixes
 
