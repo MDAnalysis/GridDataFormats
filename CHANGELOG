@@ -13,6 +13,17 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 -------------------------------------------------------------------------------
+??/??/???? orbeckst, spyke7
+
+  * 1.2.1
+
+  Enhancements
+
+  * Implemented loading of a Grid from a native object for OpenVDB (Issue #162, PR #169)
+
+  Fixes
+
+
 05/22/2026 orbeckst, spyke7
 
   * 1.2.0

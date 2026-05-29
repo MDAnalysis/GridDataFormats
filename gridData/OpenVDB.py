@@ -109,20 +109,21 @@ except ImportError:
 @dataclass
 class DownCastTo:
     """:func:`~dataclasses.dataclass` decorator serving as a marker for a downcast.
-    
+
     This function is used to create a proxy for an OpenVDB grid type.
     The field :attr:`gridType` contains the OpenVDB grid type that it represents.
     :meth:`OpenVDBField._get_best_grid_type` selects a OpenVDB grid that best matches
     the numpy dtype of the data but in some cases, only target OpenVDB grid types are
     available that loose precision. In this case, this class wraps the orginal OpenVDB
     class to indicate that the downcast. For example, ::
-    
+
        np.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")]
-       
+
     indicates that NumPy int32 data should be represented by a :class:`openvdb.Int32Grid`
     but if this is not available, a :class:`openvdb.FloatGrid` is used instead,
     which, however, is only able to represent a subset of all 32-bit integers.
     """
+
     gridType: str
 
 
@@ -142,7 +143,7 @@ class OpenVDBField(object):
 
       import gridData.OpenVDB as OpenVDB
 
-      vdb_field = OpenVDB.OpenVDBField(grid=np.ones((3, 4, 5)), 
+      vdb_field = OpenVDB.OpenVDBField(grid=np.ones((3, 4, 5)),
                                        origin=np.array([1.5, 0, 0]),
                                        delta=np.array([0.5, 0.5, 0.25]),
                                        name='density')
@@ -153,6 +154,22 @@ class OpenVDBField(object):
       g = Grid(...)
       g.export('output.vdb', format='vdb')
     """
+
+    # dtype maps
+    _DATATYPES = {
+        np.dtype("bool"): ["BoolGrid"],
+        np.dtype("int8"): ["Int32Grid", "FloatGrid"],
+        np.dtype("uint8"): ["Int32Grid", "FloatGrid"],
+        np.dtype("int16"): ["Int32Grid", "FloatGrid"],
+        np.dtype("uint16"): ["Int32Grid", "FloatGrid"],
+        np.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")],
+        np.dtype("uint32"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
+        np.dtype("int64"): ["Int64Grid", DownCastTo("FloatGrid")],
+        np.dtype("uint64"): ["Int64Grid", DownCastTo("FloatGrid")],
+        np.dtype("float16"): ["HalfGrid", "FloatGrid"],
+        np.dtype("float32"): ["FloatGrid"],
+        np.dtype("float64"): ["DoubleGrid", DownCastTo("FloatGrid")],
+    }
 
     def __init__(
         self,
@@ -205,8 +222,13 @@ class OpenVDBField(object):
             self.metadata = {}
 
         if grid is not None:
-            self._populate(grid, origin, delta)
-            self.vdb_grid = self._create_openvdb_grid()
+            if isinstance(grid, vdb.GridBase):
+                self.vdb_grid = grid
+                self._extract_from_vdb_grid()
+            else:
+                self._populate(grid, origin, delta)
+                self.vdb_grid = self._create_openvdb_grid()
+
         else:
             self.grid = None
             self.origin = None
@@ -272,6 +294,57 @@ class OpenVDBField(object):
         """
         return self.vdb_grid
 
+    def _extract_from_vdb_grid(self):
+        """Extract numpy array, origin, delta from stored VDB grid.
+
+        This method converts the sparse VDB grid to a dense numpy array
+        and extracts the transform information.
+        """
+        for key in self.vdb_grid.metadata:
+            try:
+                self.metadata[key] = self.vdb_grid[key]
+            except (TypeError, ValueError):
+                pass
+
+        transformation = self.vdb_grid.transform
+
+        v_origin = np.array(transformation.indexToWorld([0, 0, 0]))
+        v_delta = np.array(transformation.indexToWorld([1, 1, 1])) - v_origin
+
+        self.origin = v_origin
+        self.delta = v_delta
+
+        dtype = np.dtype("float32")
+        vdb_class_name = type(self.vdb_grid).__name__
+        for numpy_dtype, vdb_names in self._DATATYPES.items():
+            name_dtype = vdb_names[0]
+            canonical_name = (
+                name_dtype.gridType
+                if isinstance(name_dtype, DownCastTo)
+                else name_dtype
+            )
+
+            if vdb_class_name == canonical_name:
+                dtype = numpy_dtype
+                break
+
+        bbox = self.vdb_grid.evalActiveVoxelBoundingBox()
+
+        if bbox is None or bbox[0] == bbox[1]:
+            self.grid = np.zeros((0, 0, 0), dtype=dtype)
+            return
+
+        shape = tuple(np.array(bbox[1]) - np.array(bbox[0]) + 1)
+
+        self.grid = np.zeros(shape, dtype=dtype)
+        print(dtype)
+        self.vdb_grid.copyToArray(self.grid, ijk=bbox[0])
+
+        if not np.all(np.array(bbox[0]) == 0):
+            self.origin = np.array(
+                transformation.indexToWorld(np.array(bbox[0]).tolist())
+            )
+
     def _populate(self, grid, origin, delta):
         """Populate the field with grid data.
 
@@ -331,23 +404,8 @@ class OpenVDBField(object):
         TypeError
             If dtype is not supported or no suitable grid type is available
         """
-        datatypes = {
-            np.dtype("bool"): ["BoolGrid"],
-            np.dtype("int8"): ["Int32Grid", "FloatGrid"],
-            np.dtype("uint8"): ["Int32Grid", "FloatGrid"],
-            np.dtype("int16"): ["Int32Grid", "FloatGrid"],
-            np.dtype("uint16"): ["Int32Grid", "FloatGrid"],
-            np.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")],
-            np.dtype("uint32"): [DownCastTo("Int32Grid"), DownCastTo("FloatGrid")],
-            np.dtype("int64"): ["Int64Grid", DownCastTo("FloatGrid")],
-            np.dtype("uint64"): ["Int64Grid", DownCastTo("FloatGrid")],
-            np.dtype("float16"): ["HalfGrid", "FloatGrid"],
-            np.dtype("float32"): ["FloatGrid"],
-            np.dtype("float64"): ["DoubleGrid", DownCastTo("FloatGrid")],
-        }
-
         try:
-            vdb_gridtypes = datatypes[self.grid.dtype]
+            vdb_gridtypes = self._DATATYPES[self.grid.dtype]
         except KeyError:
             raise TypeError(f"Data type {self.grid.dtype} not supported for VDB")
 

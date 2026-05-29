@@ -392,6 +392,20 @@ class TestVDBWrite:
         world = native_grid.transform.indexToWorld((0, 0, 0))
         assert_allclose([world[0], world[1], world[2]], g.origin, rtol=1e-5)
 
+    def test_extract_from_vdb_grid(self, grid345):
+        data, g = grid345
+        g.metadata["name"] = "new_density"
+
+        native = g.convert_to("vdb")
+        new_vdb_grid = Grid(grid=native)
+
+        assert_allclose(new_vdb_grid.grid, g.grid, rtol=1e-5)
+        assert_allclose(new_vdb_grid.origin, g.origin, rtol=1e-5)
+        assert_allclose(new_vdb_grid.delta, g.delta, rtol=1e-5)
+        assert new_vdb_grid.metadata["name"] == "new_density"
+        assert new_vdb_grid.grid.dtype == np.dtype("float32")
+        assert_allclose(new_vdb_grid.grid, data, rtol=1e-5)
+
 
 @pytest.mark.skipif(
     not HAS_OPENVDB, reason="Need openvdb to test import error handling"
