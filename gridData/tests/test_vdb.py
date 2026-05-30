@@ -392,6 +392,25 @@ class TestVDBWrite:
         world = native_grid.transform.indexToWorld((0, 0, 0))
         assert_allclose([world[0], world[1], world[2]], g.origin, rtol=1e-5)
 
+    def test_file_roundtrip_native_vdbgrid(self, tmpdir, grid345):
+        data, g = grid345
+        g.metadata["name"] = "new_density"
+
+        outfile = str(tmpdir / "roundtrip.vdb")
+        g.export(outfile)
+
+        grids, _ = vdb.readAll(outfile)
+        assert len(grids) == 1
+
+        grid_vdb = grids[0]
+        new_vdb_grid = Grid(grid=grid_vdb)
+        assert_allclose(new_vdb_grid.grid, g.grid, rtol=1e-5)
+        assert_allclose(new_vdb_grid.origin, g.origin, rtol=1e-5)
+        assert_allclose(new_vdb_grid.delta, g.delta, rtol=1e-5)
+        assert new_vdb_grid.metadata["name"] == "new_density"
+        assert new_vdb_grid.grid.dtype == np.dtype("float32")
+        assert_allclose(new_vdb_grid.grid, data, rtol=1e-5)
+
     def test_extract_from_vdb_grid(self, grid345):
         data, g = grid345
         g.metadata["name"] = "new_density"
@@ -405,6 +424,50 @@ class TestVDBWrite:
         assert new_vdb_grid.metadata["name"] == "new_density"
         assert new_vdb_grid.grid.dtype == np.dtype("float32")
         assert_allclose(new_vdb_grid.grid, data, rtol=1e-5)
+
+    @pytest.mark.parametrize(
+        "vdb_type,np_dtype", list(gridData.OpenVDB.OpenVDBField._DTYPES_VDB2NP.items())
+    )
+    def test_extract_dtype_roundtrip(self, vdb_type, np_dtype):
+        vdb_cls = getattr(vdb, vdb_type, None)
+        if vdb_cls is None:
+            pytest.skip(f"{vdb_type} not available in this openvdb build")
+
+        native = vdb_cls()
+        native.name = "test"
+        acc = native.getAccessor()
+        acc.setValueOn((0, 0, 0), True if np_dtype == np.dtype("bool") else 1)
+        acc.setValueOn((1, 1, 1), True if np_dtype == np.dtype("bool") else 2)
+
+        field = gridData.OpenVDB.OpenVDBField(grid=native)
+
+        assert field.grid.dtype == np_dtype
+        assert field.grid.shape != (0, 0, 0)
+
+    def test_extract_unknown_vdb_type_warns(self):
+        native = vdb.FloatGrid()
+        acc = native.getAccessor()
+        acc.setValueOn((0, 0, 0), 1.0)
+
+        patched = {
+            k: v
+            for k, v in gridData.OpenVDB.OpenVDBField._DTYPES_VDB2NP.items()
+            if k != "FloatGrid"
+        }
+        with patch.object(gridData.OpenVDB.OpenVDBField, "_DTYPES_VDB2NP", patched):
+            with pytest.warns(RuntimeWarning, match="Unknown VDB grid type"):
+                field = gridData.OpenVDB.OpenVDBField(grid=native)
+
+        assert field.grid.dtype == np.dtype("float32")
+
+    def test_extract_empty_vdb_grid_warns(self):
+        native = vdb.FloatGrid()
+        native.clear()
+
+        with pytest.warns(RuntimeWarning, match="no active voxels"):
+            field = gridData.OpenVDB.OpenVDBField(grid=native)
+
+        assert field.grid.shape == (0, 0, 0)
 
 
 @pytest.mark.skipif(

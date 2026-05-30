@@ -155,8 +155,8 @@ class OpenVDBField(object):
       g.export('output.vdb', format='vdb')
     """
 
-    # dtype maps
-    _DATATYPES = {
+    # dtype maps for numpy to vdb
+    _DTYPES_NP2VDB = {
         np.dtype("bool"): ["BoolGrid"],
         np.dtype("int8"): ["Int32Grid", "FloatGrid"],
         np.dtype("uint8"): ["Int32Grid", "FloatGrid"],
@@ -169,6 +169,16 @@ class OpenVDBField(object):
         np.dtype("float16"): ["HalfGrid", "FloatGrid"],
         np.dtype("float32"): ["FloatGrid"],
         np.dtype("float64"): ["DoubleGrid", DownCastTo("FloatGrid")],
+    }
+
+    # dtype maps for vdb to numpy
+    _DTYPES_VDB2NP = {
+        "BoolGrid": np.dtype("bool"),
+        "Int32Grid": np.dtype("int32"),
+        "Int64Grid": np.dtype("int64"),
+        "FloatGrid": np.dtype("float32"),
+        "DoubleGrid": np.dtype("float64"),
+        "HalfGrid": np.dtype("float16"),
     }
 
     def __init__(
@@ -303,8 +313,11 @@ class OpenVDBField(object):
         for key in self.vdb_grid.metadata:
             try:
                 self.metadata[key] = self.vdb_grid[key]
-            except (TypeError, ValueError):
-                pass
+            except (TypeError, ValueError) as e:
+                warnings.warn(
+                    f"Could not read metadata key '{key}' from VDB grid: {e}",
+                    UserWarning,
+                )
 
         transformation = self.vdb_grid.transform
 
@@ -314,23 +327,21 @@ class OpenVDBField(object):
         self.origin = v_origin
         self.delta = v_delta
 
-        dtype = np.dtype("float32")
-        vdb_class_name = type(self.vdb_grid).__name__
-        for numpy_dtype, vdb_names in self._DATATYPES.items():
-            name_dtype = vdb_names[0]
-            canonical_name = (
-                name_dtype.gridType
-                if isinstance(name_dtype, DownCastTo)
-                else name_dtype
+        dtype = self._DTYPES_VDB2NP.get(type(self.vdb_grid).__name__)
+        if dtype is None:
+            warnings.warn(
+                f"Unknown VDB grid type '{type(self.vdb_grid).__name__}', defaulting to float32.",
+                RuntimeWarning,
             )
-
-            if vdb_class_name == canonical_name:
-                dtype = numpy_dtype
-                break
+            dtype = np.dtype("float32")
 
         bbox = self.vdb_grid.evalActiveVoxelBoundingBox()
 
-        if bbox is None or bbox[0] == bbox[1]:
+        if bbox is None or any(bbox[1][i] < bbox[0][i] for i in range(3)):
+            warnings.warn(
+                "VDB grid has no active voxels (empty bounding box). Returning an empty array of shape (0, 0, 0).",
+                RuntimeWarning,
+            )
             self.grid = np.zeros((0, 0, 0), dtype=dtype)
             return
 
@@ -405,7 +416,7 @@ class OpenVDBField(object):
             If dtype is not supported or no suitable grid type is available
         """
         try:
-            vdb_gridtypes = self._DATATYPES[self.grid.dtype]
+            vdb_gridtypes = self._DTYPES_NP2VDB[self.grid.dtype]
         except KeyError:
             raise TypeError(f"Data type {self.grid.dtype} not supported for VDB")
 
