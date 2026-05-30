@@ -469,6 +469,29 @@ class TestVDBWrite:
 
         assert field.grid.shape == (0, 0, 0)
 
+    def test_extract_unreadable_metadata_warns(self, grid345):
+        data, g = grid345
+        g.metadata["readable"] = "hello"
+        g.metadata["factor"] = 42
+
+        native = g.convert_to("vdb")
+
+        original_getitem = native.__class__.__getitem__
+
+        def patched_getitem(self, key):
+            if key == "factor":
+                raise TypeError("unsupported metadata type")
+            return original_getitem(self, key)
+
+        with patch.object(native.__class__, "__getitem__", patched_getitem):
+            with pytest.warns(
+                UserWarning, match="Could not read metadata key 'factor'"
+            ):
+                field = gridData.OpenVDB.OpenVDBField(grid=native)
+
+        assert field.metadata.get("readable") == "hello"
+        assert "factor" not in field.metadata
+
 
 @pytest.mark.skipif(
     not HAS_OPENVDB, reason="Need openvdb to test import error handling"
