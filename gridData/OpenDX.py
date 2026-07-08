@@ -229,12 +229,12 @@ del sys
 class DXclass(object):
     """'class' object as defined by OpenDX"""
 
-    def __init__(self, classid):
+    def __init__(self, classid, name=None, component=None):
         """id is the object number"""
         self.id = classid  # serial number of the object
-        self.name = None  # name of the DXclass
-        self.component = None  # component type
-        self.D = None  # dimensions
+        self.name = name  # name of the DXclass
+        self.component = component  # component type
+        self.D = 3  # dimensions
 
     def write(self, stream, optstring="", quote=False):
         """write the 'object' line; additional args are packed in string"""
@@ -279,12 +279,13 @@ class gridpositions(DXclass):
     def __init__(self, classid, shape=None, origin=None, delta=None, **kwargs):
         if shape is None or origin is None or delta is None:
             raise ValueError("all keyword arguments are required")
-        self.id = classid
-        self.name = "gridpositions"
-        self.component = "positions"
+        super().__init__(classid,
+                         name="gridpositions",
+                         component="positions")
         self.shape = numpy.asarray(shape)  # D dimensional shape
         self.origin = numpy.asarray(origin)  # D vector
         self.rank = len(self.shape)  # D === rank
+        assert self.rank == self.D, "DXClass is only used for 3D arrays"
 
         self.delta = numpy.asarray(delta)  # DxD array of grid spacings
         # gridDataFormats  actually provides a simple 1D array with the deltas because only
@@ -301,7 +302,7 @@ class gridpositions(DXclass):
             )
 
     def write(self, stream):
-        super(gridpositions, self).write(
+        super().write(
             stream, ("counts " + self.ndformat(" %d")) % tuple(self.shape)
         )
         self._write_line(stream, "origin %f %f %f\n" % tuple(self.origin))
@@ -329,9 +330,9 @@ class gridconnections(DXclass):
     def __init__(self, classid, shape=None, **kwargs):
         if shape is None:
             raise ValueError("all keyword arguments are required")
-        self.id = classid
-        self.name = "gridconnections"
-        self.component = "connections"
+        super().__init__(classid,
+                         name="gridconnections",
+                         component="connections")
         self.shape = numpy.asarray(shape)  # D dimensional shape
 
     def write(self, stream):
@@ -410,9 +411,9 @@ class array(DXclass):
         """
         if array is None:
             raise ValueError("array keyword argument is required")
-        self.id = classid
-        self.name = "array"
-        self.component = "data"
+        super().__init__(classid,
+                         name="array",
+                         component="data")
         # detect type https://github.com/MDAnalysis/GridDataFormats/issues/35
         if type is None:
             self.array = numpy.asarray(array)
@@ -464,7 +465,7 @@ class array(DXclass):
                 ).format(self.type, list(self.dx_types.keys()))
             )
         typelabel = self.typequote + self.type + self.typequote
-        super(array, self).write(
+        super().write(
             stream,
             "type {0} rank 0 items {1} data follows".format(typelabel, self.array.size),
         )
@@ -544,6 +545,10 @@ class field(DXclass):
            dx = OpenDX.field('density',[gridpoints,gridconnections,array])
 
         """
+        super().__init__(classid,  # can be an arbitrary string
+                         name="field",
+                         component=None,  # cannot be a component of a field
+                         )
         if components is None:
             components = dict(positions=None, connections=None, data=None)
         if comments is None:
@@ -553,9 +558,6 @@ class field(DXclass):
             ]
         elif type(comments) is not list:
             comments = [str(comments)]
-        self.id = classid  # can be an arbitrary string
-        self.name = "field"
-        self.component = None  # cannot be a component of a field
         self.components = components
         self.comments = comments
 
@@ -647,7 +649,7 @@ class field(DXclass):
             for component, object in self.sorted_components():
                 object.write(outfile)
             # the field object itself
-            super(field, self).write(outfile, quote=True)
+            super().write(outfile, quote=True)
             for component, object in self.sorted_components():
                 self._write_line(
                     outfile, 'component "%s" value %s\n' % (component, str(object.id))
