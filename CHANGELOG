@@ -13,6 +13,16 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 
 -------------------------------------------------------------------------------
+MM/DD/2026 orbeckst
+
+  * 1.3.0
+
+  Changes
+
+  * update init signature for OpenDX.DXClass to include name and components
+    as optional kwargs to streamline init in child classes (PR #179)
+        
+        
 05/22/2026 orbeckst, spyke7
 
   * 1.2.0
