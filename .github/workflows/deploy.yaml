@@ -25,7 +25,7 @@ jobs:
       version: ${{ steps.extract-version.outputs.version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -197,7 +197,7 @@ jobs:
           python-version: "3.14"
 
       - name: Checkout repository for actions
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Wait for version to be available on PyPI (30 seconds)
         run: sleep 30
