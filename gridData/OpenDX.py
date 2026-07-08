@@ -331,7 +331,7 @@ class gridconnections(DXclass):
         self.shape = numpy.asarray(shape)  # D dimensional shape
 
     def write(self, stream):
-        super(gridconnections, self).write(
+        super().write(
             stream, ("counts " + self.ndformat(" %d")) % tuple(self.shape)
         )
 
