@@ -202,6 +202,7 @@ The :class:`DXParser` class is used to parse the DX file and construct the :clas
    :members:
 
 """
+
 import numpy
 import re
 import gzip
@@ -279,9 +280,7 @@ class gridpositions(DXclass):
     def __init__(self, classid, shape=None, origin=None, delta=None, **kwargs):
         if shape is None or origin is None or delta is None:
             raise ValueError("all keyword arguments are required")
-        super().__init__(classid,
-                         name="gridpositions",
-                         component="positions")
+        super().__init__(classid, name="gridpositions", component="positions")
         self.shape = numpy.asarray(shape)  # D dimensional shape
         self.origin = numpy.asarray(origin)  # D vector
         self.rank = len(self.shape)  # D === rank
@@ -302,9 +301,7 @@ class gridpositions(DXclass):
             )
 
     def write(self, stream):
-        super().write(
-            stream, ("counts " + self.ndformat(" %d")) % tuple(self.shape)
-        )
+        super().write(stream, ("counts " + self.ndformat(" %d")) % tuple(self.shape))
         self._write_line(stream, "origin %f %f %f\n" % tuple(self.origin))
         for delta in self.delta:
             self._write_line(
@@ -330,9 +327,7 @@ class gridconnections(DXclass):
     def __init__(self, classid, shape=None, **kwargs):
         if shape is None:
             raise ValueError("all keyword arguments are required")
-        super().__init__(classid,
-                         name="gridconnections",
-                         component="connections")
+        super().__init__(classid, name="gridconnections", component="connections")
         self.shape = numpy.asarray(shape)  # D dimensional shape
 
     def write(self, stream):
@@ -411,9 +406,7 @@ class array(DXclass):
         """
         if array is None:
             raise ValueError("array keyword argument is required")
-        super().__init__(classid,
-                         name="array",
-                         component="data")
+        super().__init__(classid, name="array", component="data")
         # detect type https://github.com/MDAnalysis/GridDataFormats/issues/35
         if type is None:
             self.array = numpy.asarray(array)
@@ -545,10 +538,11 @@ class field(DXclass):
            dx = OpenDX.field('density',[gridpoints,gridconnections,array])
 
         """
-        super().__init__(classid,  # can be an arbitrary string
-                         name="field",
-                         component=None,  # cannot be a component of a field
-                         )
+        super().__init__(
+            classid,  # can be an arbitrary string
+            name="field",
+            component=None,  # cannot be a component of a field
+        )
         if components is None:
             components = dict(positions=None, connections=None, data=None)
         if comments is None:
@@ -586,8 +580,8 @@ class field(DXclass):
         -------
         field
             OpenDX field wrapper
-            
-            
+
+
         .. versionadded:: 1.2.0
         """
         comments = [
@@ -614,10 +608,10 @@ class field(DXclass):
     @property
     def native(self):
         """Return native object
-        
+
         The "native" object is the :class:`gridData.OpenDX.field` itself.
-            
-        
+
+
         .. versionadded:: 1.2.0
         """
         return self
@@ -685,9 +679,11 @@ class field(DXclass):
         except (UnicodeDecodeError, RecursionError) as err:
             # parser got confused, likely not a valid file
             # (RecursionError was only observed on Windows)
-            raise ValueError("DX file could not be read. "
-                             "The original error was\n"
-                             f"   {err.__class__.__name__}: {err}")
+            raise ValueError(
+                "DX file could not be read. "
+                "The original error was\n"
+                f"   {err.__class__.__name__}: {err}"
+            )
 
     def add(self, component, DXobj):
         """add a component to the field"""
