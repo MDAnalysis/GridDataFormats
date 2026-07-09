@@ -455,10 +455,8 @@ class TestVDBWrite:
             if k != "FloatGrid"
         }
         with patch.object(gridData.OpenVDB.OpenVDBField, "_DTYPES_VDB2NP", patched):
-            with pytest.warns(RuntimeWarning, match="Unknown VDB grid type"):
+            with pytest.raises(TypeError, match="Unknown VDB grid type"):
                 field = gridData.OpenVDB.OpenVDBField(grid=native)
-
-        assert field.grid.dtype == np.dtype("float32")
 
     def test_extract_empty_vdb_grid_warns(self):
         native = vdb.FloatGrid()

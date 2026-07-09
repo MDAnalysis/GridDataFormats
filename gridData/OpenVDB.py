@@ -327,13 +327,12 @@ class OpenVDBField(object):
         self.origin = v_origin
         self.delta = v_delta
 
-        dtype = self._DTYPES_VDB2NP.get(type(self.vdb_grid).__name__)
-        if dtype is None:
-            warnings.warn(
-                f"Unknown VDB grid type '{type(self.vdb_grid).__name__}', defaulting to float32.",
-                RuntimeWarning,
+        try:
+            dtype = self._DTYPES_VDB2NP[type(self.vdb_grid).__name__]
+        except KeyError:
+            raise TypeError(
+                f"Unknown VDB grid type '{type(self.vdb_grid).__name__}', cannot map to a numpy dtype."
             )
-            dtype = np.dtype("float32")
 
         bbox = self.vdb_grid.evalActiveVoxelBoundingBox()
 
