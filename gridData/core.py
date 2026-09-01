@@ -249,6 +249,21 @@ class Grid(object):
         self.interpolation_cval = None  # default to using min(grid)
 
         if grid is not None:
+            try:
+                # if a openvdb native grid is passed
+                import openvdb as vdb
+                if isinstance(grid, vdb.GridBase):
+                    vdb_field = OpenVDB.OpenVDBField(grid=grid)
+                    self.metadata = vdb_field.metadata
+                    self._load(
+                        grid=vdb_field.grid,
+                        origin=vdb_field.origin,
+                        delta=vdb_field.delta,
+                        metadata=vdb_field.metadata,
+                    )
+                    return
+            except ImportError:
+                pass
             if isinstance(grid, str):
                 # can probably safely try to load() it...
                 filename = grid
