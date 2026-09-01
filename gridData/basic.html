@@ -22,20 +22,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basic use &mdash; GridDataFormats 1.2.0+9.g8a8f174 documentation</title>
+  <title>Basic use &mdash; GridDataFormats 1.2.0+10.gab29b50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/site.css" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=54aec79d"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/documentation_options.js?v=4fc51a12"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/js/versions.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.2.0+9.g8a8f174 documentation"
+          title="Search within GridDataFormats 1.2.0+10.gab29b50 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -134,14 +134,14 @@
 <section id="loading-data">
 <h2>Loading data<a class="headerlink" href="#loading-data" title="Link to this heading"></a></h2>
 <p>From a OpenDX file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">&quot;density.dx&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">"density.dx"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>(See also <a class="reference internal" href="formats/OpenDX.html#opendx-read-write"><span class="std std-ref">Reading and writing OpenDX files</span></a> for more information, especially
 when working with visualization programs such as PyMOL, VMD, or
 Chimera.)</p>
 <p>From a gOpenMol PLT file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">&quot;density.plt&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">"density.plt"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>From the output of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogramdd.html#numpy.histogramdd" title="(in NumPy v2.5)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogramdd()</span></code></a>:</p>
@@ -158,11 +158,11 @@ Chimera.)</p>
 <p>Some formats support writing data (see
 <a class="reference internal" href="formats.html#supported-file-formats"><span class="std std-ref">Supported file formats</span></a> for more details), using the
 <a class="reference internal" href="core.html#gridData.core.Grid.export" title="gridData.core.Grid.export"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gridData.core.Grid.export()</span></code></a> method:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">&quot;density.dx&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">"density.dx"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The format can also be specified explicitly:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">&quot;density.pkl&quot;</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">&quot;pickle&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">"density.pkl"</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s2">"pickle"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Some of the exporters (such as for OpenDX, see
@@ -174,8 +174,8 @@ keywords, which are documented separately.</p>
 <p>Assuming one has two densities that were generated on the same grid
 positions, stored in files <code class="docutils literal notranslate"><span class="pre">A.dx</span></code> and <code class="docutils literal notranslate"><span class="pre">B.dx</span></code>, one first reads the
 data into two <a class="reference internal" href="core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> objects:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">&#39;A.dx&#39;</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">&#39;B.dx&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">'A.dx'</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">'B.dx'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Subtract A from B:</p>
@@ -183,7 +183,7 @@ data into two <a class="reference internal" href="core.html#gridData.core.Grid" 
 </pre></div>
 </div>
 <p>and write out as a dx file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;C.dx&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">'C.dx'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The resulting file <code class="docutils literal notranslate"><span class="pre">C.dx</span></code> can be visualized with any OpenDX-capable
@@ -192,7 +192,7 @@ viewer, or later read-in again.</p>
 <section id="resampling">
 <h2>Resampling<a class="headerlink" href="#resampling" title="Link to this heading"></a></h2>
 <p>Load data:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">&#39;A.dx&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">'A.dx'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Interpolate with a cubic spline to twice the sample density:</p>
@@ -204,7 +204,7 @@ viewer, or later read-in again.</p>
 </pre></div>
 </div>
 <p>Resample to the grid of another density, B:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">&#39;B.dx&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s1">'B.dx'</span><span class="p">)</span>
 <span class="n">A_on_B</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -261,7 +261,7 @@ abruptly.</p>
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.2.0+9.g8a8f174
+        1.2.0+10.gab29b50
       <span class="fa fa-caret-down"></span>
     </span>
 

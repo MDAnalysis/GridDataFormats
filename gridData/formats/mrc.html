@@ -22,20 +22,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mrc — the MRC/CCP4 volumetric data format &mdash; GridDataFormats 1.2.0+9.g8a8f174 documentation</title>
+  <title>mrc — the MRC/CCP4 volumetric data format &mdash; GridDataFormats 1.2.0+10.gab29b50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=54aec79d"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/documentation_options.js?v=4fc51a12"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.2.0+9.g8a8f174 documentation"
+          title="Search within GridDataFormats 1.2.0+10.gab29b50 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -154,7 +154,7 @@ Cryst.</em> D73:469-477. doi: <a class="reference external" href="https://doi.or
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.mrc.MRC">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.mrc.</span></span><span class="sig-name descname"><span class="pre">MRC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_volumetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gridData.mrc.</span></span><span class="sig-name descname"><span class="pre">MRC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_volumetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC" title="Link to this definition"></a></dt>
 <dd><p>Represent a MRC/CCP4 file.</p>
 <p>Load <a class="reference external" href="MRC2014fileformat">MRC/CCP4 2014</a> 3D volumetric data with
 the <a class="reference external" href="https://mrcfile.readthedocs.io/">mrcfile</a> library.</p>
@@ -247,14 +247,14 @@ regardless of the order in the mrc file.</p>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.mrc.MRC.edges">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.mrc.MRC.edges" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#gridData.mrc.MRC.edges" title="Link to this definition"></a></dt>
 <dd><p>Edges of the grid cells, origin at centre of 0,0,0 grid cell.</p>
 <p>Only works for regular, orthonormal grids.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gridData.mrc.MRC.from_grid">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC.from_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC.from_grid" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/mrc.html#MRC.from_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.mrc.MRC.from_grid" title="Link to this definition"></a></dt>
 <dd><p>Create MRC object from a Grid.</p>
 <p>If the Grid was originally created from an mrcfile (and thus has
 the <code class="docutils literal notranslate"><span class="pre">Grid._mrc_header</span></code> attribute), the MRC header will be copied
@@ -286,7 +286,7 @@ into the returned MRC instance.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.mrc.MRC.native">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">native</span></span><a class="headerlink" href="#gridData.mrc.MRC.native" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">native</span></span><a class="headerlink" href="#gridData.mrc.MRC.native" title="Link to this definition"></a></dt>
 <dd><p>Return a native <a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcinterpreter.MrcInterpreter" title="(in mrcfile v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MrcInterpreter</span></code></a> object.</p>
 <p>The object is <a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcobject.MrcObject" title="(in mrcfile v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MrcObject</span></code></a> that is connected
 to a stream. It is implemented as a managed property and regenerated
@@ -299,7 +299,7 @@ it to a variable:</p>
 <code class="xref py py-class docutils literal notranslate"><span class="pre">_iostream</span></code> attribute and
 call the <a class="reference external" href="https://mrcfile.readthedocs.io/en/stable/source/mrcfile.html#mrcfile.mrcinterpreter.MrcInterpreter.flush" title="(in mrcfile v1.5.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a> method:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrc</span> <span class="o">=</span> <span class="n">gdfMRC</span><span class="o">.</span><span class="n">native</span>   <span class="c1"># important: assign to variable mrc!</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;new.mrc&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"new.mrc"</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
    <span class="n">mrc</span><span class="o">.</span><span class="n">_iostream</span> <span class="o">=</span> <span class="n">f</span>
    <span class="n">mrc</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </pre></div>
@@ -329,7 +329,7 @@ call the <a class="reference external" href="https://mrcfile.readthedocs.io/en/s
 
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.mrc.MRC.shape">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#gridData.mrc.MRC.shape" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#gridData.mrc.MRC.shape" title="Link to this definition"></a></dt>
 <dd><p>Shape of the <a class="reference internal" href="#gridData.mrc.MRC.array" title="gridData.mrc.MRC.array"><code class="xref py py-attr docutils literal notranslate"><span class="pre">array</span></code></a></p>
 </dd></dl>
 
@@ -397,7 +397,7 @@ reading, gzip and bzip2-compressed files are supported.)</p>
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.2.0+9.g8a8f174
+        1.2.0+10.gab29b50
       <span class="fa fa-caret-down"></span>
     </span>
 

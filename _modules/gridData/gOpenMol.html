@@ -21,20 +21,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.gOpenMol &mdash; GridDataFormats 1.2.0+9.g8a8f174 documentation</title>
+  <title>gridData.gOpenMol &mdash; GridDataFormats 1.2.0+10.gab29b50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=54aec79d"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/documentation_options.js?v=4fc51a12"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.2.0+9.g8a8f174 documentation"
+          title="Search within GridDataFormats 1.2.0+10.gab29b50 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -122,7 +122,7 @@
 <span class="c1">#</span>
 <span class="c1"># Part of the documentation and format specification: Copyright CSC, 2005</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">:mod:`gOpenMol` --- the gOpenMol plt format</span>
 <span class="sd">===========================================</span>
 
@@ -247,7 +247,7 @@
 <span class="sd">.. autoclass:: Plt</span>
 <span class="sd">   :members:</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
@@ -256,7 +256,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">bintype</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bintype</span> <span class="o">=</span> <span class="n">bintype</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">values</span>  <span class="c1"># dict(value=&#39;comment&#39;, ...)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">values</span>  <span class="c1"># dict(value='comment', ...)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_legal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -264,12 +264,12 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">is_legal_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_legal</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">])</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;Record(</span><span class="si">%(key)r</span><span class="s2">,</span><span class="si">%(bintype)r</span><span class="s2">,...)&quot;</span> <span class="o">%</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"Record(</span><span class="si">%(key)r</span><span class="s2">,</span><span class="si">%(bintype)r</span><span class="s2">,...)"</span> <span class="o">%</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Plt">
 <a class="viewcode-back" href="../../gridData/formats/gOpenMol.html#gridData.gOpenMol.Plt">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Plt</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to represent a gOpenMol_ plt file.</span>
+<span class="w">    </span><span class="sd">"""A class to represent a gOpenMol_ plt file.</span>
 
 <span class="sd">    Only reading is implemented; either supply a filename to the constructor</span>
 <span class="sd">      &gt;&gt;&gt; G = Plt(filename)</span>
@@ -287,39 +287,39 @@
 <span class="sd">    :attr:`Plt.delta`</span>
 <span class="sd">         DxD array describing the deltas</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">_header_struct</span> <span class="o">=</span>  <span class="p">(</span><span class="n">Record</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">,</span>   <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span><span class="s1">&#39;dimension&#39;</span><span class="p">}),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;surface&#39;</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;VSS surface&#39;</span><span class="p">,</span>
-                                              <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Orbital/density surface&#39;</span><span class="p">,</span>
-                                              <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Probe surface&#39;</span><span class="p">,</span>
-                                              <span class="mi">42</span><span class="p">:</span> <span class="s1">&#39;gridcount&#39;</span><span class="p">,</span>
-                                              <span class="mi">100</span><span class="p">:</span> <span class="s1">&#39;OpenMol&#39;</span><span class="p">,</span>
-                                              <span class="mi">200</span><span class="p">:</span> <span class="s1">&#39;Gaussian 94/98&#39;</span><span class="p">,</span>
-                                              <span class="mi">201</span><span class="p">:</span> <span class="s1">&#39;Jaguar&#39;</span><span class="p">,</span>
-                                              <span class="mi">202</span><span class="p">:</span> <span class="s1">&#39;Gamess&#39;</span><span class="p">,</span>
-                                              <span class="mi">203</span><span class="p">:</span> <span class="s1">&#39;AutoDock&#39;</span><span class="p">,</span>
-                                              <span class="mi">204</span><span class="p">:</span> <span class="s1">&#39;Delphi/Insight&#39;</span><span class="p">,</span>
-                                              <span class="mi">205</span><span class="p">:</span> <span class="s1">&#39;Grid&#39;</span><span class="p">,</span>
+    <span class="n">_header_struct</span> <span class="o">=</span>  <span class="p">(</span><span class="n">Record</span><span class="p">(</span><span class="s1">'rank'</span><span class="p">,</span>   <span class="s1">'I'</span><span class="p">,</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span><span class="s1">'dimension'</span><span class="p">}),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'surface'</span><span class="p">,</span><span class="s1">'I'</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">'VSS surface'</span><span class="p">,</span>
+                                              <span class="mi">2</span><span class="p">:</span> <span class="s1">'Orbital/density surface'</span><span class="p">,</span>
+                                              <span class="mi">3</span><span class="p">:</span> <span class="s1">'Probe surface'</span><span class="p">,</span>
+                                              <span class="mi">42</span><span class="p">:</span> <span class="s1">'gridcount'</span><span class="p">,</span>
+                                              <span class="mi">100</span><span class="p">:</span> <span class="s1">'OpenMol'</span><span class="p">,</span>
+                                              <span class="mi">200</span><span class="p">:</span> <span class="s1">'Gaussian 94/98'</span><span class="p">,</span>
+                                              <span class="mi">201</span><span class="p">:</span> <span class="s1">'Jaguar'</span><span class="p">,</span>
+                                              <span class="mi">202</span><span class="p">:</span> <span class="s1">'Gamess'</span><span class="p">,</span>
+                                              <span class="mi">203</span><span class="p">:</span> <span class="s1">'AutoDock'</span><span class="p">,</span>
+                                              <span class="mi">204</span><span class="p">:</span> <span class="s1">'Delphi/Insight'</span><span class="p">,</span>
+                                              <span class="mi">205</span><span class="p">:</span> <span class="s1">'Grid'</span><span class="p">,</span>
                                               <span class="p">}),</span>     <span class="c1"># update in init with all user defined values</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nz&#39;</span><span class="p">,</span>     <span class="s1">&#39;I&#39;</span><span class="p">),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;ny&#39;</span><span class="p">,</span>     <span class="s1">&#39;I&#39;</span><span class="p">),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;nx&#39;</span><span class="p">,</span>     <span class="s1">&#39;I&#39;</span><span class="p">),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;zmin&#39;</span><span class="p">,</span>   <span class="s1">&#39;f&#39;</span><span class="p">),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;zmax&#39;</span><span class="p">,</span>   <span class="s1">&#39;f&#39;</span><span class="p">),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;ymin&#39;</span><span class="p">,</span>   <span class="s1">&#39;f&#39;</span><span class="p">),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;ymax&#39;</span><span class="p">,</span>   <span class="s1">&#39;f&#39;</span><span class="p">),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;xmin&#39;</span><span class="p">,</span>   <span class="s1">&#39;f&#39;</span><span class="p">),</span>
-                       <span class="n">Record</span><span class="p">(</span><span class="s1">&#39;xmax&#39;</span><span class="p">,</span>   <span class="s1">&#39;f&#39;</span><span class="p">))</span>
-    <span class="n">_data_bintype</span> <span class="o">=</span> <span class="s1">&#39;f&#39;</span>   <span class="c1">#  write(&amp;value,sizeof(float),1L,output);</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'nz'</span><span class="p">,</span>     <span class="s1">'I'</span><span class="p">),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'ny'</span><span class="p">,</span>     <span class="s1">'I'</span><span class="p">),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'nx'</span><span class="p">,</span>     <span class="s1">'I'</span><span class="p">),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'zmin'</span><span class="p">,</span>   <span class="s1">'f'</span><span class="p">),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'zmax'</span><span class="p">,</span>   <span class="s1">'f'</span><span class="p">),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'ymin'</span><span class="p">,</span>   <span class="s1">'f'</span><span class="p">),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'ymax'</span><span class="p">,</span>   <span class="s1">'f'</span><span class="p">),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'xmin'</span><span class="p">,</span>   <span class="s1">'f'</span><span class="p">),</span>
+                       <span class="n">Record</span><span class="p">(</span><span class="s1">'xmax'</span><span class="p">,</span>   <span class="s1">'f'</span><span class="p">))</span>
+    <span class="n">_data_bintype</span> <span class="o">=</span> <span class="s1">'f'</span>   <span class="c1">#  write(&amp;value,sizeof(float),1L,output);</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="c1"># fix header_struct because I cannot do {...}.update()</span>
-        <span class="n">rec_surf</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;surface&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">rec_surf</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="s1">&#39;user-defined&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">51</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="mi">42</span><span class="p">))</span>
+        <span class="n">rec_surf</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="s1">'surface'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">rec_surf</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="s1">'user-defined'</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">51</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="mi">42</span><span class="p">))</span>
         <span class="c1"># assemble format</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">bintype</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">bintype</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -327,26 +327,26 @@
 <div class="viewcode-block" id="Plt.read">
 <a class="viewcode-back" href="../../gridData/formats/gOpenMol.html#gridData.gOpenMol.Plt.read">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Populate the instance from the plt file *filename*.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Populate the instance from the plt file *filename*."""</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">struct</span><span class="w"> </span><span class="kn">import</span> <span class="n">calcsize</span><span class="p">,</span> <span class="n">unpack</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">plt</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">plt</span><span class="p">:</span>
                 <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_header</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
-                <span class="n">nentries</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;nz&#39;</span><span class="p">]</span>
+                <span class="n">nentries</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">'nx'</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">[</span><span class="s1">'ny'</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">[</span><span class="s1">'nz'</span><span class="p">]</span>
                 <span class="c1"># quick and dirty... slurp it all in one go</span>
-                <span class="n">datafmt</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;bsaflag&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nentries</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_bintype</span>
+                <span class="n">datafmt</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">'bsaflag'</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nentries</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_bintype</span>
                 <span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unpack</span><span class="p">(</span><span class="n">datafmt</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">calcsize</span><span class="p">(</span><span class="n">datafmt</span><span class="p">))))</span>
         <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;gOpenMol PLT file </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> could not be read. &quot;</span>
-                             <span class="s2">&quot;The original error was</span><span class="se">\n</span><span class="s2">&quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">err</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;nz&#39;</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>  <span class="c1"># unpack plt in reverse!!</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"gOpenMol PLT file </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> could not be read. "</span>
+                             <span class="s2">"The original error was</span><span class="se">\n</span><span class="s2">"</span>
+                             <span class="sa">f</span><span class="s2">"   </span><span class="si">{</span><span class="n">err</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'filename'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="s1">'nz'</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">'ny'</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">'nx'</span><span class="p">])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>  <span class="c1"># unpack plt in reverse!!</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delta</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;xmin&#39;</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;ymin&#39;</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;zmin&#39;</span><span class="p">]])</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="s1">'xmin'</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">'ymin'</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="s1">'zmin'</span><span class="p">]])</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">'rank'</span><span class="p">]</span></div>
 
 
     <span class="nd">@property</span>
@@ -355,46 +355,46 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
+<span class="w">        </span><span class="sd">"""Edges of the grid cells, origin at centre of 0,0,..,0 grid cell.</span>
 
 <span class="sd">        Only works for regular, orthonormal grids.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">]</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>\
                 <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">]</span>     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_delta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>
-        <span class="n">qmin</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;xmin&#39;</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;ymin&#39;</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;zmin&#39;</span><span class="p">]])</span>
-        <span class="n">qmax</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;xmax&#39;</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;ymax&#39;</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;zmax&#39;</span><span class="p">]])</span>
+        <span class="n">qmin</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="s1">'xmin'</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s1">'ymin'</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s1">'zmin'</span><span class="p">]])</span>
+        <span class="n">qmax</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="s1">'xmax'</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s1">'ymax'</span><span class="p">],</span><span class="n">h</span><span class="p">[</span><span class="s1">'zmax'</span><span class="p">]])</span>
         <span class="n">delta</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">qmax</span> <span class="o">-</span> <span class="n">qmin</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
         <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_read_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pltfile</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read header bytes, try all possibilities for byte order/size/alignment.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Read header bytes, try all possibilities for byte order/size/alignment."""</span>
         <span class="n">nheader</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span><span class="p">)</span>
         <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">key</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">]</span>
         <span class="n">binheader</span> <span class="o">=</span> <span class="n">pltfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nheader</span><span class="p">)</span>
-        <span class="k">def</span><span class="w"> </span><span class="nf">decode_header</span><span class="p">(</span><span class="n">bsaflag</span><span class="o">=</span><span class="s1">&#39;@&#39;</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">decode_header</span><span class="p">(</span><span class="n">bsaflag</span><span class="o">=</span><span class="s1">'@'</span><span class="p">):</span>
             <span class="n">h</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">bsaflag</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_headerfmt</span><span class="p">,</span> <span class="n">binheader</span><span class="p">)))</span>
-            <span class="n">h</span><span class="p">[</span><span class="s1">&#39;bsaflag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bsaflag</span>
+            <span class="n">h</span><span class="p">[</span><span class="s1">'bsaflag'</span><span class="p">]</span> <span class="o">=</span> <span class="n">bsaflag</span>
             <span class="k">return</span> <span class="n">h</span>
-        <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="s1">&#39;@=&lt;&gt;&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="s1">'@=&lt;&gt;'</span><span class="p">:</span>
             <span class="c1"># try all endinaness and alignment options until we find something that looks sensible</span>
             <span class="n">header</span> <span class="o">=</span> <span class="n">decode_header</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="s1">'rank'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="k">break</span>   <span class="c1"># only legal value according to spec</span>
             <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">header</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Cannot decode header --- corrupted or wrong format?&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Cannot decode header --- corrupted or wrong format?"</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_struct</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">rec</span><span class="o">.</span><span class="n">is_legal_dict</span><span class="p">(</span><span class="n">header</span><span class="p">):</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Key </span><span class="si">%s</span><span class="s2">: Illegal value </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">header</span><span class="p">[</span><span class="n">rec</span><span class="o">.</span><span class="n">key</span><span class="p">]))</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">"Key </span><span class="si">%s</span><span class="s2">: Illegal value </span><span class="si">%r</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">header</span><span class="p">[</span><span class="n">rec</span><span class="o">.</span><span class="n">key</span><span class="p">]))</span>
         <span class="k">return</span> <span class="n">header</span>
 
 <div class="viewcode-block" id="Plt.histogramdd">
 <a class="viewcode-back" href="../../gridData/formats/gOpenMol.html#gridData.gOpenMol.Plt.histogramdd">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">histogramdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return array data as (edges,grid), i.e. a numpy nD histogram.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return array data as (edges,grid), i.e. a numpy nD histogram."""</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span></div>
 </div>
 
@@ -434,7 +434,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.2.0+9.g8a8f174
+        1.2.0+10.gab29b50
       <span class="fa fa-caret-down"></span>
     </span>
 

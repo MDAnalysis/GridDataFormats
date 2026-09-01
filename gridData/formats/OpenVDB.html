@@ -22,20 +22,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenVDB — routines to write OpenVDB files &mdash; GridDataFormats 1.2.0+9.g8a8f174 documentation</title>
+  <title>OpenVDB — routines to write OpenVDB files &mdash; GridDataFormats 1.2.0+10.gab29b50 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=54aec79d"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/documentation_options.js?v=4fc51a12"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.2.0+9.g8a8f174 documentation"
+          title="Search within GridDataFormats 1.2.0+10.gab29b50 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -163,8 +163,8 @@ volumetric data. It is the native format for Blender’s volume system.</p>
 <p>If you have a <a class="reference internal" href="../core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> object, you can write it to
 OpenVDB format:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gridData</span><span class="w"> </span><span class="kn">import</span> <span class="n">Grid</span>
-<span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">&quot;data.dx&quot;</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">&quot;data.vdb&quot;</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">"data.dx"</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">"data.vdb"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This will create a file that can be imported directly into Blender
@@ -193,14 +193,14 @@ for custom workflows or when integrating with other libraries.</p>
 <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
 
 <span class="n">vdb_field</span> <span class="o">=</span> <span class="n">OpenVDBField</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="n">delta</span><span class="p">)</span>
-<span class="n">vdb_field</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;output.vdb&quot;</span><span class="p">)</span>
+<span class="n">vdb_field</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"output.vdb"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Alternatively, you can also create a <a class="reference internal" href="../core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> from the array and
 then use the <a class="reference internal" href="../core.html#gridData.core.Grid.convert_to" title="gridData.core.Grid.convert_to"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Grid.convert_to</span></code></a> method to directly
 get a <a class="reference internal" href="#gridData.OpenVDB.OpenVDBField" title="gridData.OpenVDB.OpenVDBField"><code class="xref py py-class docutils literal notranslate"><span class="pre">gridData.OpenVDB.OpenVDBField</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="n">delta</span><span class="p">)</span>
-<span class="n">vdb_field</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="s2">&quot;VDB&quot;</span><span class="p">)</span>
+<span class="n">vdb_field</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="s2">"VDB"</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -216,8 +216,8 @@ get a <a class="reference internal" href="#gridData.OpenVDB.OpenVDBField" title=
 <p>If you need the native <code class="xref py py-class docutils literal notranslate"><span class="pre">openvdb.GridBase</span></code> grid object (e.g., a <code class="xref py py-class docutils literal notranslate"><span class="pre">openvdb.FloatGrid</span></code>) then
 you can use the <a class="reference internal" href="#gridData.OpenVDB.OpenVDBField.native" title="gridData.OpenVDB.OpenVDBField.native"><code class="xref py py-attr docutils literal notranslate"><span class="pre">OpenVDBField.native</span></code></a> attribute that gives direct access to this
 object:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">&quot;data.dx&quot;</span><span class="p">)</span>
-<span class="n">vdb_field</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="s2">&quot;VDB&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="s2">"data.dx"</span><span class="p">)</span>
+<span class="n">vdb_field</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="s2">"VDB"</span><span class="p">)</span>
 <span class="n">vdb_grid</span> <span class="o">=</span> <span class="n">vdb_field</span><span class="o">.</span><span class="n">native</span>
 </pre></div>
 </div>
@@ -229,7 +229,7 @@ object:</p>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.OpenVDB.DownCastTo">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.OpenVDB.</span></span><span class="sig-name descname"><span class="pre">DownCastTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gridType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenVDB.html#DownCastTo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenVDB.DownCastTo" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gridData.OpenVDB.</span></span><span class="sig-name descname"><span class="pre">DownCastTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gridType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenVDB.html#DownCastTo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenVDB.DownCastTo" title="Link to this definition"></a></dt>
 <dd><p><a class="reference external" href="https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dataclass()</span></code></a> decorator serving as a marker for a downcast.</p>
 <p>This function is used to create a proxy for an OpenVDB grid type.
 The field <a class="reference internal" href="#gridData.OpenVDB.DownCastTo.gridType" title="gridData.OpenVDB.DownCastTo.gridType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gridType</span></code></a> contains the OpenVDB grid type that it represents.
@@ -237,7 +237,7 @@ The field <a class="reference internal" href="#gridData.OpenVDB.DownCastTo.gridT
 the numpy dtype of the data but in some cases, only target OpenVDB grid types are
 available that loose precision. In this case, this class wraps the orginal OpenVDB
 class to indicate that the downcast. For example,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;int32&quot;</span><span class="p">):</span> <span class="p">[</span><span class="s2">&quot;Int32Grid&quot;</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">&quot;FloatGrid&quot;</span><span class="p">)]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int32"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)]</span>
 </pre></div>
 </div>
 <p>indicates that NumPy int32 data should be represented by a <code class="xref py py-class docutils literal notranslate"><span class="pre">openvdb.Int32Grid</span></code>
@@ -245,14 +245,14 @@ but if this is not available, a <code class="xref py py-class docutils literal n
 which, however, is only able to represent a subset of all 32-bit integers.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gridData.OpenVDB.DownCastTo.gridType">
-<span class="sig-name descname"><span class="pre">gridType</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#gridData.OpenVDB.DownCastTo.gridType" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">gridType</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#gridData.OpenVDB.DownCastTo.gridType" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.OpenVDB.OpenVDBField">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gridData.OpenVDB.</span></span><span class="sig-name descname"><span class="pre">OpenVDBField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'density'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenVDB.html#OpenVDBField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenVDB.OpenVDBField" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gridData.OpenVDB.</span></span><span class="sig-name descname"><span class="pre">OpenVDBField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'density'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenVDB.html#OpenVDBField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenVDB.OpenVDBField" title="Link to this definition"></a></dt>
 <dd><p>OpenVDB field object for writing volumetric data.</p>
 <p>This class provides a simple interface to write 3D grid data to
 OpenVDB format, which can be imported into Blender and other
@@ -266,13 +266,13 @@ to a .vdb file.</p>
 <span class="n">vdb_field</span> <span class="o">=</span> <span class="n">OpenVDB</span><span class="o">.</span><span class="n">OpenVDBField</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)),</span>
                                  <span class="n">origin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
                                  <span class="n">delta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]),</span>
-                                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
-<span class="n">vdb_field</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;output.vdb&#39;</span><span class="p">)</span>
+                                 <span class="n">name</span><span class="o">=</span><span class="s1">'density'</span><span class="p">)</span>
+<span class="n">vdb_field</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'output.vdb'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Or use directly from <a class="reference internal" href="../core.html#gridData.core.Grid" title="gridData.core.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;output.vdb&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;vdb&#39;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">'output.vdb'</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">'vdb'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Initialize an OpenVDB field.</p>
@@ -301,7 +301,7 @@ default <code class="docutils literal notranslate"><span class="pre">None</span>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="gridData.OpenVDB.OpenVDBField.from_grid">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenVDB.html#OpenVDBField.from_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenVDB.OpenVDBField.from_grid" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenVDB.html#OpenVDBField.from_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenVDB.OpenVDBField.from_grid" title="Link to this definition"></a></dt>
 <dd><p>Create OpenVDB field from Grid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -328,7 +328,7 @@ Default None means no tolerance-based pruning for non-boolean grids.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="gridData.OpenVDB.OpenVDBField.native">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">native</span></span><a class="headerlink" href="#gridData.OpenVDB.OpenVDBField.native" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">native</span></span><a class="headerlink" href="#gridData.OpenVDB.OpenVDBField.native" title="Link to this definition"></a></dt>
 <dd><p>Return the native openvdb grid object.</p>
 <p>The “native” object is the underlying <code class="xref py py-class docutils literal notranslate"><span class="pre">openvdb.GridBase</span></code>
 object (e.g., FloatGrid, DoubleGrid) from the openvdb library.</p>
@@ -397,7 +397,7 @@ object (e.g., FloatGrid, DoubleGrid) from the openvdb library.</p>
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.2.0+9.g8a8f174
+        1.2.0+10.gab29b50
       <span class="fa fa-caret-down"></span>
     </span>
 
