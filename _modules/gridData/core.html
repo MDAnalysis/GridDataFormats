@@ -21,20 +21,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.core &mdash; GridDataFormats 1.2.0+10.gab29b50 documentation</title>
+  <title>gridData.core &mdash; GridDataFormats 1.2.0+11.g4acc4c3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=4fc51a12"></script>
+      <script src="../../_static/documentation_options.js?v=937b3e6a"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.2.0+10.gab29b50 documentation"
+          title="Search within GridDataFormats 1.2.0+11.g4acc4c3 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -369,6 +369,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">interpolation_cval</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># default to using min(grid)</span>
 
         <span class="k">if</span> <span class="n">grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># if a openvdb native grid is passed</span>
+                <span class="kn">import</span><span class="w"> </span><span class="nn">openvdb</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">vdb</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">vdb</span><span class="o">.</span><span class="n">GridBase</span><span class="p">):</span>
+                    <span class="n">vdb_field</span> <span class="o">=</span> <span class="n">OpenVDB</span><span class="o">.</span><span class="n">OpenVDBField</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">vdb_field</span><span class="o">.</span><span class="n">metadata</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span>
+                        <span class="n">grid</span><span class="o">=</span><span class="n">vdb_field</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span>
+                        <span class="n">origin</span><span class="o">=</span><span class="n">vdb_field</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span>
+                        <span class="n">delta</span><span class="o">=</span><span class="n">vdb_field</span><span class="o">.</span><span class="n">delta</span><span class="p">,</span>
+                        <span class="n">metadata</span><span class="o">=</span><span class="n">vdb_field</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="k">pass</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="c1"># can probably safely try to load() it...</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">grid</span>
@@ -1227,7 +1242,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.2.0+10.gab29b50
+        1.2.0+11.g4acc4c3
       <span class="fa fa-caret-down"></span>
     </span>
 

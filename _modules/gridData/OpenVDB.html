@@ -21,20 +21,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>gridData.OpenVDB &mdash; GridDataFormats 1.2.0+10.gab29b50 documentation</title>
+  <title>gridData.OpenVDB &mdash; GridDataFormats 1.2.0+11.g4acc4c3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=4fc51a12"></script>
+      <script src="../../_static/documentation_options.js?v=937b3e6a"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.2.0+10.gab29b50 documentation"
+          title="Search within GridDataFormats 1.2.0+11.g4acc4c3 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -229,20 +229,21 @@
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">DownCastTo</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""":func:`~dataclasses.dataclass` decorator serving as a marker for a downcast.</span>
-<span class="sd">    </span>
+
 <span class="sd">    This function is used to create a proxy for an OpenVDB grid type.</span>
 <span class="sd">    The field :attr:`gridType` contains the OpenVDB grid type that it represents.</span>
 <span class="sd">    :meth:`OpenVDBField._get_best_grid_type` selects a OpenVDB grid that best matches</span>
 <span class="sd">    the numpy dtype of the data but in some cases, only target OpenVDB grid types are</span>
 <span class="sd">    available that loose precision. In this case, this class wraps the orginal OpenVDB</span>
 <span class="sd">    class to indicate that the downcast. For example, ::</span>
-<span class="sd">    </span>
+
 <span class="sd">       np.dtype("int32"): ["Int32Grid", DownCastTo("FloatGrid")]</span>
-<span class="sd">       </span>
+
 <span class="sd">    indicates that NumPy int32 data should be represented by a :class:`openvdb.Int32Grid`</span>
 <span class="sd">    but if this is not available, a :class:`openvdb.FloatGrid` is used instead,</span>
 <span class="sd">    which, however, is only able to represent a subset of all 32-bit integers.</span>
 <span class="sd">    """</span>
+
     <span class="n">gridType</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
@@ -265,7 +266,7 @@
 
 <span class="sd">      import gridData.OpenVDB as OpenVDB</span>
 
-<span class="sd">      vdb_field = OpenVDB.OpenVDBField(grid=np.ones((3, 4, 5)), </span>
+<span class="sd">      vdb_field = OpenVDB.OpenVDBField(grid=np.ones((3, 4, 5)),</span>
 <span class="sd">                                       origin=np.array([1.5, 0, 0]),</span>
 <span class="sd">                                       delta=np.array([0.5, 0.5, 0.25]),</span>
 <span class="sd">                                       name='density')</span>
@@ -276,6 +277,32 @@
 <span class="sd">      g = Grid(...)</span>
 <span class="sd">      g.export('output.vdb', format='vdb')</span>
 <span class="sd">    """</span>
+
+    <span class="c1"># dtype maps for numpy to vdb</span>
+    <span class="n">_DTYPES_NP2VDB</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"bool"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"BoolGrid"</span><span class="p">],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int8"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"uint8"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int16"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"uint16"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int32"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"uint32"</span><span class="p">):</span> <span class="p">[</span><span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"Int32Grid"</span><span class="p">),</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int64"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int64Grid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"uint64"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int64Grid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float16"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"HalfGrid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float32"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"FloatGrid"</span><span class="p">],</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float64"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"DoubleGrid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
+    <span class="p">}</span>
+
+    <span class="c1"># dtype maps for vdb to numpy</span>
+    <span class="n">_DTYPES_VDB2NP</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"BoolGrid"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"bool"</span><span class="p">),</span>
+        <span class="s2">"Int32Grid"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int32"</span><span class="p">),</span>
+        <span class="s2">"Int64Grid"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int64"</span><span class="p">),</span>
+        <span class="s2">"FloatGrid"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float32"</span><span class="p">),</span>
+        <span class="s2">"DoubleGrid"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float64"</span><span class="p">),</span>
+        <span class="s2">"HalfGrid"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float16"</span><span class="p">),</span>
+    <span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -328,8 +355,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">if</span> <span class="n">grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_populate</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_openvdb_grid</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">vdb</span><span class="o">.</span><span class="n">GridBase</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span> <span class="o">=</span> <span class="n">grid</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_extract_from_vdb_grid</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_populate</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_openvdb_grid</span><span class="p">()</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="kc">None</span>
@@ -398,6 +430,57 @@
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_from_vdb_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Extract numpy array, origin, delta from stored VDB grid.</span>
+
+<span class="sd">        This method converts the sparse VDB grid to a dense numpy array</span>
+<span class="sd">        and extracts the transform information.</span>
+<span class="sd">        """</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Could not read metadata key '</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">' from VDB grid: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="ne">UserWarning</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="n">transformation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span><span class="o">.</span><span class="n">transform</span>
+
+        <span class="n">v_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">transformation</span><span class="o">.</span><span class="n">indexToWorld</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+        <span class="n">v_delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">transformation</span><span class="o">.</span><span class="n">indexToWorld</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span> <span class="o">-</span> <span class="n">v_origin</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">v_origin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">v_delta</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DTYPES_VDB2NP</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Unknown VDB grid type '</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">', cannot map to a numpy dtype."</span>
+            <span class="p">)</span>
+
+        <span class="n">bbox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span><span class="o">.</span><span class="n">evalActiveVoxelBoundingBox</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">bbox</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">"VDB grid has no active voxels (empty bounding box). Returning an empty array of shape (0, 0, 0)."</span><span class="p">,</span>
+                <span class="ne">RuntimeWarning</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vdb_grid</span><span class="o">.</span><span class="n">copyToArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="n">ijk</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="n">transformation</span><span class="o">.</span><span class="n">indexToWorld</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="p">)</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_populate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Populate the field with grid data.</span>
 
@@ -457,23 +540,8 @@
 <span class="sd">        TypeError</span>
 <span class="sd">            If dtype is not supported or no suitable grid type is available</span>
 <span class="sd">        """</span>
-        <span class="n">datatypes</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"bool"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"BoolGrid"</span><span class="p">],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int8"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"uint8"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int16"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"uint16"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int32"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int32Grid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"uint32"</span><span class="p">):</span> <span class="p">[</span><span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"Int32Grid"</span><span class="p">),</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"int64"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int64Grid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"uint64"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"Int64Grid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float16"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"HalfGrid"</span><span class="p">,</span> <span class="s2">"FloatGrid"</span><span class="p">],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float32"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"FloatGrid"</span><span class="p">],</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"float64"</span><span class="p">):</span> <span class="p">[</span><span class="s2">"DoubleGrid"</span><span class="p">,</span> <span class="n">DownCastTo</span><span class="p">(</span><span class="s2">"FloatGrid"</span><span class="p">)],</span>
-        <span class="p">}</span>
-
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">vdb_gridtypes</span> <span class="o">=</span> <span class="n">datatypes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span>
+            <span class="n">vdb_gridtypes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DTYPES_NP2VDB</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data type </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> not supported for VDB"</span><span class="p">)</span>
 
@@ -598,7 +666,7 @@
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.2.0+10.gab29b50
+        1.2.0+11.g4acc4c3
       <span class="fa fa-caret-down"></span>
     </span>
 
