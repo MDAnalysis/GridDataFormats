@@ -22,20 +22,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenVDB — routines to write OpenVDB files &mdash; GridDataFormats 1.2.0+11.g4acc4c3 documentation</title>
+  <title>OpenVDB — routines to write OpenVDB files &mdash; GridDataFormats 1.2.0+12.g639bba0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/site.css" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=937b3e6a"></script>
+      <script src="../../_static/documentation_options.js?v=6077ed41"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/js/versions.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within GridDataFormats 1.2.0+11.g4acc4c3 documentation"
+          title="Search within GridDataFormats 1.2.0+12.g639bba0 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -229,8 +229,8 @@ object:</p>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="gridData.OpenVDB.DownCastTo">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gridData.OpenVDB.</span></span><span class="sig-name descname"><span class="pre">DownCastTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gridType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenVDB.html#DownCastTo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenVDB.DownCastTo" title="Link to this definition"></a></dt>
-<dd><p><a class="reference external" href="https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dataclass()</span></code></a> decorator serving as a marker for a downcast.</p>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">gridData.OpenVDB.</span></span><span class="sig-name descname"><span class="pre">DownCastTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gridType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gridData/OpenVDB.html#DownCastTo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gridData.OpenVDB.DownCastTo" title="Link to this definition"></a></dt>
+<dd><p><a class="reference external" href="https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass" title="(in Python v3.15)"><code class="xref py py-func docutils literal notranslate"><span class="pre">dataclass()</span></code></a> decorator serving as a marker for a downcast.</p>
 <p>This function is used to create a proxy for an OpenVDB grid type.
 The field <a class="reference internal" href="#gridData.OpenVDB.DownCastTo.gridType" title="gridData.OpenVDB.DownCastTo.gridType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gridType</span></code></a> contains the OpenVDB grid type that it represents.
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">OpenVDBField._get_best_grid_type()</span></code> selects a OpenVDB grid that best matches
@@ -245,7 +245,7 @@ but if this is not available, a <code class="xref py py-class docutils literal n
 which, however, is only able to represent a subset of all 32-bit integers.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="gridData.OpenVDB.DownCastTo.gridType">
-<span class="sig-name descname"><span class="pre">gridType</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#gridData.OpenVDB.DownCastTo.gridType" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">gridType</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span><a class="headerlink" href="#gridData.OpenVDB.DownCastTo.gridType" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -282,16 +282,16 @@ to a .vdb file.</p>
 <li><p><strong>grid</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>numpy.ndarray</em></a>) – 3D numpy array with the data</p></li>
 <li><p><strong>origin</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>numpy.ndarray</em></a>) – Coordinates of the center of grid cell [0,0,0]</p></li>
 <li><p><strong>delta</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>numpy.ndarray</em></a>) – Grid spacing (can be 1D array or diagonal matrix)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name of the grid (will be visible in Blender), default ‘density’</p></li>
-<li><p><strong>tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> (</em><em>optional</em><em>)</em>) – Values below this tolerance are treated as background (sparse),
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Name of the grid (will be visible in Blender), default ‘density’</p></li>
+<li><p><strong>tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em> (</em><em>optional</em><em>)</em>) – Values below this tolerance are treated as background (sparse),
 default <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
-<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em> (</em><em>optional</em><em>)</em>) – Additional metadata to embed in the VDB file.</p></li>
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a><em> (</em><em>optional</em><em>)</em>) – Additional metadata to embed in the VDB file.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ImportError" title="(in Python v3.14)"><strong>ImportError</strong></a> – If openvdb is not installed</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If grid is not 3D, or if delta is not 1D/2D or describes
+<li><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ImportError" title="(in Python v3.15)"><strong>ImportError</strong></a> – If openvdb is not installed</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.15)"><strong>ValueError</strong></a> – If grid is not 3D, or if delta is not 1D/2D or describes
     non-orthorhombic cell</p></li>
 </ul>
 </dd>
@@ -307,7 +307,7 @@ default <code class="docutils literal notranslate"><span class="pre">None</span>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>grid</strong> (<a class="reference internal" href="../core.html#gridData.core.Grid" title="gridData.core.Grid"><em>Grid</em></a>) – Grid object to convert</p></li>
-<li><p><strong>tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em>) – Values below this tolerance are treated as background (sparse).
+<li><p><strong>tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>, </em><em>optional</em>) – Values below this tolerance are treated as background (sparse).
 Default None means no tolerance-based pruning for non-boolean grids.</p></li>
 <li><p><strong>**kwargs</strong> – Additional keyword arguments:
 - name : str, grid name (default ‘density’)
@@ -351,7 +351,7 @@ object (e.g., FloatGrid, DoubleGrid) from the openvdb library.</p>
 <dd><p>Write the field to an OpenVDB file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Output filename (should end in .vdb)</p>
+<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Output filename (should end in .vdb)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -397,7 +397,7 @@ object (e.g., FloatGrid, DoubleGrid) from the openvdb library.</p>
      aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"></span>
-        1.2.0+11.g4acc4c3
+        1.2.0+12.g639bba0
       <span class="fa fa-caret-down"></span>
     </span>
 
