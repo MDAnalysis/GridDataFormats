@@ -38,6 +38,7 @@ import errno
 import pickle
 
 import numpy
+import mrcfile
 
 # For interpolated grids: need scipy.ndimage but we import it only when needed:
 # import scipy
@@ -190,6 +191,12 @@ class Grid(object):
       g = Grid()
       g.load(filename)
 
+    From a native object of one of the supported libraries, e.g., a
+    :class:`mrcfile.mrcfile.MrcFile`::
+
+      with mrcfile.open("density.mrc") as mrcobj:
+          g = Grid(mrcobj)
+
 
     Notes
     -----
@@ -208,6 +215,13 @@ class Grid(object):
     .. versionchanged:: 0.7.0
        CCP4 files are now read with :class:`gridData.mrc.MRC` and not anymore
        with the deprecated/buggy `ccp4.CCP4`
+
+    .. versionchanged:: 1.3.0
+       *grid* can be a native mrcfile object, i.e., an instance of
+       :class:`mrcfile.mrcobject.MrcObject` such as
+       :class:`mrcfile.mrcfile.MrcFile` or
+       :class:`mrcfile.mrcinterpreter.MrcInterpreter`. The data of the grid
+       are a view of the data of the mrcfile object.
 
     """
 
@@ -264,6 +278,10 @@ class Grid(object):
                     return
             except ImportError:
                 pass
+            if isinstance(grid, mrcfile.mrcobject.MrcObject):
+                # if a native mrcfile object is passed
+                self._load_mrcfile(grid, assume_volumetric=assume_volumetric)
+                return
             if isinstance(grid, str):
                 # can probably safely try to load() it...
                 filename = grid
@@ -637,12 +655,24 @@ class Grid(object):
 
     def _load_mrc(self, filename, assume_volumetric=False, **kwargs):
         """Initializes Grid from a MRC/CCP4 file."""
-        mrcfile = mrc.MRC(filename, assume_volumetric=assume_volumetric)
-        grid, edges = mrcfile.histogramdd()
+        mrcdata = mrc.MRC(filename, assume_volumetric=assume_volumetric)
+        self._populate_from_mrc(mrcdata)
+
+    def _load_mrcfile(self, mrcobj, assume_volumetric=False):
+        """Initializes Grid from a native mrcfile object.
+
+        The grid data are a view of the data of `mrcobj`.
+        """
+        mrcdata = mrc.MRC.from_mrcfile(mrcobj, assume_volumetric=assume_volumetric)
+        self._populate_from_mrc(mrcdata)
+
+    def _populate_from_mrc(self, mrcdata):
+        """Initializes Grid from a :class:`gridData.mrc.MRC` instance."""
+        grid, edges = mrcdata.histogramdd()
         self._load(grid=grid, edges=edges, metadata=self.metadata)
         # Store header for access from Grid object (undocumented)
         # https://github.com/MDAnalysis/GridDataFormats/pull/100#discussion_r782604833
-        self._mrc_header = mrcfile.header.copy()
+        self._mrc_header = mrcdata.header.copy()
 
     def _load_dx(self, filename, **kwargs):
         """Initializes Grid from a OpenDX file."""

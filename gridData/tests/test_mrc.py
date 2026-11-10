@@ -1,3 +1,5 @@
+import shutil
+
 import pytest
 
 import numpy as np
@@ -41,6 +43,11 @@ def _test_ccp4(g):
 @pytest.fixture(scope="module")
 def ccp4data():
     return mrc.MRC(datafiles.CCP4_1JZV)
+
+
+@pytest.fixture(scope="module")
+def ccp4grid():
+    return Grid(datafiles.CCP4_1JZV)
 
 
 @pytest.mark.parametrize(
@@ -378,3 +385,97 @@ class TestGridMRCWrite:
         assert_allclose(m_read.array, data)
         assert_allclose(np.diag(m_read.delta), [1.0, 1.0, 1.0])
         assert_allclose(m_read.origin, [0.0, 0.0, 0.0], rtol=1e-4, atol=1.0)
+
+
+class TestGridFromMrcfile:
+    """Tests for building a Grid from a native mrcfile object"""
+
+    def test_from_mrcfile(self, ccp4grid):
+        with mrcfile.open(datafiles.CCP4_1JZV) as mrcobj:
+            g = Grid(mrcobj)
+
+        assert_equal(g.grid.shape, ccp4grid.grid.shape)
+        assert_allclose(g.grid, ccp4grid.grid)
+        assert_allclose(g.origin, ccp4grid.origin)
+        assert_allclose(g.delta, ccp4grid.delta)
+
+    def test_from_mrcfile_keyword(self, ccp4grid):
+        with mrcfile.open(datafiles.CCP4_1JZV) as mrcobj:
+            g = Grid(grid=mrcobj)
+
+        assert_allclose(g.grid, ccp4grid.grid)
+
+    def test_from_mrcfile_header(self, ccp4grid):
+        with mrcfile.open(datafiles.CCP4_1JZV) as mrcobj:
+            g = Grid(mrcobj)
+
+        # undocumented MRC header in Grid
+        assert g._mrc_header == ccp4grid._mrc_header
+
+    def test_from_mrcmemmap(self, ccp4grid):
+        # subclasses of MrcFile must work, too
+        with mrcfile.mmap(datafiles.CCP4_1JZV) as mrcobj:
+            assert isinstance(mrcobj, mrcfile.mrcmemmap.MrcMemmap)
+            g = Grid(mrcobj)
+            assert_allclose(g.grid, ccp4grid.grid)
+
+    def test_from_mrcinterpreter(self, ccp4grid):
+        mrcobj = mrc.MRC(datafiles.CCP4_1JZV).native
+
+        assert isinstance(mrcobj, mrcfile.mrcinterpreter.MrcInterpreter)
+
+        g = Grid(mrcobj)
+        assert_allclose(g.grid, ccp4grid.grid)
+        assert_allclose(g.origin, ccp4grid.origin, rtol=1e-5, atol=1e-3)
+        assert_allclose(g.delta, ccp4grid.delta)
+
+    def test_data_is_view(self, tmpdir):
+        # the data must not be copied (Issue #172)
+        mrcfile_copy = str(tmpdir / "writable.ccp4")
+        shutil.copy(datafiles.CCP4_1JZV, mrcfile_copy)
+
+        with mrcfile.mmap(mrcfile_copy, mode="r+") as mrcobj:
+            g = Grid(mrcobj)
+
+            assert np.shares_memory(g.grid, mrcobj.data)
+
+            # changing the native object also changes the grid
+            mrcobj.data[0, 0, 0] += 1
+            assert_equal(g.grid[0, 0, 0], mrcobj.data[0, 0, 0])
+
+    def test_convert_to_roundtrip(self, ccp4grid):
+        g = Grid(ccp4grid.convert_to("mrc"))
+
+        assert_allclose(g.grid, ccp4grid.grid)
+        assert_allclose(g.origin, ccp4grid.origin, rtol=1e-5, atol=1e-3)
+        assert_allclose(g.delta, ccp4grid.delta, rtol=1e-5)
+
+    def test_volume_check(self):
+        with mrcfile.open(datafiles.ISPG_0) as mrcobj:
+            with pytest.raises(ValueError, match="is not a volumetric density"):
+                Grid(mrcobj)
+
+    def test_volume_force(self):
+        with mrcfile.open(datafiles.ISPG_0) as mrcobj:
+            g = Grid(mrcobj, assume_volumetric=True)
+
+        assert_allclose(np.sum(g.grid), 829.925)
+
+    def test_empty_data_ValueError(self):
+        mrcobj = mrcfile.mrcinterpreter.MrcInterpreter()
+        mrcobj._create_default_attributes()
+
+        with pytest.raises(ValueError, match="is not a volumetric density"):
+            Grid(mrcobj)
+
+    def test_triclinic_ValueError(self):
+        with mrcfile.open(datafiles.MRC_EMD3001) as mrcobj:
+            with pytest.raises(
+                ValueError,
+                match="Only orthorhombic unitcells are currently supported, not",
+            ):
+                Grid(mrcobj)
+
+    def test_not_mrcfile_TypeError(self):
+        with pytest.raises(TypeError, match="must be a native mrcfile object"):
+            mrc.MRC.from_mrcfile(np.ones((2, 3, 4)))

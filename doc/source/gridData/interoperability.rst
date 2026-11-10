@@ -62,15 +62,27 @@ native objects are produced::
 Creating a Grid from a native object
 ------------------------------------
 
-.. note:: **Not implemented yet.** See issue `#162`_ for details.
+.. versionadded:: 1.3.0
 
-:class:`~gridData.core.Grid` should be able to consume *native objects* in place of files.
-
+:class:`~gridData.core.Grid` also consumes *native objects* in place of files:
+the object is passed as the *grid* argument and the data together with the
+origin and the grid spacings are taken from it.
 
 For example, a :class:`mrcfile.mrcfile.MrcFile` instance can be used to
 instantiate the :class:`Grid` instance::
 
-  mrc = mrcfile.mrcfile.MrcFile("density.ccp4")
-  g = Grid(mrc)  
+  mrc = mrcfile.open("density.ccp4")
+  g = Grid(mrc)
 
-  
+and in the same manner for an OpenVDB grid::
+
+  grids, _ = vdb.readAll("density.vdb")
+  g = Grid(grids[0])
+
+The data are extracted by the *adapter class* of the format, namely with the
+*classmethod* :meth:`gridData.mrc.MRC.from_mrcfile` for MRC data. For MRC, the
+data are used as a *view* of the data of the native object and are not copied,
+so the native object has to keep the data available for as long as the
+:class:`Grid` is used.
+
+(See issue `#162`_ for additional background.)
