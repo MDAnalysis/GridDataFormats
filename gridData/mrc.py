@@ -14,6 +14,25 @@ the mrcfile_ library [Burnley2017]_.
 .. _mrcfile: https://mrcfile.readthedocs.io/
 .. _`MRC2014 file format`: http://www.ccpem.ac.uk/mrc_format/mrc2014.php
 
+A :class:`~gridData.core.Grid` can be built either from a file or directly
+from one of the native objects of the mrcfile_ library, namely
+:class:`~mrcfile.mrcfile.MrcFile`,
+:class:`~mrcfile.mrcinterpreter.MrcInterpreter`, and their subclasses::
+
+  import mrcfile
+  from gridData import Grid
+
+  g = Grid("density.mrc")                # from a file
+
+  with mrcfile.open("density.mrc") as mrcobj:
+      g = Grid(mrcobj)                   # from a native object
+
+The data of such a grid are a view of the data of the native object and are
+not copied; see :meth:`MRC.from_mrcfile`.
+
+.. versionchanged:: 1.3.0
+   Grids can be created from native mrcfile objects.
+
 
 References
 ----------
@@ -133,6 +152,55 @@ class MRC(object):
 
         if hasattr(grid, "_mrc_header"):
             mrc_obj.header = grid._mrc_header
+
+        return mrc_obj
+
+    @classmethod
+    def from_mrcfile(cls, mrcobj, assume_volumetric=False):
+        """Create a MRC object from a native mrcfile object.
+
+        Parameters
+        ----------
+        mrcobj : mrcfile.mrcobject.MrcObject
+            Native object of the mrcfile_ library that holds the data and the
+            header, such as :class:`~mrcfile.mrcfile.MrcFile` or
+            :class:`~mrcfile.mrcinterpreter.MrcInterpreter`.
+        assume_volumetric : bool (optional)
+            If ``False`` (default), check the header to determine whether the
+            data in `mrcobj` are a 3D volume. If ``True``, assume that they
+            are volumetric.
+
+        Returns
+        -------
+        MRC
+            MRC wrapper object
+
+        Raises
+        ------
+        TypeError
+            If `mrcobj` is not a native mrcfile object.
+        ValueError
+            If the unit cell is not orthorhombic or if the data are not
+            volumetric.
+
+        Notes
+        -----
+        The :attr:`array` is a view of the data of `mrcobj`, i.e., the data
+        are not copied and changes to `mrcobj` are also seen here. The data of
+        a memory-mapped object (from :func:`mrcfile.mmap`) become unavailable
+        once that object is closed.
+
+
+        .. versionadded:: 1.3.0
+        """
+        if not isinstance(mrcobj, mrcfile.mrcobject.MrcObject):
+            raise TypeError(
+                "mrcobj must be a native mrcfile object (an instance of "
+                "mrcfile.mrcobject.MrcObject) but is a {}".format(type(mrcobj))
+            )
+
+        mrc_obj = cls()
+        mrc_obj._populate(mrcobj, assume_volumetric=assume_volumetric)
 
         return mrc_obj
 
@@ -264,52 +332,60 @@ class MRC(object):
         if filename is not None:
             self.filename = filename
         with mrcfile.open(filename) as mrc:
-            if assume_volumetric:
-                # non 3D volumes should always fail, regardless of assume_volumetric value
-                is_volume = mrc.data is not None and len(mrc.data.shape) == 3
-            else:
-                is_volume = mrc.is_volume()
+            self._populate(mrc, assume_volumetric=assume_volumetric)
 
-            if not is_volume:
-                raise ValueError(
-                    "MRC file {} is not a volumetric density.".format(filename)
-                )
-            self.header = h = mrc.header.copy()
-            # check for being orthorhombic
-            if not np.allclose(
-                [h.cellb.alpha, h.cellb.beta, h.cellb.gamma], [90, 90, 90]
-            ):
-                raise ValueError(
-                    "Only orthorhombic unitcells are currently "
-                    "supported, not "
-                    "alpha={0}, beta={1}, gamma={2}".format(
-                        h.cellb.alpha, h.cellb.beta, h.cellb.gamma
-                    )
-                )
-            # mrc.data[z, y, x] indexed: convert to x,y,z as used in GridDataFormats
-            # together with the axes orientation information in mapc/mapr/maps.
-            # mapc, mapr, maps = 1, 2, 3 for Fortran-ordering and 3, 2, 1 for C-ordering.
-            # Other combinations are possible. We reorder the data for the general case
-            # by sorting mapc, mapr, maps in ascending order, i.e., to obtain x,y,z.
-            # mrcfile provides the data in zyx shape (without regard to map*) so we first
-            # transpose it to xyz and then reorient with axes_c_order.
-            #
-            # All other "xyz" quantitities are also reordered.
-            axes_order = np.hstack([h.mapc, h.mapr, h.maps])
-            axes_c_order = np.argsort(axes_order)
-            transpose_order = np.argsort(axes_order[::-1])
-            self.array = np.transpose(mrc.data, axes=transpose_order)
-            self.delta = np.diag(
-                np.array([mrc.voxel_size.x, mrc.voxel_size.y, mrc.voxel_size.z])
+    def _populate(self, mrc, assume_volumetric=False):
+        """Populate the instance from the native mrcfile object *mrc*.
+
+        The :attr:`array` is a view of the data of *mrc*.
+        """
+        if assume_volumetric:
+            # non 3D volumes should always fail, regardless of assume_volumetric value
+            is_volume = mrc.data is not None and len(mrc.data.shape) == 3
+        else:
+            is_volume = mrc.data is not None and mrc.is_volume()
+
+        if not is_volume:
+            source = (
+                "MRC file {}".format(self.filename)
+                if self.filename is not None
+                else "{} object".format(type(mrc).__name__)
             )
-            # the grid is shifted to the MRC origin by offset
-            # (assume orthorhombic)
-            offsets = np.hstack([h.nxstart, h.nystart, h.nzstart])[
-                axes_c_order
-            ] * np.diag(self.delta)
-            # GridData origin is centre of cell at x=col=0, y=row=0 z=seg=0
-            self.origin = np.hstack([h.origin.x, h.origin.y, h.origin.z]) + offsets
-            self.rank = 3
+            raise ValueError("{} is not a volumetric density.".format(source))
+        self.header = h = mrc.header.copy()
+        # check for being orthorhombic
+        if not np.allclose([h.cellb.alpha, h.cellb.beta, h.cellb.gamma], [90, 90, 90]):
+            raise ValueError(
+                "Only orthorhombic unitcells are currently "
+                "supported, not "
+                "alpha={0}, beta={1}, gamma={2}".format(
+                    h.cellb.alpha, h.cellb.beta, h.cellb.gamma
+                )
+            )
+        # mrc.data[z, y, x] indexed: convert to x,y,z as used in GridDataFormats
+        # together with the axes orientation information in mapc/mapr/maps.
+        # mapc, mapr, maps = 1, 2, 3 for Fortran-ordering and 3, 2, 1 for C-ordering.
+        # Other combinations are possible. We reorder the data for the general case
+        # by sorting mapc, mapr, maps in ascending order, i.e., to obtain x,y,z.
+        # mrcfile provides the data in zyx shape (without regard to map*) so we first
+        # transpose it to xyz and then reorient with axes_c_order.
+        #
+        # All other "xyz" quantitities are also reordered.
+        axes_order = np.hstack([h.mapc, h.mapr, h.maps])
+        axes_c_order = np.argsort(axes_order)
+        transpose_order = np.argsort(axes_order[::-1])
+        self.array = np.transpose(mrc.data, axes=transpose_order)
+        self.delta = np.diag(
+            np.array([mrc.voxel_size.x, mrc.voxel_size.y, mrc.voxel_size.z])
+        )
+        # the grid is shifted to the MRC origin by offset
+        # (assume orthorhombic)
+        offsets = np.hstack([h.nxstart, h.nystart, h.nzstart])[axes_c_order] * np.diag(
+            self.delta
+        )
+        # GridData origin is centre of cell at x=col=0, y=row=0 z=seg=0
+        self.origin = np.hstack([h.origin.x, h.origin.y, h.origin.z]) + offsets
+        self.rank = 3
 
     @property
     def shape(self):
